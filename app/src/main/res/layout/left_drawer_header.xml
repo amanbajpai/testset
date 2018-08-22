@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_180sdp"
+        android:gravity="center"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingRight="@dimen/_10sdp"
+        android:visibility="gone">
+
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/left_drawer_profile_pic"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_alignParentLeft="true"
+            android:src="@mipmap/ic_launcher"
+            app:civ_border_color="@color/grayseperator"
+            app:civ_border_width="2dp" />
+
+        <com.dininginn.guest.widget.StyledTextView
+            android:id="@+id/left_drawer_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="username"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_17sdp"
+            android:textStyle="bold" />
+
+        <com.dininginn.guest.widget.StyledTextView
+            android:id="@+id/left_drawer_contact_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/left_drawer_username"
+            android:layout_centerHorizontal="true"
+            android:text="view_edit_profile_txt"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp" />
+
+        <com.dininginn.guest.widget.StyledTextView
+            android:id="@+id/notify_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/left_drawer_profile_pic"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:text="notify_profile_txt"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp" />
+
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_150sdp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/leftDrawer_profile_imageView"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:src="@mipmap/ic_launcher" />
+
+        <com.dininginn.guest.widget.StyledTextView
+            android:id="@+id/leftDrawer_profileName_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/leftDrawer_profile_imageView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Tom Luise"
+            android:textColor="@color/colorRed"
+            android:textSize="@dimen/_14sdp" />
+
+
+        <com.dininginn.guest.widget.StyledTextView
+            android:id="@+id/left_drawerNumber_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/leftDrawer_profileName_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:text="+61 123456987"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_11sdp" />
+
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/light_gray_color" />
+
+</LinearLayout>
