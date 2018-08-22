@@ -45,7 +45,8 @@ ext {
     ]
 
     androidSupport =[
-            supportLibrary: "com.android.support:appcompat-v7:${supportLibraryVersion}"
+            supportLibrary: "com.android.support:appcompat-v7:${supportLibraryVersion}",
+            design :"com.android.support:design:${supportLibraryVersion}"
     ]
 
 }

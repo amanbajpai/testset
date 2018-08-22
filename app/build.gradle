@@ -29,4 +29,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
     implementation rootProject.ext.androidSupport.supportLibrary
     implementation rootProject.ext.dataDependency.sdpLibrary
+    implementation rootProject.ext.androidSupport.design
 }
