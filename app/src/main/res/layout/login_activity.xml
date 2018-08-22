@@ -37,9 +37,9 @@
             <com.keykeep.app.views.custom_view.StyledEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/text_gray"
-                android:singleLine="true"
                 android:maxLength="40"
+                android:singleLine="true"
+                android:textColor="@color/text_gray"
                 android:textSize="@dimen/_14sdp" />
 
         </android.support.design.widget.TextInputLayout>
@@ -71,10 +71,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_2sdp"
-                android:textColor="@color/text_gray"
-                android:singleLine="true"
-                android:maxLength="30"
                 android:inputType="textPassword"
+                android:maxLength="30"
+                android:singleLine="true"
+                android:textColor="@color/text_gray"
                 android:textSize="@dimen/_15sdp" />
         </android.support.design.widget.TextInputLayout>
 
@@ -83,41 +83,42 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/_20sdp"
         android:layout_marginRight="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_height="wrap_content">
+        android:layout_marginTop="@dimen/_5sdp">
 
         <CheckBox
             android:id="@+id/remember_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Remember Me"
             android:layout_centerVertical="true"
-            android:textColor="@color/text_gray"
-            android:checked="true" />
+            android:checked="true"
+            android:text="Remember Me"
+            android:textColor="@color/text_gray" />
 
         <com.keykeep.app.views.custom_view.StyledTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:textColor="@color/text_gray"
             android:layout_alignParentRight="true"
-            android:text="Forgot Password" />
+            android:layout_centerVertical="true"
+            android:text="Forgot Password"
+            android:textColor="@color/text_gray" />
 
     </RelativeLayout>
 
 
     <com.keykeep.app.views.custom_view.StyledButonView
+        android:id="@+id/tv_login"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
-        android:layout_marginRight="@dimen/_20sdp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginLeft="@dimen/_20sdp"
-        android:text="Login"
+        android:layout_marginRight="@dimen/_20sdp"
         android:layout_marginTop="@dimen/_20sdp"
-        android:textColor="@color/text_green"
         android:background="@drawable/rect_crop_green_bg"
-        android:layout_gravity="center_horizontal" />
+        android:text="Login"
+        android:textColor="@color/text_green" />
 
 
 </LinearLayout>
