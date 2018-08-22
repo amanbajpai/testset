@@ -36,15 +36,18 @@ ext {
     sdpVersion = '1.0.5'
     xRecyclerViewVersion = '1.3.2'
     circularImageViewVersion = '2.2.0'
+    loaderAnimViewVersion = '2.1.3'
 
     //room version
     roomVersion = '1.1.1'
     archLifecycleVersion = '1.1.1'
 
     dataDependency = [
-            sdpLibrary       : "com.intuit.sdp:sdp-android:${sdpVersion}",
-            xrecyclerview    : "com.jcodecraeer:xrecyclerview:${xRecyclerViewVersion}",
-            circularImageView: "de.hdodenhof:circleimageview:${circularImageViewVersion}"
+            sdpLibrary         : "com.intuit.sdp:sdp-android:${sdpVersion}",
+            xrecyclerview      : "com.jcodecraeer:xrecyclerview:${xRecyclerViewVersion}",
+            circularImageView  : "de.hdodenhof:circleimageview:${circularImageViewVersion}",
+            loaderAnimationView: "com.wang.avi:library:${loaderAnimViewVersion}"
+
     ]
 
     androidSupport = [

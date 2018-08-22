@@ -3,6 +3,9 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion androidCompileSdkVersion
     defaultConfig {
+
+        flavorDimensions "default"
+
         applicationId "com.keykeep.app"
         minSdkVersion androidMinSdkVersion
         targetSdkVersion androidTargetSdkVersion
@@ -20,7 +23,20 @@ android {
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }
+
+    productFlavors {
+        //new Flavor url
+        CDN {
+            buildConfigField "String", "BASE_URL", '"http://52.65.255.9/application/api/"'
+            buildConfigField "String", "BASE_URL_WEB", '"http://dininginn.com.au/application/admin/"'
+            buildConfigField "String", "NODE_URL", '"http://52.65.255.9"'
+            buildConfigField "String", "PORT", '"9000"'
+        }
+    }
+
 }
+
+
 
 dependencies {
 
@@ -38,5 +54,7 @@ dependencies {
     implementation rootProject.ext.dataDependency.circularImageView
     implementation rootProject.ext.androidSupport.cardView
     implementation rootProject.ext.androidSupport.designSuppport
+    implementation rootProject.ext.dataDependency.loaderAnimationView
+
 }
 

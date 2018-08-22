@@ -2,14 +2,10 @@
 package com.keykeep.app.views.activity;
 
 
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -22,19 +18,26 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.keykeep.app.R;
 import com.keykeep.app.model.LeftMenuDrawerItems;
+import com.keykeep.app.model.MultiSelectListItem;
+import com.keykeep.app.utils.Connectivity;
+import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.adapter.LeftDrawerListAdapter;
+import com.keykeep.app.views.custom_view.StyledTextView;
+import com.keykeep.app.views.fragment.HomeFragment;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
  * Created by ankurrawal
  */
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.OnItemClickListener {
 
     Context context;
     RelativeLayout searchRelativelayout;
@@ -55,7 +58,10 @@ public class HomeActivity extends BaseActivity {
     private Fragment fragment;
     public ImageView notificationBellIv;
     StyledTextView notificationCountTv;
+    public TextView title_tv;
     private static boolean activityVisible;
+    private boolean isActivityRunning = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,11 +94,6 @@ public class HomeActivity extends BaseActivity {
 //          toolbar.setContentInsetsAbsolute(0, 0);
 //          toolbar.setPadding(0, 0, 0, 0);
             title_tv = (TextView) findViewById(R.id.title_tv);
-            anywhwreTv = (StyledTextView) findViewById(R.id.anywhere_tv);
-            antyTimeTv = (StyledTextView) findViewById(R.id.anytime_tv);
-            guestTv = (StyledTextView) findViewById(R.id.guest_tv);
-            cusineTv = (StyledTextView) findViewById(R.id.cuisine_tv);
-            newTicketTv = (TextView) findViewById(R.id.create_new_support);
             recyclerView = (XRecyclerView) findViewById(R.id.recycler_view);
             recyclerView.setLoadingMoreEnabled(false);
             recyclerView.setPullRefreshEnabled(false);
@@ -102,13 +103,9 @@ public class HomeActivity extends BaseActivity {
             profilePic = (CircleImageView) leftDrawerHeader.findViewById(R.id.leftDrawer_profile_imageView);
             userNameTv = (StyledTextView) leftDrawerHeader.findViewById(R.id.leftDrawer_profileName_text);
             contactNoTv = (StyledTextView) leftDrawerHeader.findViewById(R.id.left_drawerNumber_text);
-            notificationBellIv = (ImageView) findViewById(R.id.notification_bell);
             notificationBellIv.setOnClickListener(this);
 
-            searchRelativelayout = (RelativeLayout) findViewById(R.id.searchmainlayout);
-            notificationCountTv = (StyledTextView) findViewById(R.id.notifcation_count);
             searchRelativelayout.setOnClickListener(this);
-            seachlayout = (LinearLayout) findViewById(R.id.search_layout);
             seachlayout.setOnClickListener(this);
             leftDrawerListAdapter = new LeftDrawerListAdapter(HomeActivity.this, leftMenuDrawerItemses);
             leftDrawerListAdapter.setOnItemClickListener(this);
@@ -118,8 +115,6 @@ public class HomeActivity extends BaseActivity {
             recyclerView.setAdapter(leftDrawerListAdapter);
             prepareMenuItemList();
             setDrawerHover(0);
-
-            newTicketTv.setOnClickListener(this);
 
 
         } catch (Exception ex) {
@@ -140,10 +135,6 @@ public class HomeActivity extends BaseActivity {
                 fragment.onResume();
 
             setMyDrawer(fragment);
-            IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction("android.net.wifi.STATE_CHANGE");
-            intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-            LocalBroadcastManager.getInstance(this).registerReceiver(networBroadcastReceiver, intentFilter);
 
             activityResumed();
 
@@ -160,28 +151,22 @@ public class HomeActivity extends BaseActivity {
         super.onPause();
 
         activityPaused();
-        try {
-            context.unregisterReceiver(notificationCountUpdateReceiver);
-            context.unregisterReceiver(updateReceiver);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
 
 
     private final int[] menuItemIcons = new int[]{R.drawable.hovme,
-            R.drawable.boking, R.drawable.payment, R.drawable.my_account,
-            R.drawable.how_it, R.drawable.abou_us, R.drawable.feedback,
-            R.drawable.suport, R.drawable.term, R.drawable.safty, R.drawable.share,
-            R.drawable.rate, R.drawable.transparrent_shape_drawer, R.drawable.logout};
+            R.drawable.hovme, R.drawable.hovme, R.drawable.hovme,
+            R.drawable.hovme, R.drawable.hovme, R.drawable.hovme,
+            R.drawable.hovme, R.drawable.hovme, R.drawable.hovme, R.drawable.hovme,
+            R.drawable.hovme, R.drawable.hovme, R.drawable.hovme};
 
 
     private final int[] menuItemIconsSelected = new int[]{
 
-            R.drawable.home_active, R.drawable.boking_hover, R.drawable.payment_hover,
-            R.drawable.my_account_activ, R.drawable.how_it_active, R.drawable.abou_us_active,
-            R.drawable.feedback_active,
-            R.drawable.supor_active, R.drawable.term_white, R.drawable.safty_hover, R.drawable.share_active, R.drawable.rate_active, R.drawable.transparrent_shape_drawer, R.drawable.logout_hover
+            R.drawable.home_active, R.drawable.home_active, R.drawable.home_active,
+            R.drawable.home_active, R.drawable.home_active, R.drawable.home_active,
+            R.drawable.home_active,
+            R.drawable.home_active, R.drawable.home_active, R.drawable.home_active, R.drawable.home_active, R.drawable.home_active, R.drawable.home_active, R.drawable.home_active
 
     };
 
@@ -244,8 +229,6 @@ public class HomeActivity extends BaseActivity {
     protected void onDestroy() {
         try {
 
-            clearAllFilters();
-            LocalBroadcastManager.getInstance(this).unregisterReceiver(networBroadcastReceiver);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -262,17 +245,6 @@ public class HomeActivity extends BaseActivity {
     }
 
 
-    public void clearNotificationFromStatusBar() {
-        try {
-            NotificationManager notificationManager = (NotificationManager) context
-                    .getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.cancel(DiningInApplication.NOTIFICATION_ID);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -284,7 +256,7 @@ public class HomeActivity extends BaseActivity {
     @Override
     public void onItemClick(int position) {
         if (!Connectivity.isConnected(context)) {
-            Utils.showToast(context, context.getResources().getString(R.string.no_internet));
+            Utils.showToast(context, "No Internet");
             return;
         }
 
@@ -294,113 +266,48 @@ public class HomeActivity extends BaseActivity {
 
             case 0: // Home
                 setDrawerHover(position);
-                title_tv.setText(getString(R.string.host_dinig_title));
+                title_tv.setText("Home");
                 Utils.replaceFragment(HomeActivity.this, new HomeFragment());
                 break;
             case 1://My Bookings
-                openBookingScreen();
                 break;
             case 2://My Payments
-                openPaymentScreen();
                 break;
             case 3://My Account
-                setDrawerHover(position);
-                title_tv.setText(menuItemNames[position]);
-                Utils.replaceFragment(HomeActivity.this, new MyAccountFragment());
                 break;
             case 4://How It Works
-                openWebActivityTerms(menuItemNames[position], UrlConstants.HOW_IT_WORK_URL, ConstantsLib.HOWITWORKS);
                 break;
             case 5: //About Us
-                openWebActivityTerms(menuItemNames[position], UrlConstants.ABOUT_US_URL, ConstantsLib.ABOUT);
                 break;
             case 6://Feedback
-                openEmail();
                 break;
             case 7://Support
-                setDrawerHover(position);
-                title_tv.setText(menuItemNames[position]);
-                Utils.replaceFragment(HomeActivity.this, new SupportFragment());
                 break;
             case 8: //Legals
-                openWebActivityTerms(menuItemNames[position], UrlConstants.TERMS_AND_CON_URL, ConstantsLib.LEGALS);
                 break;
             case 9: //Trust&safet
-                openWebActivityTerms(menuItemNames[position], UrlConstants.TRUST_AND_SAFETY, ConstantsLib.SAFETYANFTRUST);
                 break;
             case 10: //Share
-                Utils.shareApp(getString(R.string.app_name), getString(R.string.tagline), this);
                 break;
             case 11://Rate Us
-                if (!Connectivity.isConnected(context)) {
-                    Utils.showToast(context, context.getResources().getString(R.string.no_internet));
-                    return;
-                } else {
-                    logScreen(getString(R.string.screen_rateus));
-                    Utils.openPlayStore(context);
-                }
                 break;
             case 13: //Logout
-                Utils.showAlert(context, getResources().getString(R.string.app_name)
-                        , getResources().getString(R.string.logout_message)
-                        , getResources().getString(R.string.dialog_yes)
-                        , getResources().getString(R.string.dialog_cancel)
-                        , ConstantsLib.DIALOG_LOGOUT_REQUEST, this);
                 break;
 
         }
     }
 
-    private void openBookingScreen() {
-        Intent intent = new Intent(HomeActivity.this, MyBookingsActivity.class);
-        startActivity(intent);
-    }
-
-    private void openPaymentScreen() {
-        Intent intent = new Intent(HomeActivity.this, MyPaymentsListActivity.class);
-        startActivity(intent);
-    }
 
     private void setMyDrawer(Fragment fragment) {
 
         try {
             if (fragment instanceof HomeFragment) {
                 setDrawerHover(0);
-            } else if (fragment instanceof MyAccountFragment) {
-                setDrawerHover(3);
-            } else if (fragment instanceof SupportFragment) {
-                setDrawerHover(7);
-            } else if (fragment instanceof HomeFragment) {
-                setDrawerHover(0);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 
-    }
-
-
-    public void openEmail() {
-        String email = "";
-
-        if (AppSharedPrefs.getInstance(context).getFeedbackEmail().equalsIgnoreCase("")) {
-            email = getResources().getString(R.string.feedback_email);
-        } else {
-            email = AppSharedPrefs.getInstance(context).getFeedbackEmail();
-        }
-        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + email));
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Feedback");
-        startActivity(Intent.createChooser(emailIntent, "Chooser Title"));
-    }
-
-
-    private void openWebActivityTerms(String title, String url, String callfrom) {
-
-        Intent intent = new Intent(HomeActivity.this, TermsAndConditionActivity.class);
-        intent.putExtra("title", title);
-        intent.putExtra("url", url);
-        intent.putExtra("callfrom", callfrom);
-        startActivity(intent);
     }
 
 
@@ -425,32 +332,14 @@ public class HomeActivity extends BaseActivity {
 
     }
 
-    private void logoutFromServer() {
-        try {
-            try {
-                HashMap<String, String> stringParams = new HashMap<>();
-                stringParams.put("access_token", AppSharedPrefs.getInstance(context).getAccessToken());
-                stringParams.put("device_id", Utils.getDeviceId(context));
-
-                NetworkController networkController = new NetworkController(context);
-                networkController.call(UrlConstants.LOGOUT_URL_REQUEST_CODE, stringParams, this);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
 
     public void setMyActionBar(Fragment fragment) {
         try {
-            if (fragment instanceof MyAccountFragment) {
+            if (fragment instanceof HomeFragment) {
                 searchRelativelayout.setVisibility(View.GONE);
                 title_tv.setVisibility(View.VISIBLE);
                 setDrawerHover(3);
-                newTicketTv.setVisibility(View.GONE);
-                title_tv.setText(getString(R.string.my_account));
+                title_tv.setText(("Home"));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
