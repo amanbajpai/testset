@@ -25,3 +25,27 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    androidBuildToolsVersion = "27.0.1"
+    androidMinSdkVersion = 19
+    androidTargetSdkVersion = 27
+    androidCompileSdkVersion = 27
+
+
+    supportLibraryVersion = '27.1.1'
+    sdpVersion ='1.0.5'
+
+    //room version
+    roomVersion = '1.1.1'
+    archLifecycleVersion = '1.1.1'
+
+    dataDependency = [
+          sdpLibrary :  "com.intuit.sdp:sdp-android:${sdpVersion}"
+    ]
+
+    androidSupport =[
+            supportLibrary: "com.android.support:appcompat-v7:${supportLibraryVersion}"
+    ]
+
+}
