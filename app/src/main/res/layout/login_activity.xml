@@ -93,12 +93,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Remember Me"
+            android:layout_centerVertical="true"
             android:textColor="@color/text_gray"
             android:checked="true" />
 
         <com.keykeep.app.views.custom_view.StyledTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:textColor="@color/text_gray"
             android:layout_alignParentRight="true"
             android:text="Forgot Password" />
