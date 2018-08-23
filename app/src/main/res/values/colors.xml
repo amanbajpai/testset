@@ -9,4 +9,62 @@
     <color name="text_gray">#666666</color>
     <color name="yellow">#8E7536</color>
     <color name="text_green">#FFE7A1</color>
+
+    <color name="green">#FF09F609</color>
+    <color name="white_trans">#66ffffff</color>
+    <color name="black">#000000</color>
+    <color name="black_light">#4d4949</color>
+    <color name="black_xlight">#304d4949</color>
+    <color name="black_x2light">#2F2F2D</color>
+    <color name="loader_color">#E9262E</color>
+    <color name="dark_gray_color">#808080</color>
+    <color name="medium_dark_gray_color">#d7d7d7</color>
+    <color name="light_gray_color">#E6E6E6</color>
+    <color name="grayseperator">#CDCDCD</color>
+    <color name="fbbtnbluebckground">#3A5A9A</color>
+    <color name="selectorfbbtn">#CC3A5A9A</color>
+    <color name="next_btn_bckground_color">#EC2043</color>
+    <color name="next_btn_selector_color">#80E32230</color>
+    <color name="dark_gray_color_seperator">#BB808080</color>
+    <color name="colorRed">#E9262E</color>
+    <color name="textColorRed">#E9262E</color>
+    <color name="colorLicenceback">#2F2F2D</color>
+    <color name="fab_color">#E32027</color>
+    <color name="fab_color_pressed">#88E32027</color>
+    <color name="black_color_transparent">#0D000000</color>
+    <color name="gray_btn_background">#B1B1B1</color>
+    <color name="black_transparent">#aa000000</color>
+    <color name="fb_btn_disable_colr">#9BABCC</color>
+    <color name="graycolor">#e9e9e9</color>
+    <color name="dark_gray">#FF3C3F41</color>
+    <color name="blue">#3A5A9A</color>
+
+    <color name="rating_bar_gray_color">#AAA9AA</color>
+    <color name="rating_bar_yellow_color">#ecd249</color>
+
+
+    <color name="notification_bg_color">#607D8B</color>
+
+    <color name="gray">#808080</color>
+    <color name="selectcolor">#80b7e1fc</color>
+    <item name="transparentGray" type="color">#80ACACAC</item>
+    <color name="transparent">#00000000</color>
+    <color name="chat_background_color">#D0DAFC</color>
+    <color name="light_gray">#D3D3D3</color>
+    <color name="white_semi_trans">#E6ffffff</color>
+    <color name="notification_bg">#617E8C</color>
+
+    <!--Updater colors starts-->
+    <color name="mah_android_upd_window_background_color">#FFFFFFFF</color>
+    <color name="mah_android_upd_title_bar_color">@color/colorRed</color>
+    <color name="mah_android_upd_info_txt_color">@color/black</color>
+
+    <color name="mah_android_upd_restricter_dlg_btn_pressed_color">#a33F51B5</color>
+    <color name="mah_android_upd_restricter_dlg_btn_dark_state_color">@color/colorRed</color>
+    <color name="mah_android_upd_restricter_dlg_btn_light_state_color">@color/white</color>
+
+    <color name="mah_android_upd_upd_dlg_btn_text_color">#ffFF4081</color>
+    <!--Updater colors ends-->
+
+
 </resources>

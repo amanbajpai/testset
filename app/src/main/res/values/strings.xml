@@ -1,3 +1,26 @@
 <resources>
-    <string name="app_name">KeyKeepSample</string>
+    <string name="app_name">KeyKeep</string>
+
+    <array name="drawer_menu_titles">
+        <item>Home</item><!--0-->
+        <item>My Bookings</item><!--1-->
+        <item>My Payments</item><!--2-->
+        <item>My Account</item><!--3-->
+        <item>How it Works</item><!--4-->
+        <item>About Us</item><!--5-->
+        <item>FeedBack</item><!--6-->
+        <item>Support</item><!--7-->
+        <item>Legals</item><!--8-->
+        <item>Safety and Trust</item><!--9-->
+        <item>Share</item><!--10-->
+        <item>Rate Us</item><!--11-->
+
+        <item>&#160;</item><!--12-->
+        <item>Logout</item><!--13-->
+    </array>
+
+    <string name="drawer_open">Drawer open</string>
+    <string name="drawer_close">Drawer closed</string>
+
+
 </resources>

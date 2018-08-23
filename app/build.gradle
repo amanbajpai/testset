@@ -3,6 +3,9 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion androidCompileSdkVersion
     defaultConfig {
+
+        flavorDimensions "default"
+
         applicationId "com.keykeep.app"
         minSdkVersion androidMinSdkVersion
         targetSdkVersion androidTargetSdkVersion
@@ -20,13 +23,30 @@ android {
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }
+
+    productFlavors {
+        //new Flavor url
+        CDN {
+            buildConfigField "String", "BASE_URL", '"http://52.65.255.9/application/api/"'
+            buildConfigField "String", "BASE_URL_WEB", '"http://dininginn.com.au/application/admin/"'
+            buildConfigField "String", "NODE_URL", '"http://52.65.255.9"'
+            buildConfigField "String", "PORT", '"9000"'
+        }
+    }
+
 }
+
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:0.5'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
+    implementation 'com.android.support:multidex:1.0.2'
+    implementation('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
+        transitive = true;
+    }
     implementation rootProject.ext.androidSupport.supportLibrary
     implementation rootProject.ext.dataDependency.sdpLibrary
     implementation rootProject.ext.androidSupport.design
@@ -39,4 +59,11 @@ dependencies {
     implementation  rootProject.ext.dataDependency.lifeCycle
     annotationProcessor rootProject.ext.dataDependency.lifeCycleCompiler
 
+    implementation rootProject.ext.dataDependency.xrecyclerview
+    implementation rootProject.ext.dataDependency.circularImageView
+    implementation rootProject.ext.androidSupport.cardView
+    implementation rootProject.ext.androidSupport.designSuppport
+    implementation rootProject.ext.dataDependency.loaderAnimationView
+
 }
+
