@@ -25,6 +25,14 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
      */
     public abstract void initializeViews();
 
+
+    /**
+     * init custom action bar override it on need
+     */
+    public void setCustomActionBar(){
+
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +65,6 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
     protected void onResume() {
         super.onResume();
         KeyKeepApplication.activityResumed();
-
     }
 
     @Override
