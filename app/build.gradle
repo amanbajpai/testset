@@ -30,4 +30,13 @@ dependencies {
     implementation rootProject.ext.androidSupport.supportLibrary
     implementation rootProject.ext.dataDependency.sdpLibrary
     implementation rootProject.ext.androidSupport.design
+
+    // Room components
+    implementation rootProject.ext.dataDependency.roomRuntime
+    annotationProcessor rootProject.ext.dataDependency.roomCompiler
+
+    // Lifecycle components
+    implementation  rootProject.ext.dataDependency.lifeCycle
+    annotationProcessor rootProject.ext.dataDependency.lifeCycleCompiler
+
 }

@@ -73,6 +73,7 @@ public class CustomActionBar {
                 }
             });
         }
+
         if (show_left) {
             right_iv.setVisibility(View.VISIBLE);
             right_iv.setOnClickListener(new View.OnClickListener() {

@@ -1,14 +1,13 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    
+
     repositories {
         google()
         jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
-        
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -34,19 +33,23 @@ ext {
 
 
     supportLibraryVersion = '27.1.1'
-    sdpVersion ='1.0.5'
+    sdpVersion = '1.0.5'
 
     //room version
     roomVersion = '1.1.1'
     archLifecycleVersion = '1.1.1'
 
     dataDependency = [
-          sdpLibrary :  "com.intuit.sdp:sdp-android:${sdpVersion}"
+            sdpLibrary       : "com.intuit.sdp:sdp-android:${sdpVersion}",
+            roomRuntime      : "android.arch.persistence.room:runtime:$rootProject.roomVersion",
+            roomCompiler     : "android.arch.persistence.room:compiler:$rootProject.roomVersion",
+            lifeCycle        : "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion",
+            lifeCycleCompiler: "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
     ]
 
-    androidSupport =[
+    androidSupport = [
             supportLibrary: "com.android.support:appcompat-v7:${supportLibraryVersion}",
-            design :"com.android.support:design:${supportLibraryVersion}"
+            design        : "com.android.support:design:${supportLibraryVersion}"
     ]
 
 }
