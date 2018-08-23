@@ -14,14 +14,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.keykeep.app.R;
 import com.keykeep.app.model.LeftMenuDrawerItems;
-import com.keykeep.app.model.MultiSelectListItem;
 import com.keykeep.app.utils.Connectivity;
 import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.adapter.LeftDrawerListAdapter;
@@ -39,10 +36,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.OnItemClickListener {
 
-    Context context;
-    RelativeLayout searchRelativelayout;
-    LinearLayout seachlayout;
-    DrawerLayout mDrawerLayout;
+    private Context context;
+    private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private List<LeftMenuDrawerItems> leftMenuDrawerItemses = new ArrayList<>();
     private XRecyclerView recyclerView;
@@ -52,15 +47,11 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
     int previousPosition = -1;
     Toolbar toolbar;
     CircleImageView profilePic;
-    StyledTextView userNameTv, contactNoTv, anywhwreTv, antyTimeTv, guestTv, cusineTv;
-    private List<MultiSelectListItem> selectedListCusineItems = new ArrayList<>();
-    List<MultiSelectListItem> cuisineChecked = new ArrayList<>();
+    StyledTextView userNameTv, contactNoTv;
     private Fragment fragment;
     public ImageView notificationBellIv;
-    StyledTextView notificationCountTv;
     public TextView title_tv;
     private static boolean activityVisible;
-    private boolean isActivityRunning = false;
 
 
     @Override
@@ -68,8 +59,6 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_layout);
-        isActivityRunning = true;
-
         initializeViews();
         setupDrawer();
         setView();
@@ -88,25 +77,14 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
 
             context = HomeActivity.this;
             drawerView = findViewById(R.id.left_drawer);
-//          scrollView = (ScrollView) findViewById(R.id.left_drawer_scroll_layout);
             mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
             toolbar = (Toolbar) findViewById(R.id.home_layout_toolbar);
-//          toolbar.setContentInsetsAbsolute(0, 0);
-//          toolbar.setPadding(0, 0, 0, 0);
             title_tv = (TextView) findViewById(R.id.title_tv);
             recyclerView = (XRecyclerView) findViewById(R.id.recycler_view);
             recyclerView.setLoadingMoreEnabled(false);
             recyclerView.setPullRefreshEnabled(false);
-
             View leftDrawerHeader = View.inflate(context, R.layout.left_drawer_header, null);
             recyclerView.addHeaderView(leftDrawerHeader);
-            profilePic = (CircleImageView) leftDrawerHeader.findViewById(R.id.leftDrawer_profile_imageView);
-            userNameTv = (StyledTextView) leftDrawerHeader.findViewById(R.id.leftDrawer_profileName_text);
-            contactNoTv = (StyledTextView) leftDrawerHeader.findViewById(R.id.left_drawerNumber_text);
-            notificationBellIv.setOnClickListener(this);
-
-            searchRelativelayout.setOnClickListener(this);
-            seachlayout.setOnClickListener(this);
             leftDrawerListAdapter = new LeftDrawerListAdapter(HomeActivity.this, leftMenuDrawerItemses);
             leftDrawerListAdapter.setOnItemClickListener(this);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -222,7 +200,6 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
     @Override
     protected void onStop() {
         super.onStop();
-        isActivityRunning = false;
     }
 
     @Override
@@ -336,7 +313,6 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
     public void setMyActionBar(Fragment fragment) {
         try {
             if (fragment instanceof HomeFragment) {
-                searchRelativelayout.setVisibility(View.GONE);
                 title_tv.setVisibility(View.VISIBLE);
                 setDrawerHover(3);
                 title_tv.setText(("Home"));

@@ -12,7 +12,7 @@
 
         <activity
             android:name=".views.activity.SplashActivity"
-            android:theme="@style/NoActionBar">
+            android:theme="@style/NoActionbarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -21,7 +21,11 @@
 
         <activity android:name="com.keykeep.app.views.activity.LoginActivity"></activity>
 
-        <activity android:name="com.keykeep.app.views.activity.HomeActivity"></activity>
+        <activity
+            android:name="com.keykeep.app.views.activity.HomeActivity"
+            android:theme="@style/NoActionbarTheme">
+
+        </activity>
 
     </application>
 
