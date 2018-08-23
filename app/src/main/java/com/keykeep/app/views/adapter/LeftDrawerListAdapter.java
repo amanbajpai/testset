@@ -89,8 +89,6 @@ public class LeftDrawerListAdapter extends RecyclerView.Adapter<LeftDrawerListAd
             }
         });
 
-//        }
-
     }
 
     @Override

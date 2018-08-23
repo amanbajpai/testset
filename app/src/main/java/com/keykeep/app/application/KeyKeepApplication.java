@@ -8,12 +8,10 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.multidex.MultiDexApplication;
 
-import com.crashlytics.android.Crashlytics;
 import com.keykeep.app.BuildConfig;
 
 import java.lang.reflect.Method;
 
-import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by ankurrawal on 22/8/18.
@@ -67,7 +65,7 @@ public class KeyKeepApplication extends MultiDexApplication {
     private void instantiateFabric() {
         try {
             if (!BuildConfig.DEBUG) {
-                Fabric.with(this, new Crashlytics());
+//                Fabric.with(this, new Crashlytics());
             }
 
         } catch (Exception ex) {

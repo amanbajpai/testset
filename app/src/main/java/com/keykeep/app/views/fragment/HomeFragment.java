@@ -6,13 +6,10 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.keykeep.app.R;
 
 public class HomeFragment extends BaseFragment {
 
-
-    public static final String EVENT_LIST = "event_list";
     View rootView;
     private Context context;
 
@@ -26,10 +23,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void initializeViews(View rootView) {
-
         context = getActivity();
-
-
     }
 
 

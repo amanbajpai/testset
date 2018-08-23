@@ -15,7 +15,6 @@ import com.keykeep.app.views.custom_view.CustomActionBar;
  */
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-
     private TextView tvLogin;
 
     @Override
@@ -28,6 +27,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void initView() {
         tvLogin = (TextView) findViewById(R.id.tv_login);
+        tvLogin.setOnClickListener(this);
     }
 
     /**
