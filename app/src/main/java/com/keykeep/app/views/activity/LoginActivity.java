@@ -13,27 +13,28 @@ import com.keykeep.app.views.custom_view.CustomActionBar;
 /**
  * Created by akshaydashore on 22/8/18
  */
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends BaseActivity {
 
     private TextView tvLogin;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
         setCustomActionBar();
-        initView();
+        initializeViews();
     }
 
-    private void initView() {
+    @Override
+    public void initializeViews() {
         tvLogin = (TextView) findViewById(R.id.tv_login);
         tvLogin.setOnClickListener(this);
     }
 
-    /**
-     * set Custom tool bar
-     */
-    private void setCustomActionBar() {
+    @Override
+    public void setCustomActionBar() {
+        super.setCustomActionBar();
         CustomActionBar customActionBar = new CustomActionBar(this);
         customActionBar.setActionbar("Login", false, false, this);
     }

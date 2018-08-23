@@ -19,7 +19,7 @@
             android:layout_width="@dimen/_35sdp"
             android:layout_height="@dimen/_35sdp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_4sdp"
             android:gravity="center"
             android:visibility="invisible"
             android:src="@drawable/ic_back"
