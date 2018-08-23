@@ -9,7 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".views.activity.SplashActivity"
             android:theme="@style/NoActionbarTheme">
@@ -19,7 +18,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.keykeep.app.views.activity.LoginActivity"></activity>
+        <activity android:name="com.keykeep.app.views.activity.LoginActivity"/>
 
         <activity
             android:name="com.keykeep.app.views.activity.HomeActivity"

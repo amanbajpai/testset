@@ -46,8 +46,12 @@ ext {
             sdpLibrary         : "com.intuit.sdp:sdp-android:${sdpVersion}",
             xrecyclerview      : "com.jcodecraeer:xrecyclerview:${xRecyclerViewVersion}",
             circularImageView  : "de.hdodenhof:circleimageview:${circularImageViewVersion}",
-            loaderAnimationView: "com.wang.avi:library:${loaderAnimViewVersion}"
+            loaderAnimationView: "com.wang.avi:library:${loaderAnimViewVersion}",
 
+            roomRuntime      : "android.arch.persistence.room:runtime:$rootProject.roomVersion",
+            roomCompiler     : "android.arch.persistence.room:compiler:$rootProject.roomVersion",
+            lifeCycle        : "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion",
+            lifeCycleCompiler: "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
     ]
 
     androidSupport = [

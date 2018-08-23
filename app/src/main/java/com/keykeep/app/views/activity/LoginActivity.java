@@ -15,7 +15,6 @@ import com.keykeep.app.views.custom_view.CustomActionBar;
  */
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-
     private TextView tvLogin;
 
     @Override

@@ -62,6 +62,8 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
         initializeViews();
         setupDrawer();
         setView();
+        Utils.replaceFragment(HomeActivity.this, new HomeFragment());
+
     }
 
 
@@ -94,11 +96,9 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
             prepareMenuItemList();
             setDrawerHover(0);
 
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
     }
 
 
