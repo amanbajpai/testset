@@ -53,7 +53,7 @@ public class Connectivity {
     public static boolean isConnectedWifi(Context context) {
         NetworkInfo info = Connectivity.getNetworkInfo(context);
         return (info != null && info.isConnected() && info.getType() == ConnectivityManager.TYPE_WIFI);
-    }
+    }//
 
     /**
      * Check if there is any connectivity to a mobile network
