@@ -17,7 +17,7 @@
         app:indicatorColor="@color/loader_color"
         app:indicatorName="BallClipRotateMultipleIndicator" />
 
-    <com.dininginn.guest.widget.StyledTextView
+    <com.keykeep.app.views.custom_view.StyledTextView
         android:id="@+id/loader_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
