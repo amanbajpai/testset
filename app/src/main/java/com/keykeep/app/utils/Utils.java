@@ -287,7 +287,7 @@ public class Utils {
     }
 
 
-    public static boolean onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public static boolean onRequestPermissionsResult(String[] permissions, int[] grantResults) {
         try {
             for (int i = 0; i < grantResults.length; i++) {
                 if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {

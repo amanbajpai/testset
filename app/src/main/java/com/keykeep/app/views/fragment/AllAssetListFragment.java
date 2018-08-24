@@ -20,7 +20,6 @@ import com.keykeep.app.views.adapter.AssetAdapter;
 
 public class AllAssetListFragment extends BaseFragment {
 
-
     private Context context;
 
     @Override

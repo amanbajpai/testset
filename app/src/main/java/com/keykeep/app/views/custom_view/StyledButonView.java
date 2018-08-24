@@ -17,8 +17,8 @@ import com.keykeep.app.R;
 public class StyledButonView extends android.support.v7.widget.AppCompatButton {
 
     private final String TAG = "StyledTextView";
-    //    private final String DEFAULT_FONT = "roboto_regular.ttf";
-    private final String DEFAULT_FONT = "helvetica.ttf";
+        private final String DEFAULT_FONT = "roboto_regular.ttf";
+//    private final String DEFAULT_FONT = "helvetica.ttf";
 
     public StyledButonView(Context context) {
         super(context);

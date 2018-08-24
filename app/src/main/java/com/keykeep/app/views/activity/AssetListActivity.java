@@ -100,10 +100,8 @@ public class AssetListActivity extends BaseActivity {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
-
     }
 
     @Override

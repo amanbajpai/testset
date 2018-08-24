@@ -63,6 +63,7 @@ dependencies {
     implementation rootProject.ext.androidSupport.cardView
     implementation rootProject.ext.androidSupport.designSuppport
     implementation rootProject.ext.dataDependency.loaderAnimationView
+    implementation rootProject.ext.dataDependency.qrCodeScanner
 
 }
 

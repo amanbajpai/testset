@@ -41,6 +41,7 @@ ext {
     //room version
     roomVersion = '1.1.1'
     archLifecycleVersion = '1.1.1'
+    qrCodeVersion = '3.3.0'
 
     dataDependency = [
             sdpLibrary         : "com.intuit.sdp:sdp-android:${sdpVersion}",
@@ -48,10 +49,11 @@ ext {
             circularImageView  : "de.hdodenhof:circleimageview:${circularImageViewVersion}",
             loaderAnimationView: "com.wang.avi:library:${loaderAnimViewVersion}",
 
-            roomRuntime      : "android.arch.persistence.room:runtime:$rootProject.roomVersion",
-            roomCompiler     : "android.arch.persistence.room:compiler:$rootProject.roomVersion",
-            lifeCycle        : "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion",
-            lifeCycleCompiler: "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
+            roomRuntime        : "android.arch.persistence.room:runtime:$rootProject.roomVersion",
+            roomCompiler       : "android.arch.persistence.room:compiler:$rootProject.roomVersion",
+            lifeCycle          : "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion",
+            lifeCycleCompiler  : "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion",
+            qrCodeScanner      : "com.google.zxing:core:$rootProject.qrCodeVersion"
     ]
 
     androidSupport = [
