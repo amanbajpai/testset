@@ -1,4 +1,4 @@
-package com.keykeep.app.views.activity;
+package com.keykeep.app.views.activity.assetDetail;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

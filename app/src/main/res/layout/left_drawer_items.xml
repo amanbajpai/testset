@@ -1,44 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rootLayout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.keykeep.app.views.activity.home.HomeViewModel" />
+    </data>
 
     <LinearLayout
+        android:id="@+id/rootLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/_10sdp">
+        android:background="@color/white"
+        android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_gravity="center">
 
-            <ImageView
-                android:id="@+id/left_drawer_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true" />
-
-        </RelativeLayout>
-
-        <com.keykeep.app.views.custom_view.StyledTextView
-            android:id="@+id/leftDrawerTxt"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/_8sdp"
-            android:gravity="center_vertical"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_9sdp" />
-    </LinearLayout>
+            android:orientation="horizontal"
+            android:padding="@dimen/_10sdp">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_1sdp"
-        android:background="@color/grayseperator" />
-</LinearLayout>
+            <RelativeLayout
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:id="@+id/left_drawer_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true" />
+
+            </RelativeLayout>
+
+            <com.keykeep.app.views.custom_view.StyledTextView
+                android:id="@+id/leftDrawerTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_9sdp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/grayseperator" />
+    </LinearLayout>
+</layout>

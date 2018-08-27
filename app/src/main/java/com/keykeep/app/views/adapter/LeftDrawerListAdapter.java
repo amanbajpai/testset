@@ -1,6 +1,8 @@
 package com.keykeep.app.views.adapter;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,31 +12,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.keykeep.app.R;
+import com.keykeep.app.databinding.LeftDrawerItemsBinding;
 import com.keykeep.app.model.LeftMenuDrawerItems;
 
 import java.util.List;
 
 /**
  */
-public class LeftDrawerListAdapter extends RecyclerView.Adapter<LeftDrawerListAdapter.MyViewHolder> {
+public class LeftDrawerListAdapter extends RecyclerView.Adapter<LeftDrawerListAdapter.BindingHolder> {
 
     Context context;
     private List<LeftMenuDrawerItems> leftDrawerMenuList;
     OnItemClickListener onItemClickListener;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView leftMenuTxt;
-        LinearLayout rootLayout;
-        ImageView menuIcon;
-
-        public MyViewHolder(View view) {
-            super(view);
-            leftMenuTxt = (TextView) view.findViewById(R.id.leftDrawerTxt);
-            rootLayout = (LinearLayout) view.findViewById(R.id.rootLayout);
-            menuIcon = (ImageView) view.findViewById(R.id.left_drawer_iv);
-        }
-    }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
@@ -48,41 +38,43 @@ public class LeftDrawerListAdapter extends RecyclerView.Adapter<LeftDrawerListAd
 
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.left_drawer_items, parent, false);
+    public BindingHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LeftDrawerItemsBinding commentsHeaderBinding = DataBindingUtil.inflate(
+                LayoutInflater.from(parent.getContext()),
+                R.layout.left_drawer_items,
+                parent,
+                false);
 
-        return new MyViewHolder(itemView);
+        return new BindingHolder(commentsHeaderBinding);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
+    public void onBindViewHolder(BindingHolder holder, final int position) {
 
         LeftMenuDrawerItems leftMenuDrawerItems = leftDrawerMenuList.get(position);
 
-//        if (position != leftDrawerMenuList.size() - 2) {
-
-        holder.leftMenuTxt.setText(leftMenuDrawerItems.getTitle());
+        holder.binding.leftDrawerTxt.setText(leftMenuDrawerItems.getTitle());
 
         if (leftDrawerMenuList.get(position).isMenuIsSelected()) {
 
-            holder.leftMenuTxt.setTextColor(context.getResources().getColor(R.color.white));
-            holder.rootLayout.setBackgroundColor(context.getResources().getColor(R.color.grayseperator));
-            holder.menuIcon.setImageResource(leftDrawerMenuList.get(position).getSelectedIcon());
+            holder.binding.leftDrawerTxt.setTextColor(context.getResources().getColor(R.color.white));
+            holder.binding.rootLayout.setBackgroundColor(context.getResources().getColor(R.color.grayseperator));
+            holder.binding.leftDrawerIv.setImageResource(leftDrawerMenuList.get(position).getSelectedIcon());
         } else {
 
-            holder.leftMenuTxt.setTextColor(context.getResources().getColor(R.color.black));
-            holder.rootLayout.setBackgroundColor(context.getResources().getColor(R.color.white));
-            holder.menuIcon.setImageResource(leftDrawerMenuList.get(position).getDeSelectedIcon());
+            holder.binding.leftDrawerTxt.setTextColor(context.getResources().getColor(R.color.black));
+            holder.binding.rootLayout.setBackgroundColor(context.getResources().getColor(R.color.white));
+            holder.binding.leftDrawerIv.setImageResource(leftDrawerMenuList.get(position).getDeSelectedIcon());
         }
 
-        holder.rootLayout.setOnClickListener(new View.OnClickListener() {
+        holder.binding.rootLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onItemClickListener.onItemClick(position);
             }
         });
-        holder.leftMenuTxt.setOnClickListener(new View.OnClickListener() {
+
+        holder.binding.leftDrawerTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onItemClickListener.onItemClick(position);
@@ -99,4 +91,29 @@ public class LeftDrawerListAdapter extends RecyclerView.Adapter<LeftDrawerListAd
     public interface OnItemClickListener {
         void onItemClick(int position);
     }
+
+
+    public static class BindingHolder extends RecyclerView.ViewHolder {
+        private LeftDrawerItemsBinding binding;
+
+        public BindingHolder(LeftDrawerItemsBinding binding) {
+            super(binding.rootLayout);
+            this.binding = binding;
+        }
+    }
+
+
+//    public class MyViewHolder extends RecyclerView.ViewHolder {
+//
+//        public TextView leftMenuTxt;
+//        LinearLayout rootLayout;
+//        ImageView menuIcon;
+//
+//        public MyViewHolder(View view) {
+//            super(view);
+//            leftMenuTxt = (TextView) view.findViewById(R.id.leftDrawerTxt);
+//            rootLayout = (LinearLayout) view.findViewById(R.id.rootLayout);
+//            menuIcon = (ImageView) view.findViewById(R.id.left_drawer_iv);
+//        }
+//    }
 }

@@ -1,19 +1,18 @@
-package com.keykeep.app.views.activity.login;
+package com.keykeep.app.views.activity.forgot_password;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.ViewModel;
 import android.content.Context;
 
-import com.keykeep.app.R;
 import com.keykeep.app.interfaces.DialogClickListener;
 import com.keykeep.app.netcom.Keys;
 import com.keykeep.app.utils.Utils;
-import com.keykeep.app.views.base.BaseViewMadel;
 
 /**
- * Created by akshaydashore on 24/8/18
+ * Created by akshaydashore on 27/8/18
  */
-public class LoginViewModel extends BaseViewMadel implements DialogClickListener {
-
+public class ForgotViewModel extends ViewModel implements DialogClickListener{
 
     public final MutableLiveData<Integer> validator = new MutableLiveData<>();
 
@@ -30,18 +29,8 @@ public class LoginViewModel extends BaseViewMadel implements DialogClickListener
         return true;
     }
 
-    public boolean checkPassword(String text) {
-
-        if (Utils.isStringsEmpty(text)) {
-            validator.setValue(Keys.empty_password);
-            return false;
-        }
-        return true;
-    }
-
     @Override
     public void onDialogClick(int which, int requestCode) {
 
     }
-
 }

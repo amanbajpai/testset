@@ -76,6 +76,7 @@
                     android:hint="@string/password">
 
                     <com.keykeep.app.views.custom_view.StyledEditText
+                        android:id="@+id/et_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_2sdp"
@@ -95,6 +96,7 @@
                     android:layout_marginTop="@dimen/_15sdp">
 
                     <com.keykeep.app.views.custom_view.StyledTextView
+                        android:id="@+id/tv_forgot_password"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
@@ -114,7 +116,7 @@
                         android:paddingRight="@dimen/_30sdp"
                         android:paddingTop="@dimen/_5sdp"
                         android:text="@string/login"
-                        android:textColor="@color/text_green"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_14sdp" />
                 </RelativeLayout>
 

@@ -47,18 +47,15 @@ public class KeyKeepApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-
         try {
 
             instance = this;
             enableStricMode();
             instantiateFabric();
 
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
 
     }
 
