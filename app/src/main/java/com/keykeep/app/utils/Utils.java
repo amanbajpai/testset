@@ -45,9 +45,9 @@ import com.keykeep.app.BuildConfig;
 import com.keykeep.app.R;
 import com.keykeep.app.interfaces.ConstantsLib;
 import com.keykeep.app.interfaces.DialogClickListener;
-import com.keykeep.app.utils.ui.CustomProgressDialog;
+import com.keykeep.app.views.custom_view.CustomProgressDialog;
 import com.keykeep.app.views.base.BaseActivity;
-import com.keykeep.app.views.activity.HomeActivity;
+import com.keykeep.app.views.activity.home.HomeActivity;
 import com.keykeep.app.views.fragment.HomeFragment;
 
 import org.json.JSONArray;
@@ -74,6 +74,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class Utils {
@@ -87,6 +89,16 @@ public class Utils {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    public static boolean isValideEmail(String email)
+    {
+        Pattern pattern;
+        Matcher matcher;
+        final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        pattern = Pattern.compile(EMAIL_PATTERN);
+        matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 
 

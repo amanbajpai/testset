@@ -1,49 +1,45 @@
-package com.keykeep.app.views.activity.login;
+package com.keykeep.app.views.activity.forgot_password;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.keykeep.app.R;
-import com.keykeep.app.databinding.LoginActivityBinding;
+import com.keykeep.app.databinding.ActivityForgotPasswordBinding;
 import com.keykeep.app.netcom.Keys;
 import com.keykeep.app.utils.Utils;
-import com.keykeep.app.views.activity.home.HomeActivity;
-import com.keykeep.app.views.activity.forgot_password.ForgotPasswordActivity;
+import com.keykeep.app.views.activity.login.LoginViewModel;
 import com.keykeep.app.views.base.BaseActivity;
 
 /**
- * Created by akshaydashore on 22/8/18
+ * Created by akshaydashore on 27/8/18
  */
-public class LoginActivity extends BaseActivity {
+public class ForgotPasswordActivity extends BaseActivity {
 
-    private LoginActivityBinding binding;
-    LoginViewModel viewModel;
+    ActivityForgotPasswordBinding binding;
+    ForgotViewModel viewModel;
     private Context context;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = this;
         initializeViews();
+        context = this;
     }
 
     @Override
     public void initializeViews() {
 
-        binding = DataBindingUtil.setContentView(this, R.layout.login_activity);
-        binding.tvLogin.setOnClickListener(this);
-        binding.tvForgotPassword.setOnClickListener(this);
-        viewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_forgot_password);
+        binding.tvSubmit.setOnClickListener(this);
+        viewModel = ViewModelProviders.of(this).get(ForgotViewModel.class);
         binding.setViewModel(viewModel);
         viewModel.validator.observe(this, observer);
     }
-
 
     Observer observer = new Observer<Integer>() {
 
@@ -59,10 +55,6 @@ public class LoginActivity extends BaseActivity {
                     Utils.showAlert(context, getString(R.string.error), getString(R.string.enter_password), "ok", "", Keys.dialogOkClick, viewModel);
                     break;
 
-                case Keys.invalid_mail:
-                    Utils.showAlert(context, getString(R.string.error), getString(R.string.enter_valid_employeeid), "ok", "", Keys.dialogOkClick, viewModel);
-                    break;
-
             }
         }
     };
@@ -71,19 +63,12 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.tv_login:
-                if (viewModel.checkEmail(binding.etMail.getText().toString())
-                        && viewModel.checkPassword(binding.etPassword.getText().toString())) {
-                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+            case R.id.tv_submit:
+                if (viewModel.checkEmail(binding.etMail.getText().toString())) {
                     finish();
                 }
                 break;
-
-            case R.id.tv_forgot_password:
-                startActivity(new Intent(context, ForgotPasswordActivity.class));
-                break;
         }
     }
-
 
 }

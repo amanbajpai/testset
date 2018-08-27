@@ -39,10 +39,7 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//            window.setStatusBarColor(this.getResources().getColor(R.color.dark_gray_color));
-            window.setStatusBarColor(this.getResources().getColor(R.color.colorRed));
         }
     }
 

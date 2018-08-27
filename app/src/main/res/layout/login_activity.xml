@@ -33,7 +33,7 @@
                 android:orientation="vertical">
 
 
-                <com.keykeep.app.views.custom_view.StyledTextViewLight
+                <com.keykeep.app.views.custom_view.StyledTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -55,7 +55,7 @@
                     android:hint="Employe Id"
                     android:textSize="@dimen/_13sdp">
 
-                    <com.keykeep.app.views.custom_view.StyledEditTextView
+                    <com.keykeep.app.views.custom_view.StyledEditText
                         android:id="@+id/et_mail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -75,7 +75,8 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:hint="@string/password">
 
-                    <com.keykeep.app.views.custom_view.StyledEditTextView
+                    <com.keykeep.app.views.custom_view.StyledEditText
+                        android:id="@+id/et_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_2sdp"
@@ -94,7 +95,8 @@
                     android:layout_marginRight="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_15sdp">
 
-                    <com.keykeep.app.views.custom_view.StyledTextViewLight
+                    <com.keykeep.app.views.custom_view.StyledTextView
+                        android:id="@+id/tv_forgot_password"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
@@ -103,7 +105,7 @@
                         android:textColor="@color/text_gray"
                         android:textSize="@dimen/_14sdp" />
 
-                    <com.keykeep.app.views.custom_view.StyledTextViewLight
+                    <com.keykeep.app.views.custom_view.StyledTextView
                         android:id="@+id/tv_login"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -114,7 +116,7 @@
                         android:paddingRight="@dimen/_30sdp"
                         android:paddingTop="@dimen/_5sdp"
                         android:text="@string/login"
-                        android:textColor="@color/text_green"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_14sdp" />
                 </RelativeLayout>
 

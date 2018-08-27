@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.keykeep.app.R;
-import com.keykeep.app.views.activity.AssetDetailActivity;
+import com.keykeep.app.views.activity.assetDetail.AssetDetailActivity;
 
 /**
  * Created by akshaydashore on 23/8/18

@@ -41,6 +41,10 @@
     <string name="login">Login</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="password">Password</string>
+    <string name="enter_employeeid">Please enter employeeId</string>
+    <string name="enter_password">Enter password</string>
+    <string name="enter_valid_employeeid">Please enter valide mailId</string>
+    <string name="error">Error</string>
 
 
 </resources>
