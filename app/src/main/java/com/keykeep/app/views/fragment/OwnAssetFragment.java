@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.keykeep.app.R;
 import com.keykeep.app.views.adapter.AssetAdapter;
+import com.keykeep.app.views.base.BaseFragment;
 
 /**
  * Created by akshaydashore on 23/8/18

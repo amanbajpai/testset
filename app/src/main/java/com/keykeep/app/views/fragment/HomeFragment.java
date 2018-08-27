@@ -1,16 +1,13 @@
 package com.keykeep.app.views.fragment;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +18,7 @@ import com.keykeep.app.qrcodescanner.QrCodeActivity;
 import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.activity.AssetListActivity;
+import com.keykeep.app.views.base.BaseFragment;
 
 public class HomeFragment extends BaseFragment {
 
@@ -71,7 +69,7 @@ public class HomeFragment extends BaseFragment {
                 if (Utils.checkPermissions(getActivity(), AppUtils.CAMERA_PERMISSION)) {
                     startActivityForResult(new Intent(context, QrCodeActivity.class), AppUtils.REQUEST_CODE_QR_SCAN);
                 } else {
-                    requestPermissions(new String[]{AppUtils.CAMERA_PERMISSION}, AppUtils.REQUEST_CODE_CAMERA);
+                    requestPermissions(AppUtils.STORAGE_CAMERA_PERMISSIONS, AppUtils.REQUEST_CODE_CAMERA);
                 }
                 break;
 
@@ -107,7 +105,7 @@ public class HomeFragment extends BaseFragment {
             if (data == null)
                 return;
             //Getting the passed result
-            String result = data.getStringExtra("com.blikoon.qrcodescanner.error_decoding_image");
+            String result = data.getStringExtra(AppUtils.SCAN_FAIL);
             if (result != null) {
                 AlertDialog alertDialog = new AlertDialog.Builder(context).create();
                 alertDialog.setTitle("Scan Error");
@@ -127,7 +125,7 @@ public class HomeFragment extends BaseFragment {
             if (data == null)
                 return;
             //Getting the passed result
-            String result = data.getStringExtra("com.blikoon.qrcodescanner.got_qr_scan_relult");
+            String result = data.getStringExtra(AppUtils.SCAN_SUCCESS);
             AlertDialog alertDialog = new AlertDialog.Builder(context).create();
             alertDialog.setTitle("Scan result");
             alertDialog.setMessage(result);

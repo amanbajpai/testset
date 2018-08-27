@@ -17,7 +17,7 @@
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp">
 
-            <TextView
+            <com.keykeep.app.views.custom_view.StyledTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Asset Name :"
@@ -25,7 +25,7 @@
                 android:textSize="@dimen/_13sdp"
                 android:textStyle="bold" />
 
-            <TextView
+            <com.keykeep.app.views.custom_view.StyledTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -42,7 +42,7 @@
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp">
 
-            <TextView
+            <com.keykeep.app.views.custom_view.StyledTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Model No."
@@ -50,7 +50,7 @@
                 android:textSize="@dimen/_13sdp"
                 android:textStyle="bold" />
 
-            <TextView
+            <com.keykeep.app.views.custom_view.StyledTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -66,7 +66,7 @@
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp">
 
-            <TextView
+            <com.keykeep.app.views.custom_view.StyledTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Registration :"
@@ -74,7 +74,7 @@
                 android:textSize="@dimen/_13sdp"
                 android:textStyle="bold" />
 
-            <TextView
+            <com.keykeep.app.views.custom_view.StyledTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

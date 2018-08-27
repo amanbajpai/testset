@@ -46,7 +46,7 @@ import com.keykeep.app.R;
 import com.keykeep.app.interfaces.ConstantsLib;
 import com.keykeep.app.interfaces.DialogClickListener;
 import com.keykeep.app.utils.ui.CustomProgressDialog;
-import com.keykeep.app.views.activity.BaseActivity;
+import com.keykeep.app.views.base.BaseActivity;
 import com.keykeep.app.views.activity.HomeActivity;
 import com.keykeep.app.views.fragment.HomeFragment;
 

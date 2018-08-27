@@ -25,16 +25,15 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.keykeep.app.views.activity.LoginActivity" />
+        <activity android:name="com.keykeep.app.views.activity.login.LoginActivity" />
 
         <activity
             android:name="com.keykeep.app.views.activity.HomeActivity"
             android:theme="@style/NoActionbarTheme" />
-
         <activity android:name=".views.activity.AssetListActivity" />
         <activity android:name=".qrcodescanner.QrCodeActivity" />
+        <activity android:name="com.keykeep.app.views.activity.AssetDetailActivity" />
 
 
     </application>
-
 </manifest>
