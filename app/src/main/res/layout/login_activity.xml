@@ -12,15 +12,18 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/green_light"
+        android:background="@drawable/login_back"
         android:orientation="vertical">
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_margin="@dimen/_20sdp"
-            android:elevation="@dimen/_5sdp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/_60sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:elevation="@dimen/_15sdp"
+
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="@dimen/_15sdp">
 
@@ -34,22 +37,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:drawableLeft="@drawable/circle_login"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:drawableLeft="@drawable/login_profile"
+                    android:drawablePadding="@dimen/_10sdp"
                     android:gravity="center_vertical"
                     android:text="Login"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_17sdp" />
 
-                <android.support.design.widget.TextInputLayout
+                <com.keykeep.app.views.custom_view.CustomTextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/image_logo"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:layout_marginRight="@dimen/_20sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:hint="Employe Id">
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:hint="Employe Id"
+                    android:textSize="@dimen/_13sdp">
 
                     <com.keykeep.app.views.custom_view.StyledEditText
                         android:id="@+id/et_mail"
@@ -60,29 +64,27 @@
                         android:textColor="@color/text_gray"
                         android:textSize="@dimen/_14sdp" />
 
-                </android.support.design.widget.TextInputLayout>
+                </com.keykeep.app.views.custom_view.CustomTextInputLayout>
 
 
-                <android.support.design.widget.TextInputLayout
+                <com.keykeep.app.views.custom_view.CustomTextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/image_logo"
-                    android:layout_gravity="center_vertical"
-                    android:hint="Enter Password">
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:hint="@string/password">
 
                     <com.keykeep.app.views.custom_view.StyledEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_2sdp"
-                        android:layout_marginLeft="@dimen/_20sdp"
-                        android:layout_marginRight="@dimen/_20sdp"
                         android:inputType="textPassword"
                         android:maxLength="30"
                         android:singleLine="true"
                         android:textColor="@color/text_gray"
                         android:textSize="@dimen/_15sdp" />
-                </android.support.design.widget.TextInputLayout>
-
+                </com.keykeep.app.views.custom_view.CustomTextInputLayout>
 
 
                 <RelativeLayout
@@ -90,46 +92,44 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:layout_marginRight="@dimen/_20sdp"
-                    android:layout_marginTop="@dimen/_10sdp">
+                    android:layout_marginTop="@dimen/_15sdp">
 
                     <com.keykeep.app.views.custom_view.StyledTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:text="Forgot Password?"
-                        android:textSize="@dimen/_14sdp"
-                        android:textColor="@color/text_gray" />
+                        android:text="@string/forgot_password"
+                        android:textColor="@color/text_gray"
+                        android:textSize="@dimen/_14sdp" />
 
                     <com.keykeep.app.views.custom_view.StyledTextView
                         android:id="@+id/tv_login"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/_20sdp"
                         android:background="@drawable/rect_crop_green_bg"
                         android:paddingBottom="@dimen/_5sdp"
-                        android:paddingLeft="@dimen/_25sdp"
-                        android:onClick="{view->}"
-                        android:paddingRight="@dimen/_25sdp"
+                        android:paddingLeft="@dimen/_30sdp"
+                        android:paddingRight="@dimen/_30sdp"
                         android:paddingTop="@dimen/_5sdp"
-                        android:text="Login"
-                        android:textSize="@dimen/_14sdp"
-                        android:textColor="@color/text_green" />
+                        android:text="@string/login"
+                        android:textColor="@color/text_green"
+                        android:textSize="@dimen/_14sdp" />
                 </RelativeLayout>
 
                 <CheckBox
                     android:id="@+id/remember_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/_20sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_20sdp"
-                    android:checked="true"
                     android:layout_gravity="right"
-                    android:textSize="@dimen/_14sdp"
-                    android:text="Remember Me"
-                    android:textColor="@color/text_gray" />
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:checked="true"
+                    android:text="@string/remember_me"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/_14sdp" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
