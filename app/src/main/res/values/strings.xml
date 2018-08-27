@@ -37,6 +37,10 @@
     <string name="qr_code_could_not_read_qr_code_from_picture">Could not read your image.Try another image~</string>
     <string name="qr_code_could_not_read_qr_code_from_scanner">Sorry, could not open scan content</string>
     <string name="qr_code_camera_not_found">Could not detect camera</string>
+    <string name="remember_me">Remember Me</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="password">Password</string>
 
 
 </resources>

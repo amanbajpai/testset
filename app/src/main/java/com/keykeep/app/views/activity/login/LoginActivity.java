@@ -29,7 +29,6 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         context = this;
         setContentView(R.layout.login_activity);
-        setCustomActionBar();
         initializeViews();
     }
 
@@ -48,13 +47,6 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-    @Override
-    public void setCustomActionBar() {
-
-        super.setCustomActionBar();
-        CustomActionBar customActionBar = new CustomActionBar(this);
-        customActionBar.setActionbar("Login", false, false, this);
-    }
 
     @Override
     public void onClick(View view) {

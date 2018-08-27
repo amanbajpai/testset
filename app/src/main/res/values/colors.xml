@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#253035</color>
-    <color name="colorPrimaryDark">#253035</color>
+    <color name="colorPrimary">#111C6C</color>
+    <color name="colorPrimaryDark">#111C6C</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#ffffff</color>
     <color name="green_light">#697D5D</color>
@@ -78,5 +78,5 @@
     <color name="qr_code_flash_light_text_color">#66FFFFFF</color>
     <color name="qr_code_finder_frame">#FFFFFFFF</color>
     <color name="qr_code_finder_laser">#25f705</color>
-
+    <color name="app_blue">#111C6C</color>
 </resources>
