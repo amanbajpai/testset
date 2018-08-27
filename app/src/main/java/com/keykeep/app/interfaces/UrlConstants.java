@@ -13,7 +13,6 @@ public interface UrlConstants {
 
     String LOGIN_URL = BASE_URL + "socialLogin";
 
-
     int LOGIN_URL_REQUEST_CODE = 1;
 
 }

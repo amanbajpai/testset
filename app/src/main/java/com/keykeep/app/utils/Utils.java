@@ -46,7 +46,7 @@ import com.keykeep.app.R;
 import com.keykeep.app.interfaces.ConstantsLib;
 import com.keykeep.app.interfaces.DialogClickListener;
 import com.keykeep.app.utils.ui.CustomProgressDialog;
-import com.keykeep.app.views.activity.BaseActivity;
+import com.keykeep.app.views.base.BaseActivity;
 import com.keykeep.app.views.activity.HomeActivity;
 import com.keykeep.app.views.fragment.HomeFragment;
 
@@ -287,7 +287,7 @@ public class Utils {
     }
 
 
-    public static boolean onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public static boolean onRequestPermissionsResult(String[] permissions, int[] grantResults) {
         try {
             for (int i = 0; i < grantResults.length; i++) {
                 if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {

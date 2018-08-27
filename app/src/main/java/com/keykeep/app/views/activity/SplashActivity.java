@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import com.keykeep.app.R;
+import com.keykeep.app.views.activity.login.LoginActivity;
 
 
 /**

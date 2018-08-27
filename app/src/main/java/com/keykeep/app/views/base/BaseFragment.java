@@ -1,4 +1,4 @@
-package com.keykeep.app.views.fragment;
+package com.keykeep.app.views.base;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

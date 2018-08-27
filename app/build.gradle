@@ -24,6 +24,9 @@ android {
         sourceCompatibility 1.8
     }
 
+    dataBinding {
+        enabled = true
+    }
     productFlavors {
 
         CDN {
@@ -63,6 +66,7 @@ dependencies {
     implementation rootProject.ext.androidSupport.cardView
     implementation rootProject.ext.androidSupport.designSuppport
     implementation rootProject.ext.dataDependency.loaderAnimationView
+    implementation rootProject.ext.dataDependency.qrCodeScanner
 
 }
 

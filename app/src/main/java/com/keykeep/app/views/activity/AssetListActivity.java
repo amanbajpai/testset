@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 
 import com.keykeep.app.R;
 import com.keykeep.app.views.adapter.AssetPagerAdapter;
+import com.keykeep.app.views.base.BaseActivity;
 import com.keykeep.app.views.custom_view.CustomActionBar;
 import com.keykeep.app.views.fragment.AllAssetListFragment;
 import com.keykeep.app.views.fragment.OwnAssetFragment;
@@ -100,10 +101,8 @@ public class AssetListActivity extends BaseActivity {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
-
     }
 
     @Override
