@@ -30,7 +30,7 @@
                 android:orientation="vertical">
 
 
-                <com.keykeep.app.views.custom_view.StyledTextView
+                <com.keykeep.app.views.custom_view.StyledTextViewLight
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -51,7 +51,7 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:hint="Employe Id">
 
-                    <com.keykeep.app.views.custom_view.StyledEditText
+                    <com.keykeep.app.views.custom_view.StyledEditTextView
                         android:id="@+id/et_mail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
                     android:layout_gravity="center_vertical"
                     android:hint="Enter Password">
 
-                    <com.keykeep.app.views.custom_view.StyledEditText
+                    <com.keykeep.app.views.custom_view.StyledEditTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_2sdp"
@@ -92,7 +92,7 @@
                     android:layout_marginRight="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_10sdp">
 
-                    <com.keykeep.app.views.custom_view.StyledTextView
+                    <com.keykeep.app.views.custom_view.StyledTextViewLight
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
@@ -101,7 +101,7 @@
                         android:textSize="@dimen/_14sdp"
                         android:textColor="@color/text_gray" />
 
-                    <com.keykeep.app.views.custom_view.StyledTextView
+                    <com.keykeep.app.views.custom_view.StyledTextViewLight
                         android:id="@+id/tv_login"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

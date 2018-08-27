@@ -26,7 +26,7 @@
 
         </RelativeLayout>
 
-        <com.keykeep.app.views.custom_view.StyledTextView
+        <com.keykeep.app.views.custom_view.StyledTextViewLight
             android:id="@+id/leftDrawerTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
