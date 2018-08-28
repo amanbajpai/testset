@@ -13,6 +13,7 @@ import com.keykeep.app.R;
 import com.keykeep.app.databinding.LoginActivityBinding;
 import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.utils.Utils;
+import com.keykeep.app.model.bean.LoginBean;
 import com.keykeep.app.views.activity.forgot_password.ForgotPasswordActivity;
 import com.keykeep.app.views.base.BaseActivity;
 
@@ -24,6 +25,7 @@ public class LoginActivity extends BaseActivity {
     private LoginActivityBinding binding;
     LoginViewModel viewModel;
     private Context context;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class LoginActivity extends BaseActivity {
         viewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
         binding.setViewModel(viewModel);
         viewModel.validator.observe(this, observer);
+        viewModel.responce_validator.observe(this, responce_observer);
     }
 
 
@@ -66,6 +69,18 @@ public class LoginActivity extends BaseActivity {
         }
     };
 
+    Observer<LoginBean> responce_observer = new Observer<LoginBean>() {
+
+        @Override
+        public void onChanged(@Nullable LoginBean loginBean) {
+
+            if (loginBean == null){
+                Utils.showAlert(context, getString(R.string.error), getString(R.string.enter_employeeid), "ok", "", AppUtils.dialogOkClick, viewModel);
+            }
+
+        }
+    };
+
 
     @Override
     public void onClick(View view) {
@@ -73,7 +88,7 @@ public class LoginActivity extends BaseActivity {
             case R.id.tv_login:
                 if (viewModel.checkEmail(binding.etMail.getText().toString())
                         && viewModel.checkPassword(binding.etPassword.getText().toString())) {
-                    viewModel.doLogin();
+                    viewModel.doLogin(binding);
 //                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
 //                    finish();
                 }

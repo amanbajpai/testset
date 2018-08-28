@@ -23,7 +23,6 @@
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_20sdp"
             android:elevation="@dimen/_15sdp"
-
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="@dimen/_15sdp">
 

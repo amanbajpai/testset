@@ -4,11 +4,13 @@ import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 
 import com.keykeep.app.R;
+import com.keykeep.app.databinding.LoginActivityBinding;
 import com.keykeep.app.interfaces.DialogClickListener;
 import com.keykeep.app.model.bean.LoginBean;
 import com.keykeep.app.netcom.Keys;
 import com.keykeep.app.netcom.retrofit.RetrofitHolder;
 import com.keykeep.app.utils.AppUtils;
+import com.keykeep.app.utils.LogUtils;
 import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.base.BaseViewMadel;
 
@@ -23,6 +25,7 @@ public class LoginViewModel extends BaseViewMadel implements DialogClickListener
 
 
     public final MutableLiveData<Integer> validator = new MutableLiveData<>();
+    public final MutableLiveData<LoginBean>responce_validator = new MutableLiveData<>();
 
 
     public boolean checkEmail(String text) {
@@ -50,19 +53,22 @@ public class LoginViewModel extends BaseViewMadel implements DialogClickListener
     public void onDialogClick(int which, int requestCode) {
     }
 
-    public void doLogin() {
+    public void doLogin(LoginActivityBinding binding) {
 
-        Call<LoginBean> call = RetrofitHolder.getService().doLogin("", "");
+        String email = binding.etMail.getText().toString();
+        String password = binding.etMail.getText().toString();
+
+        Call<LoginBean> call = RetrofitHolder.getService().doLogin(email, password);
 
         call.enqueue(new Callback<LoginBean>() {
             @Override
             public void onResponse(Call<LoginBean> call, Response<LoginBean> response) {
-
+                responce_validator.setValue(response.body());
             }
 
             @Override
             public void onFailure(Call<LoginBean> call, Throwable t) {
-
+                validator.setValue(AppUtils.SERVER_ERROR);
             }
         });
 
