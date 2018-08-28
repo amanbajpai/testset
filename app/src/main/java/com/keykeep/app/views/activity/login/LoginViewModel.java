@@ -5,9 +5,16 @@ import android.content.Context;
 
 import com.keykeep.app.R;
 import com.keykeep.app.interfaces.DialogClickListener;
+import com.keykeep.app.model.bean.LoginBean;
 import com.keykeep.app.netcom.Keys;
+import com.keykeep.app.netcom.retrofit.RetrofitHolder;
+import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.base.BaseViewMadel;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by akshaydashore on 24/8/18
@@ -21,10 +28,10 @@ public class LoginViewModel extends BaseViewMadel implements DialogClickListener
     public boolean checkEmail(String text) {
 
         if (Utils.isStringsEmpty(text)) {
-            validator.setValue(Keys.empty_id);
+            validator.setValue(AppUtils.empty_id);
             return false;
         } else if (!Utils.isValideEmail(text)) {
-            validator.setValue(Keys.invalid_mail);
+            validator.setValue(AppUtils.invalid_mail);
             return false;
         }
         return true;
@@ -33,7 +40,7 @@ public class LoginViewModel extends BaseViewMadel implements DialogClickListener
     public boolean checkPassword(String text) {
 
         if (Utils.isStringsEmpty(text)) {
-            validator.setValue(Keys.empty_password);
+            validator.setValue(AppUtils.empty_password);
             return false;
         }
         return true;
@@ -41,7 +48,23 @@ public class LoginViewModel extends BaseViewMadel implements DialogClickListener
 
     @Override
     public void onDialogClick(int which, int requestCode) {
-
     }
 
+    public void doLogin() {
+
+        Call<LoginBean> call = RetrofitHolder.getService().doLogin("", "");
+
+        call.enqueue(new Callback<LoginBean>() {
+            @Override
+            public void onResponse(Call<LoginBean> call, Response<LoginBean> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<LoginBean> call, Throwable t) {
+
+            }
+        });
+
+    }
 }

@@ -22,8 +22,23 @@ public interface AppUtils {
 
 
 
-    int REQUEST_CODE_QR_SCAN = 1010;
-    int REQUEST_CODE_CAMERA = 1011;
 
+
+
+    /**
+     * login keys
+     */
+    public static int empty_id =101;
+    public static int invalid_mail =102;
+    public static int empty_password =103;
+
+    int REQUEST_CODE_QR_SCAN = 104;
+    int REQUEST_CODE_CAMERA = 105;
+
+
+    /**
+     * dialog keys
+     */
+    public static int dialogOkClick=501;
 
 }

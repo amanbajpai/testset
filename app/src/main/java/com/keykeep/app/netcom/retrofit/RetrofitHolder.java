@@ -6,7 +6,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.keykeep.app.BuildConfig;
 import com.keykeep.app.netcom.retrofit.Config;
+import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.utils.LogUtils;
+import com.keykeep.app.utils.Utils;
 
 import org.json.JSONObject;
 
@@ -33,6 +35,11 @@ public class RetrofitHolder {
     private Context context;
     private Retrofit retrofit;
     private static KeyKeepAPI service;
+    private String HEADER_API_KEY = "api_key";
+    private String HEADER_DEVICE_TYPE = "device_type";
+    private String HEADER_DEVICE_ID = "device_id";
+    private String HEADER_DEVICE_TOKEN = "device_token";
+
 
     public RetrofitHolder(Context context) {
         this.context = context;
@@ -104,31 +111,29 @@ public class RetrofitHolder {
     /**
      * set header in need
      */
-//    private Request getRequestWithHeaders(Interceptor.Chain chain) {
-//        Request.Builder builder = chain.request().newBuilder();
-////        if (chain.request().url().toString().contains(Config.BASE_URL)) {
-////            builder.addHeader(DEVICE_UNIQUE_HEADER, App.getInstance().getDeviceId());
-////            builder.addHeader(DEVICE_TYPE_HEADER, App.getInstance().getDeviceType());
-////            builder.addHeader(DEVICE_OS_VERSION_HEADER, App.getInstance().getDeviceApiNumber());
-////            builder.addHeader(AUTHORIZATION_HEADER, "Bearer " + getToken());
-////            builder.addHeader(APP_VERSION_HEADER, BuildConfig.VERSION_NAME);
-////            builder.addHeader(CONTENT_TYPE_HEADER, "application/json");
-//
+    private Request getRequestWithHeaders(Interceptor.Chain chain) {
+        Request.Builder builder = chain.request().newBuilder();
+//        if (chain.request().url().toString().contains(Config.BASE_URL)) {
+            builder.addHeader(HEADER_API_KEY, Utils.getApiKey());
+            builder.addHeader(HEADER_DEVICE_ID, Utils.getDeviceID(context));
+            builder.addHeader(HEADER_DEVICE_TOKEN, Utils.getToken());
+            builder.addHeader(HEADER_DEVICE_TYPE, Utils.getDeviceType());
+
 //            try {
-////                JSONObject settingJsonObject = new JSONObject();
-////                settingJsonObject.put("CurrentVersion", BuildConfig.VERSION_NAME);
-////                if (Config.USE_BAIDU) {
-////                    settingJsonObject.put(REGION_HEADER, ASIA_CHINA_REGION);
-////                } else {
-////                    settingJsonObject.put(REGION_HEADER, ASIA_REGION);
-////                }
-////                byte[] settingsByteArray = settingJsonObject.toString().getBytes("UTF-8");
-////                builder.addHeader(SETTINGS_HEADER, Base64.encodeToString(settingsByteArray, Base64.NO_WRAP));
+//                JSONObject settingJsonObject = new JSONObject();
+//                settingJsonObject.put("CurrentVersion", BuildConfig.VERSION_NAME);
+//                if (Config.USE_BAIDU) {
+//                    settingJsonObject.put(REGION_HEADER, ASIA_CHINA_REGION);
+//                } else {
+//                    settingJsonObject.put(REGION_HEADER, ASIA_REGION);
+//                }
+//                byte[] settingsByteArray = settingJsonObject.toString().getBytes("UTF-8");
+//                builder.addHeader(SETTINGS_HEADER, Base64.encodeToString(settingsByteArray, Base64.NO_WRAP));
 //            } catch (Exception e) {
 //                LogUtils.e("RetrofitHolder", "Add header settings json" + e, e);
 //            }
-////        }
-//        return builder.build();
-//    }
+//        }
+        return builder.build();
+    }
 
 }

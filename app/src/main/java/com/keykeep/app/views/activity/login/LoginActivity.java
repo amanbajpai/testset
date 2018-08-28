@@ -12,6 +12,7 @@ import android.view.View;
 import com.keykeep.app.R;
 import com.keykeep.app.databinding.LoginActivityBinding;
 import com.keykeep.app.netcom.Keys;
+import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.activity.home.HomeActivity;
 import com.keykeep.app.views.activity.forgot_password.ForgotPasswordActivity;
@@ -51,16 +52,16 @@ public class LoginActivity extends BaseActivity {
         public void onChanged(@Nullable Integer value) {
             switch (value) {
 
-                case Keys.empty_id:
-                    Utils.showAlert(context, getString(R.string.error), getString(R.string.enter_employeeid), "ok", "", Keys.dialogOkClick, viewModel);
+                case AppUtils.empty_id:
+                    Utils.showAlert(context, getString(R.string.error), getString(R.string.enter_employeeid), "ok", "", AppUtils.dialogOkClick, viewModel);
                     break;
 
-                case Keys.empty_password:
-                    Utils.showAlert(context, getString(R.string.error), getString(R.string.enter_password), "ok", "", Keys.dialogOkClick, viewModel);
+                case AppUtils.empty_password:
+                    Utils.showAlert(context, getString(R.string.error), getString(R.string.enter_password), "ok", "", AppUtils.dialogOkClick, viewModel);
                     break;
 
-                case Keys.invalid_mail:
-                    Utils.showAlert(context, getString(R.string.error), getString(R.string.enter_valid_employeeid), "ok", "", Keys.dialogOkClick, viewModel);
+                case AppUtils.invalid_mail:
+                    Utils.showAlert(context, getString(R.string.error), getString(R.string.enter_valid_employeeid), "ok", "", AppUtils.dialogOkClick, viewModel);
                     break;
 
             }
@@ -74,8 +75,9 @@ public class LoginActivity extends BaseActivity {
             case R.id.tv_login:
                 if (viewModel.checkEmail(binding.etMail.getText().toString())
                         && viewModel.checkPassword(binding.etPassword.getText().toString())) {
-                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                    finish();
+                    viewModel.doLogin();
+//                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+//                    finish();
                 }
                 break;
 

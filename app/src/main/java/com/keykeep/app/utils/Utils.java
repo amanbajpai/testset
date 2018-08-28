@@ -21,6 +21,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -43,8 +44,9 @@ import android.widget.Toast;
 
 import com.keykeep.app.BuildConfig;
 import com.keykeep.app.R;
-import com.keykeep.app.interfaces.ConstantsLib;
 import com.keykeep.app.interfaces.DialogClickListener;
+import com.keykeep.app.netcom.Keys;
+import com.keykeep.app.netcom.retrofit.Config;
 import com.keykeep.app.views.custom_view.CustomProgressDialog;
 import com.keykeep.app.views.base.BaseActivity;
 import com.keykeep.app.views.activity.home.HomeActivity;
@@ -91,8 +93,7 @@ public class Utils {
         }
     }
 
-    public static boolean isValideEmail(String email)
-    {
+    public static boolean isValideEmail(String email) {
         Pattern pattern;
         Matcher matcher;
         final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -520,27 +521,27 @@ public class Utils {
 //        }
 //    }
 
-    public static void openImageCamera(AppCompatActivity activity) {
-        try {
-            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            activity.startActivityForResult(cameraIntent, ConstantsLib.SELECT_IMAGE_CAMERA);
-        } catch (ActivityNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
+//    public static void openImageCamera(AppCompatActivity activity) {
+//        try {
+//            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//            activity.startActivityForResult(cameraIntent, ConstantsLib.SELECT_IMAGE_CAMERA);
+//        } catch (ActivityNotFoundException ex) {
+//            ex.printStackTrace();
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+//    }
 
-    public static void openImageGallery(AppCompatActivity activity) {
-        try {
-            Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            activity.startActivityForResult(galleryIntent, ConstantsLib.SELECT_IMAGE_GALLERY);
-        } catch (ActivityNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
+//    public static void openImageGallery(AppCompatActivity activity) {
+//        try {
+//            Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//            activity.startActivityForResult(galleryIntent, ConstantsLib.SELECT_IMAGE_GALLERY);
+//        } catch (ActivityNotFoundException ex) {
+//            ex.printStackTrace();
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+//    }
 
     public static void openDatePicker(Context context, final View view) {
         try {
@@ -827,21 +828,6 @@ public class Utils {
         return filePath;
     }
 
-    public static void addCommonParams(Map<String, String> stringParams) {
-        try {
-            if (stringParams != null) {
-                stringParams.put("api_key", ConstantsLib.API_KEY);
-                stringParams.put("api_version", ConstantsLib.API_VERSION);
-                stringParams.put("app_type", ConstantsLib.APP_TYPE);
-                stringParams.put("language", "en-EN");
-                stringParams.put("device_type", "android");
-                stringParams.put("version", "" + BuildConfig.VERSION_CODE);
-                stringParams.put("version_name", "" + BuildConfig.VERSION_NAME);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
 
     /**
      * dialog width 75% of screen width
@@ -1741,5 +1727,33 @@ public class Utils {
         return Math.atan(Math.abs(height) / Math.abs(width));
     }
 
+
+    /**
+     * add common params in below method
+     *
+     * @return
+     */
+    public static String getApiKey() {
+        return Keys.API_KEY;
+    }
+
+    public static String getDeviceID(Context context) {
+        String device_id = Settings.Secure.getString(context.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        return device_id;
+    }
+
+    public static String getToken() {
+        /**
+         * dummy token for now
+         */
+        String token = "adfasdfasdfaf";
+
+        return token;
+    }
+
+    public static String getDeviceType() {
+        return Keys.TYPE_ANDROID;
+    }
 
 }

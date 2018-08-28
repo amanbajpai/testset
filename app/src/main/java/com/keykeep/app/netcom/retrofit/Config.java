@@ -7,7 +7,13 @@ import com.keykeep.app.BuildConfig;
  */
 
 public interface Config {
+
     public static final String BASE_URL = BuildConfig.BASE_URL;
+
+    /**
+     * Login
+     */
+    String LOGIN_URL  = "login";
 
 }
 
