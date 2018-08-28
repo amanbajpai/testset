@@ -8,6 +8,7 @@ public interface Keys {
 
     String API_KEY = "cdnsol";
     String TYPE_ANDROID = "android";
+    String TOKEN_TYPE = "access";
 
 
     /**
@@ -19,14 +20,13 @@ public interface Keys {
     String TAG_DEVICE_TOKEN = "device_token";
 
 
+    /*API keys Below*/
+
     /**
      * Login
      */
     String EMAIL = "email";
     String PASSWORD = "password";
-
-
-
-
-
+    String EMPLOYEE_ID = "employee_id";
+    String IS_MY_ASSETS = "is_my_assets";
 }

@@ -56,7 +56,7 @@ public class LoginViewModel extends BaseViewMadel implements DialogClickListener
         String password = binding.etPassword.getText().toString();
 
 
-        Call<LoginBean> call = RetrofitHolder.getService().doLogin(KeyKeepApplication.getInstance().getBaseEntity(), email, password);
+        Call<LoginBean> call = RetrofitHolder.getService().doLogin(KeyKeepApplication.getInstance().getBaseEntity(false), email, password);
 
         call.enqueue(new Callback<LoginBean>() {
             @Override

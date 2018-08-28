@@ -10,6 +10,9 @@ public class BaseRequestEntity {
     private String device_type;
     private String device_id;
     private String device_token;
+    private String token_type;
+    private String access_token;
+
 
     public String getApi_key() {
         return api_key;
@@ -41,5 +44,21 @@ public class BaseRequestEntity {
 
     public void setDevice_token(String device_token) {
         this.device_token = device_token;
+    }
+
+    public String getToken_type() {
+        return token_type;
+    }
+
+    public void setToken_type(String token_type) {
+        this.token_type = token_type;
+    }
+
+    public String getAccess_token() {
+        return access_token;
+    }
+
+    public void setAccess_token(String access_token) {
+        this.access_token = access_token;
     }
 }

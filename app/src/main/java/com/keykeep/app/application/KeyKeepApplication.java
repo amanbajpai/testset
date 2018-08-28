@@ -12,6 +12,7 @@ import com.keykeep.app.BuildConfig;
 import com.keykeep.app.model.bean.BaseRequestEntity;
 import com.keykeep.app.netcom.Keys;
 import com.keykeep.app.netcom.retrofit.RetrofitHolder;
+import com.keykeep.app.preferences.Pref;
 import com.keykeep.app.utils.Utils;
 
 import java.lang.reflect.Method;
@@ -140,12 +141,16 @@ public class KeyKeepApplication extends MultiDexApplication {
         }
     }
 
-    public static BaseRequestEntity getBaseEntity() {
+    public static BaseRequestEntity getBaseEntity(boolean includeToken) {
         BaseRequestEntity baseRequestEntity = new BaseRequestEntity();
         baseRequestEntity.setApi_key(Keys.API_KEY);
         baseRequestEntity.setDevice_id(Utils.getDeviceID());
         baseRequestEntity.setDevice_token("dfsfsdfsdfsdf"); //put firebase app token here from preferences
         baseRequestEntity.setDevice_type(Keys.TYPE_ANDROID);
+        if (includeToken) {
+            baseRequestEntity.setToken_type(Keys.TOKEN_TYPE);
+            baseRequestEntity.setAccess_token(Pref.getAccessToken(instance));
+        }
         return baseRequestEntity;
     }
 

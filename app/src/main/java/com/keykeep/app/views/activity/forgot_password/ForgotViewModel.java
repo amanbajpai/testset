@@ -3,6 +3,7 @@ package com.keykeep.app.views.activity.forgot_password;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
+import com.keykeep.app.application.KeyKeepApplication;
 import com.keykeep.app.databinding.ActivityForgotPasswordBinding;
 import com.keykeep.app.interfaces.DialogClickListener;
 import com.keykeep.app.model.bean.ForgotPasswordResponseBean;
@@ -39,7 +40,7 @@ public class ForgotViewModel extends ViewModel implements DialogClickListener {
 
         String email = binding.etMail.getText().toString();
 
-        Call<ForgotPasswordResponseBean> call = RetrofitHolder.getService().forgotPassword(email);
+        Call<ForgotPasswordResponseBean> call = RetrofitHolder.getService().forgotPassword(KeyKeepApplication.getInstance().getBaseEntity(false), email);
 
         call.enqueue(new Callback<ForgotPasswordResponseBean>() {
             @Override

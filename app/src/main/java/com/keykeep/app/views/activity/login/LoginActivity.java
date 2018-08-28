@@ -89,6 +89,7 @@ public class LoginActivity extends BaseActivity {
             Gson gson = new Gson();
             String user_detail = gson.toJson(loginBean.getResult());
             Pref.setUserDetail(context, user_detail);
+            Pref.setAccessToken(context, loginBean.getAccessToken());
             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
             finish();
         }
