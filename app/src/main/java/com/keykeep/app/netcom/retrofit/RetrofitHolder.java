@@ -5,12 +5,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.keykeep.app.BuildConfig;
-import com.keykeep.app.netcom.retrofit.Config;
-import com.keykeep.app.utils.AppUtils;
-import com.keykeep.app.utils.LogUtils;
 import com.keykeep.app.utils.Utils;
-
-import org.json.JSONObject;
 
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -114,10 +109,10 @@ public class RetrofitHolder {
     private Request getRequestWithHeaders(Interceptor.Chain chain) {
         Request.Builder builder = chain.request().newBuilder();
 //        if (chain.request().url().toString().contains(Config.BASE_URL)) {
-            builder.addHeader(HEADER_API_KEY, Utils.getApiKey());
-            builder.addHeader(HEADER_DEVICE_ID, Utils.getDeviceID(context));
-            builder.addHeader(HEADER_DEVICE_TOKEN, Utils.getToken());
-            builder.addHeader(HEADER_DEVICE_TYPE, Utils.getDeviceType());
+        builder.addHeader(HEADER_API_KEY, Utils.getApiKey());
+        builder.addHeader(HEADER_DEVICE_ID, Utils.getDeviceID(context));
+        builder.addHeader(HEADER_DEVICE_TOKEN, Utils.getToken());
+        builder.addHeader(HEADER_DEVICE_TYPE, Utils.getDeviceType());
 
 //            try {
 //                JSONObject settingJsonObject = new JSONObject();

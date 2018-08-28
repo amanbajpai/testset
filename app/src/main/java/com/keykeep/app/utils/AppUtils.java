@@ -1,7 +1,6 @@
 package com.keykeep.app.utils;
 
 import android.Manifest;
-import android.content.pm.PackageManager;
 
 /**
  * Created by ankurrawal on 22/8/18.
@@ -21,16 +20,12 @@ public interface AppUtils {
     String[] LOCATION_PERMISSIONS = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
 
-
-
-
-
     /**
      * login keys
      */
-    public static int empty_id =101;
-    public static int invalid_mail =102;
-    public static int empty_password =103;
+    public static int empty_id = 101;
+    public static int invalid_mail = 102;
+    public static int empty_password = 103;
 
     int REQUEST_CODE_QR_SCAN = 104;
     int REQUEST_CODE_CAMERA = 105;
@@ -40,6 +35,6 @@ public interface AppUtils {
     /**
      * dialog keys
      */
-    public static int dialogOkClick=501;
+    public static int dialogOkClick = 501;
 
 }
