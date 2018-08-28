@@ -52,6 +52,7 @@
     <string name="enter_old_password">Enter old password</string>
     <string name="enter_confirm_password">Enter confirm password</string>
     <string name="confirm_password_match">Confirm password must match password</string>
+    <string name="new_password">New Password</string>
 
 
 </resources>

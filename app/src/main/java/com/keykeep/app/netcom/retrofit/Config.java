@@ -15,6 +15,7 @@ public interface Config {
      */
     String LOGIN_URL = "login";
     String FORGOT_PASSWORD_URL = "forgotpassword";
+    String CHANGE_PASSWORD_URL = "changepassword";
 
 
 }

@@ -34,8 +34,9 @@ public interface KeyKeepAPI {
     public Call<ForgotPasswordResponseBean> forgotPassword(@Field(Keys.EMAIL) String email);
 
 
-
+     @POST(Config.CHANGE_PASSWORD_URL)
     Call<ChangePasswordBean> doChangePassword(
+            @Body BaseRequestEntity baseRequestEntity,
             @Query(Keys.OLDPASWSWORD) String oldPassword,
             @Query(Keys.NEW_PASSWORD) String newPassword,
             @Query(Keys.CONFIRM_NEW_PASSWORD) String confirmPassword,
