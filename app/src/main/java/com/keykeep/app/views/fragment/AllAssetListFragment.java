@@ -20,7 +20,7 @@ import com.keykeep.app.views.base.BaseFragment;
  * Created by akshaydashore on 23/8/18
  */
 
-public class AllAssetListFragment extends BaseFragment implements XRecyclerView.LoadingListener{
+public class AllAssetListFragment extends BaseFragment implements XRecyclerView.LoadingListener {
 
     private Context context;
     private XRecyclerView recyclerView;
@@ -37,7 +37,7 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
 
         View view = inflater.inflate(R.layout.all_asset_list_fragment, null);
         initializeViews(view);
-        Log.e( "onCreateView: ","alllll" );
+        Log.e("onCreateView: ", "alllll");
         return view;
     }
 
@@ -64,11 +64,11 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
             public void run() {
                 recyclerView.refreshComplete();
             }
-        },2000);
+        }, 2000);
     }
 
     @Override
     public void onLoadMore() {
-        Log.e("onLoadMore: ","call load more" );
+        Log.e("onLoadMore: ", "call load more");
     }
 }

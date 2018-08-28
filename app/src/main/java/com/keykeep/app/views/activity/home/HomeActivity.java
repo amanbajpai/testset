@@ -13,7 +13,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -24,14 +23,10 @@ import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.activity.changepassword.ChangePasswordActivity;
 import com.keykeep.app.views.adapter.LeftDrawerListAdapter;
 import com.keykeep.app.views.base.BaseActivity;
-import com.keykeep.app.views.custom_view.StyledTextViewLight;
 import com.keykeep.app.views.fragment.HomeFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
-
 
 /**
  * Created by ankurrawal
@@ -48,10 +43,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
     private String[] menuItemNames;
     int previousPosition = -1;
     Toolbar toolbar;
-    CircleImageView profilePic;
-    StyledTextViewLight userNameTv, contactNoTv;
     private Fragment fragment;
-    public ImageView notificationBellIv;
     public TextView title_tv;
     private static boolean activityVisible;
 
