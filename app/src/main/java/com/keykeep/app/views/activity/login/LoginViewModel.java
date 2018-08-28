@@ -8,6 +8,7 @@ import com.keykeep.app.interfaces.DialogClickListener;
 import com.keykeep.app.model.bean.LoginBean;
 import com.keykeep.app.netcom.retrofit.RetrofitHolder;
 import com.keykeep.app.utils.AppUtils;
+import com.keykeep.app.utils.Connectivity;
 import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.base.BaseViewMadel;
 
@@ -20,10 +21,8 @@ import retrofit2.Response;
  */
 public class LoginViewModel extends BaseViewMadel implements DialogClickListener {
 
-
     public final MutableLiveData<Integer> validator = new MutableLiveData<>();
     public final MutableLiveData<LoginBean> response_validator = new MutableLiveData<>();
-
 
     public boolean checkEmail(String text) {
 
@@ -37,6 +36,7 @@ public class LoginViewModel extends BaseViewMadel implements DialogClickListener
         return true;
     }
 
+
     public boolean checkPassword(String text) {
 
         if (Utils.isStringsEmpty(text)) {
@@ -46,11 +46,21 @@ public class LoginViewModel extends BaseViewMadel implements DialogClickListener
         return true;
     }
 
+
     @Override
     public void onDialogClick(int which, int requestCode) {
+
     }
 
     public void doLogin(LoginActivityBinding binding) {
+
+        if (!checkEmail(binding.etMail.getText().toString())) {
+            return;
+        }
+
+        if (!checkPassword(binding.etPassword.getText().toString())) {
+            return;
+        }
 
         String email = binding.etMail.getText().toString();
         String password = binding.etPassword.getText().toString();

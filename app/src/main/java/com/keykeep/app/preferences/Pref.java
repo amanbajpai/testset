@@ -13,7 +13,8 @@ public class Pref {
     private static final String USER_NAME = "user_name";
     private static final String ACCESS_TOKEN = "Access_token";
     private static final String User_DETAIL = "user_detail";
-    public static final String USER_PASSWORD = "user_password";
+    public static final String EMPLOYEE_ID = "employee_id";
+    public static final String LOGIN_PASSWORD = "login_password";
 
 
     /**
@@ -25,6 +26,7 @@ public class Pref {
         return context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
     }
 
+
     /**
      * This method returns instance of shared preferences editor.
      * @param context
@@ -35,40 +37,75 @@ public class Pref {
     }
 
 
+    /**
+     * access token
+     * @param context
+     * @param value
+     */
     public static void setAccessToken(Context context, String value){
         SharedPreferences.Editor editor = getEditor(context);
         editor.putString(ACCESS_TOKEN, value);
         editor.apply();
     }
-
     public static String getAccessToken(Context context){
         return getSharedPrefs(context).getString(ACCESS_TOKEN, "");
     }
 
+
+    /**
+     * user name
+     * @param context
+     * @param value
+     */
+    public static void setUserName(Context context, String value){
+        SharedPreferences.Editor editor = getEditor(context);
+        editor.putString(USER_NAME, value);
+        editor.apply();
+    }
     public static String getUserName(Context context){
         return getSharedPrefs(context).getString(USER_NAME, null);
     }
 
+    /**
+     * user detail
+     * @param context
+     * @param user_detail
+     */
     public static void setUserDetail(Context context, String user_detail) {
         SharedPreferences.Editor editor = getEditor(context);
         editor.putString(User_DETAIL, user_detail);
         editor.apply();
     }
-
     public static String getUserDetail(Context context){
         return getSharedPrefs(context).getString(User_DETAIL, null);
     }
 
-    public static void setPassword(Context context, String password) {
+
+    /**
+     * employee id
+     * @param context
+     * @param value
+     */
+    public static void setEmployeeID(Context context, String value){
         SharedPreferences.Editor editor = getEditor(context);
-        editor.putString(USER_PASSWORD, password);
+        editor.putString(EMPLOYEE_ID, value);
         editor.apply();
     }
-
-    public static String getUserPassword(Context context){
-        return getSharedPrefs(context).getString(USER_PASSWORD, null);
+    public static String getEmployeeID(Context context){
+        return getSharedPrefs(context).getString(EMPLOYEE_ID, "");
     }
 
-
-
+    /**
+     * password
+     * @param context
+     * @param value
+     */
+    public static void setPassword(Context context, String value){
+        SharedPreferences.Editor editor = getEditor(context);
+        editor.putString(LOGIN_PASSWORD, value);
+        editor.apply();
+    }
+    public static String getPassword(Context context){
+        return getSharedPrefs(context).getString(LOGIN_PASSWORD, "");
+    }
 }

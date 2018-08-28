@@ -48,6 +48,8 @@ public class LoginActivity extends BaseActivity {
         binding.setViewModel(viewModel);
         viewModel.validator.observe(this, observer);
         viewModel.response_validator.observe(this, response_observer);
+
+
     }
 
 
@@ -89,6 +91,9 @@ public class LoginActivity extends BaseActivity {
             Gson gson = new Gson();
             String user_detail = gson.toJson(loginBean.getResult());
             Pref.setUserDetail(context, user_detail);
+            String empId = loginBean.getResult().getEmployeeId() + "";
+
+            Pref.setEmployeeID(context, empId);
             Pref.setAccessToken(context, loginBean.getAccessToken());
             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
             finish();
@@ -100,10 +105,7 @@ public class LoginActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_login:
-                if (viewModel.checkEmail(binding.etMail.getText().toString())
-                        && viewModel.checkPassword(binding.etPassword.getText().toString())) {
-                    viewModel.doLogin(binding);
-                }
+                viewModel.doLogin(binding);
                 break;
 
             case R.id.tv_forgot_password:

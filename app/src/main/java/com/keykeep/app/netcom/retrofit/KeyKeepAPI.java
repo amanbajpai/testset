@@ -28,8 +28,12 @@ public interface KeyKeepAPI {
     @POST(Config.ASSET_LIST_URL)
     public Call<AssetsListResponseBean> getAssetsList(@Body BaseRequestEntity baseRequestEntity, @Query(Keys.EMPLOYEE_ID) String email, @Query(Keys.IS_MY_ASSETS) String isMyAsset);
 
-
+     @POST(Config.CHANGE_PASSWORD_URL)
     Call<ChangePasswordBean> doChangePassword(
-
+            @Body BaseRequestEntity baseRequestEntity,
+            @Query(Keys.OLDPASWSWORD) String oldPassword,
+            @Query(Keys.NEW_PASSWORD) String newPassword,
+            @Query(Keys.CONFIRM_NEW_PASSWORD) String confirmPassword,
+            @Query(Keys.EMPLOYEE_ID) String employeeId
     );
 }

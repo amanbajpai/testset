@@ -10,16 +10,17 @@ import android.view.View;
 
 import com.keykeep.app.R;
 import com.keykeep.app.databinding.ActivityChangePasswordBinding;
+import com.keykeep.app.model.bean.ChangePasswordBean;
 import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.base.BaseActivity;
+import com.keykeep.app.views.custom_view.CustomActionBar;
 
 /**
  * Created by akshaydashore on 28/8/18
  */
 
 public class ChangePasswordActivity extends BaseActivity {
-
 
     private ActivityChangePasswordBinding binding;
     private ChangePasswordViewModel viewModel;
@@ -29,6 +30,16 @@ public class ChangePasswordActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
+        setCustomActionBar();
+        initializeViews();
+    }
+
+
+    @Override
+    public void setCustomActionBar() {
+        super.setCustomActionBar();
+        CustomActionBar customActionBar = new CustomActionBar(this);
+        customActionBar.setActionbar(getString(R.string.change_password), true, false, this);
     }
 
     @Override
@@ -39,7 +50,32 @@ public class ChangePasswordActivity extends BaseActivity {
         binding.setViewModel(viewModel);
         viewModel.validator.observe(this, observer);
 
+        viewModel.response_validator.observe(this, response_observer);
+
     }
+
+    /**
+     * handle web service response
+     */
+    Observer<ChangePasswordBean> response_observer = new Observer<ChangePasswordBean>() {
+        @Override
+        public void onChanged(@Nullable ChangePasswordBean bean) {
+
+            if (bean == null) {
+                Utils.showAlert(context, "", getString(R.string.server_error), "ok", "", AppUtils.dialogOkClick, viewModel);
+                return;
+            }
+
+            if (bean.getCode().equals(AppUtils.STATUS_SUCCESS)) {
+                Utils.showAlert(context, "", bean.getMessage(), "ok", "", AppUtils.dialogOkClick, viewModel);
+                finish();
+            } else if (bean.getCode().equals(AppUtils.STATUS_FAIL)) {
+                Utils.showAlert(context, "", bean.getMessage(), "ok", "", AppUtils.dialogOkClick, viewModel);
+                return;
+            }
+
+        }
+    };
 
 
     Observer observer = new Observer<Integer>() {
@@ -64,6 +100,9 @@ public class ChangePasswordActivity extends BaseActivity {
                 case AppUtils.match_confirm_password:
                     Utils.showToast(context, getString(R.string.confirm_password_match));
                     break;
+                case AppUtils.SERVER_ERROR:
+                    Utils.showToast(context, getString(R.string.server_error));
+                    break;
 
             }
         }
@@ -76,7 +115,7 @@ public class ChangePasswordActivity extends BaseActivity {
 
             case R.id.tv_submit:
                 if (viewModel.isValidate(binding)) {
-                    viewModel.doChangePassword(binding.etPassword.getText().toString());
+                    viewModel.doChangePassword(binding, context);
                 }
                 break;
         }

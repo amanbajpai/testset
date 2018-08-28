@@ -3,20 +3,15 @@
 
     <array name="drawer_menu_titles">
         <item>Home</item><!--0-->
-        <item>My Bookings</item><!--1-->
-        <item>My Payments</item><!--2-->
-        <item>My Account</item><!--3-->
-        <item>How it Works</item><!--4-->
-        <item>About Us</item><!--5-->
-        <item>FeedBack</item><!--6-->
-        <item>Support</item><!--7-->
-        <item>Legals</item><!--8-->
-        <item>Safety and Trust</item><!--9-->
-        <item>Share</item><!--10-->
-        <item>Rate Us</item><!--11-->
-
-        <item>&#160;</item><!--12-->
-        <item>Logout</item><!--13-->
+        <item>Handover</item><!--1-->
+        <item>Takeout</item><!--2-->
+        <item>Chat</item><!--3-->
+        <item>History</item><!--4-->
+        <item>Notification</item><!--5-->
+        <item>Profile</item><!--6-->
+        <item>Setting</item><!--7-->
+        <item>&#160;</item><!--8-->
+        <item>Logout</item><!--9-->
     </array>
 
     <string name="drawer_open">Drawer open</string>
@@ -52,6 +47,8 @@
     <string name="enter_old_password">Enter old password</string>
     <string name="enter_confirm_password">Enter confirm password</string>
     <string name="confirm_password_match">Confirm password must match password</string>
+    <string name="new_password">New Password</string>
+    <string name="change_password">Change Password</string>
 
 
 </resources>

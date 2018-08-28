@@ -105,6 +105,7 @@ public class AssetListActivity extends BaseActivity {
         });
     }
 
+
     @Override
     public void onClick(View view) {
 

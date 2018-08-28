@@ -20,7 +20,7 @@ public class LoginBean extends BaseResponse {
         this.result = result;
     }
 
-    class Result {
+   public class Result {
 
         @SerializedName("employee_id")
         @Expose
