@@ -5,24 +5,14 @@ package com.keykeep.app.netcom;
  */
 public interface Keys {
 
-
-    /**
-     * login keys
-     */
-    public static int empty_id =101;
-    public static int invalid_mail =102;
-    public static int empty_password =103;
+    String API_KEY = "cdnsol";
+    String TYPE_ANDROID = "android";
 
 
     /**
-     * dialog keys
+     * Login
      */
-    public static int dialogOkClick=501;
-
-
-
-
-
-
+    String EMAIL ="email";
+    String PASSWORD ="password";
 
 }
