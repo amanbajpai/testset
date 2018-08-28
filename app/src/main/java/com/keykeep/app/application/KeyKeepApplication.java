@@ -143,7 +143,7 @@ public class KeyKeepApplication extends MultiDexApplication {
     public static BaseRequestEntity getBaseEntity() {
         BaseRequestEntity baseRequestEntity = new BaseRequestEntity();
         baseRequestEntity.setApi_key(Keys.API_KEY);
-        baseRequestEntity.setDevice_id(Utils.getDeviceID(instance));
+        baseRequestEntity.setDevice_id(Utils.getDeviceID());
         baseRequestEntity.setDevice_token("dfsfsdfsdfsdf"); //put firebase app token here from preferences
         baseRequestEntity.setDevice_type(Keys.TYPE_ANDROID);
         return baseRequestEntity;

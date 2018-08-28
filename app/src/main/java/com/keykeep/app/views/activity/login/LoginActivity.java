@@ -16,8 +16,8 @@ import com.keykeep.app.model.bean.LoginBean;
 import com.keykeep.app.preferences.Pref;
 import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.utils.Utils;
-import com.keykeep.app.model.bean.LoginBean;
 import com.keykeep.app.views.activity.forgot_password.ForgotPasswordActivity;
+import com.keykeep.app.views.activity.home.HomeActivity;
 import com.keykeep.app.views.base.BaseActivity;
 
 /**

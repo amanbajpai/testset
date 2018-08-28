@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by akshaydashore on 28/8/18
  */
 
-public class ChangePasswordBean extends BaseResponce{
+public class ChangePasswordBean extends BaseResponse {
 
 
     @SerializedName("user_account_id")
