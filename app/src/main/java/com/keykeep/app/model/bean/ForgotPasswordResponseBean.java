@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by akshaydashore on 28/8/18
  */
-public class LoginBean extends BaseResponse {
+public class ForgotPasswordResponseBean extends BaseResponse {
 
     @SerializedName("result")
     @Expose
@@ -34,6 +34,13 @@ public class LoginBean extends BaseResponse {
         @SerializedName("lastname")
         @Expose
         private String lastname;
+        @SerializedName("user_account_id")
+        @Expose
+        private Integer userAccountId;
+        @SerializedName("unit_name")
+        @Expose
+        private Integer unitName;
+
 
         public Integer getEmployeeId() {
             return employeeId;

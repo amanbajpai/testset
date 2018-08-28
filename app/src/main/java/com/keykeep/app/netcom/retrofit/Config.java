@@ -13,7 +13,9 @@ public interface Config {
     /**
      * Login
      */
-    String LOGIN_URL  = "login";
+    String LOGIN_URL = "login";
+    String FORGOT_PASSWORD_URL = "forgotpassword";
+
 
 }
 
