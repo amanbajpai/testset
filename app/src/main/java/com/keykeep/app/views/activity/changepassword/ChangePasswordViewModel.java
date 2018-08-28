@@ -12,6 +12,8 @@ import com.keykeep.app.netcom.retrofit.RetrofitHolder;
 import com.keykeep.app.utils.AppUtils;
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by akshaydashore on 28/8/18
@@ -39,7 +41,23 @@ public class ChangePasswordViewModel extends ViewModel {
 
     public void doChangePassword(String password) {
 
-       Call<ChangePasswordBean> call =  RetrofitHolder.getService().doChangePassword();
+
+        Call<ChangePasswordBean> call = RetrofitHolder.getService().doChangePassword("", "", "", "");
+
+        call.enqueue(new Callback<ChangePasswordBean>() {
+            @Override
+            public void onResponse(Call<ChangePasswordBean> call, Response<ChangePasswordBean> response) {
+                response_validator.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ChangePasswordBean> call, Throwable t) {
+                validator.setValue(AppUtils.SERVER_ERROR);
+
+            }
+        });
+
     }
+
 
 }

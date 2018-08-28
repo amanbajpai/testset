@@ -33,7 +33,7 @@ public class ChangePasswordActivity extends BaseActivity {
 
     @Override
     public void initializeViews() {
-        binding = DataBindingUtil.setContentView(this, R.layout.login_activity);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_change_password);
         binding.tvSubmit.setOnClickListener(this);
         viewModel = ViewModelProviders.of(this).get(ChangePasswordViewModel.class);
         binding.setViewModel(viewModel);

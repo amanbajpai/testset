@@ -26,15 +26,18 @@ public interface KeyKeepAPI {
 
     @POST(Config.LOGIN_URL)
     Call<LoginBean> doLogin(@Query(Keys.EMAIL) String email,
-                                   @Query(Keys.PASSWORD) String password,
-                                   @Query(Keys.TAG_API_KEY) String apiKey,
-                                   @Query(Keys.TAG_DEVICE_ID) String device_id,
-                                   @Query(Keys.TAG_DEVICE_TOKEN) String token,
-                                   @Query(Keys.TAG_DEVICE_TYPE) String device_type
+                            @Query(Keys.PASSWORD) String password,
+                            @Query(Keys.TAG_API_KEY) String apiKey,
+                            @Query(Keys.TAG_DEVICE_ID) String device_id,
+                            @Query(Keys.TAG_DEVICE_TOKEN) String token,
+                            @Query(Keys.TAG_DEVICE_TYPE) String device_type
     );
 
 
     Call<ChangePasswordBean> doChangePassword(
-
+            @Query(Keys.OLDPASWSWORD) String oldPassword,
+            @Query(Keys.NEW_PASSWORD) String newPassword,
+            @Query(Keys.CONFIRM_NEW_PASSWORD) String confirmPassword,
+            @Query(Keys.EMPLOYEE_ID) String employeeId
     );
 }
