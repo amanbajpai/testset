@@ -23,6 +23,9 @@ public interface AppUtils {
     int empty_id = 101;
     int invalid_mail = 102;
     int empty_password = 103;
+    int empty_old_password = 104;
+    int empty_confirm_password = 105;
+    int match_confirm_password = 106;
 
     /**
      * Intent request code

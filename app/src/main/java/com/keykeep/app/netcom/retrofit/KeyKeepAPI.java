@@ -3,6 +3,7 @@ package com.keykeep.app.netcom.retrofit;
 import android.os.Build;
 
 import com.keykeep.app.BuildConfig;
+import com.keykeep.app.model.bean.ChangePasswordBean;
 import com.keykeep.app.model.bean.LoginBean;
 import com.keykeep.app.netcom.Keys;
 import com.keykeep.app.utils.Utils;
@@ -32,4 +33,8 @@ public interface KeyKeepAPI {
                                    @Query(Keys.TAG_DEVICE_TYPE) String device_type
     );
 
+
+    Call<ChangePasswordBean> doChangePassword(
+
+    );
 }
