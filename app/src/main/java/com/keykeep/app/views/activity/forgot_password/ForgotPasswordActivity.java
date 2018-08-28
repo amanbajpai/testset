@@ -10,9 +10,8 @@ import android.view.View;
 
 import com.keykeep.app.R;
 import com.keykeep.app.databinding.ActivityForgotPasswordBinding;
-import com.keykeep.app.netcom.Keys;
+import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.utils.Utils;
-import com.keykeep.app.views.activity.login.LoginViewModel;
 import com.keykeep.app.views.base.BaseActivity;
 
 /**
@@ -47,12 +46,12 @@ public class ForgotPasswordActivity extends BaseActivity {
         public void onChanged(@Nullable Integer value) {
             switch (value) {
 
-                case Keys.empty_id:
-                    Utils.showAlert(context, getString(R.string.error), getString(R.string.enter_employeeid), "ok", "", Keys.dialogOkClick, viewModel);
+                case AppUtils.empty_id:
+                    Utils.showAlert(context, getString(R.string.error), getString(R.string.enter_employeeid), "ok", "", AppUtils.dialogOkClick, viewModel);
                     break;
 
-                case Keys.empty_password:
-                    Utils.showAlert(context, getString(R.string.error), getString(R.string.enter_password), "ok", "", Keys.dialogOkClick, viewModel);
+                case AppUtils.empty_password:
+                    Utils.showAlert(context, getString(R.string.error), getString(R.string.enter_password), "ok", "", AppUtils.dialogOkClick, viewModel);
                     break;
 
             }
