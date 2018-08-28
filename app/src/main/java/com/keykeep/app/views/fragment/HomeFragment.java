@@ -66,7 +66,7 @@ public class HomeFragment extends BaseFragment {
                 break;
 
             case R.id.scan_rl:
-                if (Utils.checkPermissions(getActivity(), AppUtils.CAMERA_PERMISSION)) {
+                if (Utils.checkPermissions(getActivity(), AppUtils.STORAGE_CAMERA_PERMISSIONS)) {
                     startActivityForResult(new Intent(context, QrCodeActivity.class), AppUtils.REQUEST_CODE_QR_SCAN);
                 } else {
                     requestPermissions(AppUtils.STORAGE_CAMERA_PERMISSIONS, AppUtils.REQUEST_CODE_CAMERA);

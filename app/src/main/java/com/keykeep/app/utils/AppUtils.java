@@ -9,37 +9,39 @@ import android.content.pm.PackageManager;
 
 public interface AppUtils {
 
-    String CAMERA_PERMISSION = Manifest.permission.CAMERA;
-    String LOCATION_PERMISSION = Manifest.permission.ACCESS_FINE_LOCATION;
-    String READ_EXTERNAL_STORAGE_PERMISSION = Manifest.permission.READ_EXTERNAL_STORAGE;
-
-    String SCAN_SUCCESS = "scan_success";
-    String SCAN_FAIL = "scan_fail";
-
     String[] STORAGE_PERMISSIONS = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
     String[] STORAGE_CAMERA_PERMISSIONS = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
     String[] LOCATION_PERMISSIONS = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
 
-
-
-
+    String SCAN_SUCCESS = "scan_success";
+    String SCAN_FAIL = "scan_fail";
 
     /**
      * login keys
      */
-    public static int empty_id =101;
-    public static int invalid_mail =102;
-    public static int empty_password =103;
+    int empty_id = 101;
+    int invalid_mail = 102;
+    int empty_password = 103;
 
-    int REQUEST_CODE_QR_SCAN = 104;
-    int REQUEST_CODE_CAMERA = 105;
-    int SERVER_ERROR = 106;
-
+    /**
+     * Intent request code
+     */
+    int REQUEST_CODE_QR_SCAN = 201;
+    int REQUEST_CODE_CAMERA = 202;
+    int SERVER_ERROR = 203;
 
     /**
      * dialog keys
      */
-    public static int dialogOkClick=501;
+    public static int dialogOkClick = 301;
+
+
+    /**
+     * api status code
+     */
+    String STATUS_FAIL = "0";
+    String STATUS_SUCCESS = "1";
+
 
 }

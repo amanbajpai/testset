@@ -9,10 +9,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.google.gson.Gson;
 import com.keykeep.app.R;
 import com.keykeep.app.databinding.LoginActivityBinding;
 import com.keykeep.app.model.bean.LoginBean;
 import com.keykeep.app.netcom.Keys;
+import com.keykeep.app.preferences.Pref;
 import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.activity.home.HomeActivity;
@@ -23,6 +25,7 @@ import com.keykeep.app.views.base.BaseActivity;
  * Created by akshaydashore on 22/8/18
  */
 public class LoginActivity extends BaseActivity {
+
 
     private LoginActivityBinding binding;
     LoginViewModel viewModel;
@@ -77,9 +80,18 @@ public class LoginActivity extends BaseActivity {
         public void onChanged(@Nullable LoginBean loginBean) {
 
             if (loginBean == null){
-                Utils.showAlert(context, getString(R.string.error), getString(R.string.enter_employeeid), "ok", "", AppUtils.dialogOkClick, viewModel);
+                Utils.showAlert(context, "", getString(R.string.server_error), "ok", "", AppUtils.dialogOkClick, viewModel);
             }
 
+            if (loginBean.getCode().equals(AppUtils.STATUS_SUCCESS)){
+                Utils.showAlert(context,"", loginBean.getMessage(), "ok", "", AppUtils.dialogOkClick, viewModel);
+            }
+
+            Gson gson = new Gson();
+            String user_detail = gson.toJson(loginBean.getResult());
+            Pref.setUserDetail(context,user_detail);
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+            finish();
         }
     };
 
@@ -91,8 +103,6 @@ public class LoginActivity extends BaseActivity {
                 if (viewModel.checkEmail(binding.etMail.getText().toString())
                         && viewModel.checkPassword(binding.etPassword.getText().toString())) {
                     viewModel.doLogin(binding);
-//                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-//                    finish();
                 }
                 break;
 

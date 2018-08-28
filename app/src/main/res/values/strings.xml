@@ -45,6 +45,7 @@
     <string name="enter_password">Enter password</string>
     <string name="enter_valid_employeeid">Please enter valide mailId</string>
     <string name="error">Error</string>
+    <string name="server_error">Server Error</string>
 
 
 </resources>

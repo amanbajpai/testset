@@ -7,6 +7,7 @@ import android.content.Context;
 
 import com.keykeep.app.interfaces.DialogClickListener;
 import com.keykeep.app.netcom.Keys;
+import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.utils.Utils;
 
 /**
@@ -20,10 +21,10 @@ public class ForgotViewModel extends ViewModel implements DialogClickListener{
     public boolean checkEmail(String text) {
 
         if (Utils.isStringsEmpty(text)) {
-            validator.setValue(Keys.empty_id);
+            validator.setValue(AppUtils.empty_id);
             return false;
         } else if (!Utils.isValideEmail(text)) {
-            validator.setValue(Keys.invalid_mail);
+            validator.setValue(AppUtils.invalid_mail);
             return false;
         }
         return true;
