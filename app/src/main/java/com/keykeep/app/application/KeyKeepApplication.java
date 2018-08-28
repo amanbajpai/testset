@@ -8,9 +8,15 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.multidex.MultiDexApplication;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.keykeep.app.BuildConfig;
+import com.keykeep.app.netcom.retrofit.RetrofitHolder;
 
 import java.lang.reflect.Method;
+
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**
@@ -24,6 +30,7 @@ public class KeyKeepApplication extends MultiDexApplication {
 
     private final String TAG = "DiningInApplication";
     public static int NOTIFICATION_ID = 1501;
+    private Retrofit retrofit;
 
     public static KeyKeepApplication getInstance() {
         if (instance == null)
@@ -52,6 +59,12 @@ public class KeyKeepApplication extends MultiDexApplication {
             instance = this;
             enableStricMode();
             instantiateFabric();
+
+
+            /**
+             * init retrofit client to call network services
+             */
+            RetrofitHolder retrofitHolder = new RetrofitHolder(instance);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -86,6 +99,7 @@ public class KeyKeepApplication extends MultiDexApplication {
             ex.printStackTrace();
         }
     }
+
 
     class LifeCycle implements Application.ActivityLifecycleCallbacks {
 
