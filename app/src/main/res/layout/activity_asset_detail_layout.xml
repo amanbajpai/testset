@@ -10,14 +10,14 @@
         android:orientation="vertical"
         android:padding="@dimen/_5sdp">
 
-        <com.keykeep.app.views.custom_view.StyledTextView
+        <com.keykeep.app.views.custom_view.StyledTextViewLight
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Audi Q7"
             android:textStyle="bold" />
 
 
-        <com.keykeep.app.views.custom_view.StyledTextView
+        <com.keykeep.app.views.custom_view.StyledTextViewLight
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book." />
@@ -26,14 +26,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <com.keykeep.app.views.custom_view.StyledTextView
+            <com.keykeep.app.views.custom_view.StyledTextViewLight
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:layout_alignParentStart="true"
                 android:text="Color: White" />
 
-            <com.keykeep.app.views.custom_view.StyledTextView
+            <com.keykeep.app.views.custom_view.StyledTextViewLight
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -47,14 +47,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <com.keykeep.app.views.custom_view.StyledTextView
+            <com.keykeep.app.views.custom_view.StyledTextViewLight
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:layout_alignParentStart="true"
                 android:text="Year of Mfg: 2017" />
 
-            <com.keykeep.app.views.custom_view.StyledTextView
+            <com.keykeep.app.views.custom_view.StyledTextViewLight
                 android:layout_width="wrap_content"
                 android:textStyle="bold"
                 android:layout_height="wrap_content"

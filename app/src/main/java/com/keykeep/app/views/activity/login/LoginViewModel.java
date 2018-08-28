@@ -2,6 +2,7 @@ package com.keykeep.app.views.activity.login;
 
 import android.arch.lifecycle.MutableLiveData;
 
+import com.keykeep.app.application.KeyKeepApplication;
 import com.keykeep.app.databinding.LoginActivityBinding;
 import com.keykeep.app.interfaces.DialogClickListener;
 import com.keykeep.app.model.bean.LoginBean;
@@ -54,12 +55,8 @@ public class LoginViewModel extends BaseViewMadel implements DialogClickListener
         String email = binding.etMail.getText().toString();
         String password = binding.etPassword.getText().toString();
 
-        Call<LoginBean> call = RetrofitHolder.getService().doLogin(email, password
-                , Utils.getApiKey()
-                , Utils.getDeviceID()
-                , Utils.getToken()
-                , Utils.getDeviceType());
 
+        Call<LoginBean> call = RetrofitHolder.getService().doLogin(KeyKeepApplication.getInstance().getBaseEntity(), email, password);
 
         call.enqueue(new Callback<LoginBean>() {
             @Override

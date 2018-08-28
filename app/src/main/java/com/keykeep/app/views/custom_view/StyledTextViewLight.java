@@ -10,27 +10,28 @@ import android.util.AttributeSet;
 
 import com.keykeep.app.R;
 
+
 /**
  * Created by akshaydashore on 22/8/18
  */
-
-public class StyledButonView extends android.support.v7.widget.AppCompatButton {
+public class StyledTextViewLight extends android.support.v7.widget.AppCompatTextView {
 
     private final String TAG = "StyledTextView";
-    private final String DEFAULT_FONT = "Poppins-Regular.ttf";
+    private final String DEFAULT_FONT = "Poppins-Light.ttf";
+//    private final String DEFAULT_FONT = "helvetica.ttf";
 
-    public StyledButonView(Context context) {
+    public StyledTextViewLight(Context context) {
         super(context);
     }
 
-    public StyledButonView(Context context, AttributeSet attrs) {
+    public StyledTextViewLight(Context context, AttributeSet attrs) {
         super(context, attrs);
         setCustomFont(context, attrs);
     }
 
-    public StyledButonView(Context context, AttributeSet attrs, int defStyle) {
-
+    public StyledTextViewLight(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+
         setCustomFont(context, attrs);
     }
 

@@ -5,12 +5,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.keykeep.app.BuildConfig;
-import com.keykeep.app.netcom.retrofit.Config;
-import com.keykeep.app.utils.AppUtils;
-import com.keykeep.app.utils.LogUtils;
 import com.keykeep.app.utils.Utils;
-
-import org.json.JSONObject;
 
 import java.security.KeyStore;
 import java.security.KeyStoreException;

@@ -8,15 +8,15 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.multidex.MultiDexApplication;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.keykeep.app.BuildConfig;
+import com.keykeep.app.model.bean.BaseRequestEntity;
+import com.keykeep.app.netcom.Keys;
 import com.keykeep.app.netcom.retrofit.RetrofitHolder;
+import com.keykeep.app.utils.Utils;
 
 import java.lang.reflect.Method;
 
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**
@@ -138,6 +138,15 @@ public class KeyKeepApplication extends MultiDexApplication {
         public void onActivityDestroyed(Activity activity) {
 
         }
+    }
+
+    public static BaseRequestEntity getBaseEntity() {
+        BaseRequestEntity baseRequestEntity = new BaseRequestEntity();
+        baseRequestEntity.setApi_key(Keys.API_KEY);
+        baseRequestEntity.setDevice_id(Utils.getDeviceID());
+        baseRequestEntity.setDevice_token("dfsfsdfsdfsdf"); //put firebase app token here from preferences
+        baseRequestEntity.setDevice_type(Keys.TYPE_ANDROID);
+        return baseRequestEntity;
     }
 
 }

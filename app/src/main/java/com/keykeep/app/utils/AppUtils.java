@@ -1,7 +1,6 @@
 package com.keykeep.app.utils;
 
 import android.Manifest;
-import android.content.pm.PackageManager;
 
 /**
  * Created by ankurrawal on 22/8/18.

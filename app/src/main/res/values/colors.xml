@@ -13,6 +13,9 @@
     <color name="green">#FF09F609</color>
     <color name="white_trans">#66ffffff</color>
     <color name="black">#000000</color>
+
+    <color name="login_text_color">#293b58</color>
+
     <color name="black_light">#4d4949</color>
     <color name="black_xlight">#304d4949</color>
     <color name="black_x2light">#2F2F2D</color>
@@ -65,7 +68,6 @@
 
     <color name="mah_android_upd_upd_dlg_btn_text_color">#ffFF4081</color>
     <!--Updater colors ends-->
-
 
 
     <!--Qrcode scanner -->

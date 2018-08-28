@@ -29,7 +29,7 @@
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/assets" />
 
-                <com.keykeep.app.views.custom_view.StyledTextView
+                <com.keykeep.app.views.custom_view.StyledTextViewLight
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -60,7 +60,7 @@
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/scan" />
 
-                <com.keykeep.app.views.custom_view.StyledTextView
+                <com.keykeep.app.views.custom_view.StyledTextViewLight
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -92,7 +92,7 @@
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/history" />
 
-                <com.keykeep.app.views.custom_view.StyledTextView
+                <com.keykeep.app.views.custom_view.StyledTextViewLight
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -125,7 +125,7 @@
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/handover" />
 
-                <com.keykeep.app.views.custom_view.StyledTextView
+                <com.keykeep.app.views.custom_view.StyledTextViewLight
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -157,7 +157,7 @@
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/takeout" />
 
-                <com.keykeep.app.views.custom_view.StyledTextView
+                <com.keykeep.app.views.custom_view.StyledTextViewLight
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -191,7 +191,7 @@
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/chat" />
 
-                <com.keykeep.app.views.custom_view.StyledTextView
+                <com.keykeep.app.views.custom_view.StyledTextViewLight
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"

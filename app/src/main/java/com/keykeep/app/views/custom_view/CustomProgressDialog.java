@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.Window;
 
 import com.keykeep.app.R;
-import com.keykeep.app.views.custom_view.StyledTextView;
+import com.keykeep.app.views.custom_view.StyledTextViewLight;
 
 
 /**
@@ -38,7 +38,7 @@ public class CustomProgressDialog extends Dialog {
         if (!((Activity) mContext).isFinishing()) {
             super.show();
             View view = LayoutInflater.from(mContext).inflate(R.layout.loader_layout, null);
-            StyledTextView loaderMsg = (StyledTextView) view.findViewById(R.id.loader_msg);
+            StyledTextViewLight loaderMsg = (StyledTextViewLight) view.findViewById(R.id.loader_msg);
             loaderMsg.setText(message);
 
             setContentView(view);

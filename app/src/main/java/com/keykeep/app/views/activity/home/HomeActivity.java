@@ -23,7 +23,7 @@ import com.keykeep.app.utils.Connectivity;
 import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.adapter.LeftDrawerListAdapter;
 import com.keykeep.app.views.base.BaseActivity;
-import com.keykeep.app.views.custom_view.StyledTextView;
+import com.keykeep.app.views.custom_view.StyledTextViewLight;
 import com.keykeep.app.views.fragment.HomeFragment;
 
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
     int previousPosition = -1;
     Toolbar toolbar;
     CircleImageView profilePic;
-    StyledTextView userNameTv, contactNoTv;
+    StyledTextViewLight userNameTv, contactNoTv;
     private Fragment fragment;
     public ImageView notificationBellIv;
     public TextView title_tv;

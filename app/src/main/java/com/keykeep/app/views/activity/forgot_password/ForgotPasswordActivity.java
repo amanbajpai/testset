@@ -10,10 +10,9 @@ import android.view.View;
 
 import com.keykeep.app.R;
 import com.keykeep.app.databinding.ActivityForgotPasswordBinding;
-import com.keykeep.app.netcom.Keys;
+import com.keykeep.app.model.bean.ForgotPasswordResponseBean;
 import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.utils.Utils;
-import com.keykeep.app.views.activity.login.LoginViewModel;
 import com.keykeep.app.views.base.BaseActivity;
 
 /**
@@ -40,6 +39,7 @@ public class ForgotPasswordActivity extends BaseActivity {
         viewModel = ViewModelProviders.of(this).get(ForgotViewModel.class);
         binding.setViewModel(viewModel);
         viewModel.validator.observe(this, observer);
+        viewModel.response_validator.observe(this, response_observer);
     }
 
     Observer observer = new Observer<Integer>() {
@@ -49,27 +49,39 @@ public class ForgotPasswordActivity extends BaseActivity {
             switch (value) {
 
                 case AppUtils.empty_id:
-                    Utils.showAlert(context, getString(R.string.error), getString(R.string.enter_employeeid), "ok", "", AppUtils.dialogOkClick, viewModel);
+                    Utils.showToast(context, getString(R.string.enter_employeeid));
                     break;
 
                 case AppUtils.empty_password:
-                    Utils.showAlert(context, getString(R.string.error), getString(R.string.enter_password), "ok", "", AppUtils.dialogOkClick, viewModel);
+                    Utils.showToast(context, getString(R.string.enter_password));
                     break;
-
             }
         }
     };
 
+
+    Observer<ForgotPasswordResponseBean> response_observer = new Observer<ForgotPasswordResponseBean>() {
+
+        @Override
+        public void onChanged(@Nullable ForgotPasswordResponseBean loginBean) {
+
+            if (loginBean == null) {
+                Utils.showAlert(context, getString(R.string.error), getString(R.string.enter_employeeid), "ok", "", AppUtils.dialogOkClick, viewModel);
+            }
+
+        }
+    };
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_submit:
                 if (viewModel.checkEmail(binding.etMail.getText().toString())) {
-                    finish();
+                    viewModel.forgotPassword(binding);
                 }
                 break;
         }
     }
+
 
 }
