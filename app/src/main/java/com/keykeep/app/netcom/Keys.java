@@ -33,7 +33,7 @@ public interface Keys {
     String EMPLOYEE_ID = "employee_id";
     String OLDPASWSWORD = "old_password";
     String NEW_PASSWORD = "new_password";
-    String CONFIRM_NEW_PASSWORD = "connfirm_new_password";
+    String CONFIRM_NEW_PASSWORD = "confirm_new_password";
 
 
 }

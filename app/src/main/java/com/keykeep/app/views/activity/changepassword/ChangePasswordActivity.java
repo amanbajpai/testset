@@ -14,13 +14,13 @@ import com.keykeep.app.model.bean.ChangePasswordBean;
 import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.base.BaseActivity;
+import com.keykeep.app.views.custom_view.CustomActionBar;
 
 /**
  * Created by akshaydashore on 28/8/18
  */
 
 public class ChangePasswordActivity extends BaseActivity {
-
 
     private ActivityChangePasswordBinding binding;
     private ChangePasswordViewModel viewModel;
@@ -30,6 +30,16 @@ public class ChangePasswordActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
+        setCustomActionBar();
+        initializeViews();
+    }
+
+
+    @Override
+    public void setCustomActionBar() {
+        super.setCustomActionBar();
+        CustomActionBar customActionBar = new CustomActionBar(this);
+        customActionBar.setActionbar(getString(R.string.change_password), true, false, this);
     }
 
     @Override

@@ -21,6 +21,7 @@ import com.keykeep.app.R;
 import com.keykeep.app.model.LeftMenuDrawerItems;
 import com.keykeep.app.utils.Connectivity;
 import com.keykeep.app.utils.Utils;
+import com.keykeep.app.views.activity.changepassword.ChangePasswordActivity;
 import com.keykeep.app.views.adapter.LeftDrawerListAdapter;
 import com.keykeep.app.views.base.BaseActivity;
 import com.keykeep.app.views.custom_view.StyledTextViewLight;
@@ -255,7 +256,8 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
                 break;
             case 5: //About Us
                 break;
-            case 6://Feedback
+            case 6://profile
+                startActivity(new Intent(context, ChangePasswordActivity.class));
                 break;
             case 7://Support
                 break;
