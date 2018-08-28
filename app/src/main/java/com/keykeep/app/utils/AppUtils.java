@@ -34,6 +34,7 @@ public interface AppUtils {
 
     int REQUEST_CODE_QR_SCAN = 104;
     int REQUEST_CODE_CAMERA = 105;
+    int SERVER_ERROR = 106;
 
 
     /**
