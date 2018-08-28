@@ -44,6 +44,7 @@ import android.widget.Toast;
 
 import com.keykeep.app.BuildConfig;
 import com.keykeep.app.R;
+import com.keykeep.app.application.KeyKeepApplication;
 import com.keykeep.app.interfaces.DialogClickListener;
 import com.keykeep.app.netcom.Keys;
 import com.keykeep.app.netcom.retrofit.Config;
@@ -1737,8 +1738,8 @@ public class Utils {
         return Keys.API_KEY;
     }
 
-    public static String getDeviceID(Context context) {
-        String device_id = Settings.Secure.getString(context.getContentResolver(),
+    public static String getDeviceID() {
+        String device_id = Settings.Secure.getString(KeyKeepApplication.getInstance().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         return device_id;
     }

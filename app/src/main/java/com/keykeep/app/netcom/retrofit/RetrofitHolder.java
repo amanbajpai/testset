@@ -30,10 +30,6 @@ public class RetrofitHolder {
     private Context context;
     private Retrofit retrofit;
     private static KeyKeepAPI service;
-    private String HEADER_API_KEY = "api_key";
-    private String HEADER_DEVICE_TYPE = "device_type";
-    private String HEADER_DEVICE_ID = "device_id";
-    private String HEADER_DEVICE_TOKEN = "device_token";
 
 
     public RetrofitHolder(Context context) {
@@ -109,10 +105,10 @@ public class RetrofitHolder {
     private Request getRequestWithHeaders(Interceptor.Chain chain) {
         Request.Builder builder = chain.request().newBuilder();
 //        if (chain.request().url().toString().contains(Config.BASE_URL)) {
-        builder.addHeader(HEADER_API_KEY, Utils.getApiKey());
-        builder.addHeader(HEADER_DEVICE_ID, Utils.getDeviceID(context));
-        builder.addHeader(HEADER_DEVICE_TOKEN, Utils.getToken());
-        builder.addHeader(HEADER_DEVICE_TYPE, Utils.getDeviceType());
+//            builder.addHeader(HEADER_API_KEY, Utils.getApiKey());
+//            builder.addHeader(HEADER_DEVICE_ID, Utils.getDeviceID(context));
+//            builder.addHeader(HEADER_DEVICE_TOKEN, Utils.getToken());
+//            builder.addHeader(HEADER_DEVICE_TYPE, Utils.getDeviceType());
 
 //            try {
 //                JSONObject settingJsonObject = new JSONObject();

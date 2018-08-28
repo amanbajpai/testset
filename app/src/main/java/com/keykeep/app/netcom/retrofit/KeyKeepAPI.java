@@ -1,9 +1,16 @@
 package com.keykeep.app.netcom.retrofit;
 
+import android.os.Build;
+
+import com.keykeep.app.BuildConfig;
+import com.keykeep.app.model.bean.ChangePasswordBean;
 import com.keykeep.app.model.bean.BaseRequestEntity;
 import com.keykeep.app.model.bean.ForgotPasswordResponseBean;
 import com.keykeep.app.model.bean.LoginBean;
 import com.keykeep.app.netcom.Keys;
+import com.keykeep.app.utils.Utils;
+
+import java.security.Key;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -27,4 +34,8 @@ public interface KeyKeepAPI {
     public Call<ForgotPasswordResponseBean> forgotPassword(@Field(Keys.EMAIL) String email);
 
 
+
+    Call<ChangePasswordBean> doChangePassword(
+
+    );
 }

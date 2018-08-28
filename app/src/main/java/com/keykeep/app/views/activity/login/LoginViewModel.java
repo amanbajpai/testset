@@ -22,7 +22,7 @@ public class LoginViewModel extends BaseViewMadel implements DialogClickListener
 
 
     public final MutableLiveData<Integer> validator = new MutableLiveData<>();
-    public final MutableLiveData<LoginBean> responce_validator = new MutableLiveData<>();
+    public final MutableLiveData<LoginBean> response_validator = new MutableLiveData<>();
 
 
     public boolean checkEmail(String text) {
@@ -53,14 +53,15 @@ public class LoginViewModel extends BaseViewMadel implements DialogClickListener
     public void doLogin(LoginActivityBinding binding) {
 
         String email = binding.etMail.getText().toString();
-        String password = binding.etMail.getText().toString();
+        String password = binding.etPassword.getText().toString();
+
 
         Call<LoginBean> call = RetrofitHolder.getService().doLogin(KeyKeepApplication.getInstance().getBaseEntity(), email, password);
 
         call.enqueue(new Callback<LoginBean>() {
             @Override
             public void onResponse(Call<LoginBean> call, Response<LoginBean> response) {
-                responce_validator.setValue(response.body());
+                response_validator.setValue(response.body());
             }
 
             @Override
@@ -68,6 +69,6 @@ public class LoginViewModel extends BaseViewMadel implements DialogClickListener
                 validator.setValue(AppUtils.SERVER_ERROR);
             }
         });
-
     }
+
 }

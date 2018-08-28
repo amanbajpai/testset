@@ -45,6 +45,13 @@
     <string name="enter_password">Enter password</string>
     <string name="enter_valid_employeeid">Please enter valide mailId</string>
     <string name="error">Error</string>
+    <string name="server_error">Server Error</string>
+    <string name="submit">Submit</string>
+    <string name="old_password">Old Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="enter_old_password">Enter old password</string>
+    <string name="enter_confirm_password">Enter confirm password</string>
+    <string name="confirm_password_match">Confirm password must match password</string>
 
 
 </resources>
