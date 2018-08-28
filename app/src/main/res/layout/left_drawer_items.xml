@@ -12,7 +12,8 @@
         android:id="@+id/rootLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:paddingLeft="@dimen/_20sdp"
+        android:background="@color/app_blue"
         android:orientation="vertical">
 
 

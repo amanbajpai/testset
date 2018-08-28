@@ -15,7 +15,7 @@
             android:id="@+id/asset_rl"
             android:layout_width="@dimen/_120sdp"
             android:layout_height="@dimen/_120sdp"
-            android:background="@drawable/dash_board_item_bg">
+            android:background="@drawable/asset_bg">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -27,14 +27,14 @@
                     android:layout_width="@dimen/_60sdp"
                     android:layout_height="@dimen/_60sdp"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/circle_login" />
+                    android:src="@drawable/assets" />
 
                 <com.keykeep.app.views.custom_view.StyledTextViewLight
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="Assets"
-                    android:textColor="@color/green_light"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_14sdp" />
 
             </LinearLayout>
@@ -46,7 +46,7 @@
             android:layout_width="@dimen/_120sdp"
             android:layout_height="@dimen/_120sdp"
             android:layout_alignParentRight="true"
-            android:background="@drawable/dash_board_item_bg">
+            android:background="@drawable/scan_bg">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -58,14 +58,14 @@
                     android:layout_width="@dimen/_60sdp"
                     android:layout_height="@dimen/_60sdp"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/circle_login" />
+                    android:src="@drawable/scan" />
 
                 <com.keykeep.app.views.custom_view.StyledTextViewLight
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="Scan QR"
-                    android:textColor="@color/green_light"
+                    android:text="Scan"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_14sdp" />
 
             </LinearLayout>
@@ -78,7 +78,7 @@
             android:layout_height="@dimen/_120sdp"
             android:layout_below="@+id/asset_rl"
             android:layout_marginTop="@dimen/_20sdp"
-            android:background="@drawable/dash_board_item_bg">
+            android:background="@drawable/history_bg">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -90,14 +90,14 @@
                     android:layout_width="@dimen/_60sdp"
                     android:layout_height="@dimen/_60sdp"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/circle_login" />
+                    android:src="@drawable/history" />
 
                 <com.keykeep.app.views.custom_view.StyledTextViewLight
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="History"
-                    android:textColor="@color/green_light"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_14sdp" />
 
             </LinearLayout>
@@ -111,7 +111,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/scan_rl"
             android:layout_marginTop="@dimen/_20sdp"
-            android:background="@drawable/dash_board_item_bg">
+            android:background="@drawable/handover_bg">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -123,14 +123,14 @@
                     android:layout_width="@dimen/_60sdp"
                     android:layout_height="@dimen/_60sdp"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/circle_login" />
+                    android:src="@drawable/handover" />
 
                 <com.keykeep.app.views.custom_view.StyledTextViewLight
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="Handover"
-                    android:textColor="@color/green_light"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_14sdp" />
 
             </LinearLayout>
@@ -143,7 +143,7 @@
             android:layout_height="@dimen/_120sdp"
             android:layout_below="@+id/history_rl"
             android:layout_marginTop="@dimen/_20sdp"
-            android:background="@drawable/dash_board_item_bg">
+            android:background="@drawable/takeout_bg">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -155,19 +155,20 @@
                     android:layout_width="@dimen/_60sdp"
                     android:layout_height="@dimen/_60sdp"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/circle_login" />
+                    android:src="@drawable/takeout" />
 
                 <com.keykeep.app.views.custom_view.StyledTextViewLight
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="Takeout"
-                    android:textColor="@color/green_light"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_14sdp" />
 
             </LinearLayout>
 
         </RelativeLayout>
+
 
         <RelativeLayout
             android:id="@+id/chat_rl"
@@ -176,7 +177,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/hand_over_rl"
             android:layout_marginTop="@dimen/_20sdp"
-            android:background="@drawable/dash_board_item_bg">
+            android:background="@drawable/asset_bg">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -188,14 +189,14 @@
                     android:layout_width="@dimen/_60sdp"
                     android:layout_height="@dimen/_60sdp"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/circle_login" />
+                    android:src="@drawable/chat" />
 
                 <com.keykeep.app.views.custom_view.StyledTextViewLight
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="Chat"
-                    android:textColor="@color/green_light"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_14sdp" />
 
             </LinearLayout>
