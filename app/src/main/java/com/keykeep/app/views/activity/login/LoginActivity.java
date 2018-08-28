@@ -11,10 +11,8 @@ import android.view.View;
 
 import com.keykeep.app.R;
 import com.keykeep.app.databinding.LoginActivityBinding;
-import com.keykeep.app.netcom.Keys;
 import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.utils.Utils;
-import com.keykeep.app.views.activity.home.HomeActivity;
 import com.keykeep.app.views.activity.forgot_password.ForgotPasswordActivity;
 import com.keykeep.app.views.base.BaseActivity;
 

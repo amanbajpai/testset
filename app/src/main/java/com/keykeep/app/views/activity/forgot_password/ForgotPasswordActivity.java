@@ -47,13 +47,12 @@ public class ForgotPasswordActivity extends BaseActivity {
             switch (value) {
 
                 case AppUtils.empty_id:
-                    Utils.showAlert(context, getString(R.string.error), getString(R.string.enter_employeeid), "ok", "", AppUtils.dialogOkClick, viewModel);
+                    Utils.showToast(context, getString(R.string.enter_employeeid));
                     break;
 
                 case AppUtils.empty_password:
-                    Utils.showAlert(context, getString(R.string.error), getString(R.string.enter_password), "ok", "", AppUtils.dialogOkClick, viewModel);
+                    Utils.showToast(context, getString(R.string.enter_password));
                     break;
-
             }
         }
     };
@@ -69,5 +68,4 @@ public class ForgotPasswordActivity extends BaseActivity {
                 break;
         }
     }
-
 }
