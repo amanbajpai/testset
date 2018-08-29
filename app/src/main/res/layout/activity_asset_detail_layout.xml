@@ -16,7 +16,8 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -302,11 +303,6 @@
                     android:background="@color/gray" />
 
 
-
-
-
-
-
                 <!--***************Employee Detail*************-->
 
 
@@ -354,6 +350,25 @@
 
             </LinearLayout>
         </ScrollView>
+
+
+        <com.keykeep.app.views.custom_view.StyledTextViewBold
+            android:id="@+id/scan_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/green_rect_bg"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="@dimen/_10sdp"
+            android:paddingLeft="@dimen/_25sdp"
+            android:paddingRight="@dimen/_25sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:text="Request For Asset"
+            android:textColor="@color/green_light"
+            android:textSize="@dimen/_13sdp" />
+
 
     </LinearLayout>
 </layout>

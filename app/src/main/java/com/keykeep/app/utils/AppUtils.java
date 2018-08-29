@@ -36,7 +36,6 @@ public interface AppUtils {
     int REQUEST_CODE_CAMERA = 202;
     int SERVER_ERROR = 203;
     int NO_INTERNET=204;
-
     /**
      * dialog keys
      */
@@ -49,6 +48,7 @@ public interface AppUtils {
      */
     String STATUS_FAIL = "0";
     String STATUS_SUCCESS = "1";
+
 
 
 }

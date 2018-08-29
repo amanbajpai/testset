@@ -47,7 +47,7 @@ import com.keykeep.app.BuildConfig;
 import com.keykeep.app.R;
 import com.keykeep.app.application.KeyKeepApplication;
 import com.keykeep.app.interfaces.DialogClickListener;
-import com.keykeep.app.model.bean.LoginBean;
+import com.keykeep.app.model.bean.LoginResponseBean;
 import com.keykeep.app.netcom.Keys;
 import com.keykeep.app.preferences.Pref;
 import com.keykeep.app.views.custom_view.CustomProgressDialog;
@@ -704,7 +704,7 @@ public class Utils {
             progressDialog.dismiss();
         }
 //        ProgressDialog progressDialog = new ProgressDialog(context);
-        CustomProgressDialog progressDialog = new CustomProgressDialog(context);
+        progressDialog = new CustomProgressDialog(context);
 
         try {
             progressDialog.setCancelable(false);
@@ -716,10 +716,10 @@ public class Utils {
         return progressDialog;
     }
 
-    public static void hideProgressDialog(CustomProgressDialog pDialog) {
+    public static void hideProgressDialog() {
         try {
-            if (pDialog != null && pDialog.isShowing())
-                pDialog.dismiss();
+            if (progressDialog != null && progressDialog.isShowing())
+                progressDialog.dismiss();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -1037,7 +1037,7 @@ public class Utils {
 
         if (value == null)
             return "N/A";
-        return value+"";
+        return value + "";
     }
 
     public static int validateInt(Integer value) {
@@ -1772,12 +1772,12 @@ public class Utils {
         return Keys.TYPE_ANDROID;
     }
 
-    public static LoginBean.Result getUserDetail(Context context) {
-        LoginBean.Result bean = null;
+    public static LoginResponseBean.Result getUserDetail(Context context) {
+        LoginResponseBean.Result bean = null;
         String data = Pref.getUserDetail(context);
         Gson gson = new Gson();
         try {
-            bean = gson.fromJson(data, LoginBean.Result.class);
+            bean = gson.fromJson(data, LoginResponseBean.Result.class);
         } catch (Exception ex) {
         }
         return bean;

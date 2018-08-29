@@ -3,9 +3,13 @@ package com.keykeep.app.views.activity.assetDetail;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 
 import com.keykeep.app.R;
@@ -13,11 +17,11 @@ import com.keykeep.app.databinding.ActivityAssetDetailLayoutBinding;
 import com.keykeep.app.interfaces.DialogClickListener;
 import com.keykeep.app.model.bean.AssetDetailBean;
 import com.keykeep.app.preferences.Pref;
+import com.keykeep.app.qrcodescanner.QrCodeActivity;
 import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.utils.Utils;
-import com.keykeep.app.views.activity.login.LoginViewModel;
 import com.keykeep.app.views.base.BaseActivity;
-import com.keykeep.app.views.fragment.home.HomeFragment;
+import com.keykeep.app.views.custom_view.CustomActionBar;
 
 /**
  * Created by ankurrawal on 23/8/18.
@@ -25,15 +29,28 @@ import com.keykeep.app.views.fragment.home.HomeFragment;
 
 public class AssetDetailActivity extends BaseActivity implements DialogClickListener {
 
+    public static final int STATUS_ADMIN = 1;
+    public static final int STATUS_ = 2;
     private Context context;
     ActivityAssetDetailLayoutBinding binding;
     AssetDetailViewModel viewModel;
+    private String emp_id;
+    private AssetDetailBean.Result resultBean;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
+        setCustomActionBar();
         initializeViews();
+    }
+
+
+    @Override
+    public void setCustomActionBar() {
+        super.setCustomActionBar();
+        CustomActionBar customActionBar = new CustomActionBar(this);
+        customActionBar.setActionbar("Assets Detail", true, false, this);
     }
 
     @Override
@@ -44,9 +61,15 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         binding.setViewModel(viewModel);
         viewModel.validator.observe(this, observer);
         viewModel.response_validator.observe(this, response_observer);
+        viewModel.asset_request_validator.observe(this, asset_request_observer);
+        binding.scanButton.setOnClickListener(AssetDetailActivity.this);
 
-        String emp_id = Pref.getEmployeeID(context);
+        /**
+         * call web service to get data using qr code
+         */
+        emp_id = Pref.getEmployeeID(context);
         String qrcode = getIntent().getStringExtra(AppUtils.SCANED_QR_CODE);
+        Utils.showDialog(context,getString(R.string.please_wait));
         viewModel.getAssetDetail(qrcode, emp_id);
     }
 
@@ -64,32 +87,64 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
                 Utils.showAlert(context, "", bean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_click, AssetDetailActivity.this);
                 return;
             }
-
-            AssetDetailBean.Result resultBean = bean.getResult();
-
-            binding.assetName.setText(resultBean.getAssetName());
-            binding.assetType.setText(resultBean.getAssetType()+"");
-            binding.versionNumber.setText(resultBean.getVersionNumber());
-            binding.codeNumber.setText(resultBean.getVin());
-            binding.modelNo.setText(resultBean.getModelNumber());
-            binding.colorName.setText(resultBean.getColor());
-
-            binding.customerName.setText(resultBean.getCustomerName());
-            binding.customerAddress.setText(resultBean.getCustomerAddress());
-            binding.customerNumber.setText(resultBean.getCustomerMobileNumber());
-
-            binding.employeeName.setText(Utils.validateValue(resultBean.getEmployeeName()));
+            setDataFromBean(bean);
 
         }
     };
 
+
+    Observer<AssetDetailBean> asset_request_observer = new Observer<AssetDetailBean>() {
+        @Override
+        public void onChanged(@Nullable AssetDetailBean bean) {
+
+            if (bean == null) {
+                Utils.showAlert(context, "", getString(R.string.server_error), getString(R.string.ok), "", AppUtils.dialog_ok_click, AssetDetailActivity.this);
+                return;
+            }
+
+            Utils.showAlert(context, "", bean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_click, AssetDetailActivity.this);
+
+            if (bean.getCode().equals(AppUtils.STATUS_FAIL)) {
+                return;
+            }
+            binding.scanButton.setVisibility(View.GONE);
+            setDataFromBean(bean);
+
+        }
+
+    };
+
+    private void setDataFromBean(AssetDetailBean bean) {
+        resultBean = bean.getResult();
+
+        binding.assetName.setText(resultBean.getAssetName());
+        binding.assetType.setText(resultBean.getAssetType() + "");
+        binding.versionNumber.setText(resultBean.getVersionNumber());
+        binding.codeNumber.setText(resultBean.getVin());
+        binding.modelNo.setText(resultBean.getModelNumber());
+        binding.colorName.setText(resultBean.getColor());
+
+        binding.customerName.setText(resultBean.getCustomerName());
+        binding.customerAddress.setText(resultBean.getCustomerAddress());
+        binding.customerNumber.setText(resultBean.getCustomerMobileNumber());
+
+        binding.employeeName.setText(Utils.validateValue(resultBean.getEmployeeName()));
+        binding.scanButton.setOnClickListener(AssetDetailActivity.this);
+    }
+
+
     Observer<Integer> observer = new Observer<Integer>() {
+
         @Override
         public void onChanged(@Nullable Integer value) {
             switch (value) {
 
                 case AppUtils.NO_INTERNET:
                     Utils.showToast(context, getString(R.string.internet_connection));
+                    break;
+
+                case AppUtils.SERVER_ERROR:
+                    Utils.showToast(context, getString(R.string.server_error));
                     break;
             }
         }
@@ -98,11 +153,23 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
     @Override
     public void onClick(View v) {
 
+        switch (v.getId()) {
+
+            case R.id.scan_button:
+                Utils.showDialog(context,getString(R.string.please_wait));
+                viewModel.sendAssetRequest(resultBean.getQrCodeNumber(), emp_id);
+                break;
+
+            case R.id.left_iv:
+                finish();
+                break;
+        }
     }
 
     @Override
     public void onDialogClick(int which, int requestCode) {
 
     }
+
 
 }

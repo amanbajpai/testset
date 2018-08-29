@@ -21,7 +21,7 @@
                 android:id="@+id/home_layout_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:background="@color/colorPrimary"
                 android:contentInsetLeft="0dp"
                 android:contentInsetStart="0dp"
                 android:minHeight="?attr/actionBarSize">
@@ -37,7 +37,7 @@
                     android:maxLines="1"
                     android:padding="@dimen/_5sdp"
                     android:src="@drawable/menu"
-                    android:textColor="@color/colorRed"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_16sdp"
                     android:visibility="gone" />
 

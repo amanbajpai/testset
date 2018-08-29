@@ -108,6 +108,7 @@ public class Pref {
         editor.putString(LOGIN_PASSWORD, value);
         editor.apply();
     }
+
     public static String getPassword(Context context){
         return getSharedPrefs(context).getString(LOGIN_PASSWORD, "");
     }
@@ -122,7 +123,6 @@ public class Pref {
     public static boolean getBoolean(Context context,String key){
         return getSharedPrefs(context).getBoolean(key, false);
     }
-
 
 
 }

@@ -69,6 +69,7 @@ public class LoginViewModel extends BaseViewModel implements DialogClickListener
         }
 
 
+
         String email = binding.etMail.getText().toString();
         String password = binding.etPassword.getText().toString();
 
@@ -77,11 +78,13 @@ public class LoginViewModel extends BaseViewModel implements DialogClickListener
         call.enqueue(new Callback<LoginResponseBean>() {
             @Override
             public void onResponse(Call<LoginResponseBean> call, Response<LoginResponseBean> response) {
+                Utils.hideProgressDialog();
                 response_validator.setValue(response.body());
             }
 
             @Override
             public void onFailure(Call<LoginResponseBean> call, Throwable t) {
+                Utils.hideProgressDialog();
                 validator.setValue(AppUtils.SERVER_ERROR);
             }
         });

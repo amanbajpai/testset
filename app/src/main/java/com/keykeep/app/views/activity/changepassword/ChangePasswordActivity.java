@@ -120,8 +120,13 @@ public class ChangePasswordActivity extends BaseActivity implements DialogClickL
                     viewModel.doChangePassword(binding, context);
                 }
                 break;
+
+            case R.id.left_iv:
+                finish();
+                break;
         }
     }
+
 
     @Override
     public void onDialogClick(int which, int requestCode) {

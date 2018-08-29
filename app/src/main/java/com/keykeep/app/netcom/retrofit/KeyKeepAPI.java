@@ -46,4 +46,23 @@ public interface KeyKeepAPI {
             @Query(Keys.QR_CODE_NUMBER) String qr_code_number
             );
 
+
+    @POST(Config.ASSET_REQUEST)
+    Call<AssetDetailBean> sendAssetRequest(
+            @Body BaseRequestEntity baseRequestEntity,
+            @Query(Keys.EMPLOYEE_ID) String empliyeeId,
+            @Query(Keys.QR_CODE_NUMBER) String qr_code_number
+    );
+
+
+    @POST(Config.ASSET_PENDING_SEND_REQUEST)
+    public Call<AssetsListResponseBean> getAssetPendingSendRequest(@Body BaseRequestEntity baseRequestEntity,
+                                                                   @Query(Keys.EMPLOYEE_ID) String employeeId,
+                                                                   @Query(Keys.IS_MY_ASSETS) String isMyAsset);
+
+    @POST(Config.ASSET_PENDING_RECIEVE_REQUEST)
+    public Call<AssetsListResponseBean> getAssetPendingRecieveRequest(@Body BaseRequestEntity baseRequestEntity,
+                                                                      @Query(Keys.EMPLOYEE_ID) String employeeId,
+                                                                      @Query(Keys.IS_MY_ASSETS) String isMyAsset);
+
 }

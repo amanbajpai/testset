@@ -26,7 +26,11 @@ import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.activity.AssetListActivity;
 import com.keykeep.app.views.activity.assetDetail.AssetDetailActivity;
+import com.keykeep.app.views.activity.home.HomeActivity;
 import com.keykeep.app.views.base.BaseFragment;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class HomeFragment extends BaseFragment implements DialogClickListener {
 
@@ -120,9 +124,16 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
                 return;
             //Getting the passed result
             String result = data.getStringExtra(AppUtils.SCAN_SUCCESS);
-            Intent intent = new Intent(context, AssetDetailActivity.class);
-            intent.putExtra(AppUtils.SCANED_QR_CODE,result);
-            startActivity(intent);
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                 result = jsonObject.getString("qr_code_number");
+                Intent intent = new Intent(context, AssetDetailActivity.class);
+                intent.putExtra(AppUtils.SCANED_QR_CODE,result);
+                startActivity(intent);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Utils.showToast(context,getString(R.string.unable_to_scan_qr));
+            }
         }
 
     }
