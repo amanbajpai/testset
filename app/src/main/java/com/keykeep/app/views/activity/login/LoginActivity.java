@@ -12,7 +12,7 @@ import android.view.View;
 import com.google.gson.Gson;
 import com.keykeep.app.R;
 import com.keykeep.app.databinding.LoginActivityBinding;
-import com.keykeep.app.model.bean.LoginBean;
+import com.keykeep.app.model.bean.LoginResponseBean;
 import com.keykeep.app.preferences.Pref;
 import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.utils.Utils;
@@ -42,10 +42,10 @@ public class LoginActivity extends BaseActivity {
     public void initializeViews() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.login_activity);
-        binding.tvLogin.setOnClickListener(this);
-        binding.tvForgotPassword.setOnClickListener(this);
         viewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
         binding.setViewModel(viewModel);
+        binding.tvLogin.setOnClickListener(this);
+        binding.tvForgotPassword.setOnClickListener(this);
         viewModel.validator.observe(this, observer);
         viewModel.response_validator.observe(this, response_observer);
 
@@ -75,10 +75,10 @@ public class LoginActivity extends BaseActivity {
         }
     };
 
-    Observer<LoginBean> response_observer = new Observer<LoginBean>() {
+    Observer<LoginResponseBean> response_observer = new Observer<LoginResponseBean>() {
 
         @Override
-        public void onChanged(@Nullable LoginBean loginBean) {
+        public void onChanged(@Nullable LoginResponseBean loginBean) {
 
             if (loginBean == null) {
                 Utils.showAlert(context, "", getString(R.string.server_error), "ok", "", AppUtils.dialogOkClick, viewModel);

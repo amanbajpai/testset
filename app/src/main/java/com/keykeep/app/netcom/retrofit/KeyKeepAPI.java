@@ -4,7 +4,7 @@ import com.keykeep.app.model.bean.AssetsListResponseBean;
 import com.keykeep.app.model.bean.BaseRequestEntity;
 import com.keykeep.app.model.bean.ChangePasswordBean;
 import com.keykeep.app.model.bean.ForgotPasswordResponseBean;
-import com.keykeep.app.model.bean.LoginBean;
+import com.keykeep.app.model.bean.LoginResponseBean;
 import com.keykeep.app.netcom.Keys;
 
 import retrofit2.Call;
@@ -19,14 +19,14 @@ import retrofit2.http.Query;
 public interface KeyKeepAPI {
 
     @POST(Config.LOGIN_URL)
-    public Call<LoginBean> doLogin(@Body BaseRequestEntity baseRequestEntity, @Query(Keys.EMAIL) String email,
-                                   @Query(Keys.PASSWORD) String password);
+    public Call<LoginResponseBean> doLogin(@Body BaseRequestEntity baseRequestEntity, @Query(Keys.EMAIL) String email,
+                                           @Query(Keys.PASSWORD) String password);
 
     @POST(Config.FORGOT_PASSWORD_URL)
     public Call<ForgotPasswordResponseBean> forgotPassword(@Body BaseRequestEntity baseRequestEntity, @Query(Keys.EMAIL) String email);
 
     @POST(Config.ASSET_LIST_URL)
-    public Call<AssetsListResponseBean> getAssetsList(@Body BaseRequestEntity baseRequestEntity, @Query(Keys.EMPLOYEE_ID) String email, @Query(Keys.IS_MY_ASSETS) String isMyAsset);
+    public Call<AssetsListResponseBean> getAssetsList(@Body BaseRequestEntity baseRequestEntity, @Query(Keys.EMPLOYEE_ID) String employeeId, @Query(Keys.IS_MY_ASSETS) String isMyAsset);
 
      @POST(Config.CHANGE_PASSWORD_URL)
     Call<ChangePasswordBean> doChangePassword(

@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by akshaydashore on 28/8/18
  */
-public class LoginBean extends BaseResponse {
+public class LoginResponseBean extends BaseResponse {
 
     @SerializedName("result")
     @Expose

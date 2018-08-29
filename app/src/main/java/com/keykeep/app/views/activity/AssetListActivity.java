@@ -2,26 +2,25 @@ package com.keykeep.app.views.activity;
 
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.keykeep.app.R;
-import com.keykeep.app.views.adapter.AssetPagerAdapter;
 import com.keykeep.app.views.base.BaseActivity;
 import com.keykeep.app.views.custom_view.CustomActionBar;
-import com.keykeep.app.views.fragment.AllAssetListFragment;
-import com.keykeep.app.views.fragment.OwnAssetFragment;
+import com.keykeep.app.views.fragment.all_assets_list.AllAssetListFragment;
+import com.keykeep.app.views.fragment.ownAssetsFragment.MyAssetsFragment;
 
 /**
  * Created by akshaydashore on 23/8/18
  */
 public class AssetListActivity extends BaseActivity {
 
+    public static final int ALL_ASSETS_LIST = 0;
+    public static final int MY_ASSETS_LIST = 1;
     private TabLayout tab_layout;
     private boolean isClicked;
     private String TAG = "AssetListActivity";
@@ -45,14 +44,11 @@ public class AssetListActivity extends BaseActivity {
     @Override
     public void initializeViews() {
         tab_layout = findViewById(R.id.tab_layout);
-        ViewPager pager = findViewById(R.id.viewPager);
-        AssetPagerAdapter assetPagerAdapter = new AssetPagerAdapter(getSupportFragmentManager());
-        assetPagerAdapter.addFragment(new AllAssetListFragment(), "All Assets");
-        assetPagerAdapter.addFragment(new OwnAssetFragment(), "Own Assets");
+        tab_layout.addTab(tab_layout.newTab().setText("All Assets"));
+        tab_layout.addTab(tab_layout.newTab().setText("My Assets"));
 
-        pager.setAdapter(assetPagerAdapter);
+        replaceFragment(false, new AllAssetListFragment(), R.id.home_layout_container);
 
-        tab_layout.setupWithViewPager(pager);
         View root = tab_layout.getChildAt(0);
 
         if (root instanceof LinearLayout) {
@@ -67,16 +63,15 @@ public class AssetListActivity extends BaseActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 Log.e(TAG, "" + tab.getPosition());
-                if (!isClicked) {
-                    isClicked = true;
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            isClicked = false;
-                        }
-                    }, 1000);
+                switch (tab.getPosition()) {
+                    case ALL_ASSETS_LIST:
+                        replaceFragment(false, new AllAssetListFragment(), R.id.home_layout_container);
+                        break;
+                    case MY_ASSETS_LIST:
+                        replaceFragment(false, new MyAssetsFragment(), R.id.home_layout_container);
+                        break;
+
                 }
-                pager.setCurrentItem(tab.getPosition());
             }
 
             @Override
@@ -86,21 +81,6 @@ public class AssetListActivity extends BaseActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
-            }
-        });
-
-        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
             }
         });
     }

@@ -5,12 +5,11 @@ import android.arch.lifecycle.MutableLiveData;
 import com.keykeep.app.application.KeyKeepApplication;
 import com.keykeep.app.databinding.LoginActivityBinding;
 import com.keykeep.app.interfaces.DialogClickListener;
-import com.keykeep.app.model.bean.LoginBean;
+import com.keykeep.app.model.bean.LoginResponseBean;
 import com.keykeep.app.netcom.retrofit.RetrofitHolder;
 import com.keykeep.app.utils.AppUtils;
-import com.keykeep.app.utils.Connectivity;
 import com.keykeep.app.utils.Utils;
-import com.keykeep.app.views.base.BaseViewMadel;
+import com.keykeep.app.views.base.BaseViewModel;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,10 +18,10 @@ import retrofit2.Response;
 /**
  * Created by akshaydashore on 24/8/18
  */
-public class LoginViewModel extends BaseViewMadel implements DialogClickListener {
+public class LoginViewModel extends BaseViewModel implements DialogClickListener {
 
     public final MutableLiveData<Integer> validator = new MutableLiveData<>();
-    public final MutableLiveData<LoginBean> response_validator = new MutableLiveData<>();
+    public final MutableLiveData<LoginResponseBean> response_validator = new MutableLiveData<>();
 
     public boolean checkEmail(String text) {
 
@@ -66,16 +65,16 @@ public class LoginViewModel extends BaseViewMadel implements DialogClickListener
         String password = binding.etPassword.getText().toString();
 
 
-        Call<LoginBean> call = RetrofitHolder.getService().doLogin(KeyKeepApplication.getInstance().getBaseEntity(false), email, password);
+        Call<LoginResponseBean> call = RetrofitHolder.getService().doLogin(KeyKeepApplication.getInstance().getBaseEntity(false), email, password);
 
-        call.enqueue(new Callback<LoginBean>() {
+        call.enqueue(new Callback<LoginResponseBean>() {
             @Override
-            public void onResponse(Call<LoginBean> call, Response<LoginBean> response) {
+            public void onResponse(Call<LoginResponseBean> call, Response<LoginResponseBean> response) {
                 response_validator.setValue(response.body());
             }
 
             @Override
-            public void onFailure(Call<LoginBean> call, Throwable t) {
+            public void onFailure(Call<LoginResponseBean> call, Throwable t) {
                 validator.setValue(AppUtils.SERVER_ERROR);
             }
         });

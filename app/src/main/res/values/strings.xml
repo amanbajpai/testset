@@ -51,4 +51,9 @@
     <string name="change_password">Change Password</string>
 
 
+    <!--Asset Screen String -->
+    <string name="txt_status_available">Available</string>
+    <string name="txt_status_unavailable">Not Available</string>
+
+
 </resources>

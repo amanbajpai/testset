@@ -3,9 +3,7 @@ package com.keykeep.app.views.activity.changepassword;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.content.Context;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 
 import com.keykeep.app.application.KeyKeepApplication;
 import com.keykeep.app.databinding.ActivityChangePasswordBinding;
@@ -23,7 +21,7 @@ import retrofit2.Response;
  * Created by akshaydashore on 28/8/18
  */
 
-public class ChangePasswordViewModel extends ViewModel implements DialogClickListener{
+public class ChangePasswordViewModel extends ViewModel implements DialogClickListener {
 
     public final MutableLiveData<Integer> validator = new MutableLiveData<>();
     public final MutableLiveData<ChangePasswordBean> response_validator = new MutableLiveData<>();
@@ -51,7 +49,7 @@ public class ChangePasswordViewModel extends ViewModel implements DialogClickLis
         String emp_id = Pref.getEmployeeID(context);
 
         Call<ChangePasswordBean> call = RetrofitHolder.getService().doChangePassword(
-                KeyKeepApplication.getInstance().getBaseEntity()
+                KeyKeepApplication.getInstance().getBaseEntity(false)
                 , oldpassword
                 , password
                 , c_password

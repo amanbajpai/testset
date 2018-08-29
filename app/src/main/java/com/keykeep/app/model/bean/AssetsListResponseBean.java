@@ -3,6 +3,8 @@ package com.keykeep.app.model.bean;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 /**
  * Created by akshaydashore on 28/8/18
  */
@@ -10,17 +12,17 @@ public class AssetsListResponseBean extends BaseResponse {
 
     @SerializedName("result")
     @Expose
-    private Result result;
+    ArrayList<Result> result;
 
-    public Result getResult() {
+    public ArrayList<Result> getResult() {
         return result;
     }
 
-    public void setResult(Result result) {
+    public void setResult(ArrayList<Result> result) {
         this.result = result;
     }
 
-    class Result {
+    public class Result {
 
         @SerializedName("asset_id")
         @Expose

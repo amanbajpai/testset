@@ -21,8 +21,14 @@
         android:layout_width="match_parent"
         android:layout_height="1dp" />
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPager"
+    <!--   <com.keykeep.app.views.custom_view.CustomViewPager
+           android:id="@+id/viewPager"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent" />-->
+
+
+    <FrameLayout
+        android:id="@+id/home_layout_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

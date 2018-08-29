@@ -4,7 +4,7 @@
 
         <variable
             name="viewModel"
-            type="com.keykeep.app.views.fragment.all_assets_list.AllAssetListFragmentViewModel" />
+            type="com.keykeep.app.views.fragment.ownAssetsFragment.MyAssetsFragmentViewModel" />
     </data>
 
     <LinearLayout
