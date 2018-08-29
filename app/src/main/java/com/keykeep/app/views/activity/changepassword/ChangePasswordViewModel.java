@@ -14,6 +14,8 @@ import com.keykeep.app.model.bean.ChangePasswordBean;
 import com.keykeep.app.netcom.retrofit.RetrofitHolder;
 import com.keykeep.app.preferences.Pref;
 import com.keykeep.app.utils.AppUtils;
+import com.keykeep.app.utils.Connectivity;
+import com.keykeep.app.views.base.BaseViewModel;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,7 +25,7 @@ import retrofit2.Response;
  * Created by akshaydashore on 28/8/18
  */
 
-public class ChangePasswordViewModel extends ViewModel implements DialogClickListener{
+public class ChangePasswordViewModel extends BaseViewModel {
 
     public final MutableLiveData<Integer> validator = new MutableLiveData<>();
     public final MutableLiveData<ChangePasswordBean> response_validator = new MutableLiveData<>();
@@ -45,13 +47,19 @@ public class ChangePasswordViewModel extends ViewModel implements DialogClickLis
 
     public void doChangePassword(ActivityChangePasswordBinding binding, Context context) {
 
+        if (Connectivity.isConnected()) {
+            validator.setValue(AppUtils.NO_INTERNET);
+            return;
+        }
+
         String oldpassword = binding.etOldPass.getText().toString();
         String password = binding.etPassword.getText().toString();
         String c_password = binding.etConfirmPass.getText().toString();
         String emp_id = Pref.getEmployeeID(context);
 
+
         Call<ChangePasswordBean> call = RetrofitHolder.getService().doChangePassword(
-                KeyKeepApplication.getInstance().getBaseEntity()
+                KeyKeepApplication.getInstance().getBaseEntity(true)
                 , oldpassword
                 , password
                 , c_password
@@ -72,8 +80,5 @@ public class ChangePasswordViewModel extends ViewModel implements DialogClickLis
     }
 
 
-    @Override
-    public void onDialogClick(int which, int requestCode) {
 
-    }
 }

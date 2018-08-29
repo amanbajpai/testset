@@ -25,7 +25,7 @@ import com.keykeep.app.views.activity.changepassword.ChangePasswordActivity;
 import com.keykeep.app.views.adapter.LeftDrawerListAdapter;
 import com.keykeep.app.views.base.BaseActivity;
 import com.keykeep.app.views.custom_view.StyledTextViewLight;
-import com.keykeep.app.views.fragment.HomeFragment;
+import com.keykeep.app.views.fragment.home.HomeFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,9 +104,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
 
     @Override
     protected void onResume() {
-
         super.onResume();
-
         try {
             fragment = getSupportFragmentManager().findFragmentById(R.id.home_layout_container);
             if (fragment != null)
@@ -232,8 +230,8 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
 
     @Override
     public void onItemClick(int position) {
-        if (!Connectivity.isConnected(context)) {
-            Utils.showToast(context, "No Internet");
+        if (!Connectivity.isConnected()) {
+            Utils.showToast(context, getString(R.string.internet_connection));
             return;
         }
 

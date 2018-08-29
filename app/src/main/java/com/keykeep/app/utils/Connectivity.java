@@ -27,21 +27,12 @@ public class Connectivity {
     /**
      * Check if there is any connectivity
      *
-     * @param context
      * @return
      */
-    public static boolean isConnected(Context context) {
-
-        if (context != null) {
-
-            NetworkInfo info = Connectivity.getNetworkInfo(context);
-            return (info != null && info.isConnected() && isConnectedFast(context));
-
-        } else {
-
+    public static boolean isConnected() {
             NetworkInfo info = Connectivity.getNetworkInfo(KeyKeepApplication.getInstance());
             return (info != null && info.isConnected() && isConnectedFast(KeyKeepApplication.getInstance()));
-        }
+
     }
 
     /**

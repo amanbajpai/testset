@@ -42,16 +42,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.keykeep.app.BuildConfig;
 import com.keykeep.app.R;
 import com.keykeep.app.application.KeyKeepApplication;
 import com.keykeep.app.interfaces.DialogClickListener;
+import com.keykeep.app.model.bean.LoginBean;
 import com.keykeep.app.netcom.Keys;
-import com.keykeep.app.netcom.retrofit.Config;
+import com.keykeep.app.preferences.Pref;
 import com.keykeep.app.views.custom_view.CustomProgressDialog;
 import com.keykeep.app.views.base.BaseActivity;
 import com.keykeep.app.views.activity.home.HomeActivity;
-import com.keykeep.app.views.fragment.HomeFragment;
+import com.keykeep.app.views.fragment.home.HomeFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -75,7 +77,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -998,7 +999,7 @@ public class Utils {
         return timeValue;
     }*/
 
-    public static String validateValue(String value) {
+    public static String validateIntValue(String value) {
 
         String returntValue = "";
 
@@ -1011,18 +1012,33 @@ public class Utils {
 
     }
 
-    public static String validateValueNum(String value) {
+    public static String validateStringValue(String value) {
 
-        String returntValue = "0";
+        String returntValue = "";
 
         if (value == null || value.equals("") || value.equals("null"))
-            return "0";
+            return "";
 
         returntValue = value;
 
         return returntValue;
     }
 
+
+    public static String validateValue(String value) {
+
+        if (value == null || value.equals("") || value.equals("null"))
+            return "N/A";
+
+        return value;
+    }
+
+    public static String validateValue(Integer value) {
+
+        if (value == null)
+            return "N/A";
+        return value+"";
+    }
 
     public static int validateInt(Integer value) {
 
@@ -1032,7 +1048,6 @@ public class Utils {
         return value;
 
     }
-
 
     public static String getWeekName(String id) {
 
@@ -1757,4 +1772,14 @@ public class Utils {
         return Keys.TYPE_ANDROID;
     }
 
+    public static LoginBean.Result getUserDetail(Context context) {
+        LoginBean.Result bean = null;
+        String data = Pref.getUserDetail(context);
+        Gson gson = new Gson();
+        try {
+            bean = gson.fromJson(data, LoginBean.Result.class);
+        } catch (Exception ex) {
+        }
+        return bean;
+    }
 }

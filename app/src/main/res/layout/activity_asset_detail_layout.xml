@@ -1,66 +1,359 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.keykeep.app.views.activity.assetDetail.AssetDetailViewModel" />
+    </data>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/_5sdp">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <com.keykeep.app.views.custom_view.StyledTextViewLight
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Audi Q7"
-            android:textStyle="bold" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="@dimen/_5sdp">
 
-        <com.keykeep.app.views.custom_view.StyledTextViewLight
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book." />
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <com.keykeep.app.views.custom_view.StyledTextViewLight
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:layout_alignParentStart="true"
-                android:text="Color: White" />
-
-            <com.keykeep.app.views.custom_view.StyledTextViewLight
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:text="VIN: MP 09 CA 1274"
-                android:textStyle="bold" />
-
-        </RelativeLayout>
+                <!--**********Asset detail*************-->
 
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+                <com.keykeep.app.views.custom_view.StyledTextViewBold
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="@dimen/_10sdp"
+                    android:text="Asset Detail"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15sdp" />
 
-            <com.keykeep.app.views.custom_view.StyledTextViewLight
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:layout_alignParentStart="true"
-                android:text="Year of Mfg: 2017" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/black" />
 
-            <com.keykeep.app.views.custom_view.StyledTextViewLight
-                android:layout_width="wrap_content"
-                android:textStyle="bold"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:text="Fuel Type: Diesel" />
 
-        </RelativeLayout>
+                <com.keykeep.app.views.custom_view.StyledTextViewRegular
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:text="Asset Name"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13sdp" />
+
+                <com.keykeep.app.views.custom_view.StyledTextViewRegular
+                    android:id="@+id/asset_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:text="BMW x6"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_13sdp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray" />
+
+
+                <com.keykeep.app.views.custom_view.StyledTextViewRegular
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:text="@string/asset_type"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13sdp" />
+
+                <com.keykeep.app.views.custom_view.StyledTextViewRegular
+                    android:id="@+id/asset_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:text="BMW x6"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_13sdp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray" />
+
+
+                <com.keykeep.app.views.custom_view.StyledTextViewRegular
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:text="@string/version_no"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13sdp" />
+
+                <com.keykeep.app.views.custom_view.StyledTextViewRegular
+                    android:id="@+id/version_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:text="BMW x6"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_13sdp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray" />
+
+
+                <com.keykeep.app.views.custom_view.StyledTextViewRegular
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:text="@string/code"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13sdp" />
+
+                <com.keykeep.app.views.custom_view.StyledTextViewRegular
+                    android:id="@+id/code_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:text="BMW x6"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_13sdp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray" />
+
+
+                <com.keykeep.app.views.custom_view.StyledTextViewRegular
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:text="@string/model_no"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13sdp" />
+
+                <com.keykeep.app.views.custom_view.StyledTextViewRegular
+                    android:id="@+id/model_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:text="BMW x6"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_13sdp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray" />
+
+
+                <com.keykeep.app.views.custom_view.StyledTextViewRegular
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:text="@string/color"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13sdp" />
+
+                <com.keykeep.app.views.custom_view.StyledTextViewRegular
+                    android:id="@+id/color_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:text="BMW x6"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_13sdp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray" />
+
+                <!--**********Customer detail*************-->
+
+
+                <com.keykeep.app.views.custom_view.StyledTextViewBold
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="@dimen/_10sdp"
+                    android:text="@string/customer_detail"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15sdp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/black" />
+
+
+                <com.keykeep.app.views.custom_view.StyledTextViewRegular
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:text="Customer Name"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13sdp" />
+
+                <com.keykeep.app.views.custom_view.StyledTextViewRegular
+                    android:id="@+id/customer_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:text="BMW x6"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_13sdp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray" />
+
+
+                <com.keykeep.app.views.custom_view.StyledTextViewRegular
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:text="@string/customer_number"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13sdp" />
+
+                <com.keykeep.app.views.custom_view.StyledTextViewRegular
+                    android:id="@+id/customer_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:text="BMW x6"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_13sdp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray" />
+
+
+                <com.keykeep.app.views.custom_view.StyledTextViewRegular
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:text="@string/customer_address"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13sdp" />
+
+                <com.keykeep.app.views.custom_view.StyledTextViewRegular
+                    android:id="@+id/customer_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:text="BMW x6"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_13sdp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray" />
+
+
+
+
+
+
+
+                <!--***************Employee Detail*************-->
+
+
+                <com.keykeep.app.views.custom_view.StyledTextViewBold
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="@dimen/_10sdp"
+                    android:text="@string/employee_detail"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15sdp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/black" />
+
+
+                <com.keykeep.app.views.custom_view.StyledTextViewRegular
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:text="Employee Name"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13sdp" />
+
+                <com.keykeep.app.views.custom_view.StyledTextViewRegular
+                    android:id="@+id/employee_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:text="BMW x6"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_13sdp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray" />
+
+
+            </LinearLayout>
+        </ScrollView>
+
     </LinearLayout>
-</LinearLayout>
+</layout>

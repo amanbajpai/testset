@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.keykeep.app.R;
 import com.keykeep.app.databinding.ActivityChangePasswordBinding;
+import com.keykeep.app.interfaces.DialogClickListener;
 import com.keykeep.app.model.bean.ChangePasswordBean;
 import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.utils.Utils;
@@ -19,8 +20,7 @@ import com.keykeep.app.views.custom_view.CustomActionBar;
 /**
  * Created by akshaydashore on 28/8/18
  */
-
-public class ChangePasswordActivity extends BaseActivity {
+public class ChangePasswordActivity extends BaseActivity implements DialogClickListener {
 
     private ActivityChangePasswordBinding binding;
     private ChangePasswordViewModel viewModel;
@@ -62,18 +62,16 @@ public class ChangePasswordActivity extends BaseActivity {
         public void onChanged(@Nullable ChangePasswordBean bean) {
 
             if (bean == null) {
-                Utils.showAlert(context, "", getString(R.string.server_error), "ok", "", AppUtils.dialogOkClick, viewModel);
+                Utils.showAlert(context, "", getString(R.string.server_error), "ok", "", AppUtils.dialog_ok_click, ChangePasswordActivity.this);
                 return;
             }
 
             if (bean.getCode().equals(AppUtils.STATUS_SUCCESS)) {
-                Utils.showAlert(context, "", bean.getMessage(), "ok", "", AppUtils.dialogOkClick, viewModel);
-                finish();
+                Utils.showAlert(context, "", bean.getMessage(), "ok", "", AppUtils.dialog_request_succes, ChangePasswordActivity.this);
             } else if (bean.getCode().equals(AppUtils.STATUS_FAIL)) {
-                Utils.showAlert(context, "", bean.getMessage(), "ok", "", AppUtils.dialogOkClick, viewModel);
+                Utils.showAlert(context, "", bean.getMessage(), "ok", "", AppUtils.dialog_ok_click, ChangePasswordActivity.this);
                 return;
             }
-
         }
     };
 
@@ -104,6 +102,10 @@ public class ChangePasswordActivity extends BaseActivity {
                     Utils.showToast(context, getString(R.string.server_error));
                     break;
 
+                case AppUtils.NO_INTERNET:
+                    Utils.showToast(context, getString(R.string.internet_connection));
+                    break;
+
             }
         }
     };
@@ -120,4 +122,15 @@ public class ChangePasswordActivity extends BaseActivity {
                 break;
         }
     }
+
+    @Override
+    public void onDialogClick(int which, int requestCode) {
+
+        switch (which) {
+            case AppUtils.dialog_request_succes:
+                finish();
+                break;
+        }
+    }
+
 }
