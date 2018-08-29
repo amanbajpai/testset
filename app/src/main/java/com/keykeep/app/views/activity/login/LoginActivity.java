@@ -78,6 +78,10 @@ public class LoginActivity extends BaseActivity {
                 case AppUtils.NO_INTERNET:
                     Utils.showToast(context, getString(R.string.internet_connection));
                     break;
+
+                case AppUtils.SERVER_ERROR:
+                    Utils.showToast(context, getString(R.string.server_error));
+                    break;
             }
         }
     };
@@ -91,6 +95,7 @@ public class LoginActivity extends BaseActivity {
                 Utils.showAlert(context, "", getString(R.string.server_error), getString(R.string.ok), "", AppUtils.dialog_ok_click, viewModel);
                 return;
             }
+
             if (loginBean.getCode().equals(AppUtils.STATUS_FAIL)) {
                 Utils.showAlert(context, "", loginBean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_click, viewModel);
                 return;
@@ -117,6 +122,7 @@ public class LoginActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_login:
+                Utils.showDialog(context,getString(R.string.please_wait));
                 viewModel.doLogin(binding);
                 break;
 

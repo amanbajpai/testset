@@ -704,7 +704,7 @@ public class Utils {
             progressDialog.dismiss();
         }
 //        ProgressDialog progressDialog = new ProgressDialog(context);
-        CustomProgressDialog progressDialog = new CustomProgressDialog(context);
+        progressDialog = new CustomProgressDialog(context);
 
         try {
             progressDialog.setCancelable(false);
@@ -716,10 +716,10 @@ public class Utils {
         return progressDialog;
     }
 
-    public static void hideProgressDialog(CustomProgressDialog pDialog) {
+    public static void hideProgressDialog() {
         try {
-            if (pDialog != null && pDialog.isShowing())
-                pDialog.dismiss();
+            if (progressDialog != null && progressDialog.isShowing())
+                progressDialog.dismiss();
         } catch (Exception ex) {
             ex.printStackTrace();
         }

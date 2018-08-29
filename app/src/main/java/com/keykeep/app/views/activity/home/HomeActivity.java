@@ -23,7 +23,7 @@ import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.activity.changepassword.ChangePasswordActivity;
 import com.keykeep.app.views.adapter.LeftDrawerListAdapter;
 import com.keykeep.app.views.base.BaseActivity;
-import com.keykeep.app.views.custom_view.StyledTextViewLight;
+import com.keykeep.app.views.fragment.asset_request_fragment.AssetRequestFragment;
 import com.keykeep.app.views.fragment.home.HomeFragment;
 
 import java.util.ArrayList;
@@ -239,6 +239,8 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
                 Utils.replaceFragment(HomeActivity.this, new HomeFragment());
                 break;
             case 1://My Bookings
+                title_tv.setText(getString(R.string.txt_title_screen_asset_request));
+                Utils.replaceFragment(HomeActivity.this, new AssetRequestFragment());
                 break;
             case 2://My Payments
                 break;
@@ -256,6 +258,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
             case 8: //Legals
                 break;
             case 9: //Trust&safet
+
                 break;
             case 10: //Share
                 break;

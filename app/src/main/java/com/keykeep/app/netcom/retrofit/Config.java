@@ -18,7 +18,10 @@ public interface Config {
     String ASSET_LIST_URL = "assetslist";
     String CHANGE_PASSWORD_URL = "changepassword";
     String ASSET_DETAIL = "assetdetail";
+    String ASSET_REQUEST ="assetkeeprequest";
 
+    String ASSET_PENDING_SEND_REQUEST="pendingsendrequest";
+    String ASSET_PENDING_RECIEVE_REQUEST="pendingreceiverequest";
 
 }
 

@@ -3,8 +3,8 @@
 
     <array name="drawer_menu_titles">
         <item>Home</item><!--0-->
-        <item>Handover</item><!--1-->
-        <item>Takeout</item><!--2-->
+        <item>Transfer</item><!--1-->
+        <item>Test Drive</item><!--2-->
         <item>Chat</item><!--3-->
         <item>History</item><!--4-->
         <item>Notification</item><!--5-->
@@ -32,6 +32,8 @@
     <string name="qr_code_could_not_read_qr_code_from_picture">Could not read your image.Try another image~</string>
     <string name="qr_code_could_not_read_qr_code_from_scanner">Sorry, could not open scan content</string>
     <string name="qr_code_camera_not_found">Could not detect camera</string>
+
+
     <string name="remember_me">Remember Me</string>
     <string name="login">Login</string>
     <string name="forgot_password">Forgot Password?</string>
@@ -67,6 +69,17 @@
     <!--Asset Screen String -->
     <string name="txt_status_available">Available</string>
     <string name="txt_status_unavailable">Not Available</string>
-
+    <string name="scan">Scan</string>
+    <string name="please_wait">please wait</string>
+    <string name="txt_status_type_send">send</string>
+    <string name="txt_status_type_recieve">receive</string>
+    <string name="txt_tab_title_pending_send_request">Pending Send Request</string>
+    <string name="txt_tab_title_pending_recieve_request">Pending Receive Request</string>
+    <string name="txt_your_request_for">Your request for\u0020</string>
+    <string name="txt_is_send_to">\u0020is sent to\u0020</string>
+    <string name="txt_want_to">want to issue</string>
+    <string name="txt_from_you">from you</string>
+    <string name="txt_no_data_available">No request available for now</string>
+    <string name="txt_title_screen_asset_request">Asset Request</string>
 
 </resources>
