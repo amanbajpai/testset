@@ -13,8 +13,11 @@ public class Pref {
     private static final String USER_NAME = "user_name";
     private static final String ACCESS_TOKEN = "Access_token";
     private static final String User_DETAIL = "user_detail";
-    public static final String EMPLOYEE_ID = "employee_id";
-    public static final String LOGIN_PASSWORD = "login_password";
+    private static final String EMPLOYEE_ID = "employee_id";
+    private static final String LOGIN_PASSWORD = "login_password";
+
+    public static final String REMEMBER_ME = "remember_me";
+    public static final String IS_LOGIN = "is_login";
 
 
     /**
@@ -108,4 +111,18 @@ public class Pref {
     public static String getPassword(Context context){
         return getSharedPrefs(context).getString(LOGIN_PASSWORD, "");
     }
+
+
+    public static void setBoolean(Context context, boolean value,String key) {
+        SharedPreferences.Editor editor = getEditor(context);
+        editor.putBoolean(key, value);
+        editor.apply();
+    }
+
+    public static boolean getBoolean(Context context,String key){
+        return getSharedPrefs(context).getBoolean(key, false);
+    }
+
+
+
 }

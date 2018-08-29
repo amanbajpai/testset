@@ -8,13 +8,13 @@ import java.lang.ref.WeakReference;
  * Created by akshaydashore on 24/8/18
  */
 
-public class BaseViewMadel<N> extends ViewModel {
+public class BaseViewModel<N> extends ViewModel {
 
 
 
     private WeakReference<N> mNavigator;
 
-    public BaseViewMadel() {
+    public BaseViewModel() {
 
     }
 

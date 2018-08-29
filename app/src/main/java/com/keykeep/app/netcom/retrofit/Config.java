@@ -17,6 +17,7 @@ public interface Config {
     String FORGOT_PASSWORD_URL = "forgotpassword";
     String ASSET_LIST_URL = "assetslist";
     String CHANGE_PASSWORD_URL = "changepassword";
+    String ASSET_DETAIL = "assetdetail";
 
 
 }

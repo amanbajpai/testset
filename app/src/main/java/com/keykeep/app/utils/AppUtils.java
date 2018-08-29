@@ -5,7 +5,6 @@ import android.Manifest;
 /**
  * Created by ankurrawal on 22/8/18.
  */
-
 public interface AppUtils {
 
     String[] STORAGE_PERMISSIONS = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -13,8 +12,12 @@ public interface AppUtils {
     String[] LOCATION_PERMISSIONS = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
 
+
+
+    String SCANED_QR_CODE = "scan_qr_code";
     String SCAN_SUCCESS = "scan_success";
     String SCAN_FAIL = "scan_fail";
+
 
     /**
      * login keys
@@ -32,11 +35,13 @@ public interface AppUtils {
     int REQUEST_CODE_QR_SCAN = 201;
     int REQUEST_CODE_CAMERA = 202;
     int SERVER_ERROR = 203;
+    int NO_INTERNET=204;
 
     /**
      * dialog keys
      */
-    public static int dialogOkClick = 301;
+    public static int dialog_ok_click = 301;
+    public static int dialog_request_succes = 301;
 
 
     /**

@@ -59,7 +59,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:maxLength="40"
-                        android:text="toshif@cdnsol.com"
                         android:singleLine="true"
                         android:textColor="@color/text_gray"
                         android:textSize="@dimen/_14sdp" />
@@ -83,7 +82,6 @@
                         android:inputType="textPassword"
                         android:maxLength="30"
                         android:singleLine="true"
-                        android:text="123456"
                         android:textColor="@color/text_gray"
                         android:textSize="@dimen/_15sdp" />
                 </com.keykeep.app.views.custom_view.CustomTextInputLayout>
@@ -100,8 +98,8 @@
                         android:id="@+id/tv_forgot_password"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
                         android:text="@string/forgot_password"
                         android:textColor="@color/text_gray"
                         android:textSize="@dimen/_14sdp" />
@@ -113,8 +111,8 @@
                         android:layout_alignParentRight="true"
                         android:background="@drawable/rect_crop_green_bg"
                         android:paddingBottom="@dimen/_5sdp"
-                        android:paddingLeft="@dimen/_30sdp"
-                        android:paddingRight="@dimen/_30sdp"
+                        android:paddingLeft="@dimen/_25sdp"
+                        android:paddingRight="@dimen/_25sdp"
                         android:paddingTop="@dimen/_5sdp"
                         android:text="@string/login"
                         android:textColor="@color/white"
@@ -129,7 +127,7 @@
                     android:layout_marginBottom="@dimen/_20sdp"
                     android:layout_marginRight="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:checked="true"
+                    android:buttonTint="@color/app_blue"
                     android:text="@string/remember_me"
                     android:textColor="@color/text_gray"
                     android:textSize="@dimen/_14sdp" />
