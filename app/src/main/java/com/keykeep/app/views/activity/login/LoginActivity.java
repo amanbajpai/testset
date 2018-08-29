@@ -15,6 +15,7 @@ import com.keykeep.app.databinding.LoginActivityBinding;
 import com.keykeep.app.model.bean.LoginResponseBean;
 import com.keykeep.app.preferences.Pref;
 import com.keykeep.app.utils.AppUtils;
+import com.keykeep.app.utils.Connectivity;
 import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.activity.forgot_password.ForgotPasswordActivity;
 import com.keykeep.app.views.activity.home.HomeActivity;
@@ -25,11 +26,9 @@ import com.keykeep.app.views.base.BaseActivity;
  */
 public class LoginActivity extends BaseActivity {
 
-
     private LoginActivityBinding binding;
     LoginViewModel viewModel;
     private Context context;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +48,12 @@ public class LoginActivity extends BaseActivity {
         viewModel.validator.observe(this, observer);
         viewModel.response_validator.observe(this, response_observer);
 
+        if (Pref.getBoolean(context, Pref.IS_LOGIN) && Pref.getBoolean(context, Pref.IS_LOGIN)) {
+            LoginBean.Result bean = Utils.getUserDetail(context);
+            binding.etMail.setText(bean.getEmail());
+            binding.etPassword.setText(Pref.getPassword(context));
+            binding.rememberCheckbox.setChecked(true);
+        }
 
     }
 
@@ -70,7 +75,9 @@ public class LoginActivity extends BaseActivity {
                 case AppUtils.invalid_mail:
                     Utils.showToast(context, getString(R.string.enter_valid_employeeid));
                     break;
-
+                case AppUtils.NO_INTERNET:
+                    Utils.showToast(context, getString(R.string.internet_connection));
+                    break;
             }
         }
     };
@@ -81,20 +88,25 @@ public class LoginActivity extends BaseActivity {
         public void onChanged(@Nullable LoginResponseBean loginBean) {
 
             if (loginBean == null) {
-                Utils.showAlert(context, "", getString(R.string.server_error), "ok", "", AppUtils.dialogOkClick, viewModel);
+                Utils.showAlert(context, "", getString(R.string.server_error), getString(R.string.ok), "", AppUtils.dialog_ok_click, viewModel);
                 return;
             }
             if (loginBean.getCode().equals(AppUtils.STATUS_FAIL)) {
-                Utils.showAlert(context, "", loginBean.getMessage(), "ok", "", AppUtils.dialogOkClick, viewModel);
+                Utils.showAlert(context, "", loginBean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_click, viewModel);
                 return;
             }
             Gson gson = new Gson();
+
             String user_detail = gson.toJson(loginBean.getResult());
             Pref.setUserDetail(context, user_detail);
             String empId = loginBean.getResult().getEmployeeId() + "";
-
             Pref.setEmployeeID(context, empId);
             Pref.setAccessToken(context, loginBean.getAccessToken());
+            boolean isRemember = binding.rememberCheckbox.isChecked();
+            Pref.setBoolean(context, isRemember, Pref.REMEMBER_ME);
+            Pref.setBoolean(context, true, Pref.IS_LOGIN);
+            Pref.setPassword(context, binding.etPassword.getText().toString());
+
             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
             finish();
         }

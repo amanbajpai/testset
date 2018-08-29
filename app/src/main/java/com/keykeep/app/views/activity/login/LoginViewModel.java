@@ -2,12 +2,14 @@ package com.keykeep.app.views.activity.login;
 
 import android.arch.lifecycle.MutableLiveData;
 
+import com.keykeep.app.R;
 import com.keykeep.app.application.KeyKeepApplication;
 import com.keykeep.app.databinding.LoginActivityBinding;
 import com.keykeep.app.interfaces.DialogClickListener;
 import com.keykeep.app.model.bean.LoginResponseBean;
 import com.keykeep.app.netcom.retrofit.RetrofitHolder;
 import com.keykeep.app.utils.AppUtils;
+import com.keykeep.app.utils.Connectivity;
 import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.base.BaseViewModel;
 
@@ -53,6 +55,11 @@ public class LoginViewModel extends BaseViewModel implements DialogClickListener
 
     public void doLogin(LoginActivityBinding binding) {
 
+        if (!Connectivity.isConnected()) {
+            validator.setValue(AppUtils.NO_INTERNET);
+            return;
+        }
+
         if (!checkEmail(binding.etMail.getText().toString())) {
             return;
         }
@@ -61,9 +68,9 @@ public class LoginViewModel extends BaseViewModel implements DialogClickListener
             return;
         }
 
+
         String email = binding.etMail.getText().toString();
         String password = binding.etPassword.getText().toString();
-
 
         Call<LoginResponseBean> call = RetrofitHolder.getService().doLogin(KeyKeepApplication.getInstance().getBaseEntity(false), email, password);
 

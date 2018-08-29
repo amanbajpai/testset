@@ -38,4 +38,10 @@ public interface Keys {
     String NEW_PASSWORD = "new_password";
     String CONFIRM_NEW_PASSWORD = "confirm_new_password";
     String IS_MY_ASSETS = "is_my_assets";
+
+
+    /**
+     * qr code
+     */
+    String QR_CODE_NUMBER = "qr_code_number";
 }

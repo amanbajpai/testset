@@ -10,6 +10,7 @@ import com.keykeep.app.model.bean.ForgotPasswordResponseBean;
 import com.keykeep.app.netcom.retrofit.RetrofitHolder;
 import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.utils.Utils;
+import com.keykeep.app.views.base.BaseViewModel;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,7 +19,7 @@ import retrofit2.Response;
 /**
  * Created by akshaydashore on 27/8/18
  */
-public class ForgotViewModel extends ViewModel implements DialogClickListener {
+public class ForgotViewModel extends BaseViewModel implements DialogClickListener {
 
     public final MutableLiveData<Integer> validator = new MutableLiveData<>();
     public final MutableLiveData<ForgotPasswordResponseBean> response_validator = new MutableLiveData<>();

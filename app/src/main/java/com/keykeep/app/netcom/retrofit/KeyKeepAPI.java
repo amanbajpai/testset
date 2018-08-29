@@ -1,7 +1,9 @@
 package com.keykeep.app.netcom.retrofit;
 
+import com.keykeep.app.model.bean.AssetDetailBean;
 import com.keykeep.app.model.bean.AssetsListResponseBean;
 import com.keykeep.app.model.bean.BaseRequestEntity;
+import com.keykeep.app.model.bean.BaseResponse;
 import com.keykeep.app.model.bean.ChangePasswordBean;
 import com.keykeep.app.model.bean.ForgotPasswordResponseBean;
 import com.keykeep.app.model.bean.LoginResponseBean;
@@ -28,7 +30,7 @@ public interface KeyKeepAPI {
     @POST(Config.ASSET_LIST_URL)
     public Call<AssetsListResponseBean> getAssetsList(@Body BaseRequestEntity baseRequestEntity, @Query(Keys.EMPLOYEE_ID) String employeeId, @Query(Keys.IS_MY_ASSETS) String isMyAsset);
 
-     @POST(Config.CHANGE_PASSWORD_URL)
+    @POST(Config.CHANGE_PASSWORD_URL)
     Call<ChangePasswordBean> doChangePassword(
             @Body BaseRequestEntity baseRequestEntity,
             @Query(Keys.OLDPASWSWORD) String oldPassword,
@@ -36,4 +38,12 @@ public interface KeyKeepAPI {
             @Query(Keys.CONFIRM_NEW_PASSWORD) String confirmPassword,
             @Query(Keys.EMPLOYEE_ID) String employeeId
     );
+
+    @POST(Config.ASSET_DETAIL)
+    Call<AssetDetailBean> getAssetDetail(
+            @Body BaseRequestEntity baseRequestEntity,
+            @Query(Keys.EMPLOYEE_ID) String empliyeeId,
+            @Query(Keys.QR_CODE_NUMBER) String qr_code_number
+            );
+
 }

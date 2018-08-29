@@ -66,7 +66,7 @@ public class ForgotPasswordActivity extends BaseActivity {
         public void onChanged(@Nullable ForgotPasswordResponseBean loginBean) {
 
             if (loginBean == null) {
-                Utils.showAlert(context, getString(R.string.error), getString(R.string.enter_employeeid), "ok", "", AppUtils.dialogOkClick, viewModel);
+                Utils.showAlert(context, getString(R.string.error), getString(R.string.enter_employeeid), "ok", "", AppUtils.dialog_ok_click, viewModel);
             }
 
         }
