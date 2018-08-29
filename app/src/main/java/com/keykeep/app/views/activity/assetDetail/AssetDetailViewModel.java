@@ -27,7 +27,6 @@ public class AssetDetailViewModel extends ViewModel {
 
     public void getAssetDetail(String qr_code, String emp_id) {
 
-        qr_code ="521055563";
         if (!Connectivity.isConnected()) {
             validator.setValue(AppUtils.NO_INTERNET);
             return;

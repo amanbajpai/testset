@@ -49,7 +49,7 @@ public class LoginActivity extends BaseActivity {
         viewModel.response_validator.observe(this, response_observer);
 
         if (Pref.getBoolean(context, Pref.IS_LOGIN) && Pref.getBoolean(context, Pref.IS_LOGIN)) {
-            LoginBean.Result bean = Utils.getUserDetail(context);
+            LoginResponseBean.Result bean = Utils.getUserDetail(context);
             binding.etMail.setText(bean.getEmail());
             binding.etPassword.setText(Pref.getPassword(context));
             binding.rememberCheckbox.setChecked(true);

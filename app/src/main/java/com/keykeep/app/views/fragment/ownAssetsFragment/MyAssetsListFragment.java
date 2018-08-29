@@ -25,7 +25,7 @@ import com.keykeep.app.views.base.BaseFragment;
  * Created by akshaydashore on 23/8/18
  */
 
-public class MyAssetsFragment extends BaseFragment implements XRecyclerView.LoadingListener {
+public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.LoadingListener {
 
     private Context context;
     private MyAssetListFragmentBinding binding;
