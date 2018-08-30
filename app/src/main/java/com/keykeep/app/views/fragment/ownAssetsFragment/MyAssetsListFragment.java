@@ -18,6 +18,7 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.keykeep.app.R;
 import com.keykeep.app.databinding.MyAssetListFragmentBinding;
 import com.keykeep.app.model.bean.AssetsListResponseBean;
+import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.adapter.MyAssetsAdapter;
 import com.keykeep.app.views.base.BaseFragment;
 
@@ -58,6 +59,22 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
         binding.recyclerView.setLayoutManager(manager);
         binding.recyclerView.setLoadingListener(this);
         viewModel.response_validator.observe(this, response_observer);
+        Utils.hideSoftKeyboard(getActivity());
+        binding.simpleSearchView.setQueryHint("Search here");
+
+        binding.simpleSearchView.setOnQueryTextListener(new android.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+//                Toast.makeText(context, query, Toast.LENGTH_LONG).show();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+//                Toast.makeText(context, newText, Toast.LENGTH_LONG).show();
+                return false;
+            }
+        });
     }
 
     @Override
