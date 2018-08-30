@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.util.SortedList;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -66,12 +65,15 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
             @Override
             public boolean onQueryTextSubmit(String query) {
 //                Toast.makeText(context, query, Toast.LENGTH_LONG).show();
+                allAssetAdapter.getFilter().filter(query);
+
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-//                Toast.makeText(context, newText, Toast.LENGTH_LONG).show();
+                allAssetAdapter.getFilter().filter(newText);
+                allAssetAdapter.notifyDataSetChanged();
                 return false;
             }
         });
@@ -89,7 +91,7 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
         public void onChanged(@Nullable AssetsListResponseBean assetsListResponseBean) {
 
             if (assetsListResponseBean != null && assetsListResponseBean.getResult() != null && assetsListResponseBean.getResult().size() > 0) {
-                allAssetAdapter = new AllAssetsAdapter(context, assetsListResponseBean);
+                allAssetAdapter = new AllAssetsAdapter(context, assetsListResponseBean.getResult());
                 binding.recyclerView.setAdapter(allAssetAdapter);
             }
         }
@@ -112,43 +114,5 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
     public void onLoadMore() {
         Log.e("onLoadMore: ", "call load more");
     }
-
-//    private final SortedList.Callback<AssetsListResponseBean> mCallback = new SortedList.Callback<AssetsListResponseBean>() {
-//
-//        @Override
-//        public void onInserted(int position, int count) {
-//            allAssetAdapter.notifyItemRangeInserted(position, count);
-//        }
-//
-//        @Override
-//        public void onRemoved(int position, int count) {
-//            allAssetAdapter.notifyItemRangeRemoved(position, count);
-//        }
-//
-//        @Override
-//        public void onMoved(int fromPosition, int toPosition) {
-//            allAssetAdapter.notifyItemMoved(fromPosition, toPosition);
-//        }
-//
-//        @Override
-//        public void onChanged(int position, int count) {
-//            allAssetAdapter.notifyItemRangeChanged(position, count);
-//        }
-//
-//        @Override
-//        public int compare(AssetsListResponseBean a, AssetsListResponseBean b) {
-//            return mComparator.compare(a, b);
-//        }
-//
-//        @Override
-//        public boolean areContentsTheSame(AssetsListResponseBean oldItem, AssetsListResponseBean newItem) {
-//            return oldItem.equals(newItem);
-//        }
-//
-//        @Override
-//        public boolean areItemsTheSame(AssetsListResponseBean item1, AssetsListResponseBean item2) {
-//            return item1.getId() == item2.getId();
-//        }
-//    };
 
 }
