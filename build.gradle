@@ -18,6 +18,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url "https://jitpack.io" }
     }
 }
 
@@ -42,6 +43,7 @@ ext {
     roomVersion = '1.1.1'
     archLifecycleVersion = '1.1.1'
     qrCodeVersion = '3.3.0'
+    searchBarVersion = '0.7.6'
 
     dataDependency = [
             sdpLibrary         : "com.intuit.sdp:sdp-android:${sdpVersion}",
@@ -53,7 +55,8 @@ ext {
             roomCompiler       : "android.arch.persistence.room:compiler:$rootProject.roomVersion",
             lifeCycle          : "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion",
             lifeCycleCompiler  : "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion",
-            qrCodeScanner      : "com.google.zxing:core:$rootProject.qrCodeVersion"
+            qrCodeScanner      : "com.google.zxing:core:$rootProject.qrCodeVersion",
+            searchBar          : "com.github.mancj:MaterialSearchBar:$rootProject.searchBarVersion"
     ]
 
     androidSupport = [

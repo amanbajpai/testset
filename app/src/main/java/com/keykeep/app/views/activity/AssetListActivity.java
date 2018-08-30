@@ -12,7 +12,7 @@ import com.keykeep.app.R;
 import com.keykeep.app.views.base.BaseActivity;
 import com.keykeep.app.views.custom_view.CustomActionBar;
 import com.keykeep.app.views.fragment.all_assets_list.AllAssetListFragment;
-import com.keykeep.app.views.fragment.ownAssetsFragment.MyAssetsFragment;
+import com.keykeep.app.views.fragment.ownAssetsFragment.MyAssetsListFragment;
 
 /**
  * Created by akshaydashore on 23/8/18
@@ -68,7 +68,7 @@ public class AssetListActivity extends BaseActivity {
                         replaceFragment(false, new AllAssetListFragment(), R.id.home_layout_container);
                         break;
                     case MY_ASSETS_LIST:
-                        replaceFragment(false, new MyAssetsFragment(), R.id.home_layout_container);
+                        replaceFragment(false, new MyAssetsListFragment(), R.id.home_layout_container);
                         break;
 
                 }
