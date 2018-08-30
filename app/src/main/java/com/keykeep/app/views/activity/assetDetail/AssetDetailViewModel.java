@@ -6,6 +6,8 @@ import android.arch.lifecycle.ViewModel;
 
 import com.keykeep.app.application.KeyKeepApplication;
 import com.keykeep.app.model.bean.AssetDetailBean;
+import com.keykeep.app.model.bean.BaseRequestEntity;
+import com.keykeep.app.model.bean.BaseResponse;
 import com.keykeep.app.netcom.retrofit.RetrofitHolder;
 import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.utils.Connectivity;
@@ -25,6 +27,8 @@ public class AssetDetailViewModel extends ViewModel {
     MutableLiveData<Integer> validator = new MutableLiveData<>();
     MutableLiveData<AssetDetailBean> response_validator = new MutableLiveData<>();
     MutableLiveData<AssetDetailBean> asset_request_validator = new MutableLiveData<>();
+    MutableLiveData<BaseResponse> asset_req_approved_validator = new MutableLiveData<>();
+    MutableLiveData<BaseResponse> asset_req_cancel_validator = new MutableLiveData<>();
 
 
     public void getAssetDetail(String qr_code, String emp_id) {
@@ -34,7 +38,6 @@ public class AssetDetailViewModel extends ViewModel {
             return;
         }
 
-
         Call<AssetDetailBean> call = RetrofitHolder.getService().getAssetDetail(
                 KeyKeepApplication.getBaseEntity(true),
                 emp_id,
@@ -42,6 +45,7 @@ public class AssetDetailViewModel extends ViewModel {
         );
 
         call.enqueue(new Callback<AssetDetailBean>() {
+
             @Override
             public void onResponse(Call<AssetDetailBean> call, Response<AssetDetailBean> response) {
                 Utils.hideProgressDialog();
@@ -86,6 +90,68 @@ public class AssetDetailViewModel extends ViewModel {
             }
         });
 
+    }
+
+
+    public void approveAssetRequest(int req_id, String emp_id) {
+
+        if (!Connectivity.isConnected()) {
+            validator.setValue(AppUtils.NO_INTERNET);
+            return;
+        }
+
+        Call<BaseResponse> call = RetrofitHolder.getService().approveAssetRequest(
+                KeyKeepApplication.getBaseEntity(true),
+                emp_id,
+                req_id
+        );
+
+        call.enqueue(new Callback<BaseResponse>() {
+
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                Utils.hideProgressDialog();
+                BaseResponse bean  = response.body();
+                asset_req_approved_validator.setValue(bean);
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                Utils.hideProgressDialog();
+                validator.setValue(AppUtils.SERVER_ERROR);
+            }
+        });
 
     }
+
+    public void cancelAssetRequest(int req_id, String emp_id) {
+
+        if (!Connectivity.isConnected()) {
+            validator.setValue(AppUtils.NO_INTERNET);
+            return;
+        }
+
+        Call<BaseResponse> call = RetrofitHolder.getService().cancelAssetRequest(
+                KeyKeepApplication.getBaseEntity(true),
+                emp_id,
+                req_id
+        );
+
+        call.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                Utils.hideProgressDialog();
+                BaseResponse bean  = response.body();
+                asset_req_cancel_validator.setValue(bean);
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                Utils.hideProgressDialog();
+                validator.setValue(AppUtils.SERVER_ERROR);
+            }
+        });
+
+    }
+
 }

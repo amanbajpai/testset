@@ -19,6 +19,7 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.keykeep.app.R;
 import com.keykeep.app.databinding.AssetRequestSendRecieveFragmentBinding;
 import com.keykeep.app.model.bean.AssetsListResponseBean;
+import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.adapter.AssetRequestAdapter;
 import com.keykeep.app.views.base.BaseFragment;
@@ -28,7 +29,6 @@ import static android.content.ContentValues.TAG;
 /**
  * Created by ashishthakur on 29/8/18.
  */
-
 public class AssetRequestFragment extends BaseFragment implements XRecyclerView.LoadingListener {
 
     AssetRequestSendRecieveFragmentBinding binding;
@@ -36,7 +36,7 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
     public static final int ASSET_PENDING_SEND_REQUEST = 0;
     public static final int ASSET_PENDING_RECIEVE_REQUEST = 1;
     private AssetRequestAdapter assetRequestAdapter;
-    private String typeRequest;
+    private int typeRequest;
 
 
     @Nullable
@@ -49,12 +49,11 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
         viewModel.getAssetsPendingSendRequest(binding);
 
         return binding.getRoot();
-
     }
 
     @Override
     public void initializeViews(View rootView) {
-        typeRequest=getString(R.string.txt_status_type_send);
+        typeRequest = AppUtils.STATUS_ASSET_SEND_REQUEST;
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText(getString(R.string.txt_tab_title_pending_send_request)));
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText(getString(R.string.txt_tab_title_pending_recieve_request)));
         View root = binding.tabLayout.getChildAt(0);
@@ -78,11 +77,11 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
                 Log.e(TAG, "" + tab.getPosition());
                 switch (tab.getPosition()) {
                     case ASSET_PENDING_SEND_REQUEST:
-                        typeRequest=getString(R.string.txt_status_type_send);
+                        typeRequest = AppUtils.STATUS_ASSET_SEND_REQUEST;
                         viewModel.getAssetsPendingSendRequest(binding);
                         break;
                     case ASSET_PENDING_RECIEVE_REQUEST:
-                        typeRequest=getString(R.string.txt_status_type_recieve);
+                        typeRequest = AppUtils.STATUS_ASSET_RECEIVE_REQUEST;
                         viewModel.getAssetsPendingRecieveRequest(binding);
                         break;
 
@@ -102,9 +101,7 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
 
     @Override
     public void onClick(View v) {
-
     }
-
 
     Observer<AssetsListResponseBean> response_observer = new Observer<AssetsListResponseBean>() {
 
@@ -113,16 +110,14 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
 
             if (assetsListResponseBean != null && assetsListResponseBean.getResult() != null && assetsListResponseBean.getResult().size() > 0) {
                 binding.recyclerView.setVisibility(View.VISIBLE);
-                assetRequestAdapter = new AssetRequestAdapter(getActivity(), assetsListResponseBean,typeRequest);
+                assetRequestAdapter = new AssetRequestAdapter(getActivity(), assetsListResponseBean, typeRequest);
                 binding.recyclerView.setAdapter(assetRequestAdapter);
-            }
-            else {
+            } else {
                 binding.recyclerView.setVisibility(View.GONE);
-                Utils.showToast(getActivity(),assetsListResponseBean.getMessage());
-               // binding.tvNoDataAvailable.setText(getString(R.string.txt_no_data_available));
+                Utils.showToast(getActivity(), assetsListResponseBean.getMessage());
+                // binding.tvNoDataAvailable.setText(getString(R.string.txt_no_data_available));
             }
         }
-
     };
 
     @Override

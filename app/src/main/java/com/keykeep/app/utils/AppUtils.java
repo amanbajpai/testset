@@ -17,7 +17,8 @@ public interface AppUtils {
     String SCANED_QR_CODE = "scan_qr_code";
     String SCAN_SUCCESS = "scan_success";
     String SCAN_FAIL = "scan_fail";
-
+    String ASSET_STATUS_CODE = "asset_status_code";
+    String ASSET_REQUEST_ID = "asset_req_id";
 
     /**
      * login keys
@@ -36,11 +37,17 @@ public interface AppUtils {
     int REQUEST_CODE_CAMERA = 202;
     int SERVER_ERROR = 203;
     int NO_INTERNET=204;
+    int STATUS_SCAN_CODE = 205;
+    int STATUS_ASSET_LIST = 206;
+    int STATUS_ASSET_SEND_REQUEST = 207;
+    int STATUS_ASSET_RECEIVE_REQUEST = 208;
     /**
      * dialog keys
      */
-    public static int dialog_ok_click = 301;
-    public static int dialog_request_succes = 301;
+    int dialog_ok_click = 301;
+    int dialog_request_succes = 301;
+    int dialog_ok_to_finish = 302;
+
 
 
     /**

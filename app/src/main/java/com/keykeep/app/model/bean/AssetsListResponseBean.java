@@ -73,6 +73,19 @@ public class AssetsListResponseBean extends BaseResponse {
         @Expose
         private String employeeId;
 
+        @SerializedName("asset_employee_assigned_log_id")
+        @Expose
+        private Integer assetEmployeeAssignedLogId;
+
+
+        public Integer getAssetEmployeeAssignedLogId() {
+            return assetEmployeeAssignedLogId;
+        }
+
+        public void setAssetEmployeeAssignedLogId(Integer assetEmployeeAssignedLogId) {
+            this.assetEmployeeAssignedLogId = assetEmployeeAssignedLogId;
+        }
+
         public String getAssetId() {
             return assetId;
         }

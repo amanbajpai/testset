@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.keykeep.app.R;
 import com.keykeep.app.model.bean.AssetsListResponseBean;
+import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.views.activity.assetDetail.AssetDetailActivity;
 
 /**
@@ -21,13 +22,13 @@ public class AssetRequestAdapter extends RecyclerView.Adapter<AssetRequestAdapte
 
     Context context;
     private AssetsListResponseBean assetLists;
-    private String typeRequest;
+    private int typeRequest;
 
     public AssetRequestAdapter(Context context,
-                               AssetsListResponseBean resultAssetList,String typeRequest) {
+                               AssetsListResponseBean resultAssetList, int typeRequest) {
         this.context = context;
         this.assetLists = resultAssetList;
-        this.typeRequest=typeRequest;
+        this.typeRequest = typeRequest;
 
     }
 
@@ -44,11 +45,28 @@ public class AssetRequestAdapter extends RecyclerView.Adapter<AssetRequestAdapte
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
 
-        if(typeRequest.equalsIgnoreCase(context.getString(R.string.txt_status_type_send))){
-            holder.requestText.setText(String.format("%s%s%s%s", context.getString(R.string.txt_your_request_for), assetLists.getResult().get(position).getAssetName(), context.getString(R.string.txt_is_send_to), assetLists.getResult().get(position).getCustomerName()));}
-        else {
+        if (typeRequest == AppUtils.STATUS_ASSET_SEND_REQUEST) {
+            holder.requestText.setText(String.format("%s%s%s%s", context.getString(R.string.txt_your_request_for), assetLists.getResult().get(position).getAssetName(), context.getString(R.string.txt_is_send_to), assetLists.getResult().get(position).getCustomerName()));
+        } else {
             holder.requestText.setText(String.format("%s%s%s%s", assetLists.getResult().get(position).getCustomerName(), context.getString(R.string.txt_want_to), assetLists.getResult().get(position).getAssetName(), context.getString(R.string.txt_from_you)));
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (typeRequest == AppUtils.STATUS_ASSET_SEND_REQUEST) {
+                    AssetsListResponseBean.Result bean = assetLists.getResult().get(position);
+                    Intent intent = new Intent(context, AssetDetailActivity.class);
+                    intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_ASSET_SEND_REQUEST);
+                    intent.putExtra(AppUtils.ASSET_REQUEST_ID,bean.getAssetEmployeeAssignedLogId());
+                    intent.putExtra(AppUtils.SCANED_QR_CODE, bean.getQrCodeNumber());
+                    context.startActivity(intent);
+                }
+            }
+        });
+
+
     }
 
 
@@ -63,7 +81,7 @@ public class AssetRequestAdapter extends RecyclerView.Adapter<AssetRequestAdapte
 
         public Holder(View itemView) {
             super(itemView);
-            requestText=itemView.findViewById(R.id.tv_request);
+            requestText = itemView.findViewById(R.id.tv_request);
 
         }
     }

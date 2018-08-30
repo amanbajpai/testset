@@ -25,7 +25,7 @@ public class AssetRequestViewModel extends ViewModel {
 
         String employeeId = Pref.getEmployeeID(KeyKeepApplication.getInstance());
 
-        Call<AssetsListResponseBean> call = RetrofitHolder.getService().getAssetPendingSendRequest(KeyKeepApplication.getInstance().getBaseEntity(false), employeeId, "0");
+        Call<AssetsListResponseBean> call = RetrofitHolder.getService().getAssetPendingSendRequest(KeyKeepApplication.getInstance().getBaseEntity(false), employeeId);
 
         call.enqueue(new Callback<AssetsListResponseBean>() {
             @Override
@@ -44,9 +44,10 @@ public class AssetRequestViewModel extends ViewModel {
 
         String employeeId = Pref.getEmployeeID(KeyKeepApplication.getInstance());
 
-        Call<AssetsListResponseBean> call = RetrofitHolder.getService().getAssetPendingRecieveRequest(KeyKeepApplication.getInstance().getBaseEntity(false), employeeId, "0");
+        Call<AssetsListResponseBean> call = RetrofitHolder.getService().getAssetPendingRecieveRequest(KeyKeepApplication.getInstance().getBaseEntity(false), employeeId);
 
         call.enqueue(new Callback<AssetsListResponseBean>() {
+
             @Override
             public void onResponse(Call<AssetsListResponseBean> call, Response<AssetsListResponseBean> response) {
                 response_validator.setValue(response.body());
