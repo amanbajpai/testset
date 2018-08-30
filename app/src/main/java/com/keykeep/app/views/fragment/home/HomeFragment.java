@@ -1,32 +1,24 @@
 package com.keykeep.app.views.fragment.home;
 
-import android.app.Activity;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.keykeep.app.R;
 import com.keykeep.app.databinding.HomeFragmentLayoutBinding;
 import com.keykeep.app.interfaces.DialogClickListener;
-import com.keykeep.app.model.bean.AssetDetailBean;
-import com.keykeep.app.preferences.Pref;
 import com.keykeep.app.qrcodescanner.QrCodeActivity;
 import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.activity.AssetListActivity;
 import com.keykeep.app.views.activity.assetDetail.AssetDetailActivity;
-import com.keykeep.app.views.activity.home.HomeActivity;
 import com.keykeep.app.views.base.BaseFragment;
 
 import org.json.JSONException;
@@ -128,6 +120,7 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
                 JSONObject jsonObject = new JSONObject(result);
                  result = jsonObject.getString("qr_code_number");
                 Intent intent = new Intent(context, AssetDetailActivity.class);
+                intent.putExtra(AppUtils.ASSET_STATUS_CODE,AppUtils.STATUS_ASSET_LIST);
                 intent.putExtra(AppUtils.SCANED_QR_CODE,result);
                 startActivity(intent);
             } catch (JSONException e) {

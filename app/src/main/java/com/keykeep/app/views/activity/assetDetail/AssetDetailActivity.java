@@ -9,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.view.View;
 
 import com.keykeep.app.R;
@@ -32,13 +31,12 @@ import org.json.JSONObject;
 
 public class AssetDetailActivity extends BaseActivity implements DialogClickListener {
 
-    public static final int STATUS_ADMIN = 1;
-    public static final int STATUS_ = 2;
+    public static int ASSET_STATUS = 1;
     private Context context;
     ActivityAssetDetailLayoutBinding binding;
     AssetDetailViewModel viewModel;
     private String emp_id;
-    private AssetDetailBean.Result resultBean;
+    private String qr_code;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,7 +51,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
     public void setCustomActionBar() {
         super.setCustomActionBar();
         CustomActionBar customActionBar = new CustomActionBar(this);
-        customActionBar.setActionbar("Assets Detail", true, false, this);
+        customActionBar.setActionbar(getString(R.string.asset_detail), true, false, this);
     }
 
     @Override
@@ -71,9 +69,36 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
          * call web service to get data using qr code
          */
         emp_id = Pref.getEmployeeID(context);
-        String qrcode = getIntent().getStringExtra(AppUtils.SCANED_QR_CODE);
+        qr_code = getIntent().getStringExtra(AppUtils.SCANED_QR_CODE);
+        ASSET_STATUS = getIntent().getIntExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_SCAN_CODE);
         Utils.showDialog(context, getString(R.string.please_wait));
-        viewModel.getAssetDetail(qrcode, emp_id);
+        viewModel.getAssetDetail(qr_code, emp_id);
+        validateSubmitView();
+
+    }
+
+    private void validateSubmitView() {
+
+        switch (ASSET_STATUS) {
+
+            case AppUtils.STATUS_ASSET_LIST:
+                binding.scanButton.setVisibility(View.VISIBLE);
+                binding.scanButton.setText(R.string.scan_asset);
+                break;
+
+            case AppUtils.STATUS_SCAN_CODE:
+                binding.scanButton.setVisibility(View.VISIBLE);
+                binding.scanButton.setText(R.string.confirm_request);
+                break;
+
+            case AppUtils.STATUS_ASSET_SEND_REQUEST:
+                binding.pendingStatusContainer.setVisibility(View.VISIBLE);
+                binding.cancelTv.setOnClickListener(this);
+                binding.acceptTv.setOnClickListener(this);
+                break;
+
+        }
+
     }
 
 
@@ -91,7 +116,6 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
                 return;
             }
             setDataFromBean(bean);
-
         }
     };
 
@@ -104,21 +128,23 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
                 Utils.showAlert(context, "", getString(R.string.server_error), getString(R.string.ok), "", AppUtils.dialog_ok_click, AssetDetailActivity.this);
                 return;
             }
-
             Utils.showAlert(context, "", bean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_click, AssetDetailActivity.this);
-
             if (bean.getCode().equals(AppUtils.STATUS_FAIL)) {
                 return;
             }
-            binding.scanButton.setVisibility(View.GONE);
-            setDataFromBean(bean);
-
+            finish();
         }
 
     };
 
+
+    /**
+     * Set data on view components from web service bean
+     *
+     * @param bean
+     */
     private void setDataFromBean(AssetDetailBean bean) {
-        resultBean = bean.getResult();
+        AssetDetailBean.Result resultBean = bean.getResult();
 
         binding.assetName.setText(resultBean.getAssetName());
         binding.assetType.setText(Utils.getAssetType(resultBean.getAssetType()));
@@ -133,6 +159,8 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
 
         binding.employeeName.setText(Utils.validateValue(resultBean.getEmployeeName()));
         binding.scanButton.setOnClickListener(AssetDetailActivity.this);
+
+        qr_code = resultBean.getQrCodeNumber();
     }
 
 
@@ -153,6 +181,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         }
     };
 
+
     @Override
     public void onClick(View v) {
 
@@ -160,21 +189,32 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
 
             case R.id.scan_button:
                 callSubmit();
-//                Utils.showDialog(context,getString(R.string.please_wait));
-//                viewModel.sendAssetRequest(resultBean.getQrCodeNumber(), emp_id);
                 break;
 
             case R.id.left_iv:
                 finish();
                 break;
+
+            case R.id.accept_tv:
+                Utils.showDialog(context, getString(R.string.please_wait));
+                viewModel.approveAssetRequest();
+                break;
+
+            case R.id.cancel_tv:
+                break;
+
         }
     }
 
+
+    /**
+     * Put action onclick according to status code
+     */
     private void callSubmit() {
 
-        switch (1) {
+        switch (ASSET_STATUS) {
 
-            case AppUtils.STATUS_SCAN_CODE:
+            case AppUtils.STATUS_ASSET_LIST:
                 if (Utils.checkPermissions(this, AppUtils.STORAGE_CAMERA_PERMISSIONS)) {
                     startActivityForResult(new Intent(context, QrCodeActivity.class), AppUtils.REQUEST_CODE_QR_SCAN);
                 } else {
@@ -184,11 +224,11 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
                 }
                 break;
 
-            case AppUtils.STATUS_ASSET_REQUEST:
+            case AppUtils.STATUS_SCAN_CODE:
+                Utils.showDialog(context, getString(R.string.please_wait));
+                viewModel.sendAssetRequest(qr_code, emp_id);
                 break;
         }
-
-
     }
 
     @Override
@@ -215,10 +255,9 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
             String result = data.getStringExtra(AppUtils.SCAN_SUCCESS);
             try {
                 JSONObject jsonObject = new JSONObject(result);
-                result = jsonObject.getString("qr_code_number");
-                Intent intent = new Intent(context, AssetDetailActivity.class);
-                intent.putExtra(AppUtils.SCANED_QR_CODE, result);
-                startActivity(intent);
+                qr_code = jsonObject.getString("qr_code_number");
+                ASSET_STATUS = AppUtils.STATUS_SCAN_CODE;
+                validateSubmitView();
             } catch (JSONException e) {
                 e.printStackTrace();
                 Utils.showToast(context, getString(R.string.unable_to_scan_qr));

@@ -31,6 +31,7 @@ public class AssetDetailViewModel extends ViewModel {
 
         if (!Connectivity.isConnected()) {
             validator.setValue(AppUtils.NO_INTERNET);
+            Utils.hideProgressDialog();
             return;
         }
 
@@ -42,6 +43,7 @@ public class AssetDetailViewModel extends ViewModel {
         );
 
         call.enqueue(new Callback<AssetDetailBean>() {
+
             @Override
             public void onResponse(Call<AssetDetailBean> call, Response<AssetDetailBean> response) {
                 Utils.hideProgressDialog();
@@ -85,6 +87,11 @@ public class AssetDetailViewModel extends ViewModel {
                 validator.setValue(AppUtils.SERVER_ERROR);
             }
         });
+
+
+    }
+
+    public void approveAssetRequest() {
 
 
     }

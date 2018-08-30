@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.keykeep.app.R;
 import com.keykeep.app.model.bean.AssetsListResponseBean;
+import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.views.activity.assetDetail.AssetDetailActivity;
 
 /**
@@ -40,10 +41,15 @@ public class MyAssetsAdapter extends RecyclerView.Adapter<MyAssetsAdapter.Holder
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.startActivity(new Intent(context, AssetDetailActivity.class));
+                AssetsListResponseBean.Result bean = assetLists.getResult().get(position);
+                Intent intent = new Intent(context, AssetDetailActivity.class);
+                intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_ASSET_LIST);
+                intent.putExtra(AppUtils.SCANED_QR_CODE, bean.getQrCodeNumber());
+                context.startActivity(intent);
             }
         });
         holder.assetName.setText(assetLists.getResult().get(position).getAssetName());

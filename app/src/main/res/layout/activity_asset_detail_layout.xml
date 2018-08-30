@@ -356,19 +356,61 @@
             android:id="@+id/scan_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginBottom="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:background="@drawable/green_rect_bg"
             android:gravity="center"
-            android:layout_gravity="center_horizontal"
             android:paddingBottom="@dimen/_10sdp"
             android:paddingLeft="@dimen/_25sdp"
             android:paddingRight="@dimen/_25sdp"
             android:paddingTop="@dimen/_10sdp"
-            android:text="Request For Asset"
             android:textColor="@color/green_light"
-            android:textSize="@dimen/_13sdp" />
+            android:textSize="@dimen/_13sdp"
+            android:visibility="gone" />
 
+        <LinearLayout
+            android:id="@+id/pending_status_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.keykeep.app.views.custom_view.StyledTextViewBold
+                android:id="@+id/accept_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:background="@drawable/green_rect_bg"
+                android:gravity="center"
+                android:paddingBottom="@dimen/_10sdp"
+                android:paddingLeft="@dimen/_25sdp"
+                android:paddingRight="@dimen/_25sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:text="@string/accept"
+                android:textColor="@color/green_light"
+                android:textSize="@dimen/_13sdp" />
+
+            <com.keykeep.app.views.custom_view.StyledTextViewBold
+                android:id="@+id/cancel_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:background="@drawable/green_rect_bg"
+                android:gravity="center"
+                android:paddingBottom="@dimen/_10sdp"
+                android:paddingLeft="@dimen/_25sdp"
+                android:paddingRight="@dimen/_25sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:text="@string/cancel"
+                android:textColor="@color/green_light"
+                android:textSize="@dimen/_13sdp" />
+        </LinearLayout>
 
     </LinearLayout>
 </layout>
