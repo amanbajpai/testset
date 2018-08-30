@@ -101,7 +101,7 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
                 } else {
                     allAssetAdapter.getFilter().filter(newText);
                     allAssetAdapter.notifyDataSetChanged();
-                    setSearchAssetStatus();
+                   // setSearchAssetStatus();
 
                 }
 
