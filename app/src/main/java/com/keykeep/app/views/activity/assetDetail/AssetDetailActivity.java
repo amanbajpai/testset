@@ -23,6 +23,9 @@ import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.base.BaseActivity;
 import com.keykeep.app.views.custom_view.CustomActionBar;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by ankurrawal on 23/8/18.
  */
@@ -69,7 +72,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
          */
         emp_id = Pref.getEmployeeID(context);
         String qrcode = getIntent().getStringExtra(AppUtils.SCANED_QR_CODE);
-        Utils.showDialog(context,getString(R.string.please_wait));
+        Utils.showDialog(context, getString(R.string.please_wait));
         viewModel.getAssetDetail(qrcode, emp_id);
     }
 
@@ -118,7 +121,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         resultBean = bean.getResult();
 
         binding.assetName.setText(resultBean.getAssetName());
-        binding.assetType.setText(resultBean.getAssetType() + "");
+        binding.assetType.setText(Utils.getAssetType(resultBean.getAssetType()));
         binding.versionNumber.setText(resultBean.getVersionNumber());
         binding.codeNumber.setText(resultBean.getVin());
         binding.modelNo.setText(resultBean.getModelNumber());
@@ -156,8 +159,9 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         switch (v.getId()) {
 
             case R.id.scan_button:
-                Utils.showDialog(context,getString(R.string.please_wait));
-                viewModel.sendAssetRequest(resultBean.getQrCodeNumber(), emp_id);
+                callSubmit();
+//                Utils.showDialog(context,getString(R.string.please_wait));
+//                viewModel.sendAssetRequest(resultBean.getQrCodeNumber(), emp_id);
                 break;
 
             case R.id.left_iv:
@@ -166,9 +170,71 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         }
     }
 
+    private void callSubmit() {
+
+        switch (1) {
+
+            case AppUtils.STATUS_SCAN_CODE:
+                if (Utils.checkPermissions(this, AppUtils.STORAGE_CAMERA_PERMISSIONS)) {
+                    startActivityForResult(new Intent(context, QrCodeActivity.class), AppUtils.REQUEST_CODE_QR_SCAN);
+                } else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        requestPermissions(AppUtils.STORAGE_CAMERA_PERMISSIONS, AppUtils.REQUEST_CODE_CAMERA);
+                    }
+                }
+                break;
+
+            case AppUtils.STATUS_ASSET_REQUEST:
+                break;
+        }
+
+
+    }
+
     @Override
     public void onDialogClick(int which, int requestCode) {
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
+        /**
+         * Get asset result from web service after scan Qr code
+         */
+        if (requestCode == AppUtils.REQUEST_CODE_QR_SCAN) {
+
+            if (resultCode != RESULT_OK) {
+                Utils.showToast(context, getString(R.string.unable_to_scan_qr));
+                return;
+            }
+            if (data == null)
+                return;
+            //Getting the passed result
+            String result = data.getStringExtra(AppUtils.SCAN_SUCCESS);
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                result = jsonObject.getString("qr_code_number");
+                Intent intent = new Intent(context, AssetDetailActivity.class);
+                intent.putExtra(AppUtils.SCANED_QR_CODE, result);
+                startActivity(intent);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Utils.showToast(context, getString(R.string.unable_to_scan_qr));
+            }
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == AppUtils.REQUEST_CODE_CAMERA || Utils.onRequestPermissionsResult(permissions, grantResults)) {
+            startActivityForResult(new Intent(context, QrCodeActivity.class), AppUtils.REQUEST_CODE_QR_SCAN);
+        } else {
+            Utils.showToast(context, getString(R.string.allow_camera_permission));
+        }
     }
 
 

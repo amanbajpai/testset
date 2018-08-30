@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">KeyKeep</string>
+    <string name="app_name">LotView</string>
 
     <array name="drawer_menu_titles">
         <item>Home</item><!--0-->

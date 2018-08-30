@@ -1782,4 +1782,20 @@ public class Utils {
         }
         return bean;
     }
+
+    public static String getAssetType(int assetType) {
+        String type = "N/A";
+        switch (assetType) {
+
+            case 1:
+                type = "New";
+                break;
+            case 2:
+                type = "Repair";
+                break;
+
+        }
+        return type;
+    }
+
 }

@@ -63,7 +63,6 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
 
 
     private void setView() {
-
     }
 
     @Override
@@ -119,7 +118,6 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
     @Override
     protected void onPause() {
         super.onPause();
-
         activityPaused();
     }
 
