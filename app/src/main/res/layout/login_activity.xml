@@ -45,6 +45,7 @@
                     android:textSize="@dimen/_17sdp" />
 
                 <com.keykeep.app.views.custom_view.CustomTextInputLayout
+                    style="@style/TextAppearence.App.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -67,6 +68,7 @@
 
 
                 <com.keykeep.app.views.custom_view.CustomTextInputLayout
+                    style="@style/TextAppearence.App.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_20sdp"
@@ -98,8 +100,8 @@
                         android:id="@+id/tv_forgot_password"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
                         android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
                         android:text="@string/forgot_password"
                         android:textColor="@color/text_gray"
                         android:textSize="@dimen/_14sdp" />

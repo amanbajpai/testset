@@ -2,18 +2,30 @@
     <string name="app_name">LotView</string>
 
 
+    <!--  <array name="drawer_menu_titles">
+          <item>Scan</item>&lt;!&ndash;0&ndash;&gt;
+          <item>Transfer</item>&lt;!&ndash;1&ndash;&gt;
+          <item>Test Drive</item>&lt;!&ndash;2&ndash;&gt;
+          <item>Chat</item>&lt;!&ndash;3&ndash;&gt;
+          <item>Pending Request</item>&lt;!&ndash;4&ndash;&gt;
+          <item>History</item>&lt;!&ndash;5&ndash;&gt;
+          <item>Notification</item>&lt;!&ndash;6&ndash;&gt;
+          <item>Profile</item>&lt;!&ndash;7&ndash;&gt;
+          <item>Setting</item>&lt;!&ndash;8&ndash;&gt;
+          <item>Logout</item>&lt;!&ndash;9&ndash;&gt;
+      </array>-->
+
+
     <array name="drawer_menu_titles">
-        <item>Scan</item><!--0-->
-        <item>Transfer</item><!--1-->
-        <item>Test Drive</item><!--2-->
-        <item>Chat</item><!--3-->
-        <item>Pending Request</item><!--4-->
-        <item>History</item><!--5-->
-        <item>Notification</item><!--6-->
-        <item>Profile</item><!--7-->
-        <item>Setting</item><!--8-->
-        <item>Logout</item><!--9-->
+        <item>Home</item><!--0-->
+        <item>Assets</item><!--1-->
+        <item>Asset Requests</item><!--7-->
+        <item>Notifications</item><!--8-->
+        <item>Profile</item>
+        <item>Setting</item>
+        <item>Logout</item>
     </array>
+
 
     <string name="drawer_open">Drawer open</string>
     <string name="drawer_close">Drawer closed</string>
@@ -74,8 +86,8 @@
     <string name="please_wait">please wait</string>
     <string name="txt_status_type_send">send</string>
     <string name="txt_status_type_recieve">receive</string>
-    <string name="txt_tab_title_pending_send_request">Pending Send Request</string>
-    <string name="txt_tab_title_pending_recieve_request">Pending Receive Request</string>
+    <string name="txt_tab_title_pending_send_request">Sent</string>
+    <string name="txt_tab_title_pending_recieve_request">Rec</string>
     <string name="txt_your_request_for">Your request for\u0020</string>
     <string name="txt_is_send_to">\u0020is sent to\u0020</string>
     <string name="txt_want_to">want to issue</string>

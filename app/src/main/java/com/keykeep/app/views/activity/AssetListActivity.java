@@ -1,5 +1,6 @@
 package com.keykeep.app.views.activity;
 
+import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -46,6 +47,11 @@ public class AssetListActivity extends BaseActivity {
         tab_layout = findViewById(R.id.tab_layout);
         tab_layout.addTab(tab_layout.newTab().setText("All Assets"));
         tab_layout.addTab(tab_layout.newTab().setText("My Assets"));
+
+        tab_layout.setSelectedTabIndicatorColor(Color.parseColor("#3A5A9A"));
+        tab_layout.setSelectedTabIndicatorHeight((int) (5 * getResources().getDisplayMetrics().density));
+        tab_layout.setTabTextColors(Color.parseColor("#727272"), Color.parseColor("#2F2F2D"));
+
 
         replaceFragment(false, new AllAssetListFragment(), R.id.home_layout_container);
 
