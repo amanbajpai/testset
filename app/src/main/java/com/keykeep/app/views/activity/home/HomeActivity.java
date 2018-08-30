@@ -63,6 +63,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
 
 
     private void setView() {
+
     }
 
     @Override
@@ -118,24 +119,25 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
     @Override
     protected void onPause() {
         super.onPause();
+
         activityPaused();
     }
 
 
-    private final int[] menuItemIcons = new int[]{R.drawable.hovme,
-            R.drawable.hovme, R.drawable.hovme, R.drawable.hovme,
-            R.drawable.hovme, R.drawable.hovme, R.drawable.hovme,
-            R.drawable.hovme, R.drawable.hovme, R.drawable.hovme, R.drawable.hovme,
-            R.drawable.hovme, R.drawable.hovme, R.drawable.hovme};
+    private final int[] menuItemIcons = new int[]{
+            R.drawable.slider_scan,
+            R.drawable.slider_transfer, R.drawable.slider_test_drive, R.drawable.slider_chat,
+            R.drawable.slider_pending_req, R.drawable.slider_history, R.drawable.slider_notification,
+            R.drawable.slider_profile, R.drawable.slider_settings, R.drawable.slider_logout
+    };
 
 
     private final int[] menuItemIconsSelected = new int[]{
 
-            R.drawable.home_active, R.drawable.home_active, R.drawable.home_active,
-            R.drawable.home_active, R.drawable.home_active, R.drawable.home_active,
-            R.drawable.home_active,
-            R.drawable.home_active, R.drawable.home_active, R.drawable.home_active, R.drawable.home_active, R.drawable.home_active, R.drawable.home_active, R.drawable.home_active
-
+            R.drawable.slider_scan,
+            R.drawable.slider_transfer, R.drawable.slider_test_drive, R.drawable.slider_chat,
+            R.drawable.slider_pending_req, R.drawable.slider_history, R.drawable.slider_notification,
+            R.drawable.slider_profile, R.drawable.slider_settings, R.drawable.slider_logout
     };
 
     private void prepareMenuItemList() {
@@ -237,32 +239,57 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
                 Utils.replaceFragment(HomeActivity.this, new HomeFragment());
                 break;
             case 1://My Bookings
-                title_tv.setText(getString(R.string.txt_title_screen_asset_request));
-                Utils.replaceFragment(HomeActivity.this, new AssetRequestFragment());
+                setDrawerHover(position);
                 break;
             case 2://My Payments
+                setDrawerHover(position);
+
                 break;
             case 3://My Account
+                setDrawerHover(position);
+
                 break;
             case 4://How It Works
+                setDrawerHover(position);
+
                 break;
             case 5: //About Us
+                setDrawerHover(position);
+
                 break;
             case 6://profile
+                setDrawerHover(position);
+
                 startActivity(new Intent(context, ChangePasswordActivity.class));
                 break;
             case 7://Support
+                setDrawerHover(position);
+
                 break;
             case 8: //Legals
+                setDrawerHover(position);
+
+                title_tv.setText(getString(R.string.txt_title_screen_asset_request));
+                Utils.replaceFragment(HomeActivity.this, new AssetRequestFragment());
                 break;
             case 9: //Trust&safet
+                setDrawerHover(position);
 
                 break;
             case 10: //Share
+                setDrawerHover(position);
+
                 break;
             case 11://Rate Us
+                setDrawerHover(position);
+
+                break;
+            case 12://Asset Request
+                setDrawerHover(position);
+
                 break;
             case 13: //Logout
+                setDrawerHover(position);
                 break;
 
         }
@@ -273,7 +300,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
 
         try {
             if (fragment instanceof HomeFragment) {
-                setDrawerHover(0);
+                //setDrawerHover(0);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -285,7 +312,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
     private void setDrawerHover(int position) {
 
         try {
-            if (!leftMenuDrawerItemses.get(position).isMenuIsSelected()) {
+           /* if (!leftMenuDrawerItemses.get(position).isMenuIsSelected()) {
                 leftMenuDrawerItemses.get(position).setMenuIsSelected(true);
             }
 
@@ -295,7 +322,15 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
             } else {
                 leftDrawerListAdapter.notifyDataSetChanged();
             }
-            previousPosition = position;
+            previousPosition = position;*/
+            if (!leftMenuDrawerItemses.get(position).isMenuIsSelected()) {
+                for (int i = 0; i < leftMenuDrawerItemses.size(); i++) {
+                    leftMenuDrawerItemses.get(i).setMenuIsSelected(false);
+                }
+                leftMenuDrawerItemses.get(position).setMenuIsSelected(true);
+                leftDrawerListAdapter.notifyDataSetChanged();
+
+            }
 //            leftDrawerListAdapter.notifyDataSetChanged();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -308,7 +343,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
         try {
             if (fragment instanceof HomeFragment) {
                 title_tv.setVisibility(View.VISIBLE);
-                setDrawerHover(3);
+                //setDrawerHover(3);
                 title_tv.setText(("Home"));
             }
         } catch (Exception ex) {
@@ -346,4 +381,5 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
     public void onClick(View v) {
 
     }
+
 }

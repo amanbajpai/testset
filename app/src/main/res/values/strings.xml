@@ -1,16 +1,17 @@
 <resources>
     <string name="app_name">LotView</string>
 
+
     <array name="drawer_menu_titles">
-        <item>Home</item><!--0-->
+        <item>Scan</item><!--0-->
         <item>Transfer</item><!--1-->
         <item>Test Drive</item><!--2-->
         <item>Chat</item><!--3-->
-        <item>History</item><!--4-->
-        <item>Notification</item><!--5-->
-        <item>Profile</item><!--6-->
-        <item>Setting</item><!--7-->
-        <item>&#160;</item><!--8-->
+        <item>Pending Request</item><!--4-->
+        <item>History</item><!--5-->
+        <item>Notification</item><!--6-->
+        <item>Profile</item><!--7-->
+        <item>Setting</item><!--8-->
         <item>Logout</item><!--9-->
     </array>
 
@@ -86,5 +87,6 @@
     <string name="scan_asset">Scan Asset</string>
     <string name="confirm_request">Confirm Request</string>
     <string name="asset_detail">Assets Detail</string>
+    <string name="txt_no_records_avialable">No records available</string>
 
 </resources>

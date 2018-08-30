@@ -70,9 +70,9 @@
             android:layout_height="@dimen/_70sdp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_20sdp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/slider_profile_pic" />
 
-        <com.keykeep.app.views.custom_view.StyledTextViewLight
+        <com.keykeep.app.views.custom_view.StyledTextViewMedium
             android:id="@+id/leftDrawer_profileName_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -80,18 +80,19 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="Tom Luise"
-            android:textColor="@color/colorRed"
+            android:textColor="@color/black"
             android:textSize="@dimen/_14sdp" />
 
 
         <com.keykeep.app.views.custom_view.StyledTextViewLight
             android:id="@+id/left_drawerNumber_text"
+           android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/leftDrawer_profileName_text"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_5sdp"
-            android:text="+61 123456987"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="@dimen/_11sdp" />
 

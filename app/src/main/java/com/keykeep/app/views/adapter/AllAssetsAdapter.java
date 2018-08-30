@@ -13,11 +13,9 @@ import android.widget.Filterable;
 
 import com.keykeep.app.R;
 import com.keykeep.app.model.bean.AssetsListResponseBean;
-import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.views.activity.assetDetail.AssetDetailActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by akshaydashore on 23/8/18
@@ -27,13 +25,22 @@ public class AllAssetsAdapter extends RecyclerView.Adapter<AllAssetsAdapter.Hold
 
     Context context;
     private ArrayList<AssetsListResponseBean.Result> assetLists;
-    private ArrayList<AssetsListResponseBean.Result> assetListsFinal;
+    private ArrayList<AssetsListResponseBean.Result> assetfilterList;
+    private ArrayList<AssetsListResponseBean.Result> assetfilteredFinalList;
     private AllAssetsSearchFilter filter;
 
     public AllAssetsAdapter(Context context, ArrayList<AssetsListResponseBean.Result> resultAssetList) {
         this.context = context;
         this.assetLists = resultAssetList;
-        this.assetListsFinal = resultAssetList;
+        this.assetfilteredFinalList = resultAssetList;
+
+    }
+
+    public void setAssetList(Context context, ArrayList<AssetsListResponseBean.Result> resultAssetList) {
+        this.context = context;
+        this.assetLists = resultAssetList;
+        this.assetfilteredFinalList = resultAssetList;
+        notifyDataSetChanged();
 
     }
 
@@ -52,11 +59,7 @@ public class AllAssetsAdapter extends RecyclerView.Adapter<AllAssetsAdapter.Hold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AssetsListResponseBean.Result bean = assetLists.getResult().get(position);
-                Intent intent = new Intent(context, AssetDetailActivity.class);
-                intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_ASSET_LIST);
-                intent.putExtra(AppUtils.SCANED_QR_CODE, bean.getQrCodeNumber());
-                context.startActivity(intent);
+                context.startActivity(new Intent(context, AssetDetailActivity.class));
             }
         });
         holder.assetName.setText(assetLists.get(position).getAssetName());
@@ -80,9 +83,13 @@ public class AllAssetsAdapter extends RecyclerView.Adapter<AllAssetsAdapter.Hold
     @Override
     public Filter getFilter() {
         if (filter == null) {
-            filter = new AllAssetsSearchFilter(assetLists);
+            filter = new AllAssetsSearchFilter();
         }
         return filter;
+    }
+
+    public ArrayList<AssetsListResponseBean.Result> getAssetLists() {
+        return assetfilterList;
     }
 
     class Holder extends RecyclerView.ViewHolder {
@@ -99,6 +106,7 @@ public class AllAssetsAdapter extends RecyclerView.Adapter<AllAssetsAdapter.Hold
         }
     }
 
+/*
     public class AllAssetsSearchFilter extends Filter {
 
         private ArrayList<AssetsListResponseBean.Result> originalList;
@@ -140,6 +148,40 @@ public class AllAssetsAdapter extends RecyclerView.Adapter<AllAssetsAdapter.Hold
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
             originalList = (ArrayList<AssetsListResponseBean.Result>) filterResults.values;
             assetLists = originalList;
+            notifyDataSetChanged();
+        }
+    }
+*/
+
+
+    private class AllAssetsSearchFilter extends Filter {
+        FilterResults results = new FilterResults();
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            if (constraint != null && constraint.length() > 0) {
+
+                assetfilterList = new ArrayList<AssetsListResponseBean.Result>();
+                for (int i = 0; i < assetfilteredFinalList.size(); i++) {
+                    if (assetfilteredFinalList.get(i).getAssetName() != null) {
+                        if ((assetfilteredFinalList.get(i).getAssetName().toUpperCase())
+                                .contains(constraint.toString().toUpperCase())) {
+                            assetfilterList.add(assetfilteredFinalList.get(i));
+                        }
+                    }
+                }
+                results.count = assetfilterList.size();
+                results.values = assetfilterList;
+            } else {
+                results.count = assetfilteredFinalList.size();
+                results.values = assetfilteredFinalList;
+            }
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            assetLists = (ArrayList<AssetsListResponseBean.Result>) filterResults.values;
             notifyDataSetChanged();
         }
     }

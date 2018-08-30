@@ -21,7 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="@dimen/_10sdp">
+            android:paddingBottom="@dimen/_10sdp"
+            android:paddingTop="@dimen/_10sdp">
 
             <RelativeLayout
                 android:layout_width="@dimen/_40sdp"
@@ -36,7 +37,7 @@
 
             </RelativeLayout>
 
-            <com.keykeep.app.views.custom_view.StyledTextViewRegular
+            <com.keykeep.app.views.custom_view.StyledTextViewMedium
                 android:id="@+id/leftDrawerTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -44,7 +45,7 @@
                 android:layout_marginLeft="@dimen/_8sdp"
                 android:gravity="center_vertical"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_9sdp" />
+                android:textSize="@dimen/_12sdp" />
         </LinearLayout>
 
         <View

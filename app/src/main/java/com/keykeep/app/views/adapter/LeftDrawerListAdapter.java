@@ -59,12 +59,12 @@ public class LeftDrawerListAdapter extends RecyclerView.Adapter<LeftDrawerListAd
 
             holder.binding.leftDrawerTxt.setTextColor(context.getResources().getColor(R.color.black));
             holder.binding.rootLayout.setBackgroundColor(context.getResources().getColor(R.color.white));
-//            holder.binding.leftDrawerIv.setImageResource(leftDrawerMenuList.get(position).getSelectedIcon());
+           holder.binding.leftDrawerIv.setImageResource(leftDrawerMenuList.get(position).getSelectedIcon());
         } else {
 
             holder.binding.leftDrawerTxt.setTextColor(context.getResources().getColor(R.color.white));
             holder.binding.rootLayout.setBackgroundColor(context.getResources().getColor(R.color.app_blue));
-//            holder.binding.leftDrawerIv.setImageResource(leftDrawerMenuList.get(position).getDeSelectedIcon());
+            holder.binding.leftDrawerIv.setImageResource(leftDrawerMenuList.get(position).getDeSelectedIcon());
         }
 
         holder.binding.rootLayout.setOnClickListener(new View.OnClickListener() {
