@@ -118,7 +118,6 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
                 // binding.tvNoDataAvailable.setText(getString(R.string.txt_no_data_available));
             }
         }
-
     };
 
     @Override

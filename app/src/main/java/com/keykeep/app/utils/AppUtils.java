@@ -18,6 +18,7 @@ public interface AppUtils {
     String SCAN_SUCCESS = "scan_success";
     String SCAN_FAIL = "scan_fail";
     String ASSET_STATUS_CODE = "asset_status_code";
+    String ASSET_REQUEST_ID = "asset_req_id";
 
     /**
      * login keys
@@ -43,8 +44,10 @@ public interface AppUtils {
     /**
      * dialog keys
      */
-    public static int dialog_ok_click = 301;
-    public static int dialog_request_succes = 301;
+    int dialog_ok_click = 301;
+    int dialog_request_succes = 301;
+    int dialog_ok_to_finish = 302;
+
 
 
     /**

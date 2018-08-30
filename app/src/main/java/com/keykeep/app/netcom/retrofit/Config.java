@@ -23,5 +23,8 @@ public interface Config {
     String ASSET_PENDING_SEND_REQUEST="pendingsendrequest";
     String ASSET_PENDING_RECIEVE_REQUEST="pendingreceiverequest";
 
+    String CANCEL_ASSET_REQ_URL ="assetrequestdecline";
+    String APPROVE_ASSET_REQ_URL ="assetrequestapprove";
+
 }
 

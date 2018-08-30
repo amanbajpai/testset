@@ -21,6 +21,7 @@ public interface Keys {
     String TAG_DEVICE_TOKEN = "device_token";
 
 
+
     /*API keys Below*/
 
     /**
@@ -34,7 +35,7 @@ public interface Keys {
      * change password
      */
     String EMPLOYEE_ID = "employee_id";
-    String OLDPASWSWORD = "old_password";
+    String OLD_PASSWORD = "old_password";
     String NEW_PASSWORD = "new_password";
     String CONFIRM_NEW_PASSWORD = "confirm_new_password";
     String IS_MY_ASSETS = "is_my_assets";
@@ -44,4 +45,10 @@ public interface Keys {
      * qr code
      */
     String QR_CODE_NUMBER = "qr_code_number";
+
+
+    /**
+     * approved request
+     */
+    String REQ_ID = "request_id";
 }

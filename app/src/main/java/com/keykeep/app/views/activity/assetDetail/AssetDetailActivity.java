@@ -15,6 +15,7 @@ import com.keykeep.app.R;
 import com.keykeep.app.databinding.ActivityAssetDetailLayoutBinding;
 import com.keykeep.app.interfaces.DialogClickListener;
 import com.keykeep.app.model.bean.AssetDetailBean;
+import com.keykeep.app.model.bean.BaseResponse;
 import com.keykeep.app.preferences.Pref;
 import com.keykeep.app.qrcodescanner.QrCodeActivity;
 import com.keykeep.app.utils.AppUtils;
@@ -37,6 +38,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
     AssetDetailViewModel viewModel;
     private String emp_id;
     private String qr_code;
+    private int req_id = -1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,6 +65,10 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         viewModel.validator.observe(this, observer);
         viewModel.response_validator.observe(this, response_observer);
         viewModel.asset_request_validator.observe(this, asset_request_observer);
+        viewModel.asset_req_approved_validator.observe(this, asset_req_approved_observer);
+        viewModel.asset_req_cancel_validator.observe(this, asset_req_cancel_observer);
+
+
         binding.scanButton.setOnClickListener(AssetDetailActivity.this);
 
         /**
@@ -73,6 +79,10 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         ASSET_STATUS = getIntent().getIntExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_SCAN_CODE);
         Utils.showDialog(context, getString(R.string.please_wait));
         viewModel.getAssetDetail(qr_code, emp_id);
+
+        if (ASSET_STATUS == AppUtils.STATUS_ASSET_SEND_REQUEST) {
+            req_id = getIntent().getIntExtra(AppUtils.ASSET_REQUEST_ID, -1);
+        }
         validateSubmitView();
 
     }
@@ -137,6 +147,59 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
 
     };
 
+    Observer<BaseResponse> asset_req_approved_observer = new Observer<BaseResponse>() {
+        @Override
+        public void onChanged(@Nullable BaseResponse bean) {
+
+            if (bean == null) {
+                Utils.showAlert(context, "", getString(R.string.server_error), getString(R.string.ok), "", AppUtils.dialog_ok_click, AssetDetailActivity.this);
+                return;
+            }
+
+            if (bean.getCode().equals(AppUtils.STATUS_FAIL)) {
+                Utils.showAlert(context, "", bean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_click, AssetDetailActivity.this);
+                return;
+            } else {
+                Utils.showAlert(context, "", bean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_click, AssetDetailActivity.this);
+            }
+
+        }
+    };
+    Observer<BaseResponse> asset_req_cancel_observer = new Observer<BaseResponse>() {
+        @Override
+        public void onChanged(@Nullable BaseResponse bean) {
+            if (bean == null) {
+                Utils.showAlert(context, "", getString(R.string.server_error), getString(R.string.ok), "", AppUtils.dialog_ok_click, AssetDetailActivity.this);
+                return;
+            }
+
+            if (bean.getCode().equals(AppUtils.STATUS_FAIL)) {
+                Utils.showAlert(context, "", bean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_click, AssetDetailActivity.this);
+                return;
+            } else {
+                Utils.showAlert(context, "", bean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_click, AssetDetailActivity.this);
+            }
+
+        }
+    };
+
+    Observer<Integer> observer = new Observer<Integer>() {
+
+        @Override
+        public void onChanged(@Nullable Integer value) {
+            switch (value) {
+
+                case AppUtils.NO_INTERNET:
+                    Utils.hideProgressDialog();
+                    Utils.showToast(context, getString(R.string.internet_connection));
+                    break;
+
+                case AppUtils.SERVER_ERROR:
+                    Utils.showToast(context, getString(R.string.server_error));
+                    break;
+            }
+        }
+    };
 
     /**
      * Set data on view components from web service bean
@@ -164,24 +227,6 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
     }
 
 
-    Observer<Integer> observer = new Observer<Integer>() {
-
-        @Override
-        public void onChanged(@Nullable Integer value) {
-            switch (value) {
-
-                case AppUtils.NO_INTERNET:
-                    Utils.showToast(context, getString(R.string.internet_connection));
-                    break;
-
-                case AppUtils.SERVER_ERROR:
-                    Utils.showToast(context, getString(R.string.server_error));
-                    break;
-            }
-        }
-    };
-
-
     @Override
     public void onClick(View v) {
 
@@ -197,10 +242,12 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
 
             case R.id.accept_tv:
                 Utils.showDialog(context, getString(R.string.please_wait));
-                viewModel.approveAssetRequest();
+                viewModel.approveAssetRequest(req_id, emp_id);
                 break;
 
             case R.id.cancel_tv:
+                Utils.showDialog(context, getString(R.string.please_wait));
+                viewModel.cancelAssetRequest(req_id, emp_id);
                 break;
 
         }

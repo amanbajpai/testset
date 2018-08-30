@@ -33,7 +33,7 @@ public interface KeyKeepAPI {
     @POST(Config.CHANGE_PASSWORD_URL)
     Call<ChangePasswordBean> doChangePassword(
             @Body BaseRequestEntity baseRequestEntity,
-            @Query(Keys.OLDPASWSWORD) String oldPassword,
+            @Query(Keys.OLD_PASSWORD) String oldPassword,
             @Query(Keys.NEW_PASSWORD) String newPassword,
             @Query(Keys.CONFIRM_NEW_PASSWORD) String confirmPassword,
             @Query(Keys.EMPLOYEE_ID) String employeeId
@@ -44,7 +44,7 @@ public interface KeyKeepAPI {
             @Body BaseRequestEntity baseRequestEntity,
             @Query(Keys.EMPLOYEE_ID) String empliyeeId,
             @Query(Keys.QR_CODE_NUMBER) String qr_code_number
-            );
+    );
 
 
     @POST(Config.ASSET_REQUEST)
@@ -56,13 +56,25 @@ public interface KeyKeepAPI {
 
 
     @POST(Config.ASSET_PENDING_SEND_REQUEST)
-    public Call<AssetsListResponseBean> getAssetPendingSendRequest(@Body BaseRequestEntity baseRequestEntity,
-                                                                   @Query(Keys.EMPLOYEE_ID) String employeeId,
-                                                                   @Query(Keys.IS_MY_ASSETS) String isMyAsset);
+    Call<AssetsListResponseBean> getAssetPendingSendRequest(@Body BaseRequestEntity baseRequestEntity,
+                                                            @Query(Keys.EMPLOYEE_ID) String employeeId
+    );
 
     @POST(Config.ASSET_PENDING_RECIEVE_REQUEST)
-    public Call<AssetsListResponseBean> getAssetPendingRecieveRequest(@Body BaseRequestEntity baseRequestEntity,
-                                                                      @Query(Keys.EMPLOYEE_ID) String employeeId,
-                                                                      @Query(Keys.IS_MY_ASSETS) String isMyAsset);
+    Call<AssetsListResponseBean> getAssetPendingRecieveRequest(@Body BaseRequestEntity baseRequestEntity,
+                                                               @Query(Keys.EMPLOYEE_ID) String employeeId
+    );
+
+
+    @POST(Config.CANCEL_ASSET_REQ_URL)
+    Call<BaseResponse> cancelAssetRequest(@Body BaseRequestEntity baseEntity,
+                                          @Query(Keys.EMPLOYEE_ID) String emp_id,
+                                          @Query(Keys.REQ_ID) int req_id);
+
+
+    @POST(Config.APPROVE_ASSET_REQ_URL)
+    Call<BaseResponse> approveAssetRequest(@Body BaseRequestEntity baseEntity,
+                                           @Query(Keys.EMPLOYEE_ID) String emp_id,
+                                           @Query(Keys.REQ_ID) int req_id);
 
 }
