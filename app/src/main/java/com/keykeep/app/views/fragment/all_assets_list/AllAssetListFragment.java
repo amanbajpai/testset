@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.util.SortedList;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.keykeep.app.R;
 import com.keykeep.app.databinding.AllAssetListFragmentBinding;
 import com.keykeep.app.model.bean.AssetsListResponseBean;
+import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.adapter.AllAssetsAdapter;
 import com.keykeep.app.views.base.BaseFragment;
 
@@ -57,8 +59,8 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
         binding.recyclerView.setLayoutManager(manager);
         binding.recyclerView.setLoadingListener(this);
         viewModel.response_validator.observe(this, response_observer);
-
-        binding.simpleSearchView.setQueryHint("Search View");
+        Utils.hideSoftKeyboard(getActivity());
+        binding.simpleSearchView.setQueryHint("Search here");
 
         binding.simpleSearchView.setOnQueryTextListener(new android.widget.SearchView.OnQueryTextListener() {
             @Override
@@ -110,4 +112,43 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
     public void onLoadMore() {
         Log.e("onLoadMore: ", "call load more");
     }
+
+//    private final SortedList.Callback<AssetsListResponseBean> mCallback = new SortedList.Callback<AssetsListResponseBean>() {
+//
+//        @Override
+//        public void onInserted(int position, int count) {
+//            allAssetAdapter.notifyItemRangeInserted(position, count);
+//        }
+//
+//        @Override
+//        public void onRemoved(int position, int count) {
+//            allAssetAdapter.notifyItemRangeRemoved(position, count);
+//        }
+//
+//        @Override
+//        public void onMoved(int fromPosition, int toPosition) {
+//            allAssetAdapter.notifyItemMoved(fromPosition, toPosition);
+//        }
+//
+//        @Override
+//        public void onChanged(int position, int count) {
+//            allAssetAdapter.notifyItemRangeChanged(position, count);
+//        }
+//
+//        @Override
+//        public int compare(AssetsListResponseBean a, AssetsListResponseBean b) {
+//            return mComparator.compare(a, b);
+//        }
+//
+//        @Override
+//        public boolean areContentsTheSame(AssetsListResponseBean oldItem, AssetsListResponseBean newItem) {
+//            return oldItem.equals(newItem);
+//        }
+//
+//        @Override
+//        public boolean areItemsTheSame(AssetsListResponseBean item1, AssetsListResponseBean item2) {
+//            return item1.getId() == item2.getId();
+//        }
+//    };
+
 }
