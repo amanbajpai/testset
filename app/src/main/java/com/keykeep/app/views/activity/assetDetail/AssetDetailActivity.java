@@ -40,6 +40,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
     private String asset_emp_id;
     private String qr_code;
     private int req_id = -1;
+    boolean IS_FROM_SCANNER =false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,6 +82,9 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         ASSET_STATUS = getIntent().getIntExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_SCAN_CODE);
         viewModel.getAssetDetail(qr_code, mEmp_id);
         validateSubmitView();
+        if (ASSET_STATUS == AppUtils.STATUS_SCAN_CODE){
+            IS_FROM_SCANNER = true;
+        }
 
     }
 
@@ -134,9 +138,12 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
                 binding.cancelTv.setOnClickListener(this);
                 binding.acceptTv.setOnClickListener(this);
                 break;
+
             case AppUtils.STATUS_ASSET_RECEIVE_REQUEST:
                 req_id = getIntent().getIntExtra(AppUtils.ASSET_REQUEST_ID, -1);
-                // invisible button
+                binding.pendingStatusContainer.setVisibility(View.VISIBLE);
+                binding.acceptTv.setVisibility(View.GONE);
+                binding.cancelTv.setOnClickListener(this);
                 break;
         }
     }
@@ -153,6 +160,11 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
 
             if (bean.getCode().equals(AppUtils.STATUS_FAIL)) {
                 Utils.showAlert(context, "", bean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_click, AssetDetailActivity.this);
+                if (IS_FROM_SCANNER){
+                    IS_FROM_SCANNER = false;
+                    Utils.showAlert(context, "", bean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_to_finish, AssetDetailActivity.this);
+                }
+
                 return;
             }
             setDataFromBean(bean);
@@ -178,6 +190,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
 
 
     Observer<BaseResponse> asset_req_approved_observer = new Observer<BaseResponse>() {
+
         @Override
         public void onChanged(@Nullable BaseResponse bean) {
 

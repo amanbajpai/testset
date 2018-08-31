@@ -58,6 +58,13 @@ public class AssetRequestAdapter extends RecyclerView.Adapter<AssetRequestAdapte
                 if (typeRequest == AppUtils.STATUS_ASSET_SEND_REQUEST) {
                     AssetsListResponseBean.Result bean = assetLists.getResult().get(position);
                     Intent intent = new Intent(context, AssetDetailActivity.class);
+                    intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_ASSET_RECEIVE_REQUEST);
+                    intent.putExtra(AppUtils.ASSET_REQUEST_ID,bean.getAssetEmployeeAssignedLogId());
+                    intent.putExtra(AppUtils.SCANED_QR_CODE, bean.getQrCodeNumber());
+                    context.startActivity(intent);
+                }else {
+                    AssetsListResponseBean.Result bean = assetLists.getResult().get(position);
+                    Intent intent = new Intent(context, AssetDetailActivity.class);
                     intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_ASSET_SEND_REQUEST);
                     intent.putExtra(AppUtils.ASSET_REQUEST_ID,bean.getAssetEmployeeAssignedLogId());
                     intent.putExtra(AppUtils.SCANED_QR_CODE, bean.getQrCodeNumber());
