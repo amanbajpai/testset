@@ -97,6 +97,7 @@
     <string name="accept">Accept</string>
     <string name="cancel">Cancel</string>
     <string name="scan_asset">Scan Asset</string>
+    <string name="request_key">Request Key</string>
     <string name="confirm_request">Confirm Request</string>
     <string name="asset_detail">Assets Detail</string>
     <string name="txt_no_records_avialable">No records available</string>

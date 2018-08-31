@@ -18,6 +18,7 @@ import retrofit2.Response;
  * Created by ashishthakur on 29/8/18.
  */
 public class AssetRequestViewModel extends ViewModel {
+
     public final MutableLiveData<Integer> validator = new MutableLiveData<>();
     public final MutableLiveData<AssetsListResponseBean> response_validator = new MutableLiveData<>();
 

@@ -62,6 +62,11 @@ public class AssetDetailViewModel extends ViewModel {
 
     }
 
+    /**
+     * send request for asset
+     * @param qr_code
+     * @param emp_id
+     */
     public void sendAssetRequest(String qr_code, String emp_id) {
 
         if (!Connectivity.isConnected()) {
@@ -93,6 +98,46 @@ public class AssetDetailViewModel extends ViewModel {
     }
 
 
+    /**
+     * call when emp id zero means asset not allotted to any one
+     * @param qr_code
+     * @param emp_id
+     */
+    public void keepAssetRequest(String qr_code, String emp_id) {
+
+        if (!Connectivity.isConnected()) {
+            validator.setValue(AppUtils.NO_INTERNET);
+            return;
+        }
+
+        Call<AssetDetailBean> call = RetrofitHolder.getService().keepAssetRequest(
+                KeyKeepApplication.getBaseEntity(true),
+                emp_id,
+                qr_code
+        );
+
+        call.enqueue(new Callback<AssetDetailBean>() {
+            @Override
+            public void onResponse(Call<AssetDetailBean> call, Response<AssetDetailBean> response) {
+                Utils.hideProgressDialog();
+                AssetDetailBean bean = response.body();
+                asset_request_validator.setValue(bean);
+            }
+
+            @Override
+            public void onFailure(Call<AssetDetailBean> call, Throwable t) {
+                Utils.hideProgressDialog();
+                validator.setValue(AppUtils.SERVER_ERROR);
+            }
+        });
+    }
+
+
+    /**
+     * approved api for requested asset to transfer
+     * @param req_id
+     * @param emp_id
+     */
     public void approveAssetRequest(int req_id, String emp_id) {
 
         if (!Connectivity.isConnected()) {
