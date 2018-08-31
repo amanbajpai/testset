@@ -28,8 +28,6 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
 
     AssetRequestSendRecieveFragmentBinding binding;
     AssetRequestViewModel viewModel;
-    public static final int ASSET_PENDING_SEND_REQUEST = 0;
-    public static final int ASSET_PENDING_RECIEVE_REQUEST = 1;
     private AssetRequestAdapter assetRequestAdapter;
     private int typeRequest;
 
