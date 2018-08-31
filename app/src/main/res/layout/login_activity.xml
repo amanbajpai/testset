@@ -12,8 +12,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="true"
         android:background="@drawable/login_back"
+        android:clickable="true"
         android:orientation="vertical">
 
         <android.support.v7.widget.CardView
@@ -45,7 +45,7 @@
                     android:textColor="@color/login_text_color"
                     android:textSize="@dimen/_17sdp" />
 
-                <com.keykeep.app.views.custom_view.CustomTextInputLayoutTextMedium
+                <com.keykeep.app.views.custom_view.CustomTextInputLayout
                     style="@style/TextAppearence.App.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -54,6 +54,8 @@
                     android:layout_marginRight="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:hint="Employe Id"
+                    android:text="Employe Id"
+                    android:textColorHint="@color/colorAccent"
                     android:textSize="@dimen/_13sdp">
 
                     <com.keykeep.app.views.custom_view.StyledEditTextViewMedium
@@ -65,17 +67,18 @@
                         android:textColor="@color/text_gray"
                         android:textSize="@dimen/_14sdp" />
 
-                </com.keykeep.app.views.custom_view.CustomTextInputLayoutTextMedium>
+                </com.keykeep.app.views.custom_view.CustomTextInputLayout>
 
 
-                <com.keykeep.app.views.custom_view.CustomTextInputLayoutTextMedium
+                <com.keykeep.app.views.custom_view.CustomTextInputLayout
                     style="@style/TextAppearence.App.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_15sdp"
                     android:layout_marginRight="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:hint="@string/password">
+                    android:hint="@string/password"
+                    android:textColorHint="@color/colorAccent">
 
                     <com.keykeep.app.views.custom_view.StyledEditTextViewMedium
                         android:id="@+id/et_password"
@@ -87,7 +90,7 @@
                         android:singleLine="true"
                         android:textColor="@color/text_gray"
                         android:textSize="@dimen/_15sdp" />
-                </com.keykeep.app.views.custom_view.CustomTextInputLayoutTextMedium>
+                </com.keykeep.app.views.custom_view.CustomTextInputLayout>
 
 
                 <RelativeLayout

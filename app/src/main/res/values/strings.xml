@@ -55,12 +55,14 @@
     <string name="allow_camera_permission">Please allow Camera permission to scan qr code</string>
     <string name="color">Color</string>
     <string name="model_no">Model</string>
-    <string name="code">Code</string>
+    <string name="vin_no">VIN Number</string>
     <string name="version_no"> Year</string>
     <string name="asset_type">Key Type</string>
+    <string name="availability">Availability</string>
+    <string name="make">Make</string>
     <string name="customer_detail">Customer Detail</string>
-    <string name="customer_address">Customer Address</string>
-    <string name="customer_number">Customer Number</string>
+    <string name="customer_address">Address</string>
+    <string name="mobile_number">Mobile Number</string>
     <string name="employee_detail">Employee Detail</string>
 
 

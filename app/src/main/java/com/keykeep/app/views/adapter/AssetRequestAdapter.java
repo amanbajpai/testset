@@ -46,9 +46,13 @@ public class AssetRequestAdapter extends RecyclerView.Adapter<AssetRequestAdapte
     public void onBindViewHolder(@NonNull Holder holder, int position) {
 
         if (typeRequest == AppUtils.STATUS_ASSET_SEND_REQUEST) {
-            holder.requestText.setText(String.format("%s%s%s%s", context.getString(R.string.txt_your_request_for), assetLists.getResult().get(position).getAssetName(), context.getString(R.string.txt_is_send_to), assetLists.getResult().get(position).getCustomerName()));
+            holder.assetName.setText(assetLists.getResult().get(position).getAssetName());
+            holder.modelNumber.setText(assetLists.getResult().get(position).getModelNumber());
+
         } else {
-            holder.requestText.setText(String.format("%s%s%s%s", assetLists.getResult().get(position).getCustomerName(), context.getString(R.string.txt_want_to), assetLists.getResult().get(position).getAssetName(), context.getString(R.string.txt_from_you)));
+            holder.assetName.setText(assetLists.getResult().get(position).getAssetName());
+            holder.modelNumber.setText(assetLists.getResult().get(position).getModelNumber());
+
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -77,13 +81,15 @@ public class AssetRequestAdapter extends RecyclerView.Adapter<AssetRequestAdapte
 
     class Holder extends RecyclerView.ViewHolder {
 
-        private AppCompatTextView requestText;
+        private AppCompatTextView assetName,modelNumber;
 
         public Holder(View itemView) {
             super(itemView);
-            requestText = itemView.findViewById(R.id.tv_request);
+            assetName = itemView.findViewById(R.id.tv_asset_name);
+            modelNumber=itemView.findViewById(R.id.tv_model_number);
 
         }
     }
+
 
 }

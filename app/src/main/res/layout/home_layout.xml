@@ -26,8 +26,8 @@
                 android:background="@color/colorPrimary"
                 android:contentInsetLeft="0dp"
                 android:contentInsetStart="0dp"
-                app:navigationIcon="@drawable/menu"
-                android:minHeight="?attr/actionBarSize">
+                android:minHeight="?attr/actionBarSize"
+                app:navigationIcon="@drawable/menu">
 
                 <com.keykeep.app.views.custom_view.StyledTextViewLight
                     android:id="@+id/title_tv"

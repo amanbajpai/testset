@@ -254,6 +254,13 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         binding.customerNumber.setText(resultBean.getCustomerMobileNumber());
 
         binding.employeeName.setText(Utils.validateValue(resultBean.getEmployeeName()));
+
+        if (resultBean.getAssetAssginedStatus() == 0) {
+            binding.availability.setText("Available");
+        } else if (resultBean.getAssetAssginedStatus() == 1) {
+            binding.availability.setText("Assigned");
+        }
+        binding.make.setText(resultBean.getDescription());
         binding.scanButton.setOnClickListener(AssetDetailActivity.this);
         asset_emp_id = Utils.validateIntValue(resultBean.getEmployeeName());
         qr_code = resultBean.getQrCodeNumber();

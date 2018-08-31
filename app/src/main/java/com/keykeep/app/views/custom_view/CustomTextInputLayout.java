@@ -9,21 +9,21 @@ import android.util.AttributeSet;
  * Created by akshaydashore on 27/8/18
  */
 
-public class CustomTextInputLayoutTextMedium extends TextInputLayout {
+public class CustomTextInputLayout extends TextInputLayout {
 
     private final String DEFAULT_FONT = "Poppins-Medium.ttf";
 
-    public CustomTextInputLayoutTextMedium(Context context) {
+    public CustomTextInputLayout(Context context) {
         super(context);
         setCustomFont(context);
     }
 
-    public CustomTextInputLayoutTextMedium(Context context, AttributeSet attrs) {
+    public CustomTextInputLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         setCustomFont(context);
     }
 
-    public CustomTextInputLayoutTextMedium(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CustomTextInputLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setCustomFont(context);
     }
