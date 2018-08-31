@@ -54,6 +54,8 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         binding.recyclerView.setLayoutManager(manager);
         binding.recyclerView.setLoadingListener(this);
+        binding.recyclerView.setLoadingMoreEnabled(false);
+        binding.recyclerView.setPullRefreshEnabled(false);
         viewModel.response_validator.observe(this, response_observer);
         binding.tvPendingSendRequest.setOnClickListener(this);
         binding.tvPendingReceiveRequest.setOnClickListener(this);

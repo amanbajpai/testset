@@ -23,7 +23,6 @@ import com.keykeep.app.views.custom_view.CustomActionBar;
 /**
  * Created by akshaydashore on 31/8/18
  */
-
 public class TransferActivity extends BaseActivity implements XRecyclerView.LoadingListener {
 
 

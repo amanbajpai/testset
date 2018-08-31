@@ -384,7 +384,7 @@
                 android:paddingRight="@dimen/_25sdp"
                 android:paddingTop="@dimen/_10sdp"
                 android:text="@string/cancel"
-                android:textColor="@color/green_light"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_13sdp" />
         </LinearLayout>
 
