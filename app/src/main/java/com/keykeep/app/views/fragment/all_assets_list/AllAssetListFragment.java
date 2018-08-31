@@ -47,7 +47,6 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
                 binding.recyclerView.setAdapter(allAssetAdapter);
             }
         }
-
     };
 
     @Override

@@ -8,6 +8,7 @@ import com.keykeep.app.model.bean.AssetsListResponseBean;
 import com.keykeep.app.netcom.retrofit.RetrofitHolder;
 import com.keykeep.app.preferences.Pref;
 import com.keykeep.app.utils.AppUtils;
+import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.base.BaseViewModel;
 
 import retrofit2.Call;
@@ -17,7 +18,6 @@ import retrofit2.Response;
 /**
  * Created by ankurrawal on 29/8/18.
  */
-
 public class MyAssetsFragmentViewModel extends BaseViewModel {
     public final MutableLiveData<Integer> validator = new MutableLiveData<>();
     public final MutableLiveData<AssetsListResponseBean> response_validator = new MutableLiveData<>();
@@ -32,11 +32,13 @@ public class MyAssetsFragmentViewModel extends BaseViewModel {
         call.enqueue(new Callback<AssetsListResponseBean>() {
             @Override
             public void onResponse(Call<AssetsListResponseBean> call, Response<AssetsListResponseBean> response) {
+                Utils.hideProgressDialog();
                 response_validator.setValue(response.body());
             }
 
             @Override
             public void onFailure(Call<AssetsListResponseBean> call, Throwable t) {
+                Utils.hideProgressDialog();
                 validator.setValue(AppUtils.SERVER_ERROR);
             }
         });
