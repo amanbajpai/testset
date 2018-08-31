@@ -77,13 +77,12 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         mEmp_id = Pref.getEmployeeID(context);
 
         qr_code = getIntent().getStringExtra(AppUtils.SCANED_QR_CODE);
-        Utils.showProgressDialog(context, getString(R.string.please_wait));
+        Utils.showProgressDialog(context, getString(R.string.loading));
         ASSET_STATUS = getIntent().getIntExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_SCAN_CODE);
         viewModel.getAssetDetail(qr_code, mEmp_id);
         validateSubmitView();
 
     }
-
 
 
     private void validateAfterScan(String qr) {
