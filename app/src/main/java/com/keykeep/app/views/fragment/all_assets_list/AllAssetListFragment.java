@@ -95,8 +95,12 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
                     binding.tvNoRecords.setVisibility(View.GONE);
                     allAssetAdapter.setAssetList(getContext(), resultArrayList);
                 } else {
-                    allAssetAdapter.getFilter().filter(newText);
-                    allAssetAdapter.notifyDataSetChanged();
+                    try {
+                        allAssetAdapter.getFilter().filter(newText);
+                        allAssetAdapter.notifyDataSetChanged();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                 }
 
