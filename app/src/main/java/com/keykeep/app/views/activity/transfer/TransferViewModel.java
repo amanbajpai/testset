@@ -1,8 +1,9 @@
-package com.keykeep.app.views.fragment.ownAssetsFragment;
+package com.keykeep.app.views.activity.transfer;
 
 import android.arch.lifecycle.MutableLiveData;
 
 import com.keykeep.app.application.KeyKeepApplication;
+import com.keykeep.app.databinding.ActivityTransferAssetBinding;
 import com.keykeep.app.databinding.MyAssetListFragmentBinding;
 import com.keykeep.app.model.bean.AssetsListResponseBean;
 import com.keykeep.app.netcom.retrofit.RetrofitHolder;
@@ -16,16 +17,18 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Created by ankurrawal on 29/8/18.
+ * Created by akshaydashore on 31/8/18
  */
-public class MyAssetsFragmentViewModel extends BaseViewModel {
+
+public class TransferViewModel extends BaseViewModel {
+
+
     public final MutableLiveData<Integer> validator = new MutableLiveData<>();
     public final MutableLiveData<AssetsListResponseBean> response_validator = new MutableLiveData<>();
 
-    public void getMyAssets(MyAssetListFragmentBinding binding) {
+    public void getMyAssets(ActivityTransferAssetBinding binding) {
 
         String employeeId = Pref.getEmployeeID(KeyKeepApplication.getInstance());
-
 
         Call<AssetsListResponseBean> call = RetrofitHolder.getService().getAssetsList(KeyKeepApplication.getInstance().getBaseEntity(false), employeeId, "1");
 
@@ -43,4 +46,5 @@ public class MyAssetsFragmentViewModel extends BaseViewModel {
             }
         });
     }
+
 }

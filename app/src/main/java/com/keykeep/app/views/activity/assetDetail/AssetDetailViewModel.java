@@ -3,8 +3,11 @@ package com.keykeep.app.views.activity.assetDetail;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.view.View;
 
+import com.keykeep.app.R;
 import com.keykeep.app.application.KeyKeepApplication;
+import com.keykeep.app.databinding.ActivityAssetDetailLayoutBinding;
 import com.keykeep.app.model.bean.AssetDetailBean;
 import com.keykeep.app.model.bean.BaseRequestEntity;
 import com.keykeep.app.model.bean.BaseResponse;
@@ -63,21 +66,22 @@ public class AssetDetailViewModel extends ViewModel {
     }
 
     /**
-     * send request for asset
+     * send request for handover
      * @param qr_code
      * @param emp_id
      */
-    public void sendAssetRequest(String qr_code, String emp_id) {
+    public void sendHandoverRequest(String qr_code, String emp_id) {
 
         if (!Connectivity.isConnected()) {
             validator.setValue(AppUtils.NO_INTERNET);
             return;
         }
 
-        Call<AssetDetailBean> call = RetrofitHolder.getService().sendAssetRequest(
+        Call<AssetDetailBean> call = RetrofitHolder.getService().sendHandoverRequest(
                 KeyKeepApplication.getBaseEntity(true),
                 emp_id,
-                qr_code
+                qr_code,
+                "1"
         );
 
         call.enqueue(new Callback<AssetDetailBean>() {
@@ -96,6 +100,45 @@ public class AssetDetailViewModel extends ViewModel {
         });
 
     }
+
+
+
+    /**
+     * send request for handover
+     * @param qr_code
+     * @param emp_id
+     */
+    public void sendTransferRequest(String qr_code, String emp_id) {
+
+        if (!Connectivity.isConnected()) {
+            validator.setValue(AppUtils.NO_INTERNET);
+            return;
+        }
+
+        Call<AssetDetailBean> call = RetrofitHolder.getService().sendTransferRequest(
+                KeyKeepApplication.getBaseEntity(true),
+                emp_id,
+                qr_code
+        );
+
+
+        call.enqueue(new Callback<AssetDetailBean>() {
+            @Override
+            public void onResponse(Call<AssetDetailBean> call, Response<AssetDetailBean> response) {
+                Utils.hideProgressDialog();
+                AssetDetailBean bean = response.body();
+                asset_request_validator.setValue(bean);
+            }
+
+            @Override
+            public void onFailure(Call<AssetDetailBean> call, Throwable t) {
+                Utils.hideProgressDialog();
+                validator.setValue(AppUtils.SERVER_ERROR);
+            }
+        });
+
+    }
+
 
 
     /**

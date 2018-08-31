@@ -48,7 +48,6 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
 
             }
         }
-
     };
 
     @Override

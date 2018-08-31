@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.keykeep.app">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -42,7 +43,9 @@
 
         <activity
             android:name=".views.activity.changepassword.ChangePasswordActivity"/>
-
+        <activity
+            android:name=".views.activity.transfer.TransferActivity"
+            />
         <activity android:name=".views.activity.AssetListActivity" />
         <activity android:name=".qrcodescanner.QrCodeActivity" />
         <activity android:name="com.keykeep.app.views.activity.assetDetail.AssetDetailActivity" />

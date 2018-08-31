@@ -99,7 +99,6 @@ public class QrCodeActivity extends AppCompatActivity implements Callback, OnCli
         initView();
         initData();
         mApplicationContext = getApplicationContext();
-
     }
 
     private void checkPermission() {

@@ -47,26 +47,36 @@ public interface KeyKeepAPI {
     );
 
 
-    @POST(Config.ASSET_REQUEST)
-    Call<AssetDetailBean> sendAssetRequest(
-            @Body BaseRequestEntity baseRequestEntity,
-            @Query(Keys.EMPLOYEE_ID) String empliyeeId,
-            @Query(Keys.QR_CODE_NUMBER) String qr_code_number
-    );
-
     @POST(Config.KEEP_ASSET_REQUEST)
     Call<AssetDetailBean> keepAssetRequest(
             @Body BaseRequestEntity baseRequestEntity,
-            @Query(Keys.EMPLOYEE_ID) String empliyeeId,
+            @Query(Keys.EMPLOYEE_ID) String employeeId,
             @Query(Keys.QR_CODE_NUMBER) String qr_code_number
     );
 
+
+    @POST(Config.ASSET_TRANSFER_REQUEST)
+    Call<AssetDetailBean> sendTransferRequest(
+            @Body BaseRequestEntity baseRequestEntity,
+            @Query(Keys.EMPLOYEE_ID) String employeeId,
+            @Query(Keys.QR_CODE_NUMBER) String qr_code_number
+    );
+
+
+    @POST(Config.ASSET_HANDOVER_REQUEST)
+    Call<AssetDetailBean> sendHandoverRequest(
+            @Body BaseRequestEntity baseRequestEntity,
+            @Query(Keys.EMPLOYEE_ID) String employeeId,
+            @Query(Keys.QR_CODE_NUMBER) String qr_code_number,
+            @Query(Keys.SUBMIT_USER_TYPE) String submit_user_type
+    );
 
 
     @POST(Config.ASSET_PENDING_SEND_REQUEST)
     Call<AssetsListResponseBean> getAssetPendingSendRequest(@Body BaseRequestEntity baseRequestEntity,
                                                             @Query(Keys.EMPLOYEE_ID) String employeeId
     );
+
 
     @POST(Config.ASSET_PENDING_RECIEVE_REQUEST)
     Call<AssetsListResponseBean> getAssetPendingRecieveRequest(@Body BaseRequestEntity baseRequestEntity,
@@ -84,5 +94,6 @@ public interface KeyKeepAPI {
     Call<BaseResponse> approveAssetRequest(@Body BaseRequestEntity baseEntity,
                                            @Query(Keys.EMPLOYEE_ID) String emp_id,
                                            @Query(Keys.REQ_ID) int req_id);
+
 
 }
