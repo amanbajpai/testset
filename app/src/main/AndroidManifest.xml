@@ -41,7 +41,9 @@
 
         <activity
             android:name=".views.activity.changepassword.ChangePasswordActivity"/>
-
+        <activity
+            android:name=".views.activity.transfer.TransferActivity"
+            />
         <activity android:name=".views.activity.AssetListActivity" />
         <activity android:name=".qrcodescanner.QrCodeActivity" />
         <activity android:name="com.keykeep.app.views.activity.assetDetail.AssetDetailActivity" />

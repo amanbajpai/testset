@@ -95,7 +95,6 @@ public class QrCodeActivity extends Activity implements Callback, OnClickListene
         initView();
         initData();
         mApplicationContext = getApplicationContext();
-
     }
 
     private void checkPermission() {

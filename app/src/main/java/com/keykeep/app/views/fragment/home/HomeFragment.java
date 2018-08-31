@@ -19,6 +19,7 @@ import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.activity.AssetListActivity;
 import com.keykeep.app.views.activity.assetDetail.AssetDetailActivity;
+import com.keykeep.app.views.activity.transfer.TransferActivity;
 import com.keykeep.app.views.base.BaseFragment;
 
 import org.json.JSONException;
@@ -55,7 +56,6 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
     }
 
 
-
     @Override
     public void onClick(View v) {
 
@@ -77,6 +77,7 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
                 break;
 
             case R.id.hand_over_rl:
+                startActivity(new Intent(context, TransferActivity.class));
                 break;
 
             case R.id.takeout_rl:
@@ -101,7 +102,6 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
 
         /**
          * Get asset result from web service after scan Qr code
