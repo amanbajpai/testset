@@ -118,7 +118,7 @@ public class ChangePasswordActivity extends BaseActivity implements DialogClickL
 
             case R.id.tv_submit:
                 if (viewModel.isValidate(binding)) {
-                    Utils.showDialog(context,getString(R.string.please_wait));
+                    Utils.showProgressDialog(context,getString(R.string.please_wait));
                     viewModel.doChangePassword(binding, context);
                 }
                 break;

@@ -1,13 +1,11 @@
 package com.keykeep.app.views.activity;
 
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.util.Log;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.keykeep.app.R;
 import com.keykeep.app.views.base.BaseActivity;
@@ -19,17 +17,15 @@ import com.keykeep.app.views.fragment.ownAssetsFragment.MyAssetsListFragment;
  * Created by akshaydashore on 23/8/18
  */
 public class AssetListActivity extends BaseActivity {
-
-    public static final int ALL_ASSETS_LIST = 0;
-    public static final int MY_ASSETS_LIST = 1;
-    private TabLayout tab_layout;
-    private boolean isClicked;
     private String TAG = "AssetListActivity";
+    private AppCompatTextView allAssetBtn,myAssetBtn;
+    private Context context;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.asset_activity_layout);
+        context=AssetListActivity.this;
         setCustomActionBar();
         initializeViews();
     }
@@ -44,50 +40,15 @@ public class AssetListActivity extends BaseActivity {
 
     @Override
     public void initializeViews() {
-        tab_layout = findViewById(R.id.tab_layout);
-        tab_layout.addTab(tab_layout.newTab().setText("All Assets"));
-        tab_layout.addTab(tab_layout.newTab().setText("My Assets"));
-
-        tab_layout.setSelectedTabIndicatorColor(Color.parseColor("#3A5A9A"));
-        tab_layout.setSelectedTabIndicatorHeight((int) (5 * getResources().getDisplayMetrics().density));
-        tab_layout.setTabTextColors(Color.parseColor("#727272"), Color.parseColor("#2F2F2D"));
-
-
         replaceFragment(false, new AllAssetListFragment(), R.id.home_layout_container);
-
-        View root = tab_layout.getChildAt(0);
-
-        if (root instanceof LinearLayout) {
-            ((LinearLayout) root).setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
-            GradientDrawable drawable = new GradientDrawable();
-            drawable.setColor(getResources().getColor(R.color.black));
-            drawable.setSize(1, 1);
-            ((LinearLayout) root).setDividerDrawable(drawable);
-        }
-
-        tab_layout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                Log.e(TAG, "" + tab.getPosition());
-                switch (tab.getPosition()) {
-                    case ALL_ASSETS_LIST:
-                        replaceFragment(false, new AllAssetListFragment(), R.id.home_layout_container);
-                        break;
-                    case MY_ASSETS_LIST:
-                        replaceFragment(false, new MyAssetsListFragment(), R.id.home_layout_container);
-                        break;
-
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
-        });
+        allAssetBtn = findViewById(R.id.tv_all_assets);
+        myAssetBtn = findViewById(R.id.tv_my_assets);
+        allAssetBtn.setOnClickListener(this);
+        myAssetBtn.setOnClickListener(this);
+        allAssetBtn.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.all_asset_selector));
+        myAssetBtn.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.my_asset_deselector));
+        myAssetBtn.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+        allAssetBtn.setTextColor(ContextCompat.getColor(context, R.color.white));
     }
 
 
@@ -95,9 +56,23 @@ public class AssetListActivity extends BaseActivity {
     public void onClick(View view) {
 
         switch (view.getId()) {
-
             case R.id.left_iv:
                 finish();
+                break;
+            case R.id.tv_all_assets:
+                allAssetBtn.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.all_asset_selector));
+                myAssetBtn.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.my_asset_deselector));
+                myAssetBtn.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+                allAssetBtn.setTextColor(ContextCompat.getColor(context, R.color.white));
+                replaceFragment(false, new AllAssetListFragment(), R.id.home_layout_container);
+
+                break;
+            case R.id.tv_my_assets:
+                allAssetBtn.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.all_asset_deselector));
+                myAssetBtn.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.my_asset_selector));
+                allAssetBtn.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+                myAssetBtn.setTextColor(ContextCompat.getColor(context, R.color.white));
+                replaceFragment(false, new MyAssetsListFragment(), R.id.home_layout_container);
                 break;
         }
     }

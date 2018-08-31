@@ -76,7 +76,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         emp_id = Pref.getEmployeeID(context);
         qr_code = getIntent().getStringExtra(AppUtils.SCANED_QR_CODE);
         ASSET_STATUS = getIntent().getIntExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_SCAN_CODE);
-        Utils.showDialog(context, getString(R.string.please_wait));
+        Utils.showProgressDialog(context, getString(R.string.please_wait));
         viewModel.getAssetDetail(qr_code, emp_id);
 
         if (ASSET_STATUS == AppUtils.STATUS_ASSET_SEND_REQUEST || ASSET_STATUS == AppUtils.STATUS_ASSET_RECEIVE_REQUEST) {
@@ -240,12 +240,12 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
                 break;
 
             case R.id.accept_tv:
-                Utils.showDialog(context, getString(R.string.please_wait));
+                Utils.showProgressDialog(context, getString(R.string.please_wait));
                 viewModel.approveAssetRequest(req_id, emp_id);
                 break;
 
             case R.id.cancel_tv:
-                Utils.showDialog(context, getString(R.string.please_wait));
+                Utils.showProgressDialog(context, getString(R.string.please_wait));
                 viewModel.cancelAssetRequest(req_id, emp_id);
                 break;
 
@@ -271,7 +271,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
                 break;
 
             case AppUtils.STATUS_SCAN_CODE:
-                Utils.showDialog(context, getString(R.string.please_wait));
+                Utils.showProgressDialog(context, getString(R.string.please_wait));
                 if (emp_id.equals(0)){
                     viewModel.keepAssetRequest(qr_code, emp_id);
                 }else

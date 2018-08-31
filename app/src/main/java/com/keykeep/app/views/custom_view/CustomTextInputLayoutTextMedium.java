@@ -1,7 +1,6 @@
 package com.keykeep.app.views.custom_view;
 
 import android.content.Context;
-import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.support.design.widget.TextInputLayout;
 import android.util.AttributeSet;
@@ -10,21 +9,21 @@ import android.util.AttributeSet;
  * Created by akshaydashore on 27/8/18
  */
 
-public class CustomTextInputLayout extends TextInputLayout {
+public class CustomTextInputLayoutTextMedium extends TextInputLayout {
 
-    private final String DEFAULT_FONT = "roboto_regular.ttf";
+    private final String DEFAULT_FONT = "Poppins-Medium.ttf";
 
-    public CustomTextInputLayout(Context context) {
+    public CustomTextInputLayoutTextMedium(Context context) {
         super(context);
         setCustomFont(context);
     }
 
-    public CustomTextInputLayout(Context context, AttributeSet attrs) {
+    public CustomTextInputLayoutTextMedium(Context context, AttributeSet attrs) {
         super(context, attrs);
         setCustomFont(context);
     }
 
-    public CustomTextInputLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CustomTextInputLayoutTextMedium(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setCustomFont(context);
     }

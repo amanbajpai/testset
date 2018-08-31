@@ -699,7 +699,7 @@ public class Utils {
     //    public static ProgressDialog progressDialog;
     public static CustomProgressDialog progressDialog;
 
-    public static CustomProgressDialog showDialog(Context context, String message) {
+    public static CustomProgressDialog showProgressDialog(Context context, String message) {
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }

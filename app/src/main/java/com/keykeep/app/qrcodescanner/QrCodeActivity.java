@@ -16,6 +16,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
 import android.provider.MediaStore;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
@@ -38,6 +39,7 @@ import com.keykeep.app.qrcodescanner.decode.InactivityTimer;
 import com.keykeep.app.qrcodescanner.view.QrCodeFinderView;
 import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.utils.LogUtils;
+import com.keykeep.app.views.custom_view.CustomActionBar;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -45,7 +47,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 
-public class QrCodeActivity extends Activity implements Callback, OnClickListener {
+public class QrCodeActivity extends AppCompatActivity implements Callback, OnClickListener {
 
     private static final int REQUEST_SYSTEM_PICTURE = 0;
     private static final int REQUEST_PICTURE = 1;
@@ -92,6 +94,8 @@ public class QrCodeActivity extends Activity implements Callback, OnClickListene
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_code);
+        CustomActionBar customActionBar = new CustomActionBar(this);
+        customActionBar.setActionbar(getString(R.string.txt_qr_code_screen_title), true, false, this);
         initView();
         initData();
         mApplicationContext = getApplicationContext();
@@ -312,6 +316,8 @@ public class QrCodeActivity extends Activity implements Callback, OnClickListene
                 openSystemAlbum();
             }
 
+        } else if (v.getId() == R.id.left_iv) {
+            finish();
         }
 
     }

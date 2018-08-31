@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.keykeep.app.R;
 import com.keykeep.app.model.LeftMenuDrawerItems;
+import com.keykeep.app.preferences.Pref;
 import com.keykeep.app.utils.Connectivity;
 import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.activity.AssetListActivity;
@@ -48,6 +49,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
     private Fragment fragment;
     public TextView title_tv;
     private static boolean activityVisible;
+    private TextView tvProfileUserName;
 
 
     @Override
@@ -80,6 +82,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
             recyclerView.setLoadingMoreEnabled(false);
             recyclerView.setPullRefreshEnabled(false);
             View leftDrawerHeader = View.inflate(context, R.layout.left_drawer_header, null);
+            tvProfileUserName = (TextView) leftDrawerHeader.findViewById(R.id.leftDrawer_profileName_text);
             recyclerView.addHeaderView(leftDrawerHeader);
             leftDrawerListAdapter = new LeftDrawerListAdapter(HomeActivity.this, leftMenuDrawerItemses);
             leftDrawerListAdapter.setOnItemClickListener(this);
@@ -89,7 +92,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
             recyclerView.setAdapter(leftDrawerListAdapter);
             prepareMenuItemList();
             setDrawerHover(0);
-
+            tvProfileUserName.setText(Pref.getEmployeeName(this));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -134,9 +137,9 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
     private final int[] menuItemIconsSelected = new int[]{
 
             R.drawable.hovme,
-            R.drawable.hovme, R.drawable.slider_pending_req,
-            R.drawable.slider_notification, R.drawable.slider_profile, R.drawable.slider_settings,
-            R.drawable.slider_logout
+            R.drawable.hovme, R.drawable.pending_req_hover,
+            R.drawable.notification_hover, R.drawable.profile_hover, R.drawable.settings_hover,
+            R.drawable.logout_hover
     };
 
     private void prepareMenuItemList() {
@@ -238,10 +241,12 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
                 Utils.replaceFragment(HomeActivity.this, new HomeFragment());
                 break;
             case 1://Assets
+                setDrawerHover(position);
                 Intent asset_intent = new Intent(HomeActivity.this, AssetListActivity.class);
                 startActivity(asset_intent);
                 break;
             case 2://Pending Request
+                setDrawerHover(position);
                 title_tv.setText(getString(R.string.txt_title_screen_asset_request));
                 Utils.replaceFragment(HomeActivity.this, new AssetRequestFragment());
 

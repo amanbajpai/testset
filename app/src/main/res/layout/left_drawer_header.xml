@@ -3,66 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:clickable="true"
     android:orientation="vertical">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_180sdp"
-        android:gravity="center"
-        android:paddingLeft="@dimen/_10sdp"
-        android:paddingRight="@dimen/_10sdp"
-        android:visibility="gone">
-
-
-        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/left_drawer_profile_pic"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_alignParentLeft="true"
-            android:src="@mipmap/ic_launcher"
-            app:civ_border_color="@color/grayseperator"
-            app:civ_border_width="2dp" />
-
-        <com.keykeep.app.views.custom_view.StyledTextViewLight
-            android:id="@+id/left_drawer_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="username"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_17sdp"
-            android:textStyle="bold" />
-
-        <com.keykeep.app.views.custom_view.StyledTextViewLight
-            android:id="@+id/left_drawer_contact_no"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/left_drawer_username"
-            android:layout_centerHorizontal="true"
-            android:text="view_edit_profile_txt"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_12sdp" />
-
-        <com.keykeep.app.views.custom_view.StyledTextViewLight
-            android:id="@+id/notify_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/left_drawer_profile_pic"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:text="notify_profile_txt"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_12sdp" />
-
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_150sdp">
+        android:layout_height="@dimen/_130sdp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/leftDrawer_profile_imageView"
@@ -79,22 +26,9 @@
             android:layout_below="@+id/leftDrawer_profile_imageView"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_10sdp"
-            android:text="Tom Luise"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14sdp" />
-
-
-        <com.keykeep.app.views.custom_view.StyledTextViewLight
-            android:id="@+id/left_drawerNumber_text"
-           android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/leftDrawer_profileName_text"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/_5sdp"
             android:text=""
             android:textColor="@color/black"
-            android:textSize="@dimen/_11sdp" />
+            android:textSize="@dimen/_14sdp" />
 
 
     </RelativeLayout>

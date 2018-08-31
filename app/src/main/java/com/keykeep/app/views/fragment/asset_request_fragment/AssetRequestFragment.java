@@ -3,18 +3,14 @@ package com.keykeep.app.views.fragment.asset_request_fragment;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.keykeep.app.R;
@@ -24,8 +20,6 @@ import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.adapter.AssetRequestAdapter;
 import com.keykeep.app.views.base.BaseFragment;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by ashishthakur on 29/8/18.
@@ -47,6 +41,7 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
         viewModel = ViewModelProviders.of(this).get(AssetRequestViewModel.class);
         binding.setViewModel(viewModel);
         initializeViews(binding.getRoot());
+        Utils.showProgressDialog(getActivity(), getString(R.string.please_wait));
         viewModel.getAssetsPendingSendRequest(binding);
 
         return binding.getRoot();
@@ -55,64 +50,50 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
     @Override
     public void initializeViews(View rootView) {
         typeRequest = AppUtils.STATUS_ASSET_SEND_REQUEST;
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(getString(R.string.txt_tab_title_pending_send_request)));
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(getString(R.string.txt_tab_title_pending_recieve_request)));
-        binding.tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#3A5A9A"));
-        binding.tabLayout.setSelectedTabIndicatorHeight((int) (5 * getResources().getDisplayMetrics().density));
-        binding.tabLayout.setTabTextColors(Color.parseColor("#727272"), Color.parseColor("#2F2F2D"));
-
-        View root = binding.tabLayout.getChildAt(0);
-
-        if (root instanceof LinearLayout) {
-            ((LinearLayout) root).setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
-            GradientDrawable drawable = new GradientDrawable();
-            drawable.setColor(getResources().getColor(R.color.black));
-            drawable.setSize(1, 1);
-            ((LinearLayout) root).setDividerDrawable(drawable);
-        }
         binding.recyclerView.setVisibility(View.VISIBLE);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         binding.recyclerView.setLayoutManager(manager);
         binding.recyclerView.setLoadingListener(this);
         viewModel.response_validator.observe(this, response_observer);
+        binding.tvPendingSendRequest.setOnClickListener(this);
+        binding.tvPendingReceiveRequest.setOnClickListener(this);
 
-        binding.tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                Log.e(TAG, "" + tab.getPosition());
-                switch (tab.getPosition()) {
-                    case ASSET_PENDING_SEND_REQUEST:
-                        typeRequest = AppUtils.STATUS_ASSET_SEND_REQUEST;
-                        viewModel.getAssetsPendingSendRequest(binding);
-                        break;
-                    case ASSET_PENDING_RECIEVE_REQUEST:
-                        typeRequest = AppUtils.STATUS_ASSET_RECEIVE_REQUEST;
-                        viewModel.getAssetsPendingRecieveRequest(binding);
-                        break;
+        binding.tvPendingSendRequest.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.all_asset_selector));
+        binding.tvPendingReceiveRequest.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.my_asset_deselector));
+        binding.tvPendingReceiveRequest.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+        binding.tvPendingSendRequest.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
 
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
     }
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_pending_send_request:
+                Utils.showProgressDialog(getActivity(), getString(R.string.please_wait));
+                binding.tvPendingSendRequest.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.all_asset_selector));
+                binding.tvPendingReceiveRequest.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.my_asset_deselector));
+                binding.tvPendingReceiveRequest.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+                binding.tvPendingSendRequest.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+                typeRequest = AppUtils.STATUS_ASSET_SEND_REQUEST;
+                viewModel.getAssetsPendingSendRequest(binding);
+                break;
+            case R.id.tv_pending_receive_request:
+                Utils.showProgressDialog(getActivity(), getString(R.string.please_wait));
+                binding.tvPendingSendRequest.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.all_asset_deselector));
+                binding.tvPendingReceiveRequest.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.my_asset_selector));
+                binding.tvPendingSendRequest.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+                binding.tvPendingReceiveRequest.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+                typeRequest = AppUtils.STATUS_ASSET_RECEIVE_REQUEST;
+                viewModel.getAssetsPendingRecieveRequest(binding);
+                break;
+        }
     }
 
     Observer<AssetsListResponseBean> response_observer = new Observer<AssetsListResponseBean>() {
 
         @Override
         public void onChanged(@Nullable AssetsListResponseBean assetsListResponseBean) {
-
+            Utils.hideProgressDialog();
             if (assetsListResponseBean != null && assetsListResponseBean.getResult() != null && assetsListResponseBean.getResult().size() > 0) {
                 binding.recyclerView.setVisibility(View.VISIBLE);
                 assetRequestAdapter = new AssetRequestAdapter(getActivity(), assetsListResponseBean, typeRequest);

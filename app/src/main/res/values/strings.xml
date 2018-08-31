@@ -87,7 +87,7 @@
     <string name="txt_status_type_send">send</string>
     <string name="txt_status_type_recieve">receive</string>
     <string name="txt_tab_title_pending_send_request">Sent</string>
-    <string name="txt_tab_title_pending_recieve_request">Rec</string>
+    <string name="txt_tab_title_pending_recieve_request">Received</string>
     <string name="txt_your_request_for">Your request for\u0020</string>
     <string name="txt_is_send_to">\u0020is sent to\u0020</string>
     <string name="txt_want_to">want to issue</string>
@@ -101,5 +101,9 @@
     <string name="confirm_request">Confirm Request</string>
     <string name="asset_detail">Assets Detail</string>
     <string name="txt_no_records_avialable">No records available</string>
-
+    <string name="txt_qr_code_screen_title">Scan</string>
+    <string name="txt_my_profile">Profile</string>
+    <string name="txt_home">Home</string>
+    <string name="txt_all_asset">All Assets</string>
+    <string name="txt_my_asset">My Assets</string>
 </resources>

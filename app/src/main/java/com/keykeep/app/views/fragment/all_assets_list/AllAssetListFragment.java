@@ -41,10 +41,11 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
         @Override
         public void onChanged(@Nullable AssetsListResponseBean assetsListResponseBean) {
 
+            Utils.hideProgressDialog();
             if (assetsListResponseBean != null && assetsListResponseBean.getResult() != null && assetsListResponseBean.getResult().size() > 0) {
                 resultArrayList = assetsListResponseBean.getResult();
-                allAssetAdapter = new AllAssetsAdapter(context, resultArrayList);
-                binding.recyclerView.setAdapter(allAssetAdapter);
+                allAssetAdapter.setAssetList(getActivity(), resultArrayList);
+
             }
         }
 
@@ -64,6 +65,7 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
         viewModel = ViewModelProviders.of(this).get(AllAssetListFragmentViewModel.class);
         binding.setViewModel(viewModel);
         initializeViews(binding.getRoot());
+        Utils.showProgressDialog(context, getString(R.string.please_wait));
         viewModel.getAllAssets(binding);
         return binding.getRoot();
     }
@@ -73,6 +75,8 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
         resultArrayList = new ArrayList<>();
         LinearLayoutManager manager = new LinearLayoutManager(context);
         binding.recyclerView.setLayoutManager(manager);
+        allAssetAdapter = new AllAssetsAdapter(context, resultArrayList);
+        binding.recyclerView.setAdapter(allAssetAdapter);
         binding.recyclerView.setLoadingListener(this);
         binding.recyclerView.setLoadingMoreEnabled(false);
         binding.recyclerView.setPullRefreshEnabled(false);

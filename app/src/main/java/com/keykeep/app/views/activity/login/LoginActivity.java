@@ -15,7 +15,6 @@ import com.keykeep.app.databinding.LoginActivityBinding;
 import com.keykeep.app.model.bean.LoginResponseBean;
 import com.keykeep.app.preferences.Pref;
 import com.keykeep.app.utils.AppUtils;
-import com.keykeep.app.utils.Connectivity;
 import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.activity.forgot_password.ForgotPasswordActivity;
 import com.keykeep.app.views.activity.home.HomeActivity;
@@ -105,7 +104,9 @@ public class LoginActivity extends BaseActivity {
             String user_detail = gson.toJson(loginBean.getResult());
             Pref.setUserDetail(context, user_detail);
             String empId = loginBean.getResult().getEmployeeId() + "";
+            String empName = loginBean.getResult().getFirstname() + "";
             Pref.setEmployeeID(context, empId);
+            Pref.setEmployeeName(context, empName);
             Pref.setAccessToken(context, loginBean.getAccessToken());
             boolean isRemember = binding.rememberCheckbox.isChecked();
             Pref.setBoolean(context, isRemember, Pref.REMEMBER_ME);
@@ -122,7 +123,7 @@ public class LoginActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_login:
-                Utils.showDialog(context,getString(R.string.please_wait));
+                Utils.showProgressDialog(context, getString(R.string.please_wait));
                 viewModel.doLogin(binding);
                 break;
 

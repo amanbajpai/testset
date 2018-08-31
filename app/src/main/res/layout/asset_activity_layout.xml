@@ -5,17 +5,44 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tab_layout"
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/_3sdp"
+        android:layout_marginLeft="@dimen/_3sdp"
+        android:layout_marginRight="@dimen/_3sdp"
+        android:weightSum="2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
-        android:background="@color/white"
-        android:elevation="6dp"
-        android:minHeight="56dp"
-        app:tabPaddingEnd="0dp"
-        app:tabPaddingStart="0dp"
-        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget" />
+        android:gravity="center"
+        android:orientation="horizontal">
+
+
+        <com.keykeep.app.views.custom_view.StyledTextViewRegular
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_all_assets"
+            android:background="@drawable/all_asset_selector"
+            android:gravity="center"
+            android:clickable="true"
+            android:padding="@dimen/_4sdp"
+            android:text="@string/txt_all_asset"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14sdp" />
+
+        <com.keykeep.app.views.custom_view.StyledTextViewRegular
+            android:layout_width="0dp"
+            android:id="@+id/tv_my_assets"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/my_asset_deselector"
+            android:gravity="center"
+            android:clickable="true"
+            android:padding="@dimen/_4sdp"
+            android:text="@string/txt_my_asset"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/_14sdp" />
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
