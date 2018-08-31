@@ -27,7 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created by ankurrawal on 23/8/18.
+ * Created by akshaydashore on 27/8/18
  */
 
 public class AssetDetailActivity extends BaseActivity implements DialogClickListener {
@@ -374,13 +374,12 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
                 String qr = jsonObject.getString("qr_code_number");
 
                 if (!qr_code.equals("") && !qr.equals(qr_code)) {
-                    Utils.showAlert(context, "", "You have scanned different asset please try differnt asset", "ok", "" +
+                    Utils.showAlert(context, "", getString(R.string.sorry_qr_code_does_not_match), "ok", "" +
                             "", AppUtils.dialog_ok_click, this);
                     binding.scanButton.setVisibility(View.GONE);
                     return;
                 }
                 validateAfterScan(qr);
-
                 ASSET_STATUS = AppUtils.STATUS_SCAN_CODE;
 
             } catch (JSONException e) {

@@ -19,7 +19,6 @@ import retrofit2.Response;
 /**
  * Created by akshaydashore on 31/8/18
  */
-
 public class TransferViewModel extends BaseViewModel {
 
 

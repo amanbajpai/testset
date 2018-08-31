@@ -29,7 +29,6 @@ import com.keykeep.app.views.fragment.ownAssetsFragment.MyAssetsFragmentViewMode
 /**
  * Created by akshaydashore on 31/8/18
  */
-
 public class TransferActivity extends BaseActivity implements XRecyclerView.LoadingListener {
 
 

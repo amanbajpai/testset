@@ -89,5 +89,6 @@
     <string name="txt_no_records_avialable">No records available</string>
     <string name="transfer_asset">Transfer Asset</string>
     <string name="confirm_transfer">Confirm Transfer</string>
+    <string name="sorry_qr_code_does_not_match">Sorry this qr code does not match this asset</string>
 
 </resources>
