@@ -20,7 +20,7 @@ import com.keykeep.app.R;
 import com.keykeep.app.model.LeftMenuDrawerItems;
 import com.keykeep.app.utils.Connectivity;
 import com.keykeep.app.utils.Utils;
-import com.keykeep.app.views.activity.changepassword.ChangePasswordActivity;
+import com.keykeep.app.views.activity.AssetListActivity;
 import com.keykeep.app.views.adapter.LeftDrawerListAdapter;
 import com.keykeep.app.views.base.BaseActivity;
 import com.keykeep.app.views.fragment.asset_request_fragment.AssetRequestFragment;
@@ -125,19 +125,18 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
 
 
     private final int[] menuItemIcons = new int[]{
-            R.drawable.slider_scan,
-            R.drawable.slider_transfer, R.drawable.slider_test_drive, R.drawable.slider_chat,
-            R.drawable.slider_pending_req, R.drawable.slider_history, R.drawable.slider_notification,
-            R.drawable.slider_profile, R.drawable.slider_settings, R.drawable.slider_logout
+            R.drawable.hovme,
+            R.drawable.hovme, R.drawable.slider_pending_req,
+            R.drawable.slider_notification, R.drawable.slider_profile, R.drawable.slider_settings,
+            R.drawable.slider_logout
     };
-
 
     private final int[] menuItemIconsSelected = new int[]{
 
-            R.drawable.slider_scan,
-            R.drawable.slider_transfer, R.drawable.slider_test_drive, R.drawable.slider_chat,
-            R.drawable.slider_pending_req, R.drawable.slider_history, R.drawable.slider_notification,
-            R.drawable.slider_profile, R.drawable.slider_settings, R.drawable.slider_logout
+            R.drawable.hovme,
+            R.drawable.hovme, R.drawable.slider_pending_req,
+            R.drawable.slider_notification, R.drawable.slider_profile, R.drawable.slider_settings,
+            R.drawable.slider_logout
     };
 
     private void prepareMenuItemList() {
@@ -233,65 +232,34 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
 
         switch (position) {
 
-            case 0: // Home
+            case 0://Home
                 setDrawerHover(position);
                 title_tv.setText("Home");
                 Utils.replaceFragment(HomeActivity.this, new HomeFragment());
                 break;
-            case 1://My Bookings
-                setDrawerHover(position);
+            case 1://Assets
+                Intent asset_intent = new Intent(HomeActivity.this, AssetListActivity.class);
+                startActivity(asset_intent);
                 break;
-            case 2://My Payments
-                setDrawerHover(position);
-
-                break;
-            case 3://My Account
-                setDrawerHover(position);
-
-                break;
-            case 4://How It Works
-                setDrawerHover(position);
-
-                break;
-            case 5: //About Us
-                setDrawerHover(position);
-
-                break;
-            case 6://profile
-                setDrawerHover(position);
-
-                startActivity(new Intent(context, ChangePasswordActivity.class));
-                break;
-            case 7://Support
-                setDrawerHover(position);
-
-                break;
-            case 8: //Legals
-                setDrawerHover(position);
-
+            case 2://Pending Request
                 title_tv.setText(getString(R.string.txt_title_screen_asset_request));
                 Utils.replaceFragment(HomeActivity.this, new AssetRequestFragment());
+
                 break;
-            case 9: //Trust&safet
+            case 3: //Notification
                 setDrawerHover(position);
 
                 break;
-            case 10: //Share
+            case 4://Profile
+                setDrawerHover(position);
+                break;
+            case 5://Setting
                 setDrawerHover(position);
 
                 break;
-            case 11://Rate Us
-                setDrawerHover(position);
-
-                break;
-            case 12://Asset Request
-                setDrawerHover(position);
-
-                break;
-            case 13: //Logout
+            case 6: //Logout
                 setDrawerHover(position);
                 break;
-
         }
     }
 

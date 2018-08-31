@@ -3,6 +3,7 @@ package com.keykeep.app.views.fragment.asset_request_fragment;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -56,6 +57,10 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
         typeRequest = AppUtils.STATUS_ASSET_SEND_REQUEST;
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText(getString(R.string.txt_tab_title_pending_send_request)));
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText(getString(R.string.txt_tab_title_pending_recieve_request)));
+        binding.tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#3A5A9A"));
+        binding.tabLayout.setSelectedTabIndicatorHeight((int) (5 * getResources().getDisplayMetrics().density));
+        binding.tabLayout.setTabTextColors(Color.parseColor("#727272"), Color.parseColor("#2F2F2D"));
+
         View root = binding.tabLayout.getChildAt(0);
 
         if (root instanceof LinearLayout) {

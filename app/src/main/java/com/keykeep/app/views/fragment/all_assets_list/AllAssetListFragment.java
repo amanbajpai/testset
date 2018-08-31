@@ -83,11 +83,7 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
         binding.simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-//                Toast.makeText(context, query, Toast.LENGTH_LONG).show();
-                /*allAssetAdapter.getFilter().filter(query);
-                allAssetAdapter.notifyDataSetChanged();*/
                 allAssetAdapter.notifyDataSetChanged();
-
                 return false;
             }
 
@@ -101,7 +97,6 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
                 } else {
                     allAssetAdapter.getFilter().filter(newText);
                     allAssetAdapter.notifyDataSetChanged();
-                   // setSearchAssetStatus();
 
                 }
 
