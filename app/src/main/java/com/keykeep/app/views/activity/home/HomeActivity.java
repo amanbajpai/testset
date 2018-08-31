@@ -160,6 +160,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
         try {
             /*mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                     R.string.drawer_open, R.string.drawer_close)*/
+
             mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar,
                     R.string.drawer_open, R.string.drawer_close) {
 
@@ -176,8 +177,12 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
                 }
             };
 
+
+
             // Set the drawer toggle as the DrawerListener
             mDrawerLayout.addDrawerListener(mDrawerToggle);
+
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
