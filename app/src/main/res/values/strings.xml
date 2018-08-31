@@ -83,7 +83,7 @@
     <string name="txt_status_available">Available</string>
     <string name="txt_status_unavailable">Not Available</string>
     <string name="scan">Scan</string>
-    <string name="please_wait">please wait</string>
+    <string name="please_wait">Loading</string>
     <string name="txt_status_type_send">send</string>
     <string name="txt_status_type_recieve">receive</string>
     <string name="txt_tab_title_pending_send_request">Sent</string>
