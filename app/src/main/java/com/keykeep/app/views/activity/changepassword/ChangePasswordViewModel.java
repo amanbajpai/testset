@@ -13,6 +13,7 @@ import com.keykeep.app.netcom.retrofit.RetrofitHolder;
 import com.keykeep.app.preferences.Pref;
 import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.utils.Connectivity;
+import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.base.BaseViewModel;
 
 import retrofit2.Call;
@@ -39,13 +40,16 @@ public class ChangePasswordViewModel extends BaseViewModel {
         } else if (TextUtils.isEmpty(binding.etConfirmPass.getText().toString())) {
             validator.setValue(AppUtils.empty_confirm_password);
             return false;
+        }else if (binding.etConfirmPass.getText().toString().equals(binding.etConfirmPass.getText().toString())) {
+            validator.setValue(AppUtils.match_confirm_password);
+            return false;
         }
         return true;
     }
 
     public void doChangePassword(ActivityChangePasswordBinding binding, Context context) {
 
-        if (Connectivity.isConnected()) {
+        if (!Connectivity.isConnected()) {
             validator.setValue(AppUtils.NO_INTERNET);
             return;
         }
@@ -54,7 +58,6 @@ public class ChangePasswordViewModel extends BaseViewModel {
         String password = binding.etPassword.getText().toString();
         String c_password = binding.etConfirmPass.getText().toString();
         String emp_id = Pref.getEmployeeID(context);
-
 
         Call<ChangePasswordBean> call = RetrofitHolder.getService().doChangePassword(
                 KeyKeepApplication.getInstance().getBaseEntity(true)
@@ -66,11 +69,13 @@ public class ChangePasswordViewModel extends BaseViewModel {
         call.enqueue(new Callback<ChangePasswordBean>() {
             @Override
             public void onResponse(Call<ChangePasswordBean> call, Response<ChangePasswordBean> response) {
+                Utils.hideProgressDialog();
                 response_validator.setValue(response.body());
             }
 
             @Override
             public void onFailure(Call<ChangePasswordBean> call, Throwable t) {
+                Utils.hideProgressDialog();
                 validator.setValue(AppUtils.SERVER_ERROR);
             }
         });

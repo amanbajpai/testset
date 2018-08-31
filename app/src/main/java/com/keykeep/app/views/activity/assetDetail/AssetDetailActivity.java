@@ -68,7 +68,6 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         viewModel.asset_req_approved_validator.observe(this, asset_req_approved_observer);
         viewModel.asset_req_cancel_validator.observe(this, asset_req_cancel_observer);
 
-
         binding.scanButton.setOnClickListener(AssetDetailActivity.this);
 
         /**
@@ -80,7 +79,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         Utils.showDialog(context, getString(R.string.please_wait));
         viewModel.getAssetDetail(qr_code, emp_id);
 
-        if (ASSET_STATUS == AppUtils.STATUS_ASSET_SEND_REQUEST) {
+        if (ASSET_STATUS == AppUtils.STATUS_ASSET_SEND_REQUEST || ASSET_STATUS == AppUtils.STATUS_ASSET_RECEIVE_REQUEST) {
             req_id = getIntent().getIntExtra(AppUtils.ASSET_REQUEST_ID, -1);
         }
         validateSubmitView();
@@ -93,7 +92,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
 
             case AppUtils.STATUS_ASSET_LIST:
                 binding.scanButton.setVisibility(View.VISIBLE);
-                binding.scanButton.setText(R.string.scan_asset);
+                binding.scanButton.setText(R.string.request_key);
                 break;
 
             case AppUtils.STATUS_SCAN_CODE:
@@ -273,6 +272,9 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
 
             case AppUtils.STATUS_SCAN_CODE:
                 Utils.showDialog(context, getString(R.string.please_wait));
+                if (emp_id.equals(0)){
+                    viewModel.keepAssetRequest(qr_code, emp_id);
+                }else
                 viewModel.sendAssetRequest(qr_code, emp_id);
                 break;
         }
@@ -285,7 +287,6 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
 
         /**
          * Get asset result from web service after scan Qr code
@@ -310,7 +311,6 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
                 Utils.showToast(context, getString(R.string.unable_to_scan_qr));
             }
         }
-
     }
 
     @Override

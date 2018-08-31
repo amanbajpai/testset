@@ -48,7 +48,7 @@ public class LoginActivity extends BaseActivity {
         viewModel.validator.observe(this, observer);
         viewModel.response_validator.observe(this, response_observer);
 
-        if (Pref.getBoolean(context, Pref.IS_LOGIN) && Pref.getBoolean(context, Pref.IS_LOGIN)) {
+        if (Pref.getBoolean(context, Pref.IS_LOGIN) && Pref.getBoolean(context, Pref.REMEMBER_ME)) {
             LoginResponseBean.Result bean = Utils.getUserDetail(context);
             binding.etMail.setText(bean.getEmail());
             binding.etPassword.setText(Pref.getPassword(context));

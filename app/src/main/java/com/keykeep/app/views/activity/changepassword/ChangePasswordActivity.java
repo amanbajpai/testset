@@ -103,6 +103,7 @@ public class ChangePasswordActivity extends BaseActivity implements DialogClickL
                     break;
 
                 case AppUtils.NO_INTERNET:
+                    Utils.hideProgressDialog();
                     Utils.showToast(context, getString(R.string.internet_connection));
                     break;
 
@@ -117,6 +118,7 @@ public class ChangePasswordActivity extends BaseActivity implements DialogClickL
 
             case R.id.tv_submit:
                 if (viewModel.isValidate(binding)) {
+                    Utils.showDialog(context,getString(R.string.please_wait));
                     viewModel.doChangePassword(binding, context);
                 }
                 break;

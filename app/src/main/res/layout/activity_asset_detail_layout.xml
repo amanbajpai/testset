@@ -31,11 +31,10 @@
                 <com.keykeep.app.views.custom_view.StyledTextViewBold
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:padding="@dimen/_10sdp"
+                    android:padding="@dimen/_5sdp"
                     android:text="Asset Detail"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="@dimen/_14sdp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -46,12 +45,11 @@
                 <com.keykeep.app.views.custom_view.StyledTextViewRegular
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
                     android:paddingTop="@dimen/_8sdp"
                     android:text="Asset Name"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_13sdp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <com.keykeep.app.views.custom_view.StyledTextViewRegular
                     android:id="@+id/asset_name"
@@ -59,10 +57,9 @@
                     android:layout_height="match_parent"
                     android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_8sdp"
                     android:text="BMW x6"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/_13sdp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -73,12 +70,11 @@
                 <com.keykeep.app.views.custom_view.StyledTextViewRegular
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
                     android:paddingTop="@dimen/_8sdp"
                     android:text="@string/asset_type"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_13sdp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <com.keykeep.app.views.custom_view.StyledTextViewRegular
                     android:id="@+id/asset_type"
@@ -86,10 +82,9 @@
                     android:layout_height="match_parent"
                     android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_8sdp"
                     android:text="BMW x6"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/_13sdp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -100,12 +95,11 @@
                 <com.keykeep.app.views.custom_view.StyledTextViewRegular
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
                     android:paddingTop="@dimen/_8sdp"
                     android:text="@string/version_no"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_13sdp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <com.keykeep.app.views.custom_view.StyledTextViewRegular
                     android:id="@+id/version_number"
@@ -113,10 +107,9 @@
                     android:layout_height="match_parent"
                     android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_8sdp"
                     android:text="BMW x6"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/_13sdp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -127,12 +120,11 @@
                 <com.keykeep.app.views.custom_view.StyledTextViewRegular
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
                     android:paddingTop="@dimen/_8sdp"
                     android:text="@string/code"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_13sdp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <com.keykeep.app.views.custom_view.StyledTextViewRegular
                     android:id="@+id/code_number"
@@ -140,10 +132,9 @@
                     android:layout_height="match_parent"
                     android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_8sdp"
                     android:text="BMW x6"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/_13sdp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -154,12 +145,11 @@
                 <com.keykeep.app.views.custom_view.StyledTextViewRegular
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
                     android:paddingTop="@dimen/_8sdp"
                     android:text="@string/model_no"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_13sdp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <com.keykeep.app.views.custom_view.StyledTextViewRegular
                     android:id="@+id/model_no"
@@ -167,10 +157,9 @@
                     android:layout_height="match_parent"
                     android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_8sdp"
                     android:text="BMW x6"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/_13sdp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -181,12 +170,11 @@
                 <com.keykeep.app.views.custom_view.StyledTextViewRegular
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
                     android:paddingTop="@dimen/_8sdp"
                     android:text="@string/color"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_13sdp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <com.keykeep.app.views.custom_view.StyledTextViewRegular
                     android:id="@+id/color_name"
@@ -194,10 +182,9 @@
                     android:layout_height="match_parent"
                     android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_8sdp"
                     android:text="BMW x6"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/_13sdp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -210,11 +197,10 @@
                 <com.keykeep.app.views.custom_view.StyledTextViewBold
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:padding="@dimen/_10sdp"
+                    android:padding="@dimen/_5sdp"
                     android:text="@string/customer_detail"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="@dimen/_14sdp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -225,12 +211,11 @@
                 <com.keykeep.app.views.custom_view.StyledTextViewRegular
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
                     android:paddingTop="@dimen/_8sdp"
                     android:text="Customer Name"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_13sdp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <com.keykeep.app.views.custom_view.StyledTextViewRegular
                     android:id="@+id/customer_name"
@@ -238,10 +223,9 @@
                     android:layout_height="match_parent"
                     android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_8sdp"
                     android:text="BMW x6"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/_13sdp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -252,12 +236,11 @@
                 <com.keykeep.app.views.custom_view.StyledTextViewRegular
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
                     android:paddingTop="@dimen/_8sdp"
                     android:text="@string/customer_number"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_13sdp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <com.keykeep.app.views.custom_view.StyledTextViewRegular
                     android:id="@+id/customer_number"
@@ -265,10 +248,9 @@
                     android:layout_height="match_parent"
                     android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_8sdp"
                     android:text="BMW x6"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/_13sdp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -279,7 +261,6 @@
                 <com.keykeep.app.views.custom_view.StyledTextViewRegular
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
                     android:paddingTop="@dimen/_8sdp"
                     android:text="@string/customer_address"
@@ -292,7 +273,6 @@
                     android:layout_height="match_parent"
                     android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_8sdp"
                     android:text="BMW x6"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/_13sdp" />
@@ -309,11 +289,10 @@
                 <com.keykeep.app.views.custom_view.StyledTextViewBold
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:padding="@dimen/_10sdp"
+                    android:padding="@dimen/_5sdp"
                     android:text="@string/employee_detail"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="@dimen/_14sdp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -324,7 +303,6 @@
                 <com.keykeep.app.views.custom_view.StyledTextViewRegular
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
                     android:paddingTop="@dimen/_8sdp"
                     android:text="Employee Name"
@@ -337,10 +315,9 @@
                     android:layout_height="match_parent"
                     android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_8sdp"
                     android:text="BMW x6"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/_13sdp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -365,7 +342,7 @@
             android:paddingLeft="@dimen/_25sdp"
             android:paddingRight="@dimen/_25sdp"
             android:paddingTop="@dimen/_10sdp"
-            android:textColor="@color/green_light"
+            android:textColor="@color/white"
             android:textSize="@dimen/_13sdp"
             android:visibility="gone" />
 
@@ -392,7 +369,7 @@
                 android:paddingRight="@dimen/_25sdp"
                 android:paddingTop="@dimen/_10sdp"
                 android:text="@string/accept"
-                android:textColor="@color/green_light"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_13sdp" />
 
             <com.keykeep.app.views.custom_view.StyledTextViewBold
