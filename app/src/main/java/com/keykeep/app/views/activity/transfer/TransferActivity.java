@@ -21,7 +21,9 @@ import com.keykeep.app.databinding.MyAssetListFragmentBinding;
 import com.keykeep.app.model.bean.AssetsListResponseBean;
 import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.adapter.MyAssetsAdapter;
+import com.keykeep.app.views.adapter.TransferAssetAdapter;
 import com.keykeep.app.views.base.BaseActivity;
+import com.keykeep.app.views.custom_view.CustomActionBar;
 import com.keykeep.app.views.fragment.ownAssetsFragment.MyAssetsFragmentViewModel;
 
 /**
@@ -34,15 +36,23 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
     private Context context;
     private ActivityTransferAssetBinding binding;
     TransferViewModel viewModel;
-    private MyAssetsAdapter myAssetAdapter;
+    private TransferAssetAdapter myAssetAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
+        setCustomActionBar();
         initializeViews();
     }
 
+
+    @Override
+    public void setCustomActionBar() {
+        super.setCustomActionBar();
+        CustomActionBar customActionBar = new CustomActionBar(this);
+        customActionBar.setActionbar(getString(R.string.transfer_asset), true, false, this);
+    }
 
     @Override
     public void initializeViews() {
@@ -50,33 +60,28 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
         binding = DataBindingUtil.setContentView(this, R.layout.activity_transfer_asset);
         viewModel = ViewModelProviders.of(this).get(TransferViewModel.class);
         binding.setViewModel(viewModel);
-        viewModel.getMyAssets(binding);
 
         LinearLayoutManager manager = new LinearLayoutManager(context);
         binding.recyclerView.setLayoutManager(manager);
         binding.recyclerView.setLoadingListener(this);
         viewModel.response_validator.observe(this, response_observer);
         Utils.hideSoftKeyboard(this);
-        binding.simpleSearchView.setQueryHint("Search here");
 
-        binding.simpleSearchView.setOnQueryTextListener(new android.widget.SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-//                Toast.makeText(context, query, Toast.LENGTH_LONG).show();
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-//                Toast.makeText(context, newText, Toast.LENGTH_LONG).show();
-                return false;
-            }
-        });
+        Utils.showDialog(context, getString(R.string.please_wait));
+        viewModel.getMyAssets(binding);
 
     }
 
     @Override
     public void onClick(View view) {
+
+        switch (view.getId()) {
+
+            case R.id.left_iv:
+                finish();
+                break;
+
+        }
     }
 
 
@@ -85,16 +90,13 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
         @Override
         public void onChanged(@Nullable AssetsListResponseBean assetsListResponseBean) {
 
-            if (assetsListResponseBean != null && assetsListResponseBean.getResult() != null && assetsListResponseBean.getResult().size() > 0) {
+            if (assetsListResponseBean != null && assetsListResponseBean.getResult() != null) {
                 LinearLayoutManager manager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
                 binding.recyclerView.setLayoutManager(manager);
-                myAssetAdapter = new MyAssetsAdapter(context, assetsListResponseBean);
+                myAssetAdapter = new TransferAssetAdapter(context, assetsListResponseBean);
                 binding.recyclerView.setAdapter(myAssetAdapter);
-
             }
-
         }
-
     };
 
     @Override

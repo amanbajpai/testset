@@ -9,6 +9,7 @@ import com.keykeep.app.model.bean.AssetsListResponseBean;
 import com.keykeep.app.netcom.retrofit.RetrofitHolder;
 import com.keykeep.app.preferences.Pref;
 import com.keykeep.app.utils.AppUtils;
+import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.base.BaseViewModel;
 
 import retrofit2.Call;
@@ -29,17 +30,18 @@ public class TransferViewModel extends BaseViewModel {
 
         String employeeId = Pref.getEmployeeID(KeyKeepApplication.getInstance());
 
-
         Call<AssetsListResponseBean> call = RetrofitHolder.getService().getAssetsList(KeyKeepApplication.getInstance().getBaseEntity(false), employeeId, "1");
 
         call.enqueue(new Callback<AssetsListResponseBean>() {
             @Override
             public void onResponse(Call<AssetsListResponseBean> call, Response<AssetsListResponseBean> response) {
+                Utils.hideProgressDialog();
                 response_validator.setValue(response.body());
             }
 
             @Override
             public void onFailure(Call<AssetsListResponseBean> call, Throwable t) {
+                Utils.hideProgressDialog();
                 validator.setValue(AppUtils.SERVER_ERROR);
             }
         });

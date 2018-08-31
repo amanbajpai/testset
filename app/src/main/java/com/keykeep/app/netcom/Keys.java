@@ -51,4 +51,5 @@ public interface Keys {
      * approved request
      */
     String REQ_ID = "request_id";
+    String SUBMIT_USER_TYPE =  "submit_user_type";
 }

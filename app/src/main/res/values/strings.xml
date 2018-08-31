@@ -2,20 +2,6 @@
     <string name="app_name">LotView</string>
 
 
-    <!--  <array name="drawer_menu_titles">
-          <item>Scan</item>&lt;!&ndash;0&ndash;&gt;
-          <item>Transfer</item>&lt;!&ndash;1&ndash;&gt;
-          <item>Test Drive</item>&lt;!&ndash;2&ndash;&gt;
-          <item>Chat</item>&lt;!&ndash;3&ndash;&gt;
-          <item>Pending Request</item>&lt;!&ndash;4&ndash;&gt;
-          <item>History</item>&lt;!&ndash;5&ndash;&gt;
-          <item>Notification</item>&lt;!&ndash;6&ndash;&gt;
-          <item>Profile</item>&lt;!&ndash;7&ndash;&gt;
-          <item>Setting</item>&lt;!&ndash;8&ndash;&gt;
-          <item>Logout</item>&lt;!&ndash;9&ndash;&gt;
-      </array>-->
-
-
     <array name="drawer_menu_titles">
         <item>Home</item><!--0-->
         <item>Assets</item><!--1-->
@@ -101,5 +87,7 @@
     <string name="confirm_request">Confirm Request</string>
     <string name="asset_detail">Assets Detail</string>
     <string name="txt_no_records_avialable">No records available</string>
+    <string name="transfer_asset">Transfer Asset</string>
+    <string name="confirm_transfer">Confirm Transfer</string>
 
 </resources>

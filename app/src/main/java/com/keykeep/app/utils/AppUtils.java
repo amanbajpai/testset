@@ -57,5 +57,5 @@ public interface AppUtils {
     String STATUS_SUCCESS = "1";
 
 
-
+    int STATUS_TRANSFER_ASSET_LIST = 209;
 }
