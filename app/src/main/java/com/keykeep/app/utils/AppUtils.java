@@ -12,8 +12,6 @@ public interface AppUtils {
     String[] LOCATION_PERMISSIONS = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
 
-
-
     String SCANED_QR_CODE = "scan_qr_code";
     String SCAN_SUCCESS = "scan_success";
     String SCAN_FAIL = "scan_fail";
@@ -36,7 +34,7 @@ public interface AppUtils {
     int REQUEST_CODE_QR_SCAN = 201;
     int REQUEST_CODE_CAMERA = 202;
     int SERVER_ERROR = 203;
-    int NO_INTERNET=204;
+    int NO_INTERNET = 204;
     int STATUS_SCAN_CODE = 205;
     int STATUS_ASSET_LIST = 206;
     int STATUS_ASSET_SEND_REQUEST = 207;
@@ -47,7 +45,8 @@ public interface AppUtils {
     int dialog_ok_click = 301;
     int dialog_request_succes = 301;
     int dialog_ok_to_finish = 302;
-
+    int dialog_yes_no_to_finish_app = 303;
+    int dialog_logout_app = 304;
 
 
     /**

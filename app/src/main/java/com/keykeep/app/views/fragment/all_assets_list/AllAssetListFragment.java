@@ -64,7 +64,7 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
         viewModel = ViewModelProviders.of(this).get(AllAssetListFragmentViewModel.class);
         binding.setViewModel(viewModel);
         initializeViews(binding.getRoot());
-        Utils.showProgressDialog(context, getString(R.string.please_wait));
+        Utils.showProgressDialog(context, getString(R.string.loading));
         viewModel.getAllAssets(binding);
         return binding.getRoot();
     }

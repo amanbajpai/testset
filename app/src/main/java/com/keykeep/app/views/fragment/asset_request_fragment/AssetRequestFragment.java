@@ -41,7 +41,7 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
         viewModel = ViewModelProviders.of(this).get(AssetRequestViewModel.class);
         binding.setViewModel(viewModel);
         initializeViews(binding.getRoot());
-        Utils.showProgressDialog(getActivity(), getString(R.string.please_wait));
+        Utils.showProgressDialog(getActivity(), getString(R.string.loading));
         viewModel.getAssetsPendingSendRequest(binding);
 
         return binding.getRoot();
@@ -69,7 +69,7 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_pending_send_request:
-                Utils.showProgressDialog(getActivity(), getString(R.string.please_wait));
+                Utils.showProgressDialog(getActivity(), getString(R.string.loading));
                 binding.tvPendingSendRequest.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.all_asset_selector));
                 binding.tvPendingReceiveRequest.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.my_asset_deselector));
                 binding.tvPendingReceiveRequest.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
@@ -78,7 +78,7 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
                 viewModel.getAssetsPendingSendRequest(binding);
                 break;
             case R.id.tv_pending_receive_request:
-                Utils.showProgressDialog(getActivity(), getString(R.string.please_wait));
+                Utils.showProgressDialog(getActivity(), getString(R.string.loading));
                 binding.tvPendingSendRequest.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.all_asset_deselector));
                 binding.tvPendingReceiveRequest.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.my_asset_selector));
                 binding.tvPendingSendRequest.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -32,7 +31,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="@dimen/_5sdp"
-                    android:text="Asset Detail"
+                    android:text="Key Detail"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_14sdp" />
 
@@ -47,7 +46,7 @@
                     android:layout_height="match_parent"
                     android:paddingLeft="@dimen/_10sdp"
                     android:paddingTop="@dimen/_8sdp"
-                    android:text="Asset Name"
+                    android:text="Stock Number"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
@@ -57,7 +56,7 @@
                     android:layout_height="match_parent"
                     android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:text="BMW x6"
+                    android:text=""
                     android:textColor="@color/gray"
                     android:textSize="@dimen/_12sdp" />
 
@@ -82,7 +81,7 @@
                     android:layout_height="match_parent"
                     android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:text="BMW x6"
+                    android:text=""
                     android:textColor="@color/gray"
                     android:textSize="@dimen/_12sdp" />
 
@@ -107,7 +106,7 @@
                     android:layout_height="match_parent"
                     android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:text="BMW x6"
+                    android:text=""
                     android:textColor="@color/gray"
                     android:textSize="@dimen/_12sdp" />
 
@@ -132,7 +131,7 @@
                     android:layout_height="match_parent"
                     android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:text="BMW x6"
+                    android:text=""
                     android:textColor="@color/gray"
                     android:textSize="@dimen/_12sdp" />
 
@@ -157,7 +156,7 @@
                     android:layout_height="match_parent"
                     android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:text="BMW x6"
+                    android:text=""
                     android:textColor="@color/gray"
                     android:textSize="@dimen/_12sdp" />
 
@@ -182,7 +181,7 @@
                     android:layout_height="match_parent"
                     android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:text="BMW x6"
+                    android:text=""
                     android:textColor="@color/gray"
                     android:textSize="@dimen/_12sdp" />
 
@@ -223,7 +222,7 @@
                     android:layout_height="match_parent"
                     android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:text="BMW x6"
+                    android:text=""
                     android:textColor="@color/gray"
                     android:textSize="@dimen/_12sdp" />
 
@@ -248,7 +247,7 @@
                     android:layout_height="match_parent"
                     android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:text="BMW x6"
+                    android:text=""
                     android:textColor="@color/gray"
                     android:textSize="@dimen/_12sdp" />
 
@@ -273,7 +272,7 @@
                     android:layout_height="match_parent"
                     android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:text="BMW x6"
+                    android:text=""
                     android:textColor="@color/gray"
                     android:textSize="@dimen/_13sdp" />
 
@@ -315,7 +314,7 @@
                     android:layout_height="match_parent"
                     android:paddingBottom="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:text="BMW x6"
+                    android:text=""
                     android:textColor="@color/gray"
                     android:textSize="@dimen/_12sdp" />
 
@@ -351,10 +350,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_10sdp"
-            android:visibility="gone"
             android:layout_marginTop="@dimen/_5sdp"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <com.keykeep.app.views.custom_view.StyledTextViewBold
                 android:id="@+id/accept_tv"

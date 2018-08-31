@@ -104,8 +104,8 @@ public class LoginActivity extends BaseActivity {
             String user_detail = gson.toJson(loginBean.getResult());
             Pref.setUserDetail(context, user_detail);
             String empId = loginBean.getResult().getEmployeeId() + "";
-            String empName = loginBean.getResult().getFirstname() + "";
             Pref.setEmployeeID(context, empId);
+            String empName = loginBean.getResult().getFirstname() + "";
             Pref.setEmployeeName(context, empName);
             Pref.setAccessToken(context, loginBean.getAccessToken());
             boolean isRemember = binding.rememberCheckbox.isChecked();
@@ -123,7 +123,7 @@ public class LoginActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_login:
-                Utils.showProgressDialog(context, getString(R.string.please_wait));
+                Utils.showProgressDialog(context, getString(R.string.loading));
                 viewModel.doLogin(binding);
                 break;
 

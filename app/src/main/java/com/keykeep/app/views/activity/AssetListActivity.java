@@ -17,15 +17,14 @@ import com.keykeep.app.views.fragment.ownAssetsFragment.MyAssetsListFragment;
  * Created by akshaydashore on 23/8/18
  */
 public class AssetListActivity extends BaseActivity {
-    private String TAG = "AssetListActivity";
-    private AppCompatTextView allAssetBtn,myAssetBtn;
+    private AppCompatTextView allAssetBtn, myAssetBtn;
     private Context context;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.asset_activity_layout);
-        context=AssetListActivity.this;
+        context = AssetListActivity.this;
         setCustomActionBar();
         initializeViews();
     }
@@ -35,7 +34,7 @@ public class AssetListActivity extends BaseActivity {
     public void setCustomActionBar() {
         super.setCustomActionBar();
         CustomActionBar customActionBar = new CustomActionBar(this);
-        customActionBar.setActionbar("Assets", true, false, this);
+        customActionBar.setActionbar(getString(R.string.keys), true, false, this);
     }
 
     @Override

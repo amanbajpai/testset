@@ -14,6 +14,7 @@ public class Pref {
     private static final String ACCESS_TOKEN = "Access_token";
     private static final String User_DETAIL = "user_detail";
     private static final String EMPLOYEE_ID = "employee_id";
+    private static final String EMPLOYEE_NAME = "employee_name";
     private static final String LOGIN_PASSWORD = "login_password";
 
     public static final String REMEMBER_ME = "remember_me";
@@ -116,12 +117,12 @@ public class Pref {
      */
     public static void setEmployeeName(Context context, String value) {
         SharedPreferences.Editor editor = getEditor(context);
-        editor.putString(EMPLOYEE_ID, value);
+        editor.putString(EMPLOYEE_NAME, value);
         editor.apply();
     }
 
     public static String getEmployeeName(Context context) {
-        return getSharedPrefs(context).getString(EMPLOYEE_ID, "");
+        return getSharedPrefs(context).getString(EMPLOYEE_NAME, "");
     }
 
 

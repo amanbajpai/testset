@@ -4,8 +4,7 @@
 
     <array name="drawer_menu_titles">
         <item>Home</item><!--0-->
-        <item>Assets</item><!--1-->
-        <item>Asset Requests</item><!--7-->
+        <item>Key Requests</item><!--7-->
         <item>Notifications</item><!--8-->
         <item>Profile</item>
         <item>Setting</item>
@@ -55,10 +54,10 @@
     <string name="internet_connection">Please check internet connection</string>
     <string name="allow_camera_permission">Please allow Camera permission to scan qr code</string>
     <string name="color">Color</string>
-    <string name="model_no">Model No</string>
+    <string name="model_no">Model</string>
     <string name="code">Code</string>
-    <string name="version_no">Version No</string>
-    <string name="asset_type">Asset Type</string>
+    <string name="version_no"> Year</string>
+    <string name="asset_type">Key Type</string>
     <string name="customer_detail">Customer Detail</string>
     <string name="customer_address">Customer Address</string>
     <string name="customer_number">Customer Number</string>
@@ -69,7 +68,7 @@
     <string name="txt_status_available">Available</string>
     <string name="txt_status_unavailable">Not Available</string>
     <string name="scan">Scan</string>
-    <string name="please_wait">Loading</string>
+    <string name="loading">Loading...</string>
     <string name="txt_status_type_send">send</string>
     <string name="txt_status_type_recieve">receive</string>
     <string name="txt_tab_title_pending_send_request">Sent</string>
@@ -79,20 +78,28 @@
     <string name="txt_want_to">want to issue</string>
     <string name="txt_from_you">from you</string>
     <string name="txt_no_data_available">No request available for now</string>
-    <string name="txt_title_screen_asset_request">Asset Request</string>
+    <string name="txt_title_screen_asset_request">Key Requests</string>
     <string name="accept">Accept</string>
     <string name="cancel">Cancel</string>
-    <string name="scan_asset">Scan Asset</string>
+    <string name="scan_asset">Scan Key</string>
+    <string name="keys">Keys</string>
     <string name="request_key">Request Key</string>
     <string name="confirm_request">Confirm Request</string>
-    <string name="asset_detail">Assets Detail</string>
+    <string name="asset_detail">Key Detail</string>
     <string name="txt_no_records_avialable">No records available</string>
     <string name="txt_qr_code_screen_title">Scan</string>
     <string name="txt_my_profile">Profile</string>
     <string name="txt_home">Home</string>
-    <string name="txt_all_asset">All Assets</string>
-    <string name="txt_my_asset">My Assets</string>
-    <string name="transfer_asset">Transfer Asset</string>
+    <string name="txt_all_asset">All Keys</string>
+    <string name="txt_my_asset">My Keys</string>
+    <string name="transfer_asset">Transfer Key</string>
     <string name="confirm_transfer">Confirm Transfer</string>
+
+    <string name="quit_app_msg">Are you sure, want to close LotView !</string>
+    <string name="logout_message">Are you sure want to logout?</string>
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_ok">OK</string>
 
 </resources>
