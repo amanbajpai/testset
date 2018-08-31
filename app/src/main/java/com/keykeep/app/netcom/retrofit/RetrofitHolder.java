@@ -26,7 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RetrofitHolder {
 
-    public static final int TIMEOUT = 60;
+    public static final int TIMEOUT = 180;
     private Context context;
     private Retrofit retrofit;
     private static KeyKeepAPI service;
