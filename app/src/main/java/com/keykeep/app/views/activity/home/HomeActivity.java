@@ -95,6 +95,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
             prepareMenuItemList();
             setDrawerHover(0);
             tvProfileUserName.setText(Pref.getEmployeeName(this));
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -181,7 +182,6 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
                     invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
                 }
             };
-
 
 
             // Set the drawer toggle as the DrawerListener
