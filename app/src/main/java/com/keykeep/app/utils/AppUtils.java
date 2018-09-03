@@ -57,4 +57,10 @@ public interface AppUtils {
 
 
     int STATUS_TRANSFER_ASSET_LIST = 209;
+     /*Check AssetList Status*/
+
+    String IS_ASSET_LIST_AVAILABLE = "isAssetListAvailable";
+    String ASSET_AVAILABLE_STATUS = "assetAvailableStatus";
+
+
 }

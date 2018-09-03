@@ -3,6 +3,7 @@ package com.keykeep.app.views.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -188,6 +189,13 @@ public class AllAssetsAdapter extends RecyclerView.Adapter<AllAssetsAdapter.Hold
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
             assetLists = (ArrayList<AssetsListResponseBean.Result>) filterResults.values;
             notifyDataSetChanged();
+            Intent intent = new Intent(AppUtils.IS_ASSET_LIST_AVAILABLE);
+            if (assetLists.isEmpty()) {
+                intent.putExtra(AppUtils.ASSET_AVAILABLE_STATUS, false);
+            } else {
+                intent.putExtra(AppUtils.ASSET_AVAILABLE_STATUS, true);
+            }
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
         }
     }
 

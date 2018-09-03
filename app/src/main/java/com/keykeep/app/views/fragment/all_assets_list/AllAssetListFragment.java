@@ -2,12 +2,16 @@ package com.keykeep.app.views.fragment.all_assets_list;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +23,7 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.keykeep.app.R;
 import com.keykeep.app.databinding.AllAssetListFragmentBinding;
 import com.keykeep.app.model.bean.AssetsListResponseBean;
+import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.adapter.AllAssetsAdapter;
 import com.keykeep.app.views.base.BaseFragment;
@@ -113,29 +118,19 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
 
     }
 
-    public void setSearchAssetStatus() {
-        if (allAssetAdapter.getAssetLists() != null && allAssetAdapter.getAssetLists().size() == 0) {
-            binding.recyclerView.setVisibility(View.GONE);
-            binding.tvNoRecords.setVisibility(View.VISIBLE);
-            binding.tvNoRecords.setText(getString(R.string.txt_no_records_avialable));
-            allAssetAdapter.notifyDataSetChanged();
-        } else if (allAssetAdapter.getAssetLists() != null && allAssetAdapter.getAssetLists().size() > 0) {
-            binding.recyclerView.setVisibility(View.VISIBLE);
-            binding.tvNoRecords.setVisibility(View.GONE);
-            allAssetAdapter.notifyDataSetChanged();
-        } else {
-            binding.recyclerView.setVisibility(View.VISIBLE);
-            binding.tvNoRecords.setVisibility(View.GONE);
-            allAssetAdapter.notifyDataSetChanged();
-        }
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                allAssetAdapter.notifyDataSetChanged();
-            }
-        }, 1000);
+    @Override
+    public void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(context).
+                registerReceiver(aAssetListStatusReceiver,
+                        new IntentFilter(AppUtils.IS_ASSET_LIST_AVAILABLE));
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(context).unregisterReceiver(aAssetListStatusReceiver);
     }
 
     @Override
@@ -157,5 +152,23 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
     public void onLoadMore() {
         Log.e("onLoadMore: ", "call load more");
     }
+
+
+    public BroadcastReceiver aAssetListStatusReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            boolean isAssetListAvailable = intent.getBooleanExtra(AppUtils.ASSET_AVAILABLE_STATUS, false);
+            if (isAssetListAvailable) {
+                binding.recyclerView.setVisibility(View.VISIBLE);
+                binding.tvNoRecords.setVisibility(View.GONE);
+            } else {
+                binding.recyclerView.setVisibility(View.GONE);
+                binding.tvNoRecords.setVisibility(View.VISIBLE);
+                binding.tvNoRecords.setText(getString(R.string.txt_no_records_avialable));
+            }
+        }
+    };
+
 
 }
