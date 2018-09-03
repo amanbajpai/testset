@@ -7,7 +7,7 @@
             type="com.keykeep.app.views.activity.transfer.TransferViewModel" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -17,6 +17,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </LinearLayout>
+
+        <com.keykeep.app.views.custom_view.StyledTextViewLight
+            android:id="@+id/no_data_view"
+            android:layout_width="wrap_content"
+            android:textSize="@dimen/_15sdp"
+            android:textColor="@color/gray"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:text="@string/txt_no_records_avialable"
+            android:layout_height="wrap_content"
+            />
+
+    </RelativeLayout>
+
+
 
 </layout>

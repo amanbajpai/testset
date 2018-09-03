@@ -2,6 +2,7 @@ package com.keykeep.app.views.fragment.asset_request_fragment;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,7 +25,7 @@ import com.keykeep.app.views.base.BaseFragment;
 /**
  * Created by ashishthakur on 29/8/18.
  */
-public class AssetRequestFragment extends BaseFragment implements XRecyclerView.LoadingListener {
+public class AssetRequestFragment extends BaseFragment implements XRecyclerView.LoadingListener, AssetRequestAdapter.ActivityForResult {
 
     AssetRequestSendRecieveFragmentBinding binding;
     AssetRequestViewModel viewModel;
@@ -39,10 +40,14 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
         viewModel = ViewModelProviders.of(this).get(AssetRequestViewModel.class);
         binding.setViewModel(viewModel);
         initializeViews(binding.getRoot());
+        getListForWebservice();
+        return binding.getRoot();
+    }
+
+
+    public void getListForWebservice() {
         Utils.showProgressDialog(getActivity(), getString(R.string.loading));
         viewModel.getAssetsPendingSendRequest(binding);
-
-        return binding.getRoot();
     }
 
     @Override
@@ -98,6 +103,9 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
                 binding.recyclerView.setVisibility(View.VISIBLE);
                 assetRequestAdapter = new AssetRequestAdapter(getActivity(), assetsListResponseBean, typeRequest);
                 binding.recyclerView.setAdapter(assetRequestAdapter);
+                if (typeRequest == AppUtils.STATUS_ASSET_SEND_REQUEST) {
+                    assetRequestAdapter.setListener(AssetRequestFragment.this);
+                }
             } else {
                 binding.recyclerView.setVisibility(View.GONE);
                 Utils.showToast(getActivity(), assetsListResponseBean.getMessage());
@@ -115,4 +123,21 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
     public void onLoadMore() {
 
     }
+
+
+    @Override
+    public void onCallActivityResult(Intent intent) {
+        startActivityForResult(intent, AppUtils.REQ_REFRESH_VIEW);
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AppUtils.REQ_REFRESH_VIEW) {
+            getListForWebservice();
+        }
+    }
+
+
 }

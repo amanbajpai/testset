@@ -1,5 +1,6 @@
 package com.keykeep.app.views.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -17,12 +18,12 @@ import com.keykeep.app.views.activity.assetDetail.AssetDetailActivity;
 /**
  * Created by ashishthakur on 29/8/18.
  */
-
 public class AssetRequestAdapter extends RecyclerView.Adapter<AssetRequestAdapter.Holder> {
 
     Context context;
     private AssetsListResponseBean assetLists;
     private int typeRequest;
+    private ActivityForResult listener;
 
     public AssetRequestAdapter(Context context,
                                AssetsListResponseBean resultAssetList, int typeRequest) {
@@ -30,6 +31,10 @@ public class AssetRequestAdapter extends RecyclerView.Adapter<AssetRequestAdapte
         this.assetLists = resultAssetList;
         this.typeRequest = typeRequest;
 
+    }
+
+    public void setListener(ActivityForResult listener) {
+        this.listener = listener;
     }
 
     @NonNull
@@ -59,14 +64,17 @@ public class AssetRequestAdapter extends RecyclerView.Adapter<AssetRequestAdapte
                     AssetsListResponseBean.Result bean = assetLists.getResult().get(position);
                     Intent intent = new Intent(context, AssetDetailActivity.class);
                     intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_ASSET_RECEIVE_REQUEST);
-                    intent.putExtra(AppUtils.ASSET_REQUEST_ID,bean.getAssetEmployeeAssignedLogId());
+                    intent.putExtra(AppUtils.ASSET_REQUEST_ID, bean.getAssetEmployeeAssignedLogId());
                     intent.putExtra(AppUtils.SCANED_QR_CODE, bean.getQrCodeNumber());
-                    context.startActivity(intent);
-                }else {
+
+                    if (listener != null)
+                        listener.onCallActivityResult(intent);
+
+                } else {
                     AssetsListResponseBean.Result bean = assetLists.getResult().get(position);
                     Intent intent = new Intent(context, AssetDetailActivity.class);
                     intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_ASSET_SEND_REQUEST);
-                    intent.putExtra(AppUtils.ASSET_REQUEST_ID,bean.getAssetEmployeeAssignedLogId());
+                    intent.putExtra(AppUtils.ASSET_REQUEST_ID, bean.getAssetEmployeeAssignedLogId());
                     intent.putExtra(AppUtils.SCANED_QR_CODE, bean.getQrCodeNumber());
                     context.startActivity(intent);
                 }
@@ -91,6 +99,10 @@ public class AssetRequestAdapter extends RecyclerView.Adapter<AssetRequestAdapte
             requestText = itemView.findViewById(R.id.tv_request);
 
         }
+    }
+
+    public interface ActivityForResult {
+        void onCallActivityResult(Intent intent);
     }
 
 }

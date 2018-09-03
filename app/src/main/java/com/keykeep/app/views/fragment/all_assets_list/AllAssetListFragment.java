@@ -19,6 +19,7 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.keykeep.app.R;
 import com.keykeep.app.databinding.AllAssetListFragmentBinding;
 import com.keykeep.app.model.bean.AssetsListResponseBean;
+import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.adapter.AllAssetsAdapter;
 import com.keykeep.app.views.base.BaseFragment;
@@ -74,7 +75,7 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
         resultArrayList = new ArrayList<>();
         LinearLayoutManager manager = new LinearLayoutManager(context);
         binding.recyclerView.setLayoutManager(manager);
-        allAssetAdapter = new AllAssetsAdapter(context, resultArrayList);
+        allAssetAdapter = new AllAssetsAdapter(context, resultArrayList, AppUtils.STATUS_ALL_ASSET_LIST);
         binding.recyclerView.setAdapter(allAssetAdapter);
         binding.recyclerView.setLoadingListener(this);
         binding.recyclerView.setLoadingMoreEnabled(false);

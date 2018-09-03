@@ -97,7 +97,7 @@
             android:paddingLeft="@dimen/_5sdp">
 
             <com.keykeep.app.views.custom_view.StyledTextViewBold
-                android:id="@+id/tv_asset_available"
+                android:id="@+id/tv_available_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Available"
@@ -105,15 +105,6 @@
                 android:textSize="@dimen/_14sdp"
                 android:textStyle="bold" />
 
-            <com.keykeep.app.views.custom_view.StyledTextViewLight
-                android:id="@+id/tv_available_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="@dimen/_13sdp"
-                android:visibility="gone" />
         </RelativeLayout>
 
     </LinearLayout>
