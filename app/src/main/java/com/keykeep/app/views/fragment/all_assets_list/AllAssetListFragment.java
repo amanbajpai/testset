@@ -109,7 +109,6 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
                 }
 
                 return false;
