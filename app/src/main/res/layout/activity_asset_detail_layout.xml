@@ -338,45 +338,52 @@
 
                 <!--***************Employee Detail*************-->
 
-
-                <com.keykeep.app.views.custom_view.StyledTextViewBold
+                <LinearLayout
+                    android:id="@+id/employee_container"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/_5sdp"
-                    android:text="@string/employee_detail"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_14sdp" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/black" />
+                    <com.keykeep.app.views.custom_view.StyledTextViewBold
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/_5sdp"
+                        android:text="@string/employee_detail"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/black" />
 
 
-                <com.keykeep.app.views.custom_view.StyledTextViewRegular
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_8sdp"
-                    android:text="Employee Name"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_13sdp" />
+                    <com.keykeep.app.views.custom_view.StyledTextViewRegular
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:text="Employee Name"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_13sdp" />
 
-                <com.keykeep.app.views.custom_view.StyledTextViewRegular
-                    android:id="@+id/employee_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingBottom="@dimen/_8sdp"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:text=""
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/_12sdp" />
+                    <com.keykeep.app.views.custom_view.StyledTextViewRegular
+                        android:id="@+id/employee_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:text=""
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_12sdp" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/gray" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/gray" />
 
+
+                </LinearLayout>
 
             </LinearLayout>
         </ScrollView>

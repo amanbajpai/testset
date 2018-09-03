@@ -30,12 +30,13 @@ public class AllAssetsAdapter extends RecyclerView.Adapter<AllAssetsAdapter.Hold
     private ArrayList<AssetsListResponseBean.Result> assetfilterList;
     private ArrayList<AssetsListResponseBean.Result> assetfilteredFinalList;
     private AllAssetsSearchFilter filter;
+    int REQ_TYPE;
 
-    public AllAssetsAdapter(Context context, ArrayList<AssetsListResponseBean.Result> resultAssetList) {
+    public AllAssetsAdapter(Context context, ArrayList<AssetsListResponseBean.Result> resultAssetList, int REQ_TYPE) {
         this.context = context;
         this.assetLists = resultAssetList;
         this.assetfilteredFinalList = resultAssetList;
-
+        this.REQ_TYPE = REQ_TYPE;
     }
 
     public void setAssetList(Context context, ArrayList<AssetsListResponseBean.Result> resultAssetList) {
@@ -43,7 +44,6 @@ public class AllAssetsAdapter extends RecyclerView.Adapter<AllAssetsAdapter.Hold
         this.assetLists = resultAssetList;
         this.assetfilteredFinalList = resultAssetList;
         notifyDataSetChanged();
-
     }
 
     @NonNull
@@ -61,9 +61,10 @@ public class AllAssetsAdapter extends RecyclerView.Adapter<AllAssetsAdapter.Hold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 AssetsListResponseBean.Result bean = assetLists.get(position);
                 Intent intent = new Intent(context, AssetDetailActivity.class);
-                intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_ASSET_LIST);
+                intent.putExtra(AppUtils.ASSET_STATUS_CODE, REQ_TYPE);
                 intent.putExtra(AppUtils.SCANED_QR_CODE, bean.getQrCodeNumber());
                 context.startActivity(intent);
             }
@@ -76,6 +77,9 @@ public class AllAssetsAdapter extends RecyclerView.Adapter<AllAssetsAdapter.Hold
             holder.availableStatus.setText(context.getString(R.string.txt_status_available));
         } else {
             holder.availableStatus.setText(context.getString(R.string.txt_status_unavailable));
+        }
+        if (REQ_TYPE == AppUtils.STATUS_TRANSFER_ASSET_LIST) {
+            holder.availableStatus.setVisibility(View.INVISIBLE);
         }
 
     }

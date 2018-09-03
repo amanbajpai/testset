@@ -73,7 +73,6 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
             case R.id.left_iv:
                 finish();
                 break;
-
         }
     }
 
@@ -83,11 +82,14 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
         @Override
         public void onChanged(@Nullable AssetsListResponseBean assetsListResponseBean) {
 
-            if (assetsListResponseBean != null && assetsListResponseBean.getResult() != null) {
+            if (assetsListResponseBean != null && assetsListResponseBean.getResult() != null&& assetsListResponseBean.getResult().size()>0) {
                 LinearLayoutManager manager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
                 binding.recyclerView.setLayoutManager(manager);
                 myAssetAdapter = new TransferAssetAdapter(context, assetsListResponseBean);
                 binding.recyclerView.setAdapter(myAssetAdapter);
+            }else {
+                binding.recyclerView.setVisibility(View.GONE);
+                binding.noDataView.setVisibility(View.VISIBLE);
             }
         }
     };

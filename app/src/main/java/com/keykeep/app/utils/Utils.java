@@ -1046,7 +1046,6 @@ public class Utils {
             return 0;
         }
         return value;
-
     }
 
     public static String getWeekName(String id) {

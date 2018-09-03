@@ -72,7 +72,6 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
 
     @Override
     public void initializeViews() {
-
         try {
 
             context = HomeActivity.this;
@@ -131,7 +130,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
 
 
     private final int[] menuItemIcons = new int[]{
-            R.drawable.hovme,
+            R.drawable.home,
             R.drawable.slider_pending_req,
             R.drawable.slider_notification, R.drawable.slider_profile, R.drawable.slider_settings,
             R.drawable.slider_logout
@@ -139,7 +138,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
 
     private final int[] menuItemIconsSelected = new int[]{
 
-            R.drawable.hovme,
+            R.drawable.home_hover,
             R.drawable.pending_req_hover,
             R.drawable.notification_hover, R.drawable.profile_hover, R.drawable.settings_hover,
             R.drawable.logout_hover

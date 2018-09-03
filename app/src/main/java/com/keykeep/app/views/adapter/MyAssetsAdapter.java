@@ -46,7 +46,7 @@ public class MyAssetsAdapter extends RecyclerView.Adapter<MyAssetsAdapter.Holder
             public void onClick(View view) {
                 AssetsListResponseBean.Result bean = assetLists.getResult().get(position);
                 Intent intent = new Intent(context, AssetDetailActivity.class);
-                intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_ASSET_LIST);
+                intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_ALL_ASSET_LIST);
                 intent.putExtra(AppUtils.SCANED_QR_CODE, bean.getQrCodeNumber());
                 context.startActivity(intent);
             }

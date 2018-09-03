@@ -35,10 +35,15 @@ public interface AppUtils {
     int REQUEST_CODE_CAMERA = 202;
     int SERVER_ERROR = 203;
     int NO_INTERNET = 204;
-    int STATUS_SCAN_CODE = 205;
-    int STATUS_ASSET_LIST = 206;
+    int STATUS_SCANED_CODE = 205;
+
+    int STATUS_ALL_ASSET_LIST = 206;
+
     int STATUS_ASSET_SEND_REQUEST = 207;
     int STATUS_ASSET_RECEIVE_REQUEST = 208;
+
+    int REQ_REFRESH_VIEW=210;
+
     /**
      * dialog keys
      */

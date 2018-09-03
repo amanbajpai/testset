@@ -79,7 +79,7 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
         resultArrayList = new ArrayList<>();
         LinearLayoutManager manager = new LinearLayoutManager(context);
         binding.recyclerView.setLayoutManager(manager);
-        allAssetAdapter = new AllAssetsAdapter(context, resultArrayList);
+        allAssetAdapter = new AllAssetsAdapter(context, resultArrayList, AppUtils.STATUS_ALL_ASSET_LIST);
         binding.recyclerView.setAdapter(allAssetAdapter);
         binding.recyclerView.setLoadingListener(this);
         binding.recyclerView.setLoadingMoreEnabled(false);

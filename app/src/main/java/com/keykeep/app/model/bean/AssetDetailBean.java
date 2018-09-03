@@ -72,7 +72,7 @@ public class AssetDetailBean extends BaseResponse {
         private String employeeName;
         @SerializedName("employee_id")
         @Expose
-        private Object employeeId;
+        private Integer employeeId;
 
         public Integer getAssetId() {
             return assetId;
@@ -194,11 +194,11 @@ public class AssetDetailBean extends BaseResponse {
             this.employeeName = employeeName;
         }
 
-        public Object getEmployeeId() {
+        public Integer getEmployeeId() {
             return employeeId;
         }
 
-        public void setEmployeeId(Object employeeId) {
+        public void setEmployeeId(Integer employeeId) {
             this.employeeId = employeeId;
         }
     }

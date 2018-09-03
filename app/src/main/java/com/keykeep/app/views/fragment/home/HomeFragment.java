@@ -120,7 +120,7 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
                 JSONObject jsonObject = new JSONObject(result);
                  result = jsonObject.getString("qr_code_number");
                 Intent intent = new Intent(context, AssetDetailActivity.class);
-                intent.putExtra(AppUtils.ASSET_STATUS_CODE,AppUtils.STATUS_SCAN_CODE);
+                intent.putExtra(AppUtils.ASSET_STATUS_CODE,AppUtils.STATUS_SCANED_CODE);
                 intent.putExtra(AppUtils.SCANED_QR_CODE,result);
                 startActivity(intent);
             } catch (JSONException e) {

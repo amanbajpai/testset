@@ -19,6 +19,7 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.keykeep.app.R;
 import com.keykeep.app.databinding.MyAssetListFragmentBinding;
 import com.keykeep.app.model.bean.AssetsListResponseBean;
+import com.keykeep.app.utils.AppUtils;
 import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.adapter.AllAssetsAdapter;
 import com.keykeep.app.views.base.BaseFragment;
@@ -66,7 +67,7 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
         binding.recyclerView.setLoadingListener(this);
         binding.recyclerView.setLoadingMoreEnabled(false);
         binding.recyclerView.setPullRefreshEnabled(false);
-        myAssetAdapter = new AllAssetsAdapter(context, resultArrayList);
+        myAssetAdapter = new AllAssetsAdapter(context, resultArrayList, AppUtils.STATUS_TRANSFER_ASSET_LIST);
         binding.recyclerView.setAdapter(myAssetAdapter);
         viewModel.response_validator.observe(this, response_observer);
         Utils.hideSoftKeyboard(getActivity());
@@ -114,9 +115,7 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
                 myAssetAdapter.setAssetList(getActivity(),resultArrayList);
 
             }
-
         }
-
     };
 
     @Override
