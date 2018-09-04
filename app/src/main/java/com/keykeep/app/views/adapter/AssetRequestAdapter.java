@@ -1,6 +1,5 @@
 package com.keykeep.app.views.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -96,12 +95,12 @@ public class AssetRequestAdapter extends RecyclerView.Adapter<AssetRequestAdapte
 
     class Holder extends RecyclerView.ViewHolder {
 
-        private AppCompatTextView assetName,modelNumber;
+        private AppCompatTextView assetName, modelNumber;
 
         public Holder(View itemView) {
             super(itemView);
             assetName = itemView.findViewById(R.id.tv_asset_name);
-            modelNumber=itemView.findViewById(R.id.tv_model_number);
+            modelNumber = itemView.findViewById(R.id.tv_model_number);
 
         }
     }

@@ -29,6 +29,7 @@ import org.json.JSONObject;
 /**
  * Created by ankurrawal on 23/8/18.
  */
+
 public class AssetDetailActivity extends BaseActivity implements DialogClickListener {
 
     public static int ASSET_STATUS = 1;
@@ -156,14 +157,14 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
                 break;
 
 
-            case AppUtils.STATUS_ASSET_SEND_REQUEST1:
+            case AppUtils.STATUS_ASSET_SEND_REQUEST:
                 req_id = getIntent().getIntExtra(AppUtils.ASSET_REQUEST_ID, -1);
                 binding.pendingStatusContainer.setVisibility(View.VISIBLE);
                 binding.cancelTv.setOnClickListener(this);
                 binding.acceptTv.setOnClickListener(this);
                 break;
 
-            case AppUtils.STATUS_ASSET_SEND_REQUEST:
+            case AppUtils.STATUS_ASSET_RECEIVE_REQUEST:
                 req_id = getIntent().getIntExtra(AppUtils.ASSET_REQUEST_ID, -1);
                 binding.pendingStatusContainer.setVisibility(View.VISIBLE);
                 binding.acceptTv.setVisibility(View.GONE);
