@@ -31,6 +31,7 @@ import org.json.JSONObject;
  */
 public class AssetDetailActivity extends BaseActivity implements DialogClickListener {
 
+    private  boolean HAS_SCANNED = false;
     public static int ASSET_STATUS = 1;
     private Context context;
     ActivityAssetDetailLayoutBinding binding;
@@ -47,31 +48,6 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         context = this;
         setCustomActionBar();
         initializeViews();
-    }
-
-
-    /**
-     * validate request for request,handover and transfer
-     */
-    private void validateTextView() {
-
-        /**
-         * Asset keep request
-         */
-        if (asset_emp_id == null || asset_emp_id.equals("0")) {
-            ASSET_STATUS = AppUtils.STATUS_ALL_ASSET_LIST;
-            /**
-             * Asset handover
-             */
-        } else if (asset_emp_id.equals(mEmp_id)) {
-            ASSET_STATUS = AppUtils.STATUS_TRANSFER_ASSET_LIST;
-            /**
-             * Asset transfer
-             */
-        } else {
-            ASSET_STATUS = AppUtils.STATUS_ALL_ASSET_LIST;
-        }
-
     }
 
 
@@ -108,8 +84,6 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         if (ASSET_STATUS == AppUtils.STATUS_SCANED_CODE) {
             IS_FROM_SCANNER = true;
         }
-
-
     }
 
 
@@ -134,27 +108,44 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
 
     }
 
+
+    private String validateTextView(boolean isConfirm) {
+
+        /**
+         * Asset keep request
+         */
+        if (asset_emp_id == null || asset_emp_id.equals("0")) {
+            if (isConfirm || IS_FROM_SCANNER)
+                return getString(R.string.confirm_request);
+            else
+                return getString(R.string.request_key);
+
+            /**
+             * Asset handover
+             */
+        } else if (asset_emp_id.equals(mEmp_id)) {
+            if (isConfirm || IS_FROM_SCANNER)
+                return getString(R.string.confirm_transfer);
+            else
+                return getString(R.string.transfer_key_to_company);
+
+            /**
+             * Asset transfer
+             */
+        } else {
+            if (isConfirm || IS_FROM_SCANNER)
+                return getString(R.string.confirm_request);
+            else
+                return getString(R.string.request_key);
+
+        }
+    }
+
+
     private void validateSubmitView() {
 
+
         switch (ASSET_STATUS) {
-
-            case AppUtils.STATUS_ALL_ASSET_LIST:
-                binding.scanButton.setVisibility(View.VISIBLE);
-                binding.scanButton.setText(R.string.request_key);
-                break;
-
-
-            case AppUtils.STATUS_SCANED_CODE:
-                binding.scanButton.setVisibility(View.VISIBLE);
-                binding.scanButton.setText(R.string.confirm_request);
-                break;
-
-
-            case AppUtils.STATUS_TRANSFER_ASSET_LIST:
-                binding.scanButton.setVisibility(View.VISIBLE);
-                binding.scanButton.setText(R.string.transfer_key_to_company);
-                break;
-
 
             case AppUtils.STATUS_ASSET_SEND_REQUEST1:
                 req_id = getIntent().getIntExtra(AppUtils.ASSET_REQUEST_ID, -1);
@@ -169,7 +160,14 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
                 binding.acceptTv.setVisibility(View.GONE);
                 binding.cancelTv.setOnClickListener(this);
                 break;
+
+            default:
+                String text = validateTextView(HAS_SCANNED);
+                binding.scanButton.setVisibility(View.VISIBLE);
+                binding.scanButton.setText(text);
+
         }
+
     }
 
 
@@ -188,15 +186,15 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
             if (bean.getCode().equals(AppUtils.STATUS_FAIL)) {
                 Utils.showAlert(context, "", bean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_click, AssetDetailActivity.this);
                 if (IS_FROM_SCANNER) {
-                    IS_FROM_SCANNER = false;
                     Utils.showAlert(context, "", bean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_to_finish, AssetDetailActivity.this);
                 }
-
                 return;
             }
-            setDataFromBean(bean);
-            validateTextView();
-            validateSubmitView();
+            if (bean.getCode().equals(AppUtils.STATUS_SUCCESS)) {
+                setDataFromBean(bean);
+                validateSubmitView();
+            }
+
         }
     };
 
@@ -346,34 +344,46 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
      */
     private void callSubmit() {
 
-        switch (ASSET_STATUS) {
-
-            case AppUtils.STATUS_ALL_ASSET_LIST:
-                if (Utils.checkPermissions(this, AppUtils.STORAGE_CAMERA_PERMISSIONS)) {
-                    startActivityForResult(new Intent(context, QrCodeActivity.class), AppUtils.REQUEST_CODE_QR_SCAN);
-                } else {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        requestPermissions(AppUtils.STORAGE_CAMERA_PERMISSIONS, AppUtils.REQUEST_CODE_CAMERA);
-                    }
+        if (IS_FROM_SCANNER || HAS_SCANNED) {
+            beforeSendRequestValidation();
+        } else {
+            if (Utils.checkPermissions(this, AppUtils.STORAGE_CAMERA_PERMISSIONS)) {
+                startActivityForResult(new Intent(context, QrCodeActivity.class), AppUtils.REQUEST_CODE_QR_SCAN);
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(AppUtils.STORAGE_CAMERA_PERMISSIONS, AppUtils.REQUEST_CODE_CAMERA);
                 }
-                break;
-
-            case AppUtils.STATUS_TRANSFER_ASSET_LIST:
-                if (Utils.checkPermissions(this, AppUtils.STORAGE_CAMERA_PERMISSIONS)) {
-                    startActivityForResult(new Intent(context, QrCodeActivity.class), AppUtils.REQUEST_CODE_QR_SCAN);
-                } else {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        requestPermissions(AppUtils.STORAGE_CAMERA_PERMISSIONS, AppUtils.REQUEST_CODE_CAMERA);
-                    }
-                }
-                break;
-
-
-            case AppUtils.STATUS_SCANED_CODE:
-                beforeSendRequestValidation();
-                break;
-
+            }
         }
+
+//        switch (ASSET_STATUS) {
+//
+//            case AppUtils.STATUS_ALL_ASSET_LIST:
+//                if (Utils.checkPermissions(this, AppUtils.STORAGE_CAMERA_PERMISSIONS)) {
+//                    startActivityForResult(new Intent(context, QrCodeActivity.class), AppUtils.REQUEST_CODE_QR_SCAN);
+//                } else {
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                        requestPermissions(AppUtils.STORAGE_CAMERA_PERMISSIONS, AppUtils.REQUEST_CODE_CAMERA);
+//                    }
+//                }
+//                break;
+//
+//            case AppUtils.STATUS_TRANSFER_ASSET_LIST:
+//                if (Utils.checkPermissions(this, AppUtils.STORAGE_CAMERA_PERMISSIONS)) {
+//                    startActivityForResult(new Intent(context, QrCodeActivity.class), AppUtils.REQUEST_CODE_QR_SCAN);
+//                } else {
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                        requestPermissions(AppUtils.STORAGE_CAMERA_PERMISSIONS, AppUtils.REQUEST_CODE_CAMERA);
+//                    }
+//                }
+//                break;
+//
+//
+//            case AppUtils.STATUS_SCANED_CODE:
+//                beforeSendRequestValidation();
+//                break;
+//
+//        }
     }
 
     /**
@@ -437,8 +447,8 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
                             "", AppUtils.dialog_ok_click, this);
                     return;
                 }
-                validateAfterScan(qr);
-                ASSET_STATUS = AppUtils.STATUS_SCANED_CODE;
+                HAS_SCANNED =true;
+                validateSubmitView();
 
             } catch (JSONException e) {
                 e.printStackTrace();
