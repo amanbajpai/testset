@@ -16,6 +16,7 @@ import com.keykeep.app.databinding.HomeFragmentLayoutBinding;
 import com.keykeep.app.interfaces.DialogClickListener;
 import com.keykeep.app.qrcodescanner.QrCodeActivity;
 import com.keykeep.app.utils.AppUtils;
+import com.keykeep.app.utils.Connectivity;
 import com.keykeep.app.utils.Utils;
 import com.keykeep.app.views.activity.AssetListActivity;
 import com.keykeep.app.views.activity.assetDetail.AssetDetailActivity;
@@ -59,8 +60,12 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()) {
+        if (!Connectivity.isConnected()) {
+            Utils.showSnackBar(binding, getString(R.string.internet_connection));
+            return;
+        }
 
+        switch (v.getId()) {
             case R.id.asset_rl:
                 startActivity(new Intent(context, AssetListActivity.class));
                 break;
@@ -96,7 +101,7 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
         if (requestCode == AppUtils.REQUEST_CODE_CAMERA || Utils.onRequestPermissionsResult(permissions, grantResults)) {
             startActivityForResult(new Intent(context, QrCodeActivity.class), AppUtils.REQUEST_CODE_QR_SCAN);
         } else {
-            Utils.showToast(context, getString(R.string.allow_camera_permission));
+            Utils.showSnackBar(binding, getString(R.string.allow_camera_permission));
         }
     }
 
@@ -109,7 +114,7 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
         if (requestCode == AppUtils.REQUEST_CODE_QR_SCAN) {
 
             if (resultCode != getActivity().RESULT_OK) {
-                Utils.showToast(context, getString(R.string.unable_to_scan_qr));
+                Utils.showSnackBar(binding, getString(R.string.unable_to_scan_qr));
                 return;
             }
             if (data == null)
@@ -118,14 +123,14 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
             String result = data.getStringExtra(AppUtils.SCAN_SUCCESS);
             try {
                 JSONObject jsonObject = new JSONObject(result);
-                 result = jsonObject.getString("qr_code_number");
+                result = jsonObject.getString("qr_code_number");
                 Intent intent = new Intent(context, AssetDetailActivity.class);
-                intent.putExtra(AppUtils.ASSET_STATUS_CODE,AppUtils.STATUS_SCANED_CODE);
-                intent.putExtra(AppUtils.SCANED_QR_CODE,result);
+                intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_SCANED_CODE);
+                intent.putExtra(AppUtils.SCANED_QR_CODE, result);
                 startActivity(intent);
             } catch (JSONException e) {
                 e.printStackTrace();
-                Utils.showToast(context,getString(R.string.unable_to_scan_qr));
+                Utils.showSnackBar(binding, getString(R.string.unable_to_scan_qr));
             }
         }
 

@@ -15,6 +15,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.database.Cursor;
+import android.databinding.ViewDataBinding;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -22,6 +23,7 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -94,6 +96,49 @@ public class Utils {
             ex.printStackTrace();
         }
     }
+
+    public static void showSnackBar(ViewDataBinding binding, String message) {
+
+//    public static void showSnackBar(ViewDataBinding binding, String message, boolean istoAction, String ActionText, String actionMessage) {
+//        Snackbar snackbar = null;
+//        View snackBarView = snackbar.getView();
+//        snackBarView.setBackgroundColor(ContextCompat.getColor(binding.getRoot().getContext(), R.color.app_blue));
+//
+//        if (istoAction) {
+//            snackbar.make(binding.getRoot(), message, Snackbar.LENGTH_LONG)
+//                    .setAction(ActionText, new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            Snackbar snackbar1 = Snackbar.make(binding.getRoot(), actionMessage, Snackbar.LENGTH_SHORT);
+//                            snackbar1.show();
+//                        }
+//                    });
+//        } else {
+//            snackbar.make(binding.getRoot(), message, Snackbar.LENGTH_SHORT);
+//        }
+//
+//        snackbar.show();
+
+        Snackbar snackbar;
+        snackbar = Snackbar.make(binding.getRoot(), message, Snackbar.LENGTH_SHORT);
+        View snackBarView = snackbar.getView();
+        snackBarView.setBackgroundColor(binding.getRoot().getContext().getResources().getColor(R.color.app_blue));
+//        TextView textView = (TextView) snackBarView.findViewById(android.support.design.R.id.snackbar_text);
+//        textView.setTextColor(R.color.white);
+        snackbar.show();
+    }
+
+    public static void showSnackBar(Context context, View view, String message) {
+
+        Snackbar snackbar;
+        snackbar = Snackbar.make(view, message, Snackbar.LENGTH_SHORT);
+        View snackBarView = snackbar.getView();
+        snackBarView.setBackgroundColor(context.getResources().getColor(R.color.app_blue));
+//        TextView textView = (TextView) snackBarView.findViewById(android.support.design.R.id.snackbar_text);
+//        textView.setTextColor(R.color.white);
+        snackbar.show();
+    }
+
 
     public static boolean isValideEmail(String email) {
         Pattern pattern;

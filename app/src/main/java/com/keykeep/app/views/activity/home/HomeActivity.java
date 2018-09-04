@@ -233,7 +233,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
     @Override
     public void onItemClick(int position) {
         if (!Connectivity.isConnected()) {
-            Utils.showToast(context, getString(R.string.internet_connection));
+            Utils.showSnackBar(HomeActivity.this, drawerView, getString(R.string.internet_connection));
             return;
         }
 

@@ -7,30 +7,46 @@
             type="com.keykeep.app.views.fragment.ownAssetsFragment.MyAssetsFragmentViewModel" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="true"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <SearchView
-            android:id="@+id/simpleSearchView"
+        <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <SearchView
+                android:id="@+id/simpleSearchView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/search_background"
+                android:focusable="false"
+                android:iconifiedByDefault="false"
+                android:queryHint="Search here" />
+
+            <com.jcodecraeer.xrecyclerview.XRecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <com.keykeep.app.views.custom_view.StyledTextViewRegular
+            android:id="@+id/tv_no_records"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:background="@drawable/search_background"
-            android:iconifiedByDefault="false"
-            android:queryHint="Search here" />
+            android:layout_centerInParent="true"
+            android:layout_margin="@dimen/_5sdp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15sdp"
+            android:visibility="gone" />
 
+    </RelativeLayout>
 
-        <com.jcodecraeer.xrecyclerview.XRecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </LinearLayout>
 
 </layout>

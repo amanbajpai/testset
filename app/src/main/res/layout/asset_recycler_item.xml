@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="@dimen/_1sdp">
+            android:padding="@dimen/_5sdp">
 
             <com.keykeep.app.views.custom_view.StyledTextViewBold
                 android:id="@+id/tv_asset_name"
@@ -24,8 +24,7 @@
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:text="BMW CAR"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_16sdp"
-                 />
+                android:textSize="@dimen/_16sdp" />
 
         </RelativeLayout>
 
@@ -44,8 +43,7 @@
                 android:maxLines="1"
                 android:text="Model No."
                 android:textColor="@color/dark_gray_color"
-                android:textSize="@dimen/_12sdp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/_12sdp" />
 
             <com.keykeep.app.views.custom_view.StyledTextViewRegular
                 android:id="@+id/tv_vin_number"
@@ -96,14 +94,13 @@
             android:orientation="horizontal"
             android:paddingLeft="@dimen/_5sdp">
 
-            <com.keykeep.app.views.custom_view.StyledTextViewBold
+            <com.keykeep.app.views.custom_view.StyledTextViewMedium
                 android:id="@+id/tv_available_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Available"
                 android:textColor="@color/dark_gray_color"
-                android:textSize="@dimen/_14sdp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/_14sdp" />
 
         </RelativeLayout>
 

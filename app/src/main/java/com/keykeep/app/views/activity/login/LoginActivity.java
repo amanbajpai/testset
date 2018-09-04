@@ -44,8 +44,9 @@ public class LoginActivity extends BaseActivity {
         binding.setViewModel(viewModel);
         binding.tvLogin.setOnClickListener(this);
         binding.tvForgotPassword.setOnClickListener(this);
-        viewModel.validator.observe(this, observer);
+        viewModel.validator.observe(this, validatorObserver);
         viewModel.response_validator.observe(this, response_observer);
+        viewModel.validator.observe(this, validatorObserver);
 
         if (Pref.getBoolean(context, Pref.IS_LOGIN) && Pref.getBoolean(context, Pref.REMEMBER_ME)) {
             LoginResponseBean.Result bean = Utils.getUserDetail(context);
@@ -57,29 +58,30 @@ public class LoginActivity extends BaseActivity {
     }
 
 
-    Observer observer = new Observer<Integer>() {
+    Observer validatorObserver = new Observer<Integer>() {
 
         @Override
         public void onChanged(@Nullable Integer value) {
             switch (value) {
 
                 case AppUtils.empty_id:
-                    Utils.showToast(context, getString(R.string.enter_employeeid));
+                    Utils.showSnackBar(binding, getString(R.string.enter_employeeid));
                     break;
 
                 case AppUtils.empty_password:
-                    Utils.showToast(context, getString(R.string.enter_password));
+                    Utils.showSnackBar(binding, getString(R.string.enter_password));
                     break;
 
                 case AppUtils.invalid_mail:
-                    Utils.showToast(context, getString(R.string.enter_valid_employeeid));
+                    Utils.showSnackBar(binding, getString(R.string.enter_valid_employeeid));
                     break;
                 case AppUtils.NO_INTERNET:
-                    Utils.showToast(context, getString(R.string.internet_connection));
+                    Utils.hideProgressDialog();
+                    Utils.showSnackBar(binding, getString(R.string.internet_connection));
                     break;
 
                 case AppUtils.SERVER_ERROR:
-                    Utils.showToast(context, getString(R.string.server_error));
+                    Utils.showSnackBar(binding, getString(R.string.server_error));
                     break;
             }
         }

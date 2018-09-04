@@ -6,9 +6,11 @@
             name="viewModel"
             type="com.keykeep.app.views.fragment.all_assets_list.AllAssetListFragmentViewModel" />
     </data>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -18,10 +20,10 @@
                 android:id="@+id/simpleSearchView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_5sdp"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginBottom="@dimen/_5sdp"
                 android:background="@drawable/search_background"
                 android:focusable="false"
                 android:iconifiedByDefault="false"
@@ -35,14 +37,14 @@
         </LinearLayout>
 
         <com.keykeep.app.views.custom_view.StyledTextViewRegular
-            android:layout_width="wrap_content"
-            android:textColor="@color/black"
-            android:visibility="gone"
             android:id="@+id/tv_no_records"
-            android:layout_margin="@dimen/_5sdp"
-            android:textSize="@dimen/_15sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_height="wrap_content" />
+            android:layout_margin="@dimen/_5sdp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15sdp"
+            android:visibility="gone" />
 
     </RelativeLayout>
 

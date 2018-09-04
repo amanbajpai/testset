@@ -49,11 +49,15 @@ public class ForgotPasswordActivity extends BaseActivity {
             switch (value) {
 
                 case AppUtils.empty_id:
-                    Utils.showToast(context, getString(R.string.enter_employeeid));
+                    Utils.showSnackBar(binding, getString(R.string.enter_employeeid));
                     break;
 
                 case AppUtils.empty_password:
-                    Utils.showToast(context, getString(R.string.enter_password));
+                    Utils.showSnackBar(binding, getString(R.string.enter_password));
+                    break;
+                case AppUtils.NO_INTERNET:
+                    Utils.hideProgressDialog();
+                    Utils.showSnackBar(binding, getString(R.string.internet_connection));
                     break;
             }
         }

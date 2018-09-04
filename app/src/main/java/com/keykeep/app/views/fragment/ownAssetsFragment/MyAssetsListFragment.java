@@ -2,12 +2,16 @@ package com.keykeep.app.views.fragment.ownAssetsFragment;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,7 +57,7 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
         viewModel = ViewModelProviders.of(this).get(MyAssetsFragmentViewModel.class);
         binding.setViewModel(viewModel);
         initializeViews(binding.getRoot());
-        Utils.showProgressDialog(context,getString(R.string.loading));
+        Utils.showProgressDialog(context, getString(R.string.loading));
         viewModel.getMyAssets(binding);
         return binding.getRoot();
 
@@ -66,13 +70,13 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
         binding.recyclerView.setLayoutManager(manager);
         binding.recyclerView.setLoadingListener(this);
         binding.recyclerView.setLoadingMoreEnabled(false);
-        binding.recyclerView.setPullRefreshEnabled(false);
+        binding.recyclerView.setPullRefreshEnabled(true);
         myAssetAdapter = new AllAssetsAdapter(context, resultArrayList, AppUtils.STATUS_TRANSFER_ASSET_LIST);
         binding.recyclerView.setAdapter(myAssetAdapter);
         viewModel.response_validator.observe(this, response_observer);
         Utils.hideSoftKeyboard(getActivity());
         binding.simpleSearchView.setQueryHint("Search here");
-
+        binding.tvNoRecords.setVisibility(View.GONE);
         binding.simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -112,15 +116,46 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
             Utils.hideProgressDialog();
             if (assetsListResponseBean != null && assetsListResponseBean.getResult() != null && assetsListResponseBean.getResult().size() > 0) {
                 resultArrayList = assetsListResponseBean.getResult();
-                myAssetAdapter.setAssetList(getActivity(),resultArrayList);
+                myAssetAdapter.setAssetList(getActivity(), resultArrayList);
 
+            } else {
+                noDataView();
+            }
+        }
+    };
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(context).
+                registerReceiver(aAssetListStatusReceiver,
+                        new IntentFilter(AppUtils.IS_ASSET_LIST_AVAILABLE));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(context).unregisterReceiver(aAssetListStatusReceiver);
+    }
+
+
+    public BroadcastReceiver aAssetListStatusReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            boolean isAssetListAvailable = intent.getBooleanExtra(AppUtils.ASSET_AVAILABLE_STATUS, false);
+            if (isAssetListAvailable) {
+                binding.recyclerView.setVisibility(View.VISIBLE);
+                binding.tvNoRecords.setVisibility(View.GONE);
+            } else {
+                noDataView();
             }
         }
     };
 
     @Override
     public void onRefresh() {
-
+        viewModel.getMyAssets(binding);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -129,8 +164,16 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
         }, 2000);
     }
 
+
     @Override
     public void onLoadMore() {
         Log.e("onLoadMore: ", "call load more");
     }
+
+    private void noDataView() {
+        binding.recyclerView.setVisibility(View.GONE);
+        binding.tvNoRecords.setVisibility(View.VISIBLE);
+        binding.tvNoRecords.setText(getString(R.string.txt_no_records_avialable));
+    }
+
 }

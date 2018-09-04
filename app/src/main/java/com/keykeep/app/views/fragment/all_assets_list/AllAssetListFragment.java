@@ -51,6 +51,8 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
                 resultArrayList = assetsListResponseBean.getResult();
                 allAssetAdapter.setAssetList(getActivity(), resultArrayList);
 
+            } else {
+                noDataView();
             }
         }
     };
@@ -83,7 +85,7 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
         binding.recyclerView.setAdapter(allAssetAdapter);
         binding.recyclerView.setLoadingListener(this);
         binding.recyclerView.setLoadingMoreEnabled(false);
-        binding.recyclerView.setPullRefreshEnabled(false);
+        binding.recyclerView.setPullRefreshEnabled(true);
         viewModel.response_validator.observe(this, response_observer);
         Utils.hideSoftKeyboard(getActivity());
         binding.simpleSearchView.setQueryHint("Search here");
@@ -138,7 +140,7 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
 
     @Override
     public void onRefresh() {
-
+        viewModel.getAllAssets(binding);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -162,12 +164,15 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
                 binding.recyclerView.setVisibility(View.VISIBLE);
                 binding.tvNoRecords.setVisibility(View.GONE);
             } else {
-                binding.recyclerView.setVisibility(View.GONE);
-                binding.tvNoRecords.setVisibility(View.VISIBLE);
-                binding.tvNoRecords.setText(getString(R.string.txt_no_records_avialable));
+                noDataView();
             }
         }
     };
 
+    private void noDataView() {
+        binding.recyclerView.setVisibility(View.GONE);
+        binding.tvNoRecords.setVisibility(View.VISIBLE);
+        binding.tvNoRecords.setText(getString(R.string.txt_no_records_avialable));
+    }
 
 }

@@ -40,7 +40,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
     private String asset_emp_id;
     private String qr_code;
     private int req_id = -1;
-    boolean IS_FROM_SCANNER =false;
+    boolean IS_FROM_SCANNER = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +48,31 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         context = this;
         setCustomActionBar();
         initializeViews();
+    }
+
+
+    /**
+     * validate request for request,handover and transfer
+     */
+    private void validateTextView() {
+
+        /**
+         * Asset keep request
+         */
+        if (asset_emp_id == null || asset_emp_id.equals("0")) {
+            ASSET_STATUS = AppUtils.STATUS_ALL_ASSET_LIST;
+            /**
+             * Asset handover
+             */
+        } else if (asset_emp_id.equals(mEmp_id)) {
+            ASSET_STATUS = AppUtils.STATUS_TRANSFER_ASSET_LIST;
+            /**
+             * Asset transfer
+             */
+        } else {
+            ASSET_STATUS = AppUtils.STATUS_ALL_ASSET_LIST;
+        }
+
     }
 
 
@@ -81,10 +106,10 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         Utils.showProgressDialog(context, getString(R.string.loading));
         ASSET_STATUS = getIntent().getIntExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_SCANED_CODE);
         viewModel.getAssetDetail(qr_code, mEmp_id);
-        validateSubmitView();
-        if (ASSET_STATUS == AppUtils.STATUS_SCANED_CODE){
+        if (ASSET_STATUS == AppUtils.STATUS_SCANED_CODE) {
             IS_FROM_SCANNER = true;
         }
+
 
     }
 
@@ -128,7 +153,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
 
             case AppUtils.STATUS_TRANSFER_ASSET_LIST:
                 binding.scanButton.setVisibility(View.VISIBLE);
-                binding.scanButton.setText(R.string.transfer_asset);
+                binding.scanButton.setText(R.string.transfer_key_to_company);
                 break;
 
 
@@ -163,7 +188,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
 
             if (bean.getCode().equals(AppUtils.STATUS_FAIL)) {
                 Utils.showAlert(context, "", bean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_click, AssetDetailActivity.this);
-                if (IS_FROM_SCANNER){
+                if (IS_FROM_SCANNER) {
                     IS_FROM_SCANNER = false;
                     Utils.showAlert(context, "", bean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_to_finish, AssetDetailActivity.this);
                 }
@@ -171,6 +196,8 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
                 return;
             }
             setDataFromBean(bean);
+            validateTextView();
+            validateSubmitView();
         }
     };
 
@@ -240,11 +267,11 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
 
                 case AppUtils.NO_INTERNET:
                     Utils.hideProgressDialog();
-                    Utils.showToast(context, getString(R.string.internet_connection));
+                    Utils.showSnackBar(binding, getString(R.string.internet_connection));
                     break;
 
                 case AppUtils.SERVER_ERROR:
-                    Utils.showToast(context, getString(R.string.server_error));
+                    Utils.showSnackBar(binding, getString(R.string.server_error));
                     break;
             }
         }
@@ -278,10 +305,10 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         }
         binding.make.setText(resultBean.getDescription());
         binding.scanButton.setOnClickListener(AssetDetailActivity.this);
-        asset_emp_id = Utils.validateInt(resultBean.getEmployeeId())+"";
+        asset_emp_id = Utils.validateInt(resultBean.getEmployeeId()) + "";
         qr_code = resultBean.getQrCodeNumber();
 
-        if (Utils.validateStringValue(resultBean.getEmployeeName()).equals("")){
+        if (Utils.validateStringValue(resultBean.getEmployeeName()).equals("")) {
             binding.employeeContainer.setVisibility(View.GONE);
         }
 
@@ -397,7 +424,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         if (requestCode == AppUtils.REQUEST_CODE_QR_SCAN) {
 
             if (resultCode != RESULT_OK || data == null) {
-                Utils.showToast(context, getString(R.string.unable_to_scan_qr));
+                Utils.showSnackBar(binding, getString(R.string.unable_to_scan_qr));
                 return;
             }
             //Getting the passed result
@@ -416,7 +443,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
 
             } catch (JSONException e) {
                 e.printStackTrace();
-                Utils.showToast(context, getString(R.string.unable_to_scan_qr));
+                Utils.showSnackBar(binding, getString(R.string.unable_to_scan_qr));
             }
         }
     }
@@ -427,7 +454,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         if (requestCode == AppUtils.REQUEST_CODE_CAMERA || Utils.onRequestPermissionsResult(permissions, grantResults)) {
             startActivityForResult(new Intent(context, QrCodeActivity.class), AppUtils.REQUEST_CODE_QR_SCAN);
         } else {
-            Utils.showToast(context, getString(R.string.allow_camera_permission));
+            Utils.showSnackBar(binding, getString(R.string.allow_camera_permission));
         }
     }
 

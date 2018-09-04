@@ -84,27 +84,27 @@ public class ChangePasswordActivity extends BaseActivity implements DialogClickL
             switch (value) {
 
                 case AppUtils.empty_old_password:
-                    Utils.showToast(context, getString(R.string.enter_old_password));
+                    Utils.showSnackBar(binding, getString(R.string.enter_old_password));
                     break;
 
                 case AppUtils.empty_password:
-                    Utils.showToast(context, getString(R.string.enter_password));
+                    Utils.showSnackBar(binding, getString(R.string.enter_password));
                     break;
 
                 case AppUtils.empty_confirm_password:
-                    Utils.showToast(context, getString(R.string.enter_confirm_password));
+                    Utils.showSnackBar(binding, getString(R.string.enter_confirm_password));
                     break;
 
                 case AppUtils.match_confirm_password:
-                    Utils.showToast(context, getString(R.string.confirm_password_match));
+                    Utils.showSnackBar(binding, getString(R.string.confirm_password_match));
                     break;
                 case AppUtils.SERVER_ERROR:
-                    Utils.showToast(context, getString(R.string.server_error));
+                    Utils.showSnackBar(binding, getString(R.string.server_error));
                     break;
 
                 case AppUtils.NO_INTERNET:
                     Utils.hideProgressDialog();
-                    Utils.showToast(context, getString(R.string.internet_connection));
+                    Utils.showSnackBar(binding, getString(R.string.internet_connection));
                     break;
 
             }
@@ -118,7 +118,7 @@ public class ChangePasswordActivity extends BaseActivity implements DialogClickL
 
             case R.id.tv_submit:
                 if (viewModel.isValidate(binding)) {
-                    Utils.showProgressDialog(context,getString(R.string.loading));
+                    Utils.showProgressDialog(context, getString(R.string.loading));
                     viewModel.doChangePassword(binding, context);
                 }
                 break;

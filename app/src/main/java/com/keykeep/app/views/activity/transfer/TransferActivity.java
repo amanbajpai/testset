@@ -82,14 +82,13 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
         @Override
         public void onChanged(@Nullable AssetsListResponseBean assetsListResponseBean) {
 
-            if (assetsListResponseBean != null && assetsListResponseBean.getResult() != null&& assetsListResponseBean.getResult().size()>0) {
+            if (assetsListResponseBean != null && assetsListResponseBean.getResult() != null && assetsListResponseBean.getResult().size() > 0) {
                 LinearLayoutManager manager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
                 binding.recyclerView.setLayoutManager(manager);
                 myAssetAdapter = new TransferAssetAdapter(context, assetsListResponseBean);
                 binding.recyclerView.setAdapter(myAssetAdapter);
-            }else {
-                binding.recyclerView.setVisibility(View.GONE);
-                binding.noDataView.setVisibility(View.VISIBLE);
+            } else {
+                noDataView();
             }
         }
     };
@@ -109,5 +108,14 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
     public void onLoadMore() {
         Log.e("onLoadMore: ", "call load more");
     }
+
+
+    private void noDataView() {
+        binding.recyclerView.setVisibility(View.GONE);
+        binding.tvNoRecords.setVisibility(View.VISIBLE);
+        binding.tvNoRecords.setText(getString(R.string.txt_no_records_avialable));
+    }
+
+
 }
 

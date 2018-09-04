@@ -2,61 +2,64 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.keykeep.app.views.fragment.asset_request_fragment.AssetRequestViewModel" />
     </data>
 
-    <LinearLayout
-        android:background="@color/white"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:clickable="true"
         android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clickable="true"
         android:orientation="vertical">
+
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar"
             android:background="@color/white"
             android:elevation="6dp"
             android:minHeight="56dp"
+            android:visibility="gone"
             app:tabPaddingEnd="0dp"
             app:tabPaddingStart="0dp"
             app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget" />
+
         <LinearLayout
-            android:layout_marginTop="@dimen/_3sdp"
-            android:layout_marginLeft="@dimen/_3sdp"
-            android:layout_marginRight="@dimen/_3sdp"
-            android:weightSum="2"
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_3sdp"
+            android:layout_marginRight="@dimen/_3sdp"
+            android:layout_marginTop="@dimen/_3sdp"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="2">
 
 
             <com.keykeep.app.views.custom_view.StyledTextViewRegular
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
                 android:id="@+id/tv_pending_send_request"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="@drawable/all_asset_selector"
-                android:gravity="center"
                 android:clickable="true"
+                android:gravity="center"
                 android:padding="@dimen/_4sdp"
                 android:text="@string/txt_tab_title_pending_send_request"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14sdp" />
 
             <com.keykeep.app.views.custom_view.StyledTextViewRegular
-                android:layout_width="0dp"
                 android:id="@+id/tv_pending_receive_request"
-                android:layout_weight="1"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="@drawable/my_asset_deselector"
-                android:gravity="center"
                 android:clickable="true"
+                android:gravity="center"
                 android:padding="@dimen/_4sdp"
                 android:text="@string/txt_tab_title_pending_recieve_request"
                 android:textColor="@color/colorPrimary"
@@ -69,13 +72,25 @@
 
         <com.jcodecraeer.xrecyclerview.XRecyclerView
             android:id="@+id/recycler_view"
-            android:paddingStart="0dp"
-            android:paddingEnd="0dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_alignStart="@+id/linearLayout"
+            android:layout_below="@+id/linearLayout"
+            android:paddingEnd="0dp"
+            android:paddingStart="@dimen/_3sdp" />
 
-    </LinearLayout>
+        <com.keykeep.app.views.custom_view.StyledTextViewRegular
+            android:id="@+id/tv_no_records"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="@dimen/_5sdp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15sdp"
+            android:visibility="gone" />
 
+
+    </RelativeLayout>
 
 
 </layout>
