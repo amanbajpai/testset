@@ -66,7 +66,7 @@
 
     <!--Asset Screen String -->
     <string name="txt_status_available">Available</string>
-    <string name="txt_status_unavailable">Not Available</string>
+    <string name="txt_status_unavailable">Assigned</string>
     <string name="scan">Scan</string>
     <string name="loading">Loading...</string>
     <string name="txt_status_type_send">send</string>

@@ -73,9 +73,9 @@ public class AllAssetsAdapter extends RecyclerView.Adapter<AllAssetsAdapter.Hold
         holder.vinNumber.setText(assetLists.get(position).getVin());
         holder.versionNumber.setText(assetLists.get(position).getVersionNumber());
         if (assetLists.get(position).getAssetAssginedStatus().equalsIgnoreCase("1")) {
-            holder.availableStatus.setText(context.getString(R.string.txt_status_available));
-        } else {
             holder.availableStatus.setText(context.getString(R.string.txt_status_unavailable));
+        } else {
+            holder.availableStatus.setText(context.getString(R.string.txt_status_available));
         }
         if (REQ_TYPE == AppUtils.STATUS_TRANSFER_ASSET_LIST) {
             holder.availableStatus.setVisibility(View.INVISIBLE);

@@ -1,6 +1,5 @@
 package com.keykeep.app.views.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -50,7 +49,7 @@ public class AssetRequestAdapter extends RecyclerView.Adapter<AssetRequestAdapte
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
 
-        if (typeRequest == AppUtils.STATUS_ASSET_SEND_REQUEST) {
+        if (typeRequest == AppUtils.STATUS_ASSET_SEND_REQUEST1) {
             holder.requestText.setText(String.format("%s%s%s%s", context.getString(R.string.txt_your_request_for), assetLists.getResult().get(position).getAssetName(), context.getString(R.string.txt_is_send_to), assetLists.getResult().get(position).getCustomerName()));
         } else {
             holder.requestText.setText(String.format("%s%s%s%s", assetLists.getResult().get(position).getCustomerName(), context.getString(R.string.txt_want_to), assetLists.getResult().get(position).getAssetName(), context.getString(R.string.txt_from_you)));
@@ -60,10 +59,10 @@ public class AssetRequestAdapter extends RecyclerView.Adapter<AssetRequestAdapte
             @Override
             public void onClick(View view) {
 
-                if (typeRequest == AppUtils.STATUS_ASSET_SEND_REQUEST) {
+                if (typeRequest == AppUtils.STATUS_ASSET_SEND_REQUEST1) {
                     AssetsListResponseBean.Result bean = assetLists.getResult().get(position);
                     Intent intent = new Intent(context, AssetDetailActivity.class);
-                    intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_ASSET_RECEIVE_REQUEST);
+                    intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_ASSET_SEND_REQUEST);
                     intent.putExtra(AppUtils.ASSET_REQUEST_ID, bean.getAssetEmployeeAssignedLogId());
                     intent.putExtra(AppUtils.SCANED_QR_CODE, bean.getQrCodeNumber());
 
@@ -73,7 +72,7 @@ public class AssetRequestAdapter extends RecyclerView.Adapter<AssetRequestAdapte
                 } else {
                     AssetsListResponseBean.Result bean = assetLists.getResult().get(position);
                     Intent intent = new Intent(context, AssetDetailActivity.class);
-                    intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_ASSET_SEND_REQUEST);
+                    intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_ASSET_SEND_REQUEST1);
                     intent.putExtra(AppUtils.ASSET_REQUEST_ID, bean.getAssetEmployeeAssignedLogId());
                     intent.putExtra(AppUtils.SCANED_QR_CODE, bean.getQrCodeNumber());
                     context.startActivity(intent);
