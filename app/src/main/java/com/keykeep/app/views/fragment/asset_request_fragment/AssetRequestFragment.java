@@ -54,7 +54,7 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
 
     @Override
     public void initializeViews(View rootView) {
-        typeRequest = AppUtils.STATUS_ASSET_SEND_REQUEST;
+        typeRequest = AppUtils.STATUS_ASSET_SEND_REQUEST1;
         binding.recyclerView.setVisibility(View.VISIBLE);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         binding.recyclerView.setLayoutManager(manager);
@@ -82,7 +82,7 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
                 binding.tvPendingReceiveRequest.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.my_asset_deselector));
                 binding.tvPendingReceiveRequest.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
                 binding.tvPendingSendRequest.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
-                typeRequest = AppUtils.STATUS_ASSET_SEND_REQUEST;
+                typeRequest = AppUtils.STATUS_ASSET_SEND_REQUEST1;
                 viewModel.getAssetsPendingSendRequest(binding);
                 break;
             case R.id.tv_pending_receive_request:
@@ -93,7 +93,7 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
                 binding.tvPendingReceiveRequest.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.my_asset_selector));
                 binding.tvPendingSendRequest.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
                 binding.tvPendingReceiveRequest.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
-                typeRequest = AppUtils.STATUS_ASSET_RECEIVE_REQUEST;
+                typeRequest = AppUtils.STATUS_ASSET_SEND_REQUEST;
                 viewModel.getAssetsPendingRecieveRequest(binding);
                 break;
         }
@@ -108,7 +108,7 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
                 binding.recyclerView.setVisibility(View.VISIBLE);
                 assetRequestAdapter = new AssetRequestAdapter(getActivity(), assetsListResponseBean, typeRequest);
                 binding.recyclerView.setAdapter(assetRequestAdapter);
-                if (typeRequest == AppUtils.STATUS_ASSET_SEND_REQUEST) {
+                if (typeRequest == AppUtils.STATUS_ASSET_SEND_REQUEST1) {
                     assetRequestAdapter.setListener(AssetRequestFragment.this);
                 }
             } else {
