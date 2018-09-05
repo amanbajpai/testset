@@ -4,7 +4,7 @@
 
         <variable
             name="viewModel"
-            type="com.keykeep.app.views.activity.transfer.TransferViewModel" />
+            type="com.lotview.app.views.activity.transfer.TransferViewModel" />
     </data>
 
     <RelativeLayout
@@ -18,16 +18,16 @@
             android:layout_height="match_parent" />
 
 
-        <!-- <com.keykeep.app.views.custom_view.StyledTextViewLight
-             android:id="@+id/no_data_view"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_centerInParent="true"
-             android:textColor="@color/gray"
-             android:textSize="@dimen/_15sdp"
-             android:visibility="gone" />-->
+        <!--<com.lotview.app.views.custom_view.StyledTextViewLight
+            android:id="@+id/no_data_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/_15sdp"
+            android:visibility="gone" />-->
 
-        <com.keykeep.app.views.custom_view.StyledTextViewRegular
+        <com.lotview.app.views.custom_view.StyledTextViewRegular
             android:id="@+id/tv_no_records"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

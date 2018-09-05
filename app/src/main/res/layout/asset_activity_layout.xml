@@ -17,7 +17,7 @@
         android:orientation="horizontal">
 
 
-        <com.keykeep.app.views.custom_view.StyledTextViewRegular
+        <com.lotview.app.views.custom_view.StyledTextViewRegular
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/_14sdp" />
 
-        <com.keykeep.app.views.custom_view.StyledTextViewRegular
+        <com.lotview.app.views.custom_view.StyledTextViewRegular
             android:layout_width="0dp"
             android:id="@+id/tv_my_assets"
             android:layout_weight="1"
@@ -48,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp" />
 
-    <!--   <com.keykeep.app.views.custom_view.CustomViewPager
+    <!--lotviewkeep.app.views.custom_view.CustomViewPager
            android:id="@+id/viewPager"
            android:layout_width="match_parent"
            android:layout_height="match_parent" />-->

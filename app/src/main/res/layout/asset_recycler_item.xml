@@ -17,7 +17,7 @@
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp">
 
-            <com.keykeep.app.views.custom_view.StyledTextViewBold
+            <com.lotview.app.views.custom_view.StyledTextViewBold
                 android:id="@+id/tv_asset_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
             android:orientation="horizontal"
             android:paddingLeft="@dimen/_5sdp">
 
-            <com.keykeep.app.views.custom_view.StyledTextViewRegular
+            <com.lotview.app.views.custom_view.StyledTextViewRegular
                 android:id="@+id/tv_model_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
                 android:textColor="@color/dark_gray_color"
                 android:textSize="@dimen/_12sdp" />
 
-            <com.keykeep.app.views.custom_view.StyledTextViewRegular
+            <com.lotview.app.views.custom_view.StyledTextViewRegular
                 android:id="@+id/tv_vin_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
                 android:textSize="@dimen/_12sdp"
                 android:visibility="gone" />
 
-            <com.keykeep.app.views.custom_view.StyledTextViewRegular
+            <com.lotview.app.views.custom_view.StyledTextViewRegular
                 android:id="@+id/tv_version_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
             android:orientation="horizontal"
             android:paddingLeft="@dimen/_5sdp">
 
-            <com.keykeep.app.views.custom_view.StyledTextViewMedium
+            <com.lotview.app.views.custom_view.StyledTextViewMedium
                 android:id="@+id/tv_available_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

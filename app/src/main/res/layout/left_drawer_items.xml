@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.keykeep.app.views.activity.home.HomeViewModel" />
+            type="com.lotview.app.views.activity.home.HomeViewModel" />
     </data>
 
     <LinearLayout
@@ -38,7 +38,7 @@
 
             </RelativeLayout>
 
-            <com.keykeep.app.views.custom_view.StyledTextViewMedium
+            <com.lotview.app.views.custom_view.StyledTextViewMedium
                 android:id="@+id/leftDrawerTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

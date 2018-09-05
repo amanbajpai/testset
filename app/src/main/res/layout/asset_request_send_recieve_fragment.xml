@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.keykeep.app.views.fragment.asset_request_fragment.AssetRequestViewModel" />
+            type="com.lotview.app.views.fragment.asset_request_fragment.AssetRequestViewModel" />
     </data>
 
     <RelativeLayout
@@ -39,7 +39,7 @@
             android:weightSum="2">
 
 
-            <com.keykeep.app.views.custom_view.StyledTextViewRegular
+            <com.lotview.app.views.custom_view.StyledTextViewRegular
                 android:id="@+id/tv_pending_send_request"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14sdp" />
 
-            <com.keykeep.app.views.custom_view.StyledTextViewRegular
+            <com.lotview.app.views.custom_view.StyledTextViewRegular
                 android:id="@+id/tv_pending_receive_request"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
             android:paddingEnd="0dp"
             android:paddingStart="@dimen/_3sdp" />
 
-        <com.keykeep.app.views.custom_view.StyledTextViewRegular
+        <com.lotview.app.views.custom_view.StyledTextViewRegular
             android:id="@+id/tv_no_records"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
