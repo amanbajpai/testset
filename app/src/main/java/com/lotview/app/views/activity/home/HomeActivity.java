@@ -29,6 +29,7 @@ import com.lotview.app.views.adapter.LeftDrawerListAdapter;
 import com.lotview.app.views.base.BaseActivity;
 import com.lotview.app.views.fragment.asset_request_fragment.AssetRequestFragment;
 import com.lotview.app.views.fragment.home.HomeFragment;
+import com.lotview.app.views.fragment.notifications.NotificationFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -254,6 +255,8 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
                 break;
             case 2: //Notification
                 setDrawerHover(position);
+                title_tv.setText(getString(R.string.tittle_notifications));
+                Utils.replaceFragment(HomeActivity.this, new NotificationFragment());
 
                 break;
             case 3://Profile

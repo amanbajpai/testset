@@ -7,6 +7,7 @@ import com.lotview.app.model.bean.BaseResponse;
 import com.lotview.app.model.bean.ChangePasswordBean;
 import com.lotview.app.model.bean.ForgotPasswordResponseBean;
 import com.lotview.app.model.bean.LoginResponseBean;
+import com.lotview.app.model.bean.NotificationsResponseBean;
 import com.lotview.app.netcom.Keys;
 
 import retrofit2.Call;
@@ -94,6 +95,13 @@ public interface KeyKeepAPI {
     Call<BaseResponse> approveAssetRequest(@Body BaseRequestEntity baseEntity,
                                            @Query(Keys.EMPLOYEE_ID) String emp_id,
                                            @Query(Keys.REQ_ID) int req_id);
+
+
+    @POST(Config.NOTIFICATIONS_REQ_URL)
+    Call<NotificationsResponseBean> getNotificationsRequest(@Body BaseRequestEntity baseEntity,
+                                                            @Query(Keys.EMPLOYEE_ID) String emp_id);
+
+
 
 
 }

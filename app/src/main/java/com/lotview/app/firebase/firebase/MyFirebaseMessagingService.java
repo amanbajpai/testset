@@ -11,9 +11,9 @@ import android.support.v4.app.NotificationManagerCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.google.gson.Gson;
 import com.lotview.app.R;
 import com.lotview.app.application.KeyKeepApplication;
+import com.lotview.app.model.notification.PushAdditionalData;
 import com.lotview.app.model.notification.PushData;
 import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.utils.LogUtils;
@@ -34,6 +34,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public static int value = 1;
     private int pushType;
     PushData push_data = null;
+    PushAdditionalData push_additional_data = null;
 
 
     @Override
@@ -53,28 +54,29 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         try {
 
             JSONObject jsonObject = new JSONObject(remoteMessage.getData());
-            String pushMessage = "";
+            String PushSound = "";
+            String PushIcon = "";
             String pushTittle = "";
-            String pushBody = "";
-//          String pushData = "";
+            String PushBody = "";
+            String PushAdditionalData = "";
+            int PushType = 0;
 
-            if (jsonObject.toString().contains("mp_message")) {
-//                String message = jsonObject.has("mp_message") ? jsonObject.optString("mp_message") : "";
-//                mixPanelNotification(message, getResources().getString(R.string.app_name));
 
-            } else {
+            PushIcon = jsonObject.optString("icon");
+            PushSound = jsonObject.optString("sound");
+            pushTittle = jsonObject.optString("title");
+            PushBody = jsonObject.optString("body");
+            PushType = jsonObject.optInt("push_type");
+            PushAdditionalData = jsonObject.optString("additional_data");
 
-                pushMessage = jsonObject.optString("message");
-                pushTittle = jsonObject.optString("title");
-                pushBody = jsonObject.optString("body");
-                pushType = jsonObject.optInt("push_type");
+            JSONObject object = new JSONObject(PushAdditionalData);
+//            Gson gson = new Gson();
+//            push_additional_data = gson.fromJson(object.toString(), PushAdditionalData.class);
+            int PushAssetId = object.optInt("asset_id");
+            int PushEmployeeId = object.optInt("employee_id");
+            int PushCompanyId = object.optInt("company_id");
 
-                JSONObject jsonObj = makejson(jsonObject);
-                JSONObject object = jsonObj.getJSONObject("push_data");
-                Gson gson = new Gson();
-                push_data = gson.fromJson(object.toString(), PushData.class);
-
-                switch (pushType) {
+            switch (pushType) {
 
 //                    case 1: // Booking Data
 //                        pushData = jsonObject.optString("push_data");
@@ -94,19 +96,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //                    case 5: // review
 //                        pushData = jsonObject.optString("push_data");
 //                        break;
-                }
             }
 
             if (AppSharedPrefs.getInstance(getApplicationContext()).isLogin() && checkIfNotificationEnabled()) {
 
-                addNotification(pushType, pushMessage, pushTittle, push_data);
+                addNotification(pushType, PushBody, pushTittle, push_data);
             }
 
-
-        } catch (
-                Exception e)
-
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -120,7 +117,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             builder.setSmallIcon(R.mipmap.ic_launcher);
 //            builder.setColor(getResources().getColor(R.color.black));
 //            builder.setColor(getResources().getColor(R.color.notification_bg_color));
-            builder.setColor(getResources().getColor(R.color.colorRed));
+            builder.setColor(getResources().getColor(R.color.app_blue));
         } else {
             builder.setSmallIcon(R.mipmap.ic_launcher);
         }
@@ -175,24 +172,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private boolean checkIfNotificationEnabled() {
         boolean isNotificationEnabled = NotificationManagerCompat.from(this).areNotificationsEnabled();
         return isNotificationEnabled;
-    }
-
-    private JSONObject makejson(JSONObject jsonObject) {
-        JSONObject newObject = new JSONObject();
-        try {
-            String pushData = jsonObject.optString("push_data");
-            JSONObject rootJson = new JSONObject(pushData);
-
-
-            jsonObject.put("push_data", rootJson);
-
-            LogUtils.e(TAG, "jsonObject==" + jsonObject.toString(4));
-
-            return jsonObject;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return jsonObject;
     }
 
 }
