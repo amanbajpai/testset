@@ -6,6 +6,6 @@
         android:color="@color/colorPrimary" />
     <solid android:color="@android:color/transparent" />
     <corners
-        android:bottomRightRadius="@dimen/_6sdp"
-        android:topRightRadius="@dimen/_6sdp" />
+        android:bottomLeftRadius="@dimen/_6sdp"
+        android:topLeftRadius="@dimen/_6sdp" />
 </shape>

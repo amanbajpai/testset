@@ -70,5 +70,8 @@ public interface AppUtils {
     String ASSET_AVAILABLE_STATUS = "assetAvailableStatus";
 
 
+    int ASSET_NEW = 1;
+    String ASSET_USED = "2";
+    String ASSET_customer = "3";
     String IS_MANUAL_QR = "is_manual_qr";
 }

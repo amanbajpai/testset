@@ -47,7 +47,7 @@ public class AssetsListResponseBean extends BaseResponse {
         private String vin;
         @SerializedName("asset_type")
         @Expose
-        private String assetType;
+        private Integer assetType;
         @SerializedName("customer_name")
         @Expose
         private String customerName;
@@ -72,6 +72,15 @@ public class AssetsListResponseBean extends BaseResponse {
         @SerializedName("employee_id")
         @Expose
         private String employeeId;
+
+
+        public Integer getAssetType() {
+            return assetType;
+        }
+
+        public void setAssetType(Integer assetType) {
+            this.assetType = assetType;
+        }
 
         @SerializedName("asset_employee_assigned_log_id")
         @Expose
@@ -146,13 +155,6 @@ public class AssetsListResponseBean extends BaseResponse {
             this.vin = vin;
         }
 
-        public String getAssetType() {
-            return assetType;
-        }
-
-        public void setAssetType(String assetType) {
-            this.assetType = assetType;
-        }
 
         public String getCustomerName() {
             return customerName;
