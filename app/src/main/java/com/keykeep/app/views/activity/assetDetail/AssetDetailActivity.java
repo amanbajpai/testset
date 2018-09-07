@@ -27,7 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created by ankurrawal on 23/8/18.
+ * Created by akshaydashore on 23/8/18
  */
 public class AssetDetailActivity extends BaseActivity implements DialogClickListener {
 
@@ -143,7 +143,6 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
 
 
     private void validateSubmitView() {
-
 
         switch (ASSET_STATUS) {
 

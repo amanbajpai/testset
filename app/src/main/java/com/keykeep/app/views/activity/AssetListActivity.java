@@ -39,15 +39,17 @@ public class AssetListActivity extends BaseActivity {
 
     @Override
     public void initializeViews() {
-        replaceFragment(false, new AllAssetListFragment(), R.id.home_layout_container);
+        replaceFragment(false, new MyAssetsListFragment(), R.id.home_layout_container);
         allAssetBtn = findViewById(R.id.tv_all_assets);
         myAssetBtn = findViewById(R.id.tv_my_assets);
         allAssetBtn.setOnClickListener(this);
         myAssetBtn.setOnClickListener(this);
-        allAssetBtn.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.all_asset_selector));
-        myAssetBtn.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.my_asset_deselector));
-        myAssetBtn.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
-        allAssetBtn.setTextColor(ContextCompat.getColor(context, R.color.white));
+
+        myAssetBtn.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.my_asset_selector));
+        allAssetBtn.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.all_asset_deselector));
+        allAssetBtn.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+        myAssetBtn.setTextColor(ContextCompat.getColor(context, R.color.white));
+
     }
 
 
@@ -64,8 +66,8 @@ public class AssetListActivity extends BaseActivity {
                 myAssetBtn.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
                 allAssetBtn.setTextColor(ContextCompat.getColor(context, R.color.white));
                 replaceFragment(false, new AllAssetListFragment(), R.id.home_layout_container);
-
                 break;
+
             case R.id.tv_my_assets:
                 allAssetBtn.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.all_asset_deselector));
                 myAssetBtn.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.my_asset_selector));

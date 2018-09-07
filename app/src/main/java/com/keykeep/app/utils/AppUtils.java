@@ -42,7 +42,7 @@ public interface AppUtils {
     int STATUS_ASSET_SEND_REQUEST1 = 207;
     int STATUS_ASSET_SEND_REQUEST = 208;
 
-    int REQ_REFRESH_VIEW=210;
+    int REQ_REFRESH_VIEW = 210;
 
     /**
      * dialog keys
@@ -68,4 +68,7 @@ public interface AppUtils {
     String ASSET_AVAILABLE_STATUS = "assetAvailableStatus";
 
 
+    int ASSET_NEW = 1;
+    String ASSET_USED = "2";
+    String ASSET_customer = "3";
 }

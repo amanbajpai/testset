@@ -18,7 +18,6 @@ public interface Config {
     String ASSET_LIST_URL = "assetslist";
     String CHANGE_PASSWORD_URL = "changepassword";
     String ASSET_DETAIL = "assetdetail";
-    String KEEP_ASSET_REQUEST ="assetkeeprequest";
     String ASSET_HANDOVER_REQUEST ="assethandoverrequest";
     String ASSET_TRANSFER_REQUEST ="assettransferrequest";
 
@@ -27,6 +26,7 @@ public interface Config {
 
     String CANCEL_ASSET_REQ_URL ="assetrequestdecline";
     String APPROVE_ASSET_REQ_URL ="assetrequestapprove";
-
+    //    String KEEP_ASSET_REQUEST ="assetkeeprequest"; // Old Api when reques t need to be approved from the admin side.
+    String KEEP_ASSET_REQUEST = "assetdirectapprove"; // Updated API for the same when request is directly approved by admin
 }
 

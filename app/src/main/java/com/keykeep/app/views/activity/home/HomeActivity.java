@@ -243,7 +243,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
 
             case 0://Home
                 setDrawerHover(position);
-                title_tv.setText("Home");
+                title_tv.setText(R.string.welcome_to_link);
                 Utils.replaceFragment(HomeActivity.this, new HomeFragment());
                 break;
             case 1://Assets Request
@@ -311,7 +311,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
             if (fragment instanceof HomeFragment) {
                 title_tv.setVisibility(View.VISIBLE);
 //                setDrawerHover(0);
-                title_tv.setText(getResources().getString(R.string.txt_home));
+                title_tv.setText(getResources().getString(R.string.welcome_to_link));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -343,7 +343,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
         try {
             title_tv.setVisibility(View.GONE);
             setDrawerHover(0);
-            title_tv.setText(getString(R.string.txt_home));
+            title_tv.setText(getString(R.string.welcome_to_link));
             Utils.replaceFragment(HomeActivity.this, new HomeFragment());
         } catch (Exception ex) {
             ex.printStackTrace();

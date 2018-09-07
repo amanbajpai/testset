@@ -105,6 +105,7 @@
     <string name="dialog_no">No</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_ok">OK</string>
+    <string name="welcome_to_link">LotView</string>
 
 
 </resources>

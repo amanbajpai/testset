@@ -1451,16 +1451,12 @@ public class Utils {
         return date;
     }
 
-    public static String validateingString(String value) {
+    public static String validateStringToValue(String value) {
 
-        String respose = "";
-
-        return value != null ? (!value.equalsIgnoreCase("null") ? (!value.equalsIgnoreCase("") ? value : "N/A") : "N/A") : "N/A";
-
-//        if (value == null || value.equals("null") || value.equals(""))
-//            return ;
-//        else
-//            return value;
+        if (value ==null|| value.equals("") || value.equals("null")){
+            return "";
+        }
+        return value;
 
     }
 
