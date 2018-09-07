@@ -20,6 +20,8 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.lotview.app.R;
 import com.lotview.app.interfaces.DialogClickListener;
 import com.lotview.app.model.LeftMenuDrawerItems;
+import com.lotview.app.model.notification.PushData;
+import com.lotview.app.netcom.Keys;
 import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Connectivity;
@@ -96,6 +98,8 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
             prepareMenuItemList();
             setDrawerHover(0);
             tvProfileUserName.setText(AppSharedPrefs.getEmployeeName());
+            handlePushCall();
+
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -343,7 +347,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
         }
     }
 
-    private void callHome() {
+    public void callHome() {
         try {
             title_tv.setVisibility(View.GONE);
             setDrawerHover(0);
@@ -393,6 +397,25 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
                     case DialogInterface.BUTTON_NEGATIVE:
                         break;
                 }
+        }
+    }
+
+    private void handlePushCall() {
+        PushData pushData = (PushData) getIntent().getSerializableExtra(Keys.NOTIFICATION_DATA);
+
+        switch (pushData.getPushType()) {
+            case Keys.NOTIFICATION_ASSET_REQUEST_APPROVE:
+                onItemClick(1);
+                break;
+            case Keys.NOTIFICATION_ASSET_TRANSFER_REQUEST:
+                break;
+            case Keys.NOTIFICATION_ASSET_TRANSFER_APPROVE:
+                break;
+            case Keys.NOTIFICATION_ASSET_TRANSFER_DECLINE:
+                break;
+            case 8:
+                break;
+
         }
     }
 }

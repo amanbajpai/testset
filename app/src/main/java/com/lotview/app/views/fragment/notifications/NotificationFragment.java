@@ -47,7 +47,7 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_notification, container, false);
         viewModel = ViewModelProviders.of(this).get(NotificationViewModel.class);
-
+        binding.setViewModel(viewModel);
         initializeViews(binding.getRoot());
         Utils.showProgressDialog(context, getString(R.string.loading));
         viewModel.getNotifications(binding);
@@ -60,8 +60,8 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
         resultArrayList = new ArrayList<>();
         LinearLayoutManager manager = new LinearLayoutManager(context);
         binding.recycleNotification.setLayoutManager(manager);
-        notificationsListAdapter = new NotificationsListAdapter(context, resultArrayList);
-        binding.recycleNotification.setAdapter(notificationsListAdapter);
+//        notificationsListAdapter = new NotificationsListAdapter(context, resultArrayList);
+//        binding.recycleNotification.setAdapter(notificationsListAdapter);
         binding.recycleNotification.setLoadingListener(this);
         binding.recycleNotification.setLoadingMoreEnabled(false);
         binding.recycleNotification.setPullRefreshEnabled(true);
@@ -82,7 +82,10 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
             Utils.hideProgressDialog();
             if (notificationsResponseBean != null && notificationsResponseBean.getResult() != null && notificationsResponseBean.getResult().size() > 0) {
                 resultArrayList = notificationsResponseBean.getResult();
-                notificationsListAdapter.setNotificationList(getActivity(), resultArrayList);
+                notificationsListAdapter = new NotificationsListAdapter(context, resultArrayList);
+                binding.recycleNotification.setAdapter(notificationsListAdapter);
+
+//                notificationsListAdapter.setNotificationList(getActivity(), resultArrayList);
 
             } else {
                 noDataView();

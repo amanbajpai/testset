@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="@dimen/_5sdp">
+            android:paddingLeft="@dimen/_5sdp">
 
             <com.lotview.app.views.custom_view.StyledTextViewBold
                 android:id="@+id/tv_asset_name"

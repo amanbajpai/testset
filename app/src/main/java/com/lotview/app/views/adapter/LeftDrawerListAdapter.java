@@ -21,17 +21,14 @@ public class LeftDrawerListAdapter extends RecyclerView.Adapter<LeftDrawerListAd
     private List<LeftMenuDrawerItems> leftDrawerMenuList;
     OnItemClickListener onItemClickListener;
 
-
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
-
 
     public LeftDrawerListAdapter(Context context, List<LeftMenuDrawerItems> leftDrawerMenuList) {
         this.context = context;
         this.leftDrawerMenuList = leftDrawerMenuList;
     }
-
 
     @Override
     public BindingHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -40,7 +37,6 @@ public class LeftDrawerListAdapter extends RecyclerView.Adapter<LeftDrawerListAd
                 R.layout.left_drawer_items,
                 parent,
                 false);
-
         return new BindingHolder(commentsHeaderBinding);
     }
 
@@ -48,16 +44,13 @@ public class LeftDrawerListAdapter extends RecyclerView.Adapter<LeftDrawerListAd
     public void onBindViewHolder(BindingHolder holder, final int position) {
 
         LeftMenuDrawerItems leftMenuDrawerItems = leftDrawerMenuList.get(position);
-
         holder.binding.leftDrawerTxt.setText(leftMenuDrawerItems.getTitle());
 
         if (leftDrawerMenuList.get(position).isMenuIsSelected()) {
-
             holder.binding.leftDrawerTxt.setTextColor(context.getResources().getColor(R.color.black));
             holder.binding.rootLayout.setBackgroundColor(context.getResources().getColor(R.color.white));
-           holder.binding.leftDrawerIv.setImageResource(leftDrawerMenuList.get(position).getSelectedIcon());
+            holder.binding.leftDrawerIv.setImageResource(leftDrawerMenuList.get(position).getSelectedIcon());
         } else {
-
             holder.binding.leftDrawerTxt.setTextColor(context.getResources().getColor(R.color.white));
             holder.binding.rootLayout.setBackgroundColor(context.getResources().getColor(R.color.app_blue));
             holder.binding.leftDrawerIv.setImageResource(leftDrawerMenuList.get(position).getDeSelectedIcon());
@@ -76,7 +69,6 @@ public class LeftDrawerListAdapter extends RecyclerView.Adapter<LeftDrawerListAd
                 onItemClickListener.onItemClick(position);
             }
         });
-
     }
 
     @Override
@@ -97,7 +89,6 @@ public class LeftDrawerListAdapter extends RecyclerView.Adapter<LeftDrawerListAd
             this.binding = binding;
         }
     }
-
 
 //    public class MyViewHolder extends RecyclerView.ViewHolder {
 //

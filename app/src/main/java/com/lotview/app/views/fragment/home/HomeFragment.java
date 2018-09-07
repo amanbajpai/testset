@@ -29,7 +29,7 @@ import org.json.JSONObject;
 public class HomeFragment extends BaseFragment implements DialogClickListener {
 
     private Context context;
-    private HomeFragmentLayoutBinding binding;
+    private com.lotview.app.databinding.HomeFragmentLayoutBinding binding;
     HomeFragmentViewModel viewModel;
 
     @Nullable
@@ -120,18 +120,29 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
             if (data == null)
                 return;
             //Getting the passed result
-            String result = data.getStringExtra(AppUtils.SCAN_SUCCESS);
-            try {
-                JSONObject jsonObject = new JSONObject(result);
-                result = jsonObject.getString("qr_code_number");
+            if (data.getBooleanExtra(AppUtils.IS_MANUAL_QR, false)) {
+                String result = data.getStringExtra(AppUtils.QR_NUMBER_MANUAL_SCAN_SUCCESS);
+
                 Intent intent = new Intent(context, AssetDetailActivity.class);
                 intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_SCANED_CODE);
                 intent.putExtra(AppUtils.SCANED_QR_CODE, result);
                 startActivity(intent);
-            } catch (JSONException e) {
-                e.printStackTrace();
-                Utils.showSnackBar(binding, getString(R.string.unable_to_scan_qr));
+
+            } else {
+                String result = data.getStringExtra(AppUtils.SCAN_SUCCESS);
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    result = jsonObject.getString("qr_code_number");
+                    Intent intent = new Intent(context, AssetDetailActivity.class);
+                    intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_SCANED_CODE);
+                    intent.putExtra(AppUtils.SCANED_QR_CODE, result);
+                    startActivity(intent);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Utils.showSnackBar(binding, getString(R.string.unable_to_scan_qr));
+                }
             }
+
         }
 
     }

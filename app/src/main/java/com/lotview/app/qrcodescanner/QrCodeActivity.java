@@ -39,7 +39,10 @@ import com.lotview.app.qrcodescanner.decode.InactivityTimer;
 import com.lotview.app.qrcodescanner.view.QrCodeFinderView;
 import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.LogUtils;
+import com.lotview.app.utils.Utils;
 import com.lotview.app.views.custom_view.CustomActionBar;
+import com.lotview.app.views.custom_view.StyledEditTextViewRegular;
+import com.lotview.app.views.custom_view.StyledTextViewSemiBold;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -77,6 +80,8 @@ public class QrCodeActivity extends AppCompatActivity implements Callback, OnCli
 //    private final String ERROR_DECODING_IMAGE = "com.blikoon.qrcodescanner.error_decoding_image";
     private final String LOGTAG = "QRScannerQRCodeActivity";
     private Context mApplicationContext;
+    private StyledEditTextViewRegular etQrCodeNumber;
+    private StyledTextViewSemiBold tvQrCodeNumberSubmit;
 
     private static Intent createIntent(Context context) {
         Intent i = new Intent(context, QrCodeActivity.class);
@@ -106,7 +111,7 @@ public class QrCodeActivity extends AppCompatActivity implements Callback, OnCli
         if (hasHardware) {
             if (!hasCameraPermission()) {
                 findViewById(R.id.qr_code_view_background).setVisibility(View.VISIBLE);
-                mQrCodeFinderView.setVisibility(View.GONE);
+                mQrCodeFinderView.setVisibility(View.VISIBLE);
                 mPermissionOk = false;
             } else {
                 mPermissionOk = true;
@@ -124,9 +129,12 @@ public class QrCodeActivity extends AppCompatActivity implements Callback, OnCli
         mQrCodeFinderView = (QrCodeFinderView) findViewById(R.id.qr_code_view_finder);
         mSurfaceView = (SurfaceView) findViewById(R.id.qr_code_preview_view);
         mLlFlashLight = findViewById(R.id.qr_code_ll_flash_light);
+        etQrCodeNumber = (StyledEditTextViewRegular) findViewById(R.id.et_qr_code_number);
+        tvQrCodeNumberSubmit = (StyledTextViewSemiBold) findViewById(R.id.tv_qr_code_number_submit);
         mHasSurface = false;
         mIvFlashLight.setOnClickListener(this);
         tvPic.setOnClickListener(this);
+        tvQrCodeNumberSubmit.setOnClickListener(this);
     }
 
     private void initData() {
@@ -317,6 +325,19 @@ public class QrCodeActivity extends AppCompatActivity implements Callback, OnCli
 
         } else if (v.getId() == R.id.left_iv) {
             finish();
+        } else if (v.getId() == R.id.tv_qr_code_number_submit) {
+            String qrNumber = etQrCodeNumber.getText().toString().trim();
+            if (!TextUtils.isEmpty(qrNumber) && qrNumber.length() > 4) {
+                Intent data = new Intent();
+                data.putExtra(AppUtils.SCAN_SUCCESS, etQrCodeNumber.getText().toString().trim());
+                data.putExtra(AppUtils.IS_MANUAL_QR, true);
+                setResult(Activity.RESULT_OK, data);
+                finish();
+            } else {
+                Utils.showSnackBar(QrCodeActivity.this, etQrCodeNumber, "Please enter a valid QR code");
+            }
+
+
         }
 
     }

@@ -20,25 +20,22 @@ public class NotificationsListAdapter extends RecyclerView.Adapter<Notifications
     private ArrayList<NotificationsResponseBean.Result> notificationsResponseBeanArrayList;
     OnItemClickListener onItemClickListener;
 
-
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
-
 
     public NotificationsListAdapter(Context context, ArrayList<NotificationsResponseBean.Result> resultArrayList) {
         this.context = context;
         this.notificationsResponseBeanArrayList = resultArrayList;
     }
 
-
     @Override
     public BindingHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         NotificationRecyclerItemBinding commentsHeaderBinding = DataBindingUtil.inflate(
-                LayoutInflater.from(parent.getContext()),
+                inflater,
                 R.layout.notification_recycler_item,
-                parent,
-                false);
+                parent, false);
 
         return new BindingHolder(commentsHeaderBinding);
     }
@@ -52,13 +49,11 @@ public class NotificationsListAdapter extends RecyclerView.Adapter<Notifications
         holder.binding.tvBody.setText(notificationsResponseBean.getNotificationDescription());
     }
 
-
     public void setNotificationList(Context context, ArrayList<NotificationsResponseBean.Result> resultArrayList) {
         this.context = context;
         this.notificationsResponseBeanArrayList = resultArrayList;
         notifyDataSetChanged();
     }
-
 
     @Override
     public int getItemCount() {
@@ -69,7 +64,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter<Notifications
         void onItemClick(int position);
     }
 
-
     public static class BindingHolder extends RecyclerView.ViewHolder {
         private NotificationRecyclerItemBinding binding;
 
@@ -78,6 +72,5 @@ public class NotificationsListAdapter extends RecyclerView.Adapter<Notifications
             this.binding = binding;
         }
     }
-
 
 }

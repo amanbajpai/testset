@@ -44,10 +44,17 @@ public interface Keys {
      */
     String QR_CODE_NUMBER = "qr_code_number";
 
+    /*Notification Type*/
+    int NOTIFICATION_ASSET_REQUEST_APPROVE = 2;
+    int NOTIFICATION_ASSET_TRANSFER_REQUEST = 4;
+    int NOTIFICATION_ASSET_TRANSFER_APPROVE = 5;
+    int NOTIFICATION_ASSET_TRANSFER_DECLINE = 6;
+    int NOTIFICATION_ASSET_SUBMIT_APPROVE = 8;
 
     /**
      * approved request
      */
     String REQ_ID = "request_id";
-    String SUBMIT_USER_TYPE =  "submit_user_type";
+    String SUBMIT_USER_TYPE = "submit_user_type";
+    String NOTIFICATION_DATA = "notification_data";
 }

@@ -14,6 +14,7 @@ public interface AppUtils {
 
     String SCANED_QR_CODE = "scan_qr_code";
     String SCAN_SUCCESS = "scan_success";
+    String QR_NUMBER_MANUAL_SCAN_SUCCESS = "qr_number_scan_success";
     String SCAN_FAIL = "scan_fail";
     String ASSET_STATUS_CODE = "asset_status_code";
     String ASSET_REQUEST_ID = "asset_req_id";
@@ -69,4 +70,5 @@ public interface AppUtils {
     String ASSET_AVAILABLE_STATUS = "assetAvailableStatus";
 
 
+    String IS_MANUAL_QR = "is_manual_qr";
 }

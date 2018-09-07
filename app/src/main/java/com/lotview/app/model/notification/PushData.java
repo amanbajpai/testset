@@ -17,23 +17,23 @@ public class PushData implements Serializable {
 
     @SerializedName("push_type")
     @Expose
-    private int pushType;
+    public int pushType;
 
     @SerializedName("additional_data")
     @Expose
-    private PushAdditionalData additionalData;
+    public PushAdditionalData additionalData;
 
     @SerializedName("body")
     @Expose
-    private String body;
+    public String body;
 
     @SerializedName("icon")
     @Expose
-    private String icon;
+    public String icon;
 
     @SerializedName("sound")
     @Expose
-    private String sound;
+    public String sound;
 
     @SerializedName("title")
     @Expose

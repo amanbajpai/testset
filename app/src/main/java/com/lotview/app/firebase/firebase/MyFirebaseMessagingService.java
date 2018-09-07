@@ -15,10 +15,10 @@ import com.lotview.app.R;
 import com.lotview.app.application.KeyKeepApplication;
 import com.lotview.app.model.notification.PushAdditionalData;
 import com.lotview.app.model.notification.PushData;
+import com.lotview.app.netcom.Keys;
 import com.lotview.app.preferences.AppSharedPrefs;
-import com.lotview.app.utils.LogUtils;
 import com.lotview.app.utils.Utils;
-import com.lotview.app.views.activity.assetDetail.AssetDetailActivity;
+import com.lotview.app.views.activity.home.HomeActivity;
 
 import org.json.JSONObject;
 
@@ -32,9 +32,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseMsgService";
     private Map<String, String> params;
     public static int value = 1;
-    private int pushType;
     PushData push_data = null;
-    PushAdditionalData push_additional_data = null;
 
 
     @Override
@@ -52,55 +50,45 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         try {
-
+            PushData pushDatabean = new PushData();
             JSONObject jsonObject = new JSONObject(remoteMessage.getData());
             String PushSound = "";
             String PushIcon = "";
             String pushTittle = "";
             String PushBody = "";
-            String PushAdditionalData = "";
+            String PushAdditionalDataJson = "";
             int PushType = 0;
 
 
             PushIcon = jsonObject.optString("icon");
+            pushDatabean.setIcon(jsonObject.optString("icon"));
             PushSound = jsonObject.optString("sound");
+            pushDatabean.setSound(jsonObject.optString("icon"));
             pushTittle = jsonObject.optString("title");
+            pushDatabean.setTitle(jsonObject.optString("icon"));
             PushBody = jsonObject.optString("body");
+            pushDatabean.setBody(jsonObject.optString("icon"));
             PushType = jsonObject.optInt("push_type");
-            PushAdditionalData = jsonObject.optString("additional_data");
+            pushDatabean.setPushType(Integer.valueOf(jsonObject.optString("icon")));
 
-            JSONObject object = new JSONObject(PushAdditionalData);
-//            Gson gson = new Gson();
-//            push_additional_data = gson.fromJson(object.toString(), PushAdditionalData.class);
+            PushAdditionalDataJson = jsonObject.optString("additional_data");
+
+            JSONObject object = new JSONObject(PushAdditionalDataJson);
             int PushAssetId = object.optInt("asset_id");
             int PushEmployeeId = object.optInt("employee_id");
             int PushCompanyId = object.optInt("company_id");
 
-            switch (pushType) {
+            PushAdditionalData pushAdditionalDataBean = new PushAdditionalData();
+            pushAdditionalDataBean.setAssetId(PushAssetId);
+            pushAdditionalDataBean.setEmployeeId(PushEmployeeId);
+            pushAdditionalDataBean.setCompanyId(PushCompanyId);
 
-//                    case 1: // Booking Data
-//                        pushData = jsonObject.optString("push_data");
-//                        break;
-//                    case 2: // Event Data
-//                        pushData = jsonObject.optString("push_data");
-////                        JSONObject jsonPushData_for_event = new JSONObject(pushData_forevent);
-////                        pushData = jsonPushData_for_event.optString("event_data");
-//                        break;
-//                    case 3: // Normal data
-//                        //no data to add
-//                        break;
-//                    case 4: // payment
-//                        pushData = jsonObject.optString("push_data");
-//                        break;
-//
-//                    case 5: // review
-//                        pushData = jsonObject.optString("push_data");
-//                        break;
-            }
+            pushDatabean.setAdditionalData(pushAdditionalDataBean);
 
             if (AppSharedPrefs.getInstance(getApplicationContext()).isLogin() && checkIfNotificationEnabled()) {
 
-                addNotification(pushType, PushBody, pushTittle, push_data);
+//                addNotification(PushType, PushBody, pushTittle, push_data);
+                addNotification(pushDatabean);
             }
 
         } catch (Exception e) {
@@ -110,30 +98,40 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
 
-    private void addNotification(int pushType, String Message, String Tittle, PushData pushData) {
+    //    private void addNotification(int pushType, String Message, String Tittle, PushData pushData) {
+    private void addNotification(PushData pushData) {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder.setSmallIcon(R.mipmap.ic_launcher);
-//            builder.setColor(getResources().getColor(R.color.black));
-//            builder.setColor(getResources().getColor(R.color.notification_bg_color));
             builder.setColor(getResources().getColor(R.color.app_blue));
         } else {
             builder.setSmallIcon(R.mipmap.ic_launcher);
         }
 
         builder.setContentTitle(getString(R.string.app_name));
-        builder.setContentTitle(Tittle);
-        builder.setContentText(Tittle + "\n" + Message);
+        builder.setContentTitle(pushData.getTitle());
+        builder.setContentText(pushData.getTitle() + "\n" + pushData.getBody());
         PendingIntent contentIntent = null;
         Intent intent = null;
-        switch (pushType) {
-            case 1: // Booking Data
-                intent = new Intent(this, AssetDetailActivity.class);
-//                intent.putExtra(ConstantsLib.NOTIFICATION_DATA, pushData);
+
+        switch (pushData.getPushType()) {
+            case 2: // asset request approve
+                intent = new Intent(this, HomeActivity.class);
+
+                break;
+            case 4: // asset transfer request receiver
+
+                break;
+            case 5: // asset transfer approve
+                break;
+            case 6: // asset transfer decline sender/receiver
+                break;
+            case 8: // asset submit approve sender
                 break;
 
         }
+        intent.putExtra(Keys.NOTIFICATION_DATA, pushData);
 
         builder.setContentIntent(contentIntent);
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
