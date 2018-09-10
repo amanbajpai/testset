@@ -106,6 +106,9 @@
     <string name="dialog_ok">OK</string>
     <string name="welcome_to_link">LotView</string>
     <string name="tittle_notifications">Notifications</string>
+    <string name="tag_number">Tag Number</string>
+    <string name="owner_you">Owner: You</string>
+    <string name="owner">Owner:</string>
 
 
 </resources>

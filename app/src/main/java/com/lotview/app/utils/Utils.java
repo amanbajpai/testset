@@ -1044,16 +1044,12 @@ public class Utils {
         return timeValue;
     }*/
 
-    public static String validateIntValue(String value) {
+    public static String validateIntValue(Integer value) {
 
-        String returntValue = "";
-
-        if (value == null || value.equals("") || value.equals("null"))
+        if (value == null )
             return "0";
 
-        returntValue = value;
-
-        return returntValue;
+        return value+"";
 
     }
 
@@ -1078,12 +1074,6 @@ public class Utils {
         return value;
     }
 
-    public static String validateValue(Integer value) {
-
-        if (value == null)
-            return "N/A";
-        return value + "";
-    }
 
     public static int validateInt(Integer value) {
 
@@ -1453,11 +1443,20 @@ public class Utils {
 
     public static String validateStringToValue(String value) {
 
-        if (value ==null|| value.equals("") || value.equals("null")){
+        if (value == null || value.equals("") || value.equals("null")) {
             return "";
         }
         return value;
 
+    }
+
+    public static String validateInteger(Integer value) {
+
+        if (value == null) {
+            return "0";
+        }
+
+        return value+"";
     }
 
     public static String validateTimeWithDate(String eventDate) {
@@ -1831,11 +1830,17 @@ public class Utils {
                 type = "New";
                 break;
             case 2:
-                type = "Repair";
+                type = "Used";
                 break;
+
+            case 3:
+                type = "Service";
+                break;
+
 
         }
         return type;
     }
+
 
 }

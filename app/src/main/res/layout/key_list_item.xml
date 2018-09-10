@@ -28,7 +28,7 @@
         </RelativeLayout>
 
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_5sdp"
@@ -36,35 +36,30 @@
             android:paddingLeft="@dimen/_5sdp">
 
             <com.lotview.app.views.custom_view.StyledTextViewRegular
-                android:id="@+id/owner_name_tv"
+                android:id="@+id/tv_vin_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.5"
                 android:maxLines="1"
-                android:text="Model No."
                 android:textColor="@color/dark_gray_color"
                 android:textSize="@dimen/_12sdp" />
 
-
-            <RelativeLayout
+            <com.lotview.app.views.custom_view.StyledTextViewRegular
+                android:id="@+id/date_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:gravity="end">
+                android:layout_weight="0.5"
+                android:maxLines="1"
+                android:paddingRight="@dimen/_5sdp"
+                android:gravity="right"
+                android:textColor="@color/dark_gray_color"
+                android:textSize="@dimen/_12sdp"
+                android:visibility="gone" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/right_arrow"
-                    android:tint="@color/blue" />
-
-            </RelativeLayout>
-        </RelativeLayout>
+        </LinearLayout>
 
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_5sdp"
@@ -72,14 +67,28 @@
             android:paddingLeft="@dimen/_5sdp">
 
             <com.lotview.app.views.custom_view.StyledTextViewMedium
-                android:id="@+id/tv_vin_number"
+                android:id="@+id/asset_type"
+                android:layout_weight="0.5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:textColor="@color/dark_gray_color"
                 android:textSize="@dimen/_13sdp" />
 
-        </RelativeLayout>
+
+            <com.lotview.app.views.custom_view.StyledTextViewMedium
+                android:id="@+id/availability_tv"
+                android:layout_width="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="right"
+                android:paddingRight="@dimen/_5sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:textColor="@color/dark_gray_color"
+                android:textSize="@dimen/_13sdp" />
+
+        </LinearLayout>
 
     </LinearLayout>
+
 </LinearLayout>
