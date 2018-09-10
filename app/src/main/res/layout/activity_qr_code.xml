@@ -1,136 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/qr_code_header_bar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_54sdp"
-        android:background="@android:color/black"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/title_activity_scan_qr_code"
-            android:textColor="@color/qr_code_white"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/qr_code_header_black_pic"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="@string/qr_code_select_picture"
-            android:textColor="@android:color/white"
-            android:textSize="15sp" />
-
-    </RelativeLayout>
 
     <SurfaceView
         android:id="@+id/qr_code_preview_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/layout_qr_numer"
-        android:layout_alignParentStart="true"
-        android:layout_gravity="center"
+        android:layout_weight="0.7"
         android:visibility="visible" />
+
 
     <com.lotview.app.qrcodescanner.view.QrCodeFinderView
         android:id="@+id/qr_code_view_finder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:visibility="gone">
+        android:visibility="gone"></com.lotview.app.qrcodescanner.view.QrCodeFinderView>
 
-    </com.lotview.app.qrcodescanner.view.QrCodeFinderView>
 
     <LinearLayout
-        android:id="@+id/layout_qr_numer"
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/black_transparent"
+        android:layout_weight="0.3"
+        android:background="@color/white"
         android:orientation="vertical">
 
-        <com.lotview.app.views.custom_view.StyledEditTextViewRegular
-            android:id="@+id/et_qr_code_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:layout_marginLeft="@dimen/_35sdp"
-            android:layout_marginRight="@dimen/_35sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/search_background"
-            android:hint="Enter QR number here"
-            android:inputType="text"
-            android:padding="@dimen/_5sdp"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="@dimen/_13sdp" />
-
-
-        <com.lotview.app.views.custom_view.StyledTextViewSemiBold
-            android:id="@+id/tv_qr_code_number_submit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:background="@drawable/rect_crop_green_bg"
-            android:paddingBottom="@dimen/_4sdp"
-            android:paddingLeft="@dimen/_30sdp"
-            android:paddingRight="@dimen/_30sdp"
-            android:paddingTop="@dimen/_4sdp"
-            android:text="Submit QR code"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_14sdp" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/qr_code_ll_flash_light"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/qr_code_flashlight_bg"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <ImageView
-            android:id="@+id/qr_code_iv_flash_light"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:visibility="gone" />
 
         <TextView
-            android:id="@+id/qr_code_tv_flash_light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="12dp"
-            android:text="@string/qr_code_open_flash_light"
-            android:textColor="@color/qr_code_flash_light_text_color"
-            android:textSize="@dimen/_13sdp"
-            android:visibility="gone" />
-    </LinearLayout>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:text="OR"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
-    <View
-        android:id="@+id/qr_code_view_background"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/qr_code_header_bar"
-        android:background="@android:color/black"
-        android:visibility="gone" />
+        <LinearLayout
+            android:id="@+id/layout_qr_numer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:padding="@dimen/_5sdp"
+            android:weightSum="1">
+
+
+            <com.lotview.app.views.custom_view.StyledEditTextViewRegular
+                android:id="@+id/et_qr_code_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_weight="0.8"
+                android:background="@drawable/search_background"
+                android:gravity="center_horizontal"
+                android:hint="Enter QR key"
+                android:inputType="text"
+                android:maxLength="4"
+                android:paddingBottom="@dimen/_5sdp"
+                android:paddingLeft="@dimen/_3sdp"
+                android:paddingRight="@dimen/_30sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_18sdp" />
+
+
+            <com.lotview.app.views.custom_view.StyledTextViewSemiBold
+                android:id="@+id/tv_qr_code_number_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:layout_weight="0.2"
+                android:background="@drawable/rect_crop_green_bg"
+                android:gravity="center_horizontal"
+                android:paddingBottom="@dimen/_4sdp"
+                android:paddingLeft="@dimen/_30sdp"
+                android:paddingRight="@dimen/_30sdp"
+                android:paddingTop="@dimen/_4sdp"
+                android:text="Done"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13sdp" />
+
+
+        </LinearLayout>
+
+
+        <com.lotview.app.views.custom_view.StyledTextViewRegular
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:text="(QR Key is alphanumeric unique code of length 4.)"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+
+    </LinearLayout>
 
 
 </RelativeLayout>

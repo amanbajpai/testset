@@ -71,8 +71,8 @@ public class QrCodeActivity extends AppCompatActivity implements Callback, OnCli
     private boolean mPlayBeep;
     private boolean mVibrate;
     private boolean mNeedFlashLightOpen = true;
-    private ImageView mIvFlashLight;
-    private TextView mTvFlashLightText;
+//    private ImageView mIvFlashLight;
+//    private TextView mTvFlashLightText;
     private Executor mQrCodeExecutor;
     private Handler mHandler;
 
@@ -110,7 +110,7 @@ public class QrCodeActivity extends AppCompatActivity implements Callback, OnCli
         boolean hasHardware = checkCameraHardWare(this);
         if (hasHardware) {
             if (!hasCameraPermission()) {
-                findViewById(R.id.qr_code_view_background).setVisibility(View.VISIBLE);
+//                findViewById(R.id.qr_code_view_background).setVisibility(View.VISIBLE);
                 mQrCodeFinderView.setVisibility(View.VISIBLE);
                 mPermissionOk = false;
             } else {
@@ -123,17 +123,17 @@ public class QrCodeActivity extends AppCompatActivity implements Callback, OnCli
     }
 
     private void initView() {
-        TextView tvPic = (TextView) findViewById(R.id.qr_code_header_black_pic);
-        mIvFlashLight = (ImageView) findViewById(R.id.qr_code_iv_flash_light);
-        mTvFlashLightText = (TextView) findViewById(R.id.qr_code_tv_flash_light);
+//        TextView tvPic = (TextView) findViewById(R.id.qr_code_header_black_pic);
+//        mIvFlashLight = (ImageView) findViewById(R.id.qr_code_iv_flash_light);
+//        mTvFlashLightText = (TextView) findViewById(R.id.qr_code_tv_flash_light);
         mQrCodeFinderView = (QrCodeFinderView) findViewById(R.id.qr_code_view_finder);
         mSurfaceView = (SurfaceView) findViewById(R.id.qr_code_preview_view);
-        mLlFlashLight = findViewById(R.id.qr_code_ll_flash_light);
+//        mLlFlashLight = findViewById(R.id.qr_code_ll_flash_light);
         etQrCodeNumber = (StyledEditTextViewRegular) findViewById(R.id.et_qr_code_number);
         tvQrCodeNumberSubmit = (StyledTextViewSemiBold) findViewById(R.id.tv_qr_code_number_submit);
         mHasSurface = false;
-        mIvFlashLight.setOnClickListener(this);
-        tvPic.setOnClickListener(this);
+//        mIvFlashLight.setOnClickListener(this);
+//        tvPic.setOnClickListener(this);
         tvQrCodeNumberSubmit.setOnClickListener(this);
     }
 
@@ -227,8 +227,8 @@ public class QrCodeActivity extends AppCompatActivity implements Callback, OnCli
         }
         mQrCodeFinderView.setVisibility(View.VISIBLE);
         mSurfaceView.setVisibility(View.VISIBLE);
-        mLlFlashLight.setVisibility(View.VISIBLE);
-        findViewById(R.id.qr_code_view_background).setVisibility(View.GONE);
+//        mLlFlashLight.setVisibility(View.VISIBLE);
+//        findViewById(R.id.qr_code_view_background).setVisibility(View.GONE);
         if (mCaptureActivityHandler == null) {
             mCaptureActivityHandler = new CaptureActivityHandler(this);
         }
@@ -309,25 +309,25 @@ public class QrCodeActivity extends AppCompatActivity implements Callback, OnCli
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.qr_code_iv_flash_light) {
+       /* if (v.getId() == R.id.qr_code_iv_flash_light) {
             if (mNeedFlashLightOpen) {
                 turnFlashlightOn();
             } else {
                 turnFlashLightOff();
             }
 
-        } else if (v.getId() == R.id.qr_code_header_black_pic) {
+        } else*/ /*if (v.getId() == R.id.qr_code_header_black_pic) {
             if (!hasCameraPermission()) {
                 mDecodeManager.showPermissionDeniedDialog(this);
             } else {
                 openSystemAlbum();
             }
 
-        } else if (v.getId() == R.id.left_iv) {
+        } else*/ if (v.getId() == R.id.left_iv) {
             finish();
         } else if (v.getId() == R.id.tv_qr_code_number_submit) {
             String qrNumber = etQrCodeNumber.getText().toString().trim();
-            if (!TextUtils.isEmpty(qrNumber) && qrNumber.length() > 4) {
+            if (!TextUtils.isEmpty(qrNumber) && qrNumber.length() == 4) {
                 Intent data = new Intent();
                 data.putExtra(AppUtils.SCAN_SUCCESS, etQrCodeNumber.getText().toString().trim());
                 data.putExtra(AppUtils.IS_MANUAL_QR, true);
@@ -351,15 +351,15 @@ public class QrCodeActivity extends AppCompatActivity implements Callback, OnCli
 
     private void turnFlashlightOn() {
         mNeedFlashLightOpen = false;
-        mTvFlashLightText.setText(getString(R.string.qr_code_close_flash_light));
-        mIvFlashLight.setBackgroundResource(R.drawable.flashlight_turn_off);
+//        mTvFlashLightText.setText(getString(R.string.qr_code_close_flash_light));
+//        mIvFlashLight.setBackgroundResource(R.drawable.flashlight_turn_off);
         CameraManager.get().setFlashLight(true);
     }
 
     private void turnFlashLightOff() {
         mNeedFlashLightOpen = true;
-        mTvFlashLightText.setText(getString(R.string.qr_code_open_flash_light));
-        mIvFlashLight.setBackgroundResource(R.drawable.flashlight_turn_on);
+//        mTvFlashLightText.setText(getString(R.string.qr_code_open_flash_light));
+//        mIvFlashLight.setBackgroundResource(R.drawable.flashlight_turn_on);
         CameraManager.get().setFlashLight(false);
     }
 

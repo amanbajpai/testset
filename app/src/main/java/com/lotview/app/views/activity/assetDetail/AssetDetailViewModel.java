@@ -38,9 +38,7 @@ public class AssetDetailViewModel extends ViewModel {
 
         Call<AssetDetailBean> call = RetrofitHolder.getService().getAssetDetail(
                 KeyKeepApplication.getBaseEntity(true),
-                emp_id,
-                qr_code
-        );
+                emp_id, qr_code);
 
         call.enqueue(new Callback<AssetDetailBean>() {
 
@@ -62,6 +60,7 @@ public class AssetDetailViewModel extends ViewModel {
 
     /**
      * send request for handover
+     *
      * @param qr_code
      * @param emp_id
      */
@@ -97,9 +96,9 @@ public class AssetDetailViewModel extends ViewModel {
     }
 
 
-
     /**
      * send request for handover
+     *
      * @param qr_code
      * @param emp_id
      */
@@ -135,9 +134,9 @@ public class AssetDetailViewModel extends ViewModel {
     }
 
 
-
     /**
      * call when emp id zero means asset not allotted to any one
+     *
      * @param qr_code
      * @param emp_id
      */
@@ -173,6 +172,7 @@ public class AssetDetailViewModel extends ViewModel {
 
     /**
      * approved api for requested asset to transfer
+     *
      * @param req_id
      * @param emp_id
      */
@@ -194,7 +194,7 @@ public class AssetDetailViewModel extends ViewModel {
             @Override
             public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
                 Utils.hideProgressDialog();
-                BaseResponse bean  = response.body();
+                BaseResponse bean = response.body();
                 asset_req_approved_validator.setValue(bean);
             }
 
@@ -224,7 +224,7 @@ public class AssetDetailViewModel extends ViewModel {
             @Override
             public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
                 Utils.hideProgressDialog();
-                BaseResponse bean  = response.body();
+                BaseResponse bean = response.body();
                 asset_req_cancel_validator.setValue(bean);
             }
 

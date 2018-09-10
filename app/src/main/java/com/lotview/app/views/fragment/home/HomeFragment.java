@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lotview.app.R;
-import com.lotview.app.databinding.HomeFragmentLayoutBinding;
 import com.lotview.app.interfaces.DialogClickListener;
 import com.lotview.app.qrcodescanner.QrCodeActivity;
 import com.lotview.app.utils.AppUtils;
@@ -122,10 +121,10 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
             //Getting the passed result
             if (data.getBooleanExtra(AppUtils.IS_MANUAL_QR, false)) {
                 String result = data.getStringExtra(AppUtils.QR_NUMBER_MANUAL_SCAN_SUCCESS);
-
+                String qr_tag_number = data.getStringExtra(AppUtils.SCAN_SUCCESS);
                 Intent intent = new Intent(context, AssetDetailActivity.class);
-                intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_SCANED_CODE);
-                intent.putExtra(AppUtils.SCANED_QR_CODE, result);
+                intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.SCAN_SUCCESS);
+                intent.putExtra(AppUtils.SCANED_QR_CODE, qr_tag_number);
                 startActivity(intent);
 
             } else {

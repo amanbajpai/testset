@@ -410,19 +410,21 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         /**
          * Get asset result from web service after scan Qr code
          */
+
         if (requestCode == AppUtils.REQUEST_CODE_QR_SCAN) {
 
             if (resultCode != RESULT_OK || data == null) {
                 Utils.showSnackBar(binding, getString(R.string.unable_to_scan_qr));
                 return;
             }
+            if (data == null)
+                return;
             //Getting the passed result
-            String result = data.getStringExtra(AppUtils.SCAN_SUCCESS);
-            try {
-                JSONObject jsonObject = new JSONObject(result);
-                String qr = jsonObject.getString("qr_code_number");
+            if (data.getBooleanExtra(AppUtils.IS_MANUAL_QR, false)) {
+                String result = data.getStringExtra(AppUtils.QR_NUMBER_MANUAL_SCAN_SUCCESS);
+                String qr_tag_number = data.getStringExtra(AppUtils.SCAN_SUCCESS);
 
-                if (!qr_code.equals("") && !qr.equals(qr_code)) {
+                if (!qr_code.equals("") && !qr_tag_number.equals(qr_code)) {
                     Utils.showAlert(context, "", getString(R.string.sorry_qr_code_does_not_match), "ok", "" +
                             "", AppUtils.dialog_ok_click, this);
                     return;
@@ -430,10 +432,26 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
                 HAS_SCANNED = true;
                 validateSubmitView();
 
-            } catch (JSONException e) {
-                e.printStackTrace();
-                Utils.showSnackBar(binding, getString(R.string.unable_to_scan_qr));
+            } else {
+                String result = data.getStringExtra(AppUtils.SCAN_SUCCESS);
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String qr = jsonObject.getString("qr_code_number");
+
+                    if (!qr_code.equals("") && !qr.equals(qr_code)) {
+                        Utils.showAlert(context, "", getString(R.string.sorry_qr_code_does_not_match), "ok", "" +
+                                "", AppUtils.dialog_ok_click, this);
+                        return;
+                    }
+                    HAS_SCANNED = true;
+                    validateSubmitView();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Utils.showSnackBar(binding, getString(R.string.unable_to_scan_qr));
+                }
             }
+
         }
     }
 
