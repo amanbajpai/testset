@@ -42,6 +42,7 @@
 
 
                 <com.keykeep.app.views.custom_view.StyledTextViewRegular
+                    android:id="@+id/asset_name_header_tv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingLeft="@dimen/_10sdp"
@@ -59,6 +60,60 @@
                     android:text=""
                     android:textColor="@color/gray"
                     android:textSize="@dimen/_12sdp" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray" />
+
+                <com.keykeep.app.views.custom_view.StyledTextViewRegular
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:text="@string/version_no"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp" />
+
+                <com.keykeep.app.views.custom_view.StyledTextViewRegular
+                    android:id="@+id/version_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:text=""
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_12sdp" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray" />
+
+
+                <!--Make-->
+
+                <com.keykeep.app.views.custom_view.StyledTextViewRegular
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:text="@string/make"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp" />
+
+                <com.keykeep.app.views.custom_view.StyledTextViewRegular
+                    android:id="@+id/make"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:text=""
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_12sdp" />
+
 
                 <View
                     android:layout_width="match_parent"
@@ -111,30 +166,6 @@
                     android:textColor="@color/gray"
                     android:textSize="@dimen/_12sdp" />
 
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/gray" />
-
-                <com.keykeep.app.views.custom_view.StyledTextViewRegular
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_8sdp"
-                    android:text="@string/version_no"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_12sdp" />
-
-                <com.keykeep.app.views.custom_view.StyledTextViewRegular
-                    android:id="@+id/version_number"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingBottom="@dimen/_8sdp"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:text=""
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/_12sdp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -216,32 +247,6 @@
                     android:layout_height="0.5dp"
                     android:background="@color/gray" />
 
-                <!--Make-->
-
-                <com.keykeep.app.views.custom_view.StyledTextViewRegular
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_8sdp"
-                    android:text="@string/make"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_12sdp" />
-
-                <com.keykeep.app.views.custom_view.StyledTextViewRegular
-                    android:id="@+id/make"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingBottom="@dimen/_8sdp"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:text=""
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/_12sdp" />
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/gray" />
 
 
                 <!--**********Customer detail*************-->

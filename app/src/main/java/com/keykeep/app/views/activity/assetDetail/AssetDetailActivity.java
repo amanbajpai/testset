@@ -127,7 +127,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
             if (isConfirm || IS_FROM_SCANNER)
                 return getString(R.string.confirm_transfer);
             else
-                return getString(R.string.transfer_key_to_company);
+                return getString(R.string.transfer_ownership);
 
             /**
              * Asset transfer
