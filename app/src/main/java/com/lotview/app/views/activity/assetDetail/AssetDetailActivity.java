@@ -32,7 +32,7 @@ import org.json.JSONObject;
 
 public class AssetDetailActivity extends BaseActivity implements DialogClickListener {
 
-    private  boolean HAS_SCANNED = false;
+    private boolean HAS_SCANNED = false;
     public static int ASSET_STATUS = 1;
     private Context context;
     ActivityAssetDetailLayoutBinding binding;
@@ -58,6 +58,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         CustomActionBar customActionBar = new CustomActionBar(this);
         customActionBar.setActionbar(getString(R.string.asset_detail), true, false, this);
     }
+
 
     @Override
     public void initializeViews() {
@@ -426,7 +427,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
                             "", AppUtils.dialog_ok_click, this);
                     return;
                 }
-                HAS_SCANNED =true;
+                HAS_SCANNED = true;
                 validateSubmitView();
 
             } catch (JSONException e) {
