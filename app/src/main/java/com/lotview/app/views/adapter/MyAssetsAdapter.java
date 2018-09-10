@@ -3,12 +3,16 @@ package com.lotview.app.views.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
+import android.widget.TextView;
 
 import com.lotview.app.R;
 import com.lotview.app.model.bean.AssetsListResponseBean;
@@ -16,69 +20,73 @@ import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Utils;
 import com.lotview.app.views.activity.assetDetail.AssetDetailActivity;
+import com.lotview.app.views.custom_view.StyledTextViewBold;
+
+import java.util.ArrayList;
 
 /**
  * Created by akshaydashore on 23/8/18
  */
-public class MyAssetsAdapter extends RecyclerView.Adapter<MyAssetsAdapter.Holder> {
+public class MyAssetsAdapter extends RecyclerView.Adapter<MyAssetsAdapter.Holder> implements Filterable {
 
     Context context;
-    private AssetsListResponseBean assetLists;
+    private ArrayList<AssetsListResponseBean.Result> assetLists;
+    private ArrayList<AssetsListResponseBean.Result> assetfilterList;
+    private ArrayList<AssetsListResponseBean.Result> assetfilteredFinalList;
+    private MyAssetsAdapter.AllAssetsSearchFilter filter;
+    int REQ_TYPE;
 
-    public MyAssetsAdapter(Context context, AssetsListResponseBean resultAssetList) {
+    public MyAssetsAdapter(Context context, ArrayList<AssetsListResponseBean.Result> resultAssetList, int REQ_TYPE) {
         this.context = context;
         this.assetLists = resultAssetList;
+        this.assetfilteredFinalList = resultAssetList;
+        this.REQ_TYPE = REQ_TYPE;
+    }
 
+    public void setAssetList(Context context, ArrayList<AssetsListResponseBean.Result> resultAssetList) {
+        this.context = context;
+        this.assetLists = resultAssetList;
+        this.assetfilteredFinalList = resultAssetList;
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
-    public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyAssetsAdapter.Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.key_list_item, null);
-        Holder holder = new Holder(view);
+        View view = inflater.inflate(R.layout.key_list_my_item, null);
+        MyAssetsAdapter.Holder holder = new MyAssetsAdapter.Holder(view);
 
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Holder holder, int position) {
-
+    public void onBindViewHolder(@NonNull MyAssetsAdapter.Holder holder, final int position) {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AssetsListResponseBean.Result bean = assetLists.getResult().get(position);
+
+                AssetsListResponseBean.Result bean = assetLists.get(position);
                 Intent intent = new Intent(context, AssetDetailActivity.class);
-                intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_ALL_ASSET_LIST);
+                intent.putExtra(AppUtils.ASSET_STATUS_CODE, REQ_TYPE);
                 intent.putExtra(AppUtils.SCANED_QR_CODE, bean.getQrCodeNumber());
                 context.startActivity(intent);
+
             }
         });
-//        holder.assetName.setText(assetLists.getResult().get(position).getAssetName());
-//        holder.modelNumber.setText(assetLists.getResult().get(position).getModelNumber());
-//        holder.vinNumber.setText(assetLists.getResult().get(position).getVin());
-//        holder.versionNumber.setText(assetLists.getResult().get(position).getVersionNumber());
-//        if (assetLists.getResult().get(position).getAssetAssginedStatus().equalsIgnoreCase("1")) {
-//            holder.availableStatus.setText(context.getString(R.string.txt_status_available));
-//        } else {
-//            holder.availableStatus.setText(context.getString(R.string.txt_status_unavailable));
-//        }
 
-        AssetsListResponseBean.Result bean = assetLists.getResult().get(position);
+        AssetsListResponseBean.Result bean = assetLists.get(position);
 
         Log.e(bean.getAssetType() + "<<", "onBindViewHolder: " + AppUtils.ASSET_NEW);
 
         if (Utils.validateIntValue(bean.getAssetType()).equals(AppUtils.ASSET_CUSTOMER)) {
             holder.vinNumber.setText(Utils.validateStringToValue(bean.getCustomerName()));
-            holder.vinNumber.setVisibility(View.VISIBLE);
         } else {
-            Log.e("onBindViewHolder: ", "true");
-            holder.vinNumber.setText(assetLists.getResult().get(position).getVin());
-            holder.vinNumber.setVisibility(View.VISIBLE);
+            holder.vinNumber.setText("Vin Number: " + assetLists.get(position).getVin());
         }
 
         // stock number
-        holder.tv_stock_number.setText(assetLists.getResult().get(position).getAssetName());
+        holder.tv_stock_number.setText(assetLists.get(position).getAssetName());
 
         if (bean.getAssetAssginedStatus().equals("1")) {
             String mEmp_id = AppSharedPrefs.getEmployeeID();
@@ -86,44 +94,93 @@ public class MyAssetsAdapter extends RecyclerView.Adapter<MyAssetsAdapter.Holder
                 holder.availability_tv.setText(context.getString(R.string.owner_you));
 
             } else {
-                holder.availability_tv.setText(context.getString(R.string.owner) + " "+bean.getEmployeeName());
+                holder.availability_tv.setText(context.getString(R.string.owner) + " " + bean.getEmployeeName());
             }
         } else {
-
             holder.availability_tv.setText(context.getString(R.string.txt_status_available));
-
         }
 
-        //currently use to show owner
-        String type = Utils.getAssetType(bean.getAssetType());
-        holder.asset_type.setText(type);
+        String date = Utils.formattedDateFromString(Utils.INPUT_DATE_TIME_FORMATE, Utils.OUTPUT_DATE_TIME_FORMATE, bean.getAssigned_approved_or_decline_at());
+        String time = Utils.formattedDateFromString(Utils.INPUT_DATE_TIME_FORMATE, Utils.OUTPUT_TIME_FORMATE, bean.getAssigned_approved_or_decline_at());
 
+        //currently use to show owner
+        holder.assigned_at_tv.setText("Assigned at: " + date);
+        holder.remaining_time.setText("Remaining Time: " + time);
 
     }
 
 
     @Override
     public int getItemCount() {
-        return assetLists.getResult().size();
+        return assetLists.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        if (filter == null) {
+            filter = new MyAssetsAdapter.AllAssetsSearchFilter();
+        }
+        return filter;
+    }
+
+    public ArrayList<AssetsListResponseBean.Result> getAssetLists() {
+        return assetfilterList;
     }
 
     class Holder extends RecyclerView.ViewHolder {
 
-        private AppCompatTextView tv_stock_number, asset_type, vinNumber, availability_tv;
+        private TextView vinNumber, assigned_at_tv, availability_tv, remaining_time;
+        StyledTextViewBold tv_stock_number;
 
         public Holder(View itemView) {
             super(itemView);
-//            assetName = itemView.findViewById(R.id.tv_asset_name);
-//            modelNumber = itemView.findViewById(R.id.tv_model_number);
-//            vinNumber = itemView.findViewById(R.id.tv_vin_number);
-//            versionNumber = itemView.findViewById(R.id.tv_version_number);
-//            availableStatus = itemView.findViewById(R.id.tv_available_status);
             tv_stock_number = itemView.findViewById(R.id.tv_stock_number);
-//            assetName = itemView.findViewById(R.id.tv_asset_name);
-            asset_type = itemView.findViewById(R.id.asset_type);
+            assigned_at_tv = itemView.findViewById(R.id.assigned_at_tv);
             vinNumber = itemView.findViewById(R.id.tv_vin_number);
             availability_tv = itemView.findViewById(R.id.availability_tv);
+            remaining_time = itemView.findViewById(R.id.remaining_time);
+        }
 
+    }
+
+
+    private class AllAssetsSearchFilter extends Filter {
+
+        FilterResults results = new FilterResults();
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            if (constraint != null && constraint.length() > 0) {
+
+                assetfilterList = new ArrayList<AssetsListResponseBean.Result>();
+                for (int i = 0; i < assetfilteredFinalList.size(); i++) {
+                    if (assetfilteredFinalList.get(i).getAssetName() != null) {
+                        if ((assetfilteredFinalList.get(i).getAssetName().toUpperCase())
+                                .contains(constraint.toString().toUpperCase())) {
+                            assetfilterList.add(assetfilteredFinalList.get(i));
+                        }
+                    }
+                }
+                results.count = assetfilterList.size();
+                results.values = assetfilterList;
+            } else {
+                results.count = assetfilteredFinalList.size();
+                results.values = assetfilteredFinalList;
+            }
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            assetLists = (ArrayList<AssetsListResponseBean.Result>) filterResults.values;
+            notifyDataSetChanged();
+            Intent intent = new Intent(AppUtils.IS_ASSET_LIST_AVAILABLE);
+            if (assetLists.isEmpty()) {
+                intent.putExtra(AppUtils.ASSET_AVAILABLE_STATUS, false);
+            } else {
+                intent.putExtra(AppUtils.ASSET_AVAILABLE_STATUS, true);
+            }
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
         }
     }
 

@@ -82,11 +82,8 @@ public class AllAssetsAdapter extends RecyclerView.Adapter<AllAssetsAdapter.Hold
 
         if (Utils.validateIntValue(bean.getAssetType()).equals(AppUtils.ASSET_CUSTOMER)) {
             holder.vinNumber.setText(Utils.validateStringToValue(bean.getCustomerName()));
-            holder.vinNumber.setVisibility(View.VISIBLE);
         } else {
-            Log.e("onBindViewHolder: ", "true");
-            holder.vinNumber.setText(assetLists.get(position).getVin());
-            holder.vinNumber.setVisibility(View.VISIBLE);
+            holder.vinNumber.setText("Vin Number: "+assetLists.get(position).getVin());
         }
 
         // stock number
@@ -101,16 +98,12 @@ public class AllAssetsAdapter extends RecyclerView.Adapter<AllAssetsAdapter.Hold
                 holder.availability_tv.setText(context.getString(R.string.owner) + " "+bean.getEmployeeName());
             }
         } else {
-
             holder.availability_tv.setText(context.getString(R.string.txt_status_available));
-
         }
 
         //currently use to show owner
         String type = Utils.getAssetType(bean.getAssetType());
         holder.asset_type.setText(type);
-
-
     }
 
 
@@ -137,18 +130,12 @@ public class AllAssetsAdapter extends RecyclerView.Adapter<AllAssetsAdapter.Hold
         StyledTextViewBold tv_stock_number;
 
         public Holder(View itemView) {
-
             super(itemView);
             tv_stock_number = itemView.findViewById(R.id.tv_stock_number);
-//            assetName = itemView.findViewById(R.id.tv_asset_name);
             asset_type = itemView.findViewById(R.id.asset_type);
             vinNumber = itemView.findViewById(R.id.tv_vin_number);
             availability_tv = itemView.findViewById(R.id.availability_tv);
-
-//            versionNumber = itemView.findViewById(R.id.tv_version_number);
-//            availableStatus = itemView.findViewById(R.id.tv_available_status);
         }
-
 
     }
 
