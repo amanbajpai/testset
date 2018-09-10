@@ -26,7 +26,7 @@ import com.lotview.app.model.bean.AssetsListResponseBean;
 import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Utils;
-import com.lotview.app.views.adapter.AllAssetsAdapter;
+import com.lotview.app.views.adapter.MyAssetsAdapter;
 import com.lotview.app.views.base.BaseFragment;
 
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
     private Context context;
     private MyAssetListFragmentBinding binding;
     MyAssetsFragmentViewModel viewModel;
-    private AllAssetsAdapter myAssetAdapter;
+    private MyAssetsAdapter myAssetAdapter;
     private ArrayList<AssetsListResponseBean.Result> resultArrayList;
 
 
@@ -72,7 +72,7 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
         binding.recyclerView.setLoadingListener(this);
         binding.recyclerView.setLoadingMoreEnabled(false);
         binding.recyclerView.setPullRefreshEnabled(true);
-        myAssetAdapter = new AllAssetsAdapter(context, resultArrayList, AppUtils.STATUS_TRANSFER_ASSET_LIST);
+        myAssetAdapter = new MyAssetsAdapter(context, resultArrayList, AppUtils.STATUS_TRANSFER_ASSET_LIST);
         binding.recyclerView.setAdapter(myAssetAdapter);
         viewModel.response_validator.observe(this, response_observer);
         Utils.hideSoftKeyboard(getActivity());

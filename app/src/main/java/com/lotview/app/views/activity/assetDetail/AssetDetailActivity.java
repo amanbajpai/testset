@@ -87,6 +87,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         if (ASSET_STATUS == AppUtils.STATUS_SCANED_CODE) {
             IS_FROM_SCANNER = true;
         }
+
     }
 
 

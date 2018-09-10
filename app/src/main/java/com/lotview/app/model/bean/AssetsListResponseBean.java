@@ -73,6 +73,30 @@ public class AssetsListResponseBean extends BaseResponse {
         @Expose
         private String employeeId;
 
+        @SerializedName("assigned_approved_or_decline_at")
+        @Expose
+        private String assigned_approved_or_decline_at;
+
+        @SerializedName("assets_hold_remain_time")
+        @Expose
+        private String assets_hold_remain_time;
+
+
+        public String getAssigned_approved_or_decline_at() {
+            return assigned_approved_or_decline_at;
+        }
+
+        public void setAssigned_approved_or_decline_at(String assigned_approved_or_decline_at) {
+            this.assigned_approved_or_decline_at = assigned_approved_or_decline_at;
+        }
+
+        public String getAssets_hold_remain_time() {
+            return assets_hold_remain_time;
+        }
+
+        public void setAssets_hold_remain_time(String assets_hold_remain_time) {
+            this.assets_hold_remain_time = assets_hold_remain_time;
+        }
 
         public Integer getAssetType() {
             return assetType;

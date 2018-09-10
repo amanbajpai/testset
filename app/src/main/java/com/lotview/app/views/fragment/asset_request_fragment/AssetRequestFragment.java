@@ -64,8 +64,8 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
         viewModel.response_validator.observe(this, response_observer);
         binding.tvPendingSendRequest.setOnClickListener(this);
         binding.tvPendingReceiveRequest.setOnClickListener(this);
-        binding.tvPendingSendRequest.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.all_asset_selector));
-        binding.tvPendingReceiveRequest.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.my_asset_deselector));
+        binding.tvPendingSendRequest.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.send_request_selector));
+        binding.tvPendingReceiveRequest.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.received_request_deselector));
         binding.tvPendingReceiveRequest.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
         binding.tvPendingSendRequest.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
 
@@ -78,8 +78,8 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
                 isSentRequestSelected = true;
                 binding.tvNoRecords.setVisibility(View.GONE);
                 Utils.showProgressDialog(getActivity(), getString(R.string.loading));
-                binding.tvPendingSendRequest.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.all_asset_selector));
-                binding.tvPendingReceiveRequest.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.my_asset_deselector));
+                binding.tvPendingSendRequest.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.send_request_selector));
+                binding.tvPendingReceiveRequest.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.received_request_deselector));
                 binding.tvPendingReceiveRequest.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
                 binding.tvPendingSendRequest.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
                 typeRequest = AppUtils.STATUS_ASSET_SEND_REQUEST1;
@@ -89,8 +89,8 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
                 isSentRequestSelected = false;
                 binding.tvNoRecords.setVisibility(View.GONE);
                 Utils.showProgressDialog(getActivity(), getString(R.string.loading));
-                binding.tvPendingSendRequest.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.all_asset_deselector));
-                binding.tvPendingReceiveRequest.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.my_asset_selector));
+                binding.tvPendingSendRequest.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.send_request_deselector));
+                binding.tvPendingReceiveRequest.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.received_request_selector));
                 binding.tvPendingSendRequest.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
                 binding.tvPendingReceiveRequest.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
                 typeRequest = AppUtils.STATUS_ASSET_SEND_REQUEST;

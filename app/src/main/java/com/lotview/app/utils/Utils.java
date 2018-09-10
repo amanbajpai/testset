@@ -87,6 +87,9 @@ import java.util.regex.Pattern;
 public class Utils {
 
     private static final String TAG = "Utils";
+    public static final String INPUT_DATE_TIME_FORMATE = "yyyy-MM-dd HH:mm:ss";
+    public static final String OUTPUT_DATE_TIME_FORMATE = "dd-MM-yyyy HH:mm:a";
+    public static final String OUTPUT_TIME_FORMATE = "HH:mm:a";
 
 
     public static void showToast(Context context, String message) {
