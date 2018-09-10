@@ -23,6 +23,7 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.lotview.app.R;
 import com.lotview.app.databinding.MyAssetListFragmentBinding;
 import com.lotview.app.model.bean.AssetsListResponseBean;
+import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Utils;
 import com.lotview.app.views.adapter.AllAssetsAdapter;
@@ -58,7 +59,7 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
         binding.setViewModel(viewModel);
         initializeViews(binding.getRoot());
         Utils.showProgressDialog(context, getString(R.string.loading));
-        viewModel.getMyAssets(binding);
+        viewModel.getMyAssets(binding, AppSharedPrefs.getInstance(context).getEmployeeID());
         return binding.getRoot();
 
     }
@@ -155,7 +156,7 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
 
     @Override
     public void onRefresh() {
-        viewModel.getMyAssets(binding);
+        viewModel.getMyAssets(binding, AppSharedPrefs.getInstance(context).getEmployeeID());
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

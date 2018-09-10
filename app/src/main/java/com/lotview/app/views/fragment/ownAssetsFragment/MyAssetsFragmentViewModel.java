@@ -22,12 +22,12 @@ public class MyAssetsFragmentViewModel extends BaseViewModel {
     public final MutableLiveData<Integer> validator = new MutableLiveData<>();
     public final MutableLiveData<AssetsListResponseBean> response_validator = new MutableLiveData<>();
 
-    public void getMyAssets(MyAssetListFragmentBinding binding) {
+    public void getMyAssets(MyAssetListFragmentBinding binding , String empID) {
 
-        String employeeId = AppSharedPrefs.getEmployeeID();
+      //  String employeeId = AppSharedPrefs.getInstance()getEmployeeID();
 
 
-        Call<AssetsListResponseBean> call = RetrofitHolder.getService().getAssetsList(KeyKeepApplication.getInstance().getBaseEntity(false), employeeId, "1");
+        Call<AssetsListResponseBean> call = RetrofitHolder.getService().getAssetsList(KeyKeepApplication.getInstance().getBaseEntity(false), empID, "1");
 
         call.enqueue(new Callback<AssetsListResponseBean>() {
             @Override
