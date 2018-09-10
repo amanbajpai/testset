@@ -148,6 +148,7 @@
 
 
                 <com.lotview.app.views.custom_view.StyledTextViewRegular
+                    android:id="@+id/code_number_header"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingLeft="@dimen/_10sdp"
@@ -224,6 +225,7 @@
                 <!--Availibilty-->
 
                 <com.lotview.app.views.custom_view.StyledTextViewRegular
+                    android:id="@+id/availability_header"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingLeft="@dimen/_10sdp"

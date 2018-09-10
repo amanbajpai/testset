@@ -290,11 +290,9 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         binding.codeNumber.setText(resultBean.getVin());
         binding.modelNo.setText(resultBean.getModelNumber());
         binding.colorName.setText(resultBean.getColor());
-
         binding.customerName.setText(resultBean.getCustomerName());
         binding.customerAddress.setText(resultBean.getCustomerAddress());
         binding.customerNumber.setText(resultBean.getCustomerMobileNumber());
-
         binding.employeeName.setText(Utils.validateValue(resultBean.getEmployeeName()));
 
 
@@ -303,6 +301,25 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         } else if (resultBean.getAssetAssginedStatus() == 1) {
             binding.availability.setText("Assigned");
         }
+
+        String eid = Utils.validateInteger(resultBean.getEmployeeId());
+
+        if (eid.equals(mEmp_id) || eid.equals("0")) {
+
+            binding.availability.setVisibility(View.GONE);
+            binding.availabilityHeader.setVisibility(View.GONE);
+        }
+
+        if (resultBean.getAssetType() == Integer.valueOf(AppUtils.ASSET_CUSTOMER)) {
+            binding.assetNameHeaderTv.setText(R.string.tag_number);
+        }
+
+
+        if (Utils.validateStringToValue(resultBean.getVin()).equals("")) {
+            binding.codeNumber.setVisibility(View.GONE);
+            binding.codeNumberHeader.setVisibility(View.GONE);
+        }
+
         binding.make.setText(resultBean.getDescription());
         binding.scanButton.setOnClickListener(AssetDetailActivity.this);
         asset_emp_id = Utils.validateInt(resultBean.getEmployeeId()) + "";
@@ -318,6 +335,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         } else {
             binding.requestContainer.setVisibility(View.GONE);
         }
+
     }
 
 
