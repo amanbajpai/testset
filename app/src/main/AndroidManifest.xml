@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.keykeep.app">
+    package="com.lotview.app">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -11,7 +11,7 @@
 
 
     <application
-        android:name=".application.KeyKeepApplication"
+        android:name="com.lotview.app.application.KeyKeepApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -20,7 +20,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".views.activity.SplashActivity"
+            android:name="com.lotview.app.views.activity.SplashActivity"
             android:noHistory="true"
             android:theme="@style/NoActionbarTheme">
             <intent-filter>
@@ -30,25 +30,43 @@
         </activity>
 
         <activity
-            android:name="com.keykeep.app.views.activity.login.LoginActivity"
+            android:name="com.lotview.app.views.activity.login.LoginActivity"
             android:theme="@style/NoActionbarTheme" />
 
         <activity
-            android:name="com.keykeep.app.views.activity.forgot_password.ForgotPasswordActivity"
+            android:name="com.lotview.app.views.activity.forgot_password.ForgotPasswordActivity"
             android:theme="@style/NoActionbarTheme" />
 
         <activity
-            android:name="com.keykeep.app.views.activity.home.HomeActivity"
+            android:name="com.lotview.app.views.activity.home.HomeActivity"
             android:theme="@style/NoActionbarTheme" />
 
-        <activity
-            android:name=".views.activity.changepassword.ChangePasswordActivity"/>
-        <activity
-            android:name=".views.activity.transfer.TransferActivity"
-            />
-        <activity android:name=".views.activity.AssetListActivity" />
-        <activity android:name=".qrcodescanner.QrCodeActivity" />
-        <activity android:name="com.keykeep.app.views.activity.assetDetail.AssetDetailActivity" />
+        <activity android:name="com.lotview.app.views.activity.changepassword.ChangePasswordActivity" />
+        <activity android:name="com.lotview.app.views.activity.transfer.TransferActivity" />
+        <activity android:name="com.lotview.app.views.activity.AssetListActivity" />
+        <activity android:name="com.lotview.app.qrcodescanner.QrCodeActivity" />
+        <activity android:name="com.lotview.app.views.activity.assetDetail.AssetDetailActivity" />
+
+
+        <!--Firebase configuration-->
+        <service android:name=".firebase.firebase.DeleteTokenService" />
+
+        <service android:name=".firebase.firebase.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service android:name=".firebase.firebase.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="0b2a50fa30c096f0b61aae2622ab361081013c2f" />
 
     </application>
 </manifest>

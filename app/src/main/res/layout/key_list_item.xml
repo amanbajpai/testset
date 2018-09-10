@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.keykeep.app.views.custom_view.StyledTextViewBold
+            <com.lotview.app.views.custom_view.StyledTextViewBold
                 android:id="@+id/tv_stock_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
             android:orientation="horizontal"
             android:paddingLeft="@dimen/_5sdp">
 
-            <com.keykeep.app.views.custom_view.StyledTextViewRegular
+            <com.lotview.app.views.custom_view.StyledTextViewRegular
                 android:id="@+id/owner_name_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -43,7 +43,6 @@
                 android:text="Model No."
                 android:textColor="@color/dark_gray_color"
                 android:textSize="@dimen/_12sdp" />
-
 
 
             <RelativeLayout
@@ -72,7 +71,7 @@
             android:orientation="horizontal"
             android:paddingLeft="@dimen/_5sdp">
 
-            <com.keykeep.app.views.custom_view.StyledTextViewMedium
+            <com.lotview.app.views.custom_view.StyledTextViewMedium
                 android:id="@+id/tv_vin_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

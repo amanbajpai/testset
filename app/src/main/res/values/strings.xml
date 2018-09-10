@@ -51,6 +51,7 @@
     <string name="change_password">Change Password</string>
     <string name="ok">ok</string>
     <string name="unable_to_scan_qr">Unable to scan Qr code please try again</string>
+    <!--<string name="internet_connection">Please check internet connection</string>-->
     <string name="internet_connection">Please check internet connection</string>
     <string name="allow_camera_permission">Please allow Camera permission to scan qr code</string>
     <string name="color">Color</string>
@@ -64,6 +65,7 @@
     <string name="customer_address">Address</string>
     <string name="mobile_number">Mobile Number</string>
     <string name="employee_detail">Employee Detail</string>
+    <string name="request_detail">Request Detail</string>
 
 
     <!--Asset Screen String -->
@@ -75,16 +77,13 @@
     <string name="txt_status_type_recieve">receive</string>
     <string name="txt_tab_title_pending_send_request">Sent</string>
     <string name="txt_tab_title_pending_recieve_request">Received</string>
-    <string name="txt_your_request_for">Your request for\u0020</string>
-    <string name="txt_is_send_to">\u0020is sent to\u0020</string>
-    <string name="txt_want_to">want to issue</string>
-    <string name="txt_from_you">from you</string>
     <string name="txt_no_data_available">No request available for now</string>
     <string name="txt_title_screen_asset_request">Key Requests</string>
     <string name="accept">Accept</string>
     <string name="cancel">Cancel Request</string>
     <string name="scan_asset">Scan Key</string>
     <string name="keys">Keys</string>
+    <string name="actionbar_keys">Keys</string>
     <string name="request_key">Request Key</string>
     <string name="confirm_request">Confirm Request</string>
     <string name="asset_detail">Key Detail</string>
@@ -106,6 +105,7 @@
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_ok">OK</string>
     <string name="welcome_to_link">LotView</string>
+    <string name="tittle_notifications">Notifications</string>
 
 
 </resources>

@@ -4,7 +4,7 @@
 
         <variable
             name="viewModel"
-            type="com.keykeep.app.views.fragment.ownAssetsFragment.MyAssetsFragmentViewModel" />
+            type="com.lotview.app.views.fragment.ownAssetsFragment.MyAssetsFragmentViewModel" />
     </data>
 
     <RelativeLayout
@@ -36,7 +36,7 @@
 
         </LinearLayout>
 
-        <com.keykeep.app.views.custom_view.StyledTextViewRegular
+        <com.lotview.app.views.custom_view.StyledTextViewRegular
             android:id="@+id/tv_no_records"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
