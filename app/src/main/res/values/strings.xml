@@ -94,7 +94,7 @@
     <string name="txt_all_asset">All Keys</string>
     <string name="txt_my_asset">My Keys</string>
     <string name="transfer_asset">Transfer Key</string>
-    <string name="transfer_key_to_company">Transfer Key to company</string>
+    <string name="transfer_ownership">Transfer Ownership</string>
     <string name="confirm_transfer">Confirm Transfer</string>
     <string name="sorry_qr_code_does_not_match">Sorry this qr code does not match this asset</string>
 
