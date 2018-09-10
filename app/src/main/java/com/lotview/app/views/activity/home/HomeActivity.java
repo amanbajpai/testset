@@ -26,6 +26,7 @@ import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Connectivity;
 import com.lotview.app.utils.Utils;
+import com.lotview.app.views.activity.AssetListActivity;
 import com.lotview.app.views.activity.login.LoginActivity;
 import com.lotview.app.views.adapter.LeftDrawerListAdapter;
 import com.lotview.app.views.base.BaseActivity;
@@ -99,7 +100,6 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
             setDrawerHover(0);
             tvProfileUserName.setText(AppSharedPrefs.getEmployeeName());
             handlePushCall();
-
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -399,19 +399,23 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
     }
 
     private void handlePushCall() {
-        PushData pushData = (PushData) getIntent().getSerializableExtra(Keys.NOTIFICATION_DATA);
+        PushData pushData = (PushData) this.getIntent().getSerializableExtra(Keys.NOTIFICATION_DATA);
 
         switch (pushData.getPushType()) {
             case Keys.NOTIFICATION_ASSET_REQUEST_APPROVE:
-                onItemClick(1);
+                startActivity(new Intent(context, AssetListActivity.class));
                 break;
             case Keys.NOTIFICATION_ASSET_TRANSFER_REQUEST:
+                onItemClick(1);
                 break;
             case Keys.NOTIFICATION_ASSET_TRANSFER_APPROVE:
+                onItemClick(1);
                 break;
             case Keys.NOTIFICATION_ASSET_TRANSFER_DECLINE:
+                onItemClick(1);
                 break;
-            case 8:
+            case Keys.NOTIFICATION_ASSET_SUBMIT_APPROVE:
+                startActivity(new Intent(context, AssetListActivity.class));
                 break;
 
         }

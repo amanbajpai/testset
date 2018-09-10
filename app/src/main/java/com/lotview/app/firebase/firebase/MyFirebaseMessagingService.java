@@ -1,9 +1,7 @@
 package com.lotview.app.firebase.firebase;
 
 
-import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
@@ -32,7 +30,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseMsgService";
     private Map<String, String> params;
     public static int value = 1;
-    PushData push_data = null;
 
 
     @Override
@@ -60,16 +57,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             int PushType = 0;
 
 
-            PushIcon = jsonObject.optString("icon");
+            //  PushIcon = jsonObject.optString("icon");
             pushDatabean.setIcon(jsonObject.optString("icon"));
-            PushSound = jsonObject.optString("sound");
-            pushDatabean.setSound(jsonObject.optString("icon"));
-            pushTittle = jsonObject.optString("title");
-            pushDatabean.setTitle(jsonObject.optString("icon"));
-            PushBody = jsonObject.optString("body");
-            pushDatabean.setBody(jsonObject.optString("icon"));
-            PushType = jsonObject.optInt("push_type");
-            pushDatabean.setPushType(Integer.valueOf(jsonObject.optString("icon")));
+            // PushSound = jsonObject.optString("sound");
+            pushDatabean.setSound(jsonObject.optString("sound"));
+            //   pushTittle = jsonObject.optString("title");
+            pushDatabean.setTitle(jsonObject.optString("title"));
+            //  PushBody = jsonObject.optString("body");
+            pushDatabean.setBody(jsonObject.optString("body"));
+            //   PushType = jsonObject.optInt("push_type");
+            pushDatabean.setPushType(Integer.valueOf(jsonObject.optString("push_type")));
 
             PushAdditionalDataJson = jsonObject.optString("additional_data");
 
@@ -86,7 +83,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             pushDatabean.setAdditionalData(pushAdditionalDataBean);
 
             if (AppSharedPrefs.getInstance(getApplicationContext()).isLogin() && checkIfNotificationEnabled()) {
-
 //                addNotification(PushType, PushBody, pushTittle, push_data);
                 addNotification(pushDatabean);
             }
@@ -97,52 +93,48 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     }
 
-
-    //    private void addNotification(int pushType, String Message, String Tittle, PushData pushData) {
     private void addNotification(PushData pushData) {
+//        switch (pushData.getPushType()) {
+//            case 2: // asset request approve
+//                intent = new Intent(this, HomeActivity.class);
+//
+//                break;
+//            case 4: // asset transfer request receiver
+//
+//                break;
+//            case 5: // asset transfer approve
+//                break;
+//            case 6: // asset transfer decline sender/receiver
+//                break;
+//            case 8: // asset submit approve sender
+//                break;
+//
+//        }
 
+        // Create an explicit intent for an Activity in your app
+        Intent intent = new Intent(this, HomeActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.putExtra(Keys.NOTIFICATION_DATA, pushData);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder.setSmallIcon(R.mipmap.ic_launcher);
             builder.setColor(getResources().getColor(R.color.app_blue));
         } else {
             builder.setSmallIcon(R.mipmap.ic_launcher);
         }
-
-        builder.setContentTitle(getString(R.string.app_name));
         builder.setContentTitle(pushData.getTitle());
-        builder.setContentText(pushData.getTitle() + "\n" + pushData.getBody());
-        PendingIntent contentIntent = null;
-        Intent intent = null;
-
-        switch (pushData.getPushType()) {
-            case 2: // asset request approve
-                intent = new Intent(this, HomeActivity.class);
-
-                break;
-            case 4: // asset transfer request receiver
-
-                break;
-            case 5: // asset transfer approve
-                break;
-            case 6: // asset transfer decline sender/receiver
-                break;
-            case 8: // asset submit approve sender
-                break;
-
-        }
-        intent.putExtra(Keys.NOTIFICATION_DATA, pushData);
-
-        builder.setContentIntent(contentIntent);
-        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(KeyKeepApplication.NOTIFICATION_ID, builder.build());
-
-        contentIntent = PendingIntent.getActivity(this, 0, intent,
-                PendingIntent.FLAG_ONE_SHOT);
-        builder.setContentIntent(contentIntent);
+        builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        builder.setStyle(new NotificationCompat.BigTextStyle()
+                .bigText(pushData.getBody()));
+        // Set the intent that will fire when the user taps the notification
+        builder.setContentIntent(pendingIntent);
         builder.setAutoCancel(true);
+        notificationManager.notify(KeyKeepApplication.NOTIFICATION_ID, builder.build());
 
-        manager.notify(KeyKeepApplication.NOTIFICATION_ID, builder.build());
     }
 
 
