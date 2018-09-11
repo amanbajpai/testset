@@ -67,7 +67,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
         setupDrawer();
         setView();
         Utils.replaceFragment(HomeActivity.this, new HomeFragment());
-
+        onNewIntent(getIntent());
     }
 
 
