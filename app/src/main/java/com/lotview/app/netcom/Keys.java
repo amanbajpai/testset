@@ -57,4 +57,8 @@ public interface Keys {
     String REQ_ID = "request_id";
     String SUBMIT_USER_TYPE = "submit_user_type";
     String NOTIFICATION_DATA = "notification_data";
+
+    /*Latitude  &  Longitude*/
+    String EMPLOYEE_LATITUDE = "emp_lat";
+    String EMPLOYEE_LONGITUDE = "emp_long";
 }

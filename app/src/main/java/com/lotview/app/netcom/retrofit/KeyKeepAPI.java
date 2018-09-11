@@ -52,7 +52,10 @@ public interface KeyKeepAPI {
     Call<AssetDetailBean> keepAssetRequest(
             @Body BaseRequestEntity baseRequestEntity,
             @Query(Keys.EMPLOYEE_ID) String employeeId,
-            @Query(Keys.QR_CODE_NUMBER) String qr_code_number
+            @Query(Keys.QR_CODE_NUMBER) String qr_code_number,
+            @Query(Keys.EMPLOYEE_LATITUDE) String emp_latitude,
+            @Query(Keys.EMPLOYEE_LONGITUDE) String emp_longtitude
+
     );
 
 
@@ -69,7 +72,9 @@ public interface KeyKeepAPI {
             @Body BaseRequestEntity baseRequestEntity,
             @Query(Keys.EMPLOYEE_ID) String employeeId,
             @Query(Keys.QR_CODE_NUMBER) String qr_code_number,
-            @Query(Keys.SUBMIT_USER_TYPE) String submit_user_type
+            @Query(Keys.SUBMIT_USER_TYPE) String submit_user_type,
+            @Query(Keys.EMPLOYEE_LATITUDE) String emp_latitude,
+            @Query(Keys.EMPLOYEE_LONGITUDE) String emp_longtitude
     );
 
 
@@ -88,20 +93,23 @@ public interface KeyKeepAPI {
     @POST(Config.CANCEL_ASSET_REQ_URL)
     Call<BaseResponse> cancelAssetRequest(@Body BaseRequestEntity baseEntity,
                                           @Query(Keys.EMPLOYEE_ID) String emp_id,
-                                          @Query(Keys.REQ_ID) int req_id);
+                                          @Query(Keys.REQ_ID) int req_id,
+                                          @Query(Keys.EMPLOYEE_LATITUDE) String emp_latitude,
+                                          @Query(Keys.EMPLOYEE_LONGITUDE) String emp_longtitude);
 
 
     @POST(Config.APPROVE_ASSET_REQ_URL)
     Call<BaseResponse> approveAssetRequest(@Body BaseRequestEntity baseEntity,
                                            @Query(Keys.EMPLOYEE_ID) String emp_id,
-                                           @Query(Keys.REQ_ID) int req_id);
+                                           @Query(Keys.REQ_ID) int req_id,
+                                           @Query(Keys.EMPLOYEE_LATITUDE) String emp_latitude,
+                                           @Query(Keys.EMPLOYEE_LONGITUDE) String emp_longtitude
+    );
 
 
     @POST(Config.NOTIFICATIONS_REQ_URL)
     Call<NotificationsResponseBean> getNotificationsRequest(@Body BaseRequestEntity baseEntity,
                                                             @Query(Keys.EMPLOYEE_ID) String emp_id);
-
-
 
 
 }
