@@ -45,7 +45,7 @@ public class AssetRequestAdapter extends RecyclerView.Adapter<AssetRequestAdapte
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.key_list_my_item, null);
+        View view = inflater.inflate(R.layout.asset_send_received_item, null);
         Holder holder = new Holder(view);
 
         return holder;
@@ -53,7 +53,6 @@ public class AssetRequestAdapter extends RecyclerView.Adapter<AssetRequestAdapte
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
-
 
         AssetsListResponseBean.Result bean = assetLists.getResult().get(position);
 
@@ -80,12 +79,19 @@ public class AssetRequestAdapter extends RecyclerView.Adapter<AssetRequestAdapte
             holder.availability_tv.setText(context.getString(R.string.txt_status_available));
         }
 
-        String date = Utils.formattedDateFromString(Utils.INPUT_DATE_TIME_FORMATE, Utils.OUTPUT_DATE_TIME_FORMATE, bean.getAssigned_approved_or_decline_at());
-        String time = Utils.formattedDateFromString(Utils.INPUT_DATE_TIME_FORMATE, Utils.OUTPUT_TIME_FORMATE, bean.getAssigned_approved_or_decline_at());
+        String date = Utils.formattedDateFromString(Utils.INPUT_DATE_TIME_FORMATE, Utils.OUTPUT_DATE_TIME_FORMATE, bean.getAssigned_request_at());
+
+
 
         //currently use to show owner
-        holder.assigned_at_tv.setText("Assigned At: " + date);
-        holder.remaining_time.setText("Remaining Time: " + time);
+        holder.assigned_at_tv.setText("Requested At: " + date);
+
+        if (typeRequest == AppUtils.STATUS_ASSET_SEND_REQUEST1){
+            holder.requested_tv.setText("Requested To: " + Utils.validateValue(bean.getEmployeeName()));
+
+        }else {
+            holder.requested_tv.setText("Requested By: " + Utils.validateValue(bean.getRequestedByEmployeeName()));
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,7 +128,7 @@ public class AssetRequestAdapter extends RecyclerView.Adapter<AssetRequestAdapte
 
     class Holder extends RecyclerView.ViewHolder {
 
-        private TextView vinNumber, assigned_at_tv, availability_tv, remaining_time;
+        private TextView vinNumber, assigned_at_tv, availability_tv, requested_tv;
         StyledTextViewBold tv_stock_number;
 
         public Holder(View itemView) {
@@ -131,7 +137,7 @@ public class AssetRequestAdapter extends RecyclerView.Adapter<AssetRequestAdapte
             assigned_at_tv = itemView.findViewById(R.id.assigned_at_tv);
             vinNumber = itemView.findViewById(R.id.tv_vin_number);
             availability_tv = itemView.findViewById(R.id.availability_tv);
-            remaining_time = itemView.findViewById(R.id.remaining_time);
+            requested_tv = itemView.findViewById(R.id.requested_tv);
         }
 
     }
