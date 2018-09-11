@@ -99,8 +99,9 @@ dependencies {
     /*Firebase Push*/
     implementation 'com.google.firebase:firebase-messaging:11.0.4'
     compile 'com.google.firebase:firebase-core:11.0.4'
-
     apply plugin: 'com.google.gms.google-services'
-
+    compile ('io.nlopez.smartlocation:library:3.3.3') {
+        transitive = false
+    }
 }
 
