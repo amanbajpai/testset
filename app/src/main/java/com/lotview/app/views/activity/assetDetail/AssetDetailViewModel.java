@@ -75,7 +75,7 @@ public class AssetDetailViewModel extends ViewModel {
                 KeyKeepApplication.getBaseEntity(true),
                 emp_id,
                 qr_code,
-                "1"
+                "1", null, null
         );
 
         call.enqueue(new Callback<AssetDetailBean>() {
@@ -150,7 +150,7 @@ public class AssetDetailViewModel extends ViewModel {
         Call<AssetDetailBean> call = RetrofitHolder.getService().keepAssetRequest(
                 KeyKeepApplication.getBaseEntity(true),
                 emp_id,
-                qr_code
+                qr_code, null, null
         );
 
         call.enqueue(new Callback<AssetDetailBean>() {
@@ -186,8 +186,7 @@ public class AssetDetailViewModel extends ViewModel {
         Call<BaseResponse> call = RetrofitHolder.getService().approveAssetRequest(
                 KeyKeepApplication.getBaseEntity(true),
                 emp_id,
-                req_id
-        );
+                req_id, null, null);
 
         call.enqueue(new Callback<BaseResponse>() {
 
@@ -217,8 +216,7 @@ public class AssetDetailViewModel extends ViewModel {
         Call<BaseResponse> call = RetrofitHolder.getService().cancelAssetRequest(
                 KeyKeepApplication.getBaseEntity(true),
                 emp_id,
-                req_id
-        );
+                req_id, null, null);
 
         call.enqueue(new Callback<BaseResponse>() {
             @Override
