@@ -11,12 +11,14 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.database.Cursor;
 import android.databinding.ViewDataBinding;
 import android.graphics.Bitmap;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -34,6 +36,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.text.method.TransformationMethod;
 import android.util.Base64;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.MotionEvent;
 import android.view.View;
@@ -44,6 +47,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.gson.Gson;
 import com.lotview.app.BuildConfig;
 import com.lotview.app.R;
@@ -53,6 +65,7 @@ import com.lotview.app.model.bean.LoginResponseBean;
 import com.lotview.app.netcom.Keys;
 import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.views.activity.home.HomeActivity;
+import com.lotview.app.views.activity.login.LoginActivity;
 import com.lotview.app.views.base.BaseActivity;
 import com.lotview.app.views.custom_view.CustomProgressDialog;
 import com.lotview.app.views.fragment.home.HomeFragment;
@@ -82,6 +95,9 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static android.content.Context.LOCATION_SERVICE;
+import static io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider.REQUEST_CHECK_SETTINGS;
 
 
 public class Utils {
@@ -1049,10 +1065,10 @@ public class Utils {
 
     public static String validateIntValue(Integer value) {
 
-        if (value == null )
+        if (value == null)
             return "0";
 
-        return value+"";
+        return value + "";
 
     }
 
@@ -1149,6 +1165,17 @@ public class Utils {
         return sdf.format(calendar_time.getTime());
     }
 
+
+    public static boolean isGpsEnable(Context context) {
+        LocationManager service = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+        boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        return enabled;
+        // Check if enabled and if not send user to the GPS settings
+//        if (!enabled) {
+//            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+//            startActivity(intent);
+//        }
+    }
 
     public static String formattedDateFromString(String inputFormat, String outputFormat, String inputDate, String inputTime, boolean toUTC) {
 
@@ -1459,7 +1486,7 @@ public class Utils {
             return "0";
         }
 
-        return value+"";
+        return value + "";
     }
 
     public static String validateTimeWithDate(String eventDate) {
@@ -1840,10 +1867,10 @@ public class Utils {
                 type = "Service";
                 break;
 
-
         }
         return type;
     }
+
 
 
 }

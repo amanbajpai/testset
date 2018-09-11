@@ -50,10 +50,11 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
         binding.handOverRl.setOnClickListener(this);
         binding.takeoutRl.setOnClickListener(this);
         binding.chatRl.setOnClickListener(this);
-//        viewModel.validator.observe(this, observer);
-//        viewModel.respose_validator.observe(this, response_observer);
+//      viewModel.validator.observe(this, observer);
+//      viewModel.respose_validator.observe(this, response_observer);
 
     }
+
 
 
     @Override

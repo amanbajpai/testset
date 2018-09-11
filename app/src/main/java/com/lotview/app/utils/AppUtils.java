@@ -46,6 +46,8 @@ public interface AppUtils {
 
     int STATUS_TRANSFER_ASSET_LIST = 209;
     int REQ_REFRESH_VIEW = 210;
+    int REQUEST_CODE_LOCATION = 211;
+
 
     /**
      * dialog keys

@@ -56,18 +56,19 @@ public class LoginViewModel extends BaseViewModel implements DialogClickListener
 
         if (!Connectivity.isConnected()) {
             validator.setValue(AppUtils.NO_INTERNET);
+            Utils.hideProgressDialog();
             return;
         }
 
         if (!checkEmail(binding.etMail.getText().toString())) {
+            Utils.hideProgressDialog();
             return;
         }
 
         if (!checkPassword(binding.etPassword.getText().toString())) {
+            Utils.hideProgressDialog();
             return;
         }
-
-
 
         String email = binding.etMail.getText().toString();
         String password = binding.etPassword.getText().toString();

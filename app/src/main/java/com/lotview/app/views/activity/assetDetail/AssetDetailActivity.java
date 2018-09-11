@@ -337,6 +337,10 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
             binding.requestContainer.setVisibility(View.GONE);
         }
 
+        if (Utils.validateIntValue(bean.getResult().getAssetType()) != AppUtils.ASSET_CUSTOMER){
+            binding.customerDetailLayout.setVisibility(View.GONE);
+        }
+
     }
 
 
