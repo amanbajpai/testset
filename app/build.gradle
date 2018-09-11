@@ -98,7 +98,14 @@ dependencies {
 
     /*Firebase Push*/
     implementation 'com.google.firebase:firebase-messaging:11.0.4'
-    compile 'com.google.firebase:firebase-core:11.0.4'
+    implementation 'com.google.firebase:firebase-core:11.0.4'
+    implementation 'io.nlopez.smartlocation:library:3.3.3'
+
+    /*compile ('org.hibernate:hibernate-core:4.3.6.Final') {
+        exclude module: 'dom4j'
+        exclude group: 'org.jboss.logging'
+    }*/
+
 
     apply plugin: 'com.google.gms.google-services'
 

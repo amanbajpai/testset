@@ -121,7 +121,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder.setSmallIcon(R.mipmap.ic_launcher);
+            builder.setSmallIcon(R.mipmap.notification_icon);
             builder.setColor(getResources().getColor(R.color.app_blue));
         } else {
             builder.setSmallIcon(R.mipmap.ic_launcher);
