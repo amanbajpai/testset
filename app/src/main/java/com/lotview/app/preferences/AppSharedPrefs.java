@@ -2,6 +2,7 @@ package com.lotview.app.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.Location;
 
 /**
  * Created by akshaydashore on 28/8/18
@@ -20,6 +21,8 @@ public class AppSharedPrefs {
 
     public static final String REMEMBER_ME = "remember_me";
     public static final String IS_LOGIN = "is_login";
+    public static final String LATITUDE = "latitude";
+    public static final String LONGITUDE = "longitude";
 
 
     private static Context mContext = null;
@@ -144,6 +147,25 @@ public class AppSharedPrefs {
 
     public static String getPassword() {
         return sp.getString(LOGIN_PASSWORD, "");
+    }
+
+    public static void setLatitude(String lat) {
+        prefEditor.putString(LATITUDE, lat);
+        prefEditor.commit();
+    }
+
+    public static String getLatitude() {
+        return sp.getString(LATITUDE, "0");
+    }
+
+
+    public static void setLongitude(String lat) {
+        prefEditor.putString(LONGITUDE, lat);
+        prefEditor.commit();
+    }
+
+    public static String getLongitude() {
+        return sp.getString(LONGITUDE, "0");
     }
 
 

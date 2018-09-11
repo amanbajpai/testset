@@ -7,6 +7,7 @@ import com.lotview.app.application.KeyKeepApplication;
 import com.lotview.app.model.bean.AssetDetailBean;
 import com.lotview.app.model.bean.BaseResponse;
 import com.lotview.app.netcom.retrofit.RetrofitHolder;
+import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Connectivity;
 import com.lotview.app.utils.Utils;
@@ -71,11 +72,14 @@ public class AssetDetailViewModel extends ViewModel {
             return;
         }
 
+        String lat  = AppSharedPrefs.getLatitude();
+        String lng  = AppSharedPrefs.getLongitude();
+
         Call<AssetDetailBean> call = RetrofitHolder.getService().sendHandoverRequest(
                 KeyKeepApplication.getBaseEntity(true),
                 emp_id,
                 qr_code,
-                "1", null, null
+                "1", lat, lng
         );
 
         call.enqueue(new Callback<AssetDetailBean>() {
@@ -147,10 +151,13 @@ public class AssetDetailViewModel extends ViewModel {
             return;
         }
 
+        String lat  = AppSharedPrefs.getLatitude();
+        String lng  = AppSharedPrefs.getLongitude();
+
         Call<AssetDetailBean> call = RetrofitHolder.getService().keepAssetRequest(
                 KeyKeepApplication.getBaseEntity(true),
                 emp_id,
-                qr_code, null, null
+                qr_code, lat, lng
         );
 
         call.enqueue(new Callback<AssetDetailBean>() {
@@ -183,10 +190,13 @@ public class AssetDetailViewModel extends ViewModel {
             return;
         }
 
+        String lat  = AppSharedPrefs.getLatitude();
+        String lng  = AppSharedPrefs.getLongitude();
+
         Call<BaseResponse> call = RetrofitHolder.getService().approveAssetRequest(
                 KeyKeepApplication.getBaseEntity(true),
                 emp_id,
-                req_id, null, null);
+                req_id, lat, lng);
 
         call.enqueue(new Callback<BaseResponse>() {
 
@@ -213,10 +223,12 @@ public class AssetDetailViewModel extends ViewModel {
             return;
         }
 
+        String lat  = AppSharedPrefs.getLatitude();
+        String lng  = AppSharedPrefs.getLongitude();
         Call<BaseResponse> call = RetrofitHolder.getService().cancelAssetRequest(
                 KeyKeepApplication.getBaseEntity(true),
                 emp_id,
-                req_id, null, null);
+                req_id, lat, lng);
 
         call.enqueue(new Callback<BaseResponse>() {
             @Override

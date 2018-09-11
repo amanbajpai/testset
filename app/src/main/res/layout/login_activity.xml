@@ -135,6 +135,7 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:buttonTint="@color/app_blue"
                     android:text="@string/remember_me"
+                    android:visibility="invisible"
                     android:textColor="@color/text_gray"
                     android:textSize="@dimen/_12sdp" />
             </LinearLayout>

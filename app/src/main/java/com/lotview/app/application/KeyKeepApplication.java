@@ -19,6 +19,8 @@ import com.lotview.app.utils.Utils;
 import io.fabric.sdk.android.Fabric;
 import java.lang.reflect.Method;
 
+import io.nlopez.smartlocation.OnActivityUpdatedListener;
+import io.nlopez.smartlocation.SmartLocation;
 import retrofit2.Retrofit;
 
 
@@ -70,11 +72,14 @@ public class KeyKeepApplication extends MultiDexApplication {
              */
             RetrofitHolder retrofitHolder = new RetrofitHolder(instance);
 
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 
     }
+
+
 
     private void instantiateFabric() {
         try {

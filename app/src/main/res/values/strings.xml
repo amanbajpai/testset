@@ -54,6 +54,7 @@
     <!--<string name="internet_connection">Please check internet connection</string>-->
     <string name="internet_connection">Please check internet connection</string>
     <string name="allow_camera_permission">Please allow Camera permission to scan qr code</string>
+    <string name="allow_location_permission">Please allow location permission</string>
     <string name="color">Color</string>
     <string name="model_no">Model</string>
     <string name="vin_no">VIN Number</string>
