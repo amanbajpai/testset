@@ -99,7 +99,6 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
             prepareMenuItemList();
             setDrawerHover(0);
             tvProfileUserName.setText(AppSharedPrefs.getEmployeeName());
-            handlePushCall();
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -398,8 +397,8 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
         }
     }
 
-    private void handlePushCall() {
-        PushData pushData = (PushData) this.getIntent().getSerializableExtra(Keys.NOTIFICATION_DATA);
+    private void handlePushCall(PushData pushData) {
+
 
         switch (pushData.getPushType()) {
             case Keys.NOTIFICATION_ASSET_REQUEST_APPROVE:
@@ -420,4 +419,17 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
 
         }
     }
+
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+
+        if (intent != null && intent.hasExtra(Keys.NOTIFICATION_DATA)) {
+            PushData pushData = (PushData) this.getIntent().getSerializableExtra(Keys.NOTIFICATION_DATA);
+            handlePushCall(pushData);
+        }
+
+    }
+
+
 }

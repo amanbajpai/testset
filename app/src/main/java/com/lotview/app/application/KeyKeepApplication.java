@@ -79,7 +79,7 @@ public class KeyKeepApplication extends MultiDexApplication {
     private void instantiateFabric() {
         try {
             if (!BuildConfig.DEBUG) {
-//                Fabric.with(this, new Crashlytics());
+                Fabric.with(this, new Crashlytics());
             }
 
         } catch (Exception ex) {
