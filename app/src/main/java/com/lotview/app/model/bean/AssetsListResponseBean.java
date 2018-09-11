@@ -81,6 +81,25 @@ public class AssetsListResponseBean extends BaseResponse {
         @Expose
         private String assets_hold_remain_time;
 
+        /**
+         * below two tags for asset list
+         */
+        @SerializedName("asset_employee_assigned_log_id")
+        @Expose
+        private Integer assetEmployeeAssignedLogId;
+
+        @SerializedName("requested_by_employee_name")
+        @Expose
+        private String requestedByEmployeeName;
+        /**
+         * below tag for send received request
+         *
+         * @return
+         */
+        @SerializedName("assigned_request_at")
+        @Expose
+        private String assigned_request_at;
+
 
         public String getAssigned_approved_or_decline_at() {
             return assigned_approved_or_decline_at;
@@ -106,14 +125,15 @@ public class AssetsListResponseBean extends BaseResponse {
             this.assetType = assetType;
         }
 
-        @SerializedName("asset_employee_assigned_log_id")
-        @Expose
-        private Integer assetEmployeeAssignedLogId;
 
-        @SerializedName("requested_by_employee_name")
-        @Expose
-        private String requestedByEmployeeName;
 
+        public String getAssigned_request_at() {
+            return assigned_request_at;
+        }
+
+        public void setAssigned_request_at(String assigned_request_at) {
+            this.assigned_request_at = assigned_request_at;
+        }
 
         public Integer getAssetEmployeeAssignedLogId() {
             return assetEmployeeAssignedLogId;
@@ -251,6 +271,8 @@ public class AssetsListResponseBean extends BaseResponse {
         public void setRequestedByEmployeeName(String requestedByEmployeeName) {
             this.requestedByEmployeeName = requestedByEmployeeName;
         }
+
+
     }
 
 }
