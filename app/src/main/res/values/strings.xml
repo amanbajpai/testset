@@ -82,6 +82,7 @@
     <string name="txt_title_screen_asset_request">Key Requests</string>
     <string name="accept">Accept</string>
     <string name="cancel">Cancel Request</string>
+    <string name="_cancel">Cancel</string>
     <string name="scan_asset">Scan Key</string>
     <string name="keys">Keys</string>
     <string name="actionbar_keys">Keys</string>

@@ -106,7 +106,7 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
 
     private void noDataView() {
         binding.recycleNotification.setVisibility(View.GONE);
-        binding.tvNoRecords.setVisibility(View.VISIBLE);
+        binding.noDataFountLayout.setVisibility(View.VISIBLE);
         binding.tvNoRecords.setText(getString(R.string.txt_no_records_avialable));
     }
 

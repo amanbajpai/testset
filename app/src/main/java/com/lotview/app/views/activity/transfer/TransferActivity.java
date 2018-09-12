@@ -57,6 +57,7 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
         LinearLayoutManager manager = new LinearLayoutManager(context);
         binding.recyclerView.setLayoutManager(manager);
         binding.recyclerView.setLoadingListener(this);
+        binding.recyclerView.setLoadingMoreEnabled(false);
         viewModel.response_validator.observe(this, response_observer);
         Utils.hideSoftKeyboard(this);
 
@@ -94,7 +95,6 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
 
     @Override
     public void onRefresh() {
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -111,7 +111,7 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
 
     private void noDataView() {
         binding.recyclerView.setVisibility(View.GONE);
-        binding.tvNoRecords.setVisibility(View.VISIBLE);
+        binding.noDataFountLayout.setVisibility(View.VISIBLE);
         binding.tvNoRecords.setText(getString(R.string.txt_no_records_avialable));
     }
 

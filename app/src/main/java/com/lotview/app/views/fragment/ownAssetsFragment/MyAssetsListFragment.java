@@ -77,7 +77,8 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
         viewModel.response_validator.observe(this, response_observer);
         Utils.hideSoftKeyboard(getActivity());
         binding.simpleSearchView.setQueryHint("Search here");
-        binding.tvNoRecords.setVisibility(View.GONE);
+        binding.noDataFountLayout.setVisibility(View.GONE);
+
         binding.simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -89,6 +90,9 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
             public boolean onQueryTextChange(String newText) {
                 if (newText.equalsIgnoreCase("")) {
                     Utils.hideSoftKeyboard(getActivity());
+                    Utils.hideSoftKeyboard(getActivity());
+                    binding.recyclerView.setVisibility(View.VISIBLE);
+                    binding.noDataFountLayout.setVisibility(View.GONE);
                     myAssetAdapter.setAssetList(getContext(), resultArrayList);
                 } else {
                     try {
@@ -103,6 +107,7 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
                 return false;
             }
         });
+
     }
 
     @Override
@@ -147,7 +152,7 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
             boolean isAssetListAvailable = intent.getBooleanExtra(AppUtils.ASSET_AVAILABLE_STATUS, false);
             if (isAssetListAvailable) {
                 binding.recyclerView.setVisibility(View.VISIBLE);
-                binding.tvNoRecords.setVisibility(View.GONE);
+                binding.noDataFountLayout.setVisibility(View.GONE);
             } else {
                 noDataView();
             }
@@ -173,7 +178,7 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
 
     private void noDataView() {
         binding.recyclerView.setVisibility(View.GONE);
-        binding.tvNoRecords.setVisibility(View.VISIBLE);
+        binding.noDataFountLayout.setVisibility(View.VISIBLE);
         binding.tvNoRecords.setText(getString(R.string.txt_no_records_avialable));
     }
 
