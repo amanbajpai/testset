@@ -22,14 +22,12 @@ import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Utils;
 import com.lotview.app.views.base.BaseActivity;
 import com.lotview.app.views.custom_view.CustomActionBar;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
  * Created by akshaydashore on 23/8/18
  */
-
 public class AssetDetailActivity extends BaseActivity implements DialogClickListener {
 
     private boolean HAS_SCANNED = false;
@@ -159,9 +157,8 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
 
             case AppUtils.STATUS_ASSET_SEND_REQUEST:
                 req_id = getIntent().getIntExtra(AppUtils.ASSET_REQUEST_ID, -1);
-                binding.pendingStatusContainer.setVisibility(View.VISIBLE);
-                binding.acceptTv.setVisibility(View.GONE);
-                binding.cancelTv.setOnClickListener(this);
+                binding.pendingStatusContainerRequest.setVisibility(View.VISIBLE);
+                binding.requestCancelTv.setOnClickListener(this);
                 break;
 
             default:
@@ -367,6 +364,11 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
                 viewModel.cancelAssetRequest(req_id, mEmp_id);
                 break;
 
+            case R.id.request_cancel_tv:
+                Utils.showProgressDialog(context, getString(R.string.loading));
+                viewModel.cancelAssetRequest(req_id, mEmp_id);
+                break;
+
         }
     }
 
@@ -433,7 +435,6 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         /**
          * Get asset result from web service after scan Qr code
          */
-
         if (requestCode == AppUtils.REQUEST_CODE_QR_SCAN) {
 
             if (resultCode != RESULT_OK || data == null) {

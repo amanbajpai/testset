@@ -76,7 +76,7 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
         switch (v.getId()) {
             case R.id.tv_pending_send_request:
                 isSentRequestSelected = true;
-                binding.tvNoRecords.setVisibility(View.GONE);
+                binding.noDataFountLayout.setVisibility(View.GONE);
                 Utils.showProgressDialog(getActivity(), getString(R.string.loading));
                 binding.tvPendingSendRequest.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.send_request_selector));
                 binding.tvPendingReceiveRequest.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.received_request_deselector));
@@ -87,7 +87,7 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
                 break;
             case R.id.tv_pending_receive_request:
                 isSentRequestSelected = false;
-                binding.tvNoRecords.setVisibility(View.GONE);
+                binding.noDataFountLayout.setVisibility(View.GONE);
                 Utils.showProgressDialog(getActivity(), getString(R.string.loading));
                 binding.tvPendingSendRequest.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.send_request_deselector));
                 binding.tvPendingReceiveRequest.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.received_request_selector));
@@ -154,7 +154,7 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
 
     private void noDataView() {
         binding.recyclerView.setVisibility(View.GONE);
-        binding.tvNoRecords.setVisibility(View.VISIBLE);
+        binding.noDataFountLayout.setVisibility(View.VISIBLE);
         binding.tvNoRecords.setText(getString(R.string.txt_no_records_avialable));
     }
 

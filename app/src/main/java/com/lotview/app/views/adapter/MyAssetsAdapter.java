@@ -144,6 +144,47 @@ public class MyAssetsAdapter extends RecyclerView.Adapter<MyAssetsAdapter.Holder
     }
 
 
+//    private class AllAssetsSearchFilter extends Filter {
+//
+//        FilterResults results = new FilterResults();
+//
+//        @Override
+//        protected FilterResults performFiltering(CharSequence constraint) {
+//            if (constraint != null && constraint.length() > 0) {
+//
+//                assetfilterList = new ArrayList<AssetsListResponseBean.Result>();
+//                for (int i = 0; i < assetfilteredFinalList.size(); i++) {
+//                    if (assetfilteredFinalList.get(i).getAssetName() != null) {
+//                        if ((assetfilteredFinalList.get(i).getAssetName().toUpperCase())
+//                                .contains(constraint.toString().toUpperCase())) {
+//                            assetfilterList.add(assetfilteredFinalList.get(i));
+//                        }
+//                    }
+//                }
+//                results.count = assetfilterList.size();
+//                results.values = assetfilterList;
+//            } else {
+//                results.count = assetfilteredFinalList.size();
+//                results.values = assetfilteredFinalList;
+//            }
+//            return results;
+//        }
+//
+//        @Override
+//        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+//            assetLists = (ArrayList<AssetsListResponseBean.Result>) filterResults.values;
+//            notifyDataSetChanged();
+//            Intent intent = new Intent(AppUtils.IS_ASSET_LIST_AVAILABLE);
+//            if (assetLists.isEmpty()) {
+//                intent.putExtra(AppUtils.ASSET_AVAILABLE_STATUS, false);
+//            } else {
+//                intent.putExtra(AppUtils.ASSET_AVAILABLE_STATUS, true);
+//            }
+//            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+//        }
+//    }
+
+
     private class AllAssetsSearchFilter extends Filter {
 
         FilterResults results = new FilterResults();
@@ -183,5 +224,4 @@ public class MyAssetsAdapter extends RecyclerView.Adapter<MyAssetsAdapter.Holder
             LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
         }
     }
-
 }

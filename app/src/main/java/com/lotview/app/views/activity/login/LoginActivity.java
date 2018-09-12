@@ -40,6 +40,7 @@ import com.lotview.app.views.base.BaseActivity;
 
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
+import io.nlopez.smartlocation.location.config.LocationParams;
 
 import static io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider.REQUEST_CHECK_SETTINGS;
 
@@ -51,6 +52,7 @@ public class LoginActivity extends BaseActivity {
     private LoginActivityBinding binding;
     LoginViewModel viewModel;
     private Context context;
+    private SmartLocation.LocationControl location_control;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -89,14 +91,14 @@ public class LoginActivity extends BaseActivity {
         } else {
             displayLocationSettingsRequest();
         }
-
-
     }
 
     private void getLocation() {
 
-        SmartLocation.with(context).location()
-                .start(new OnLocationUpdatedListener() {
+        location_control = SmartLocation.with(context).location();
+
+
+                location_control.start(new OnLocationUpdatedListener() {
                     @Override
                     public void onLocationUpdated(Location location) {
 
@@ -106,7 +108,6 @@ public class LoginActivity extends BaseActivity {
                         AppSharedPrefs.setLatitude(lat);
                         AppSharedPrefs.setLatitude(lng);
                     }
-
                 });
 
     }
@@ -204,6 +205,13 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (location_control != null ){
+            location_control.stop();
+        }
+    }
 
 
     private void displayLocationSettingsRequest() {
