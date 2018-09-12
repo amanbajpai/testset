@@ -11,17 +11,17 @@ import android.support.multidex.MultiDexApplication;
 import com.crashlytics.android.Crashlytics;
 import com.lotview.app.BuildConfig;
 import com.lotview.app.model.bean.BaseRequestEntity;
+import com.lotview.app.model.location.DaoMaster;
+import com.lotview.app.model.location.DaoSession;
 import com.lotview.app.netcom.Keys;
-import com.lotview.app.netcom.retrofit.RetrofitHolder;
 import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.utils.Utils;
 
-import io.fabric.sdk.android.Fabric;
+import org.greenrobot.greendao.database.Database;
+
 import java.lang.reflect.Method;
 
-import io.nlopez.smartlocation.OnActivityUpdatedListener;
-import io.nlopez.smartlocation.SmartLocation;
-import retrofit2.Retrofit;
+import io.fabric.sdk.android.Fabric;
 
 
 /**
@@ -33,9 +33,10 @@ public class KeyKeepApplication extends MultiDexApplication {
 
     static KeyKeepApplication instance;
 
+    private DaoSession daoSession;
+
     private final String TAG = "KeyKeepApplication";
     public static int NOTIFICATION_ID = 1501;
-    private Retrofit retrofit;
 
     public static KeyKeepApplication getInstance() {
         if (instance == null)
@@ -66,19 +67,16 @@ public class KeyKeepApplication extends MultiDexApplication {
             enableStricMode();
             instantiateFabric();
 
+            DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "dining_inn_guest-db");
+            Database db = helper.getWritableDb();
 
-            /**
-             * init retrofit client to call network services
-             */
-            RetrofitHolder retrofitHolder = new RetrofitHolder(instance);
-
+            daoSession = new DaoMaster(db).newSession();
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 
     }
-
 
 
     private void instantiateFabric() {

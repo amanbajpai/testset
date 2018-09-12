@@ -3,13 +3,20 @@ package com.lotview.app.model.location;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.greenrobot.greendao.annotation.Entity;
+
 import java.io.Serializable;
+import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * Created by ankurrawal on 12/9/18.
  */
 
+@Entity
 public class LocationTrackBean implements Serializable {
+
+    private static final long serialVersionUID = 7526472295622776147L;
+
 
     @SerializedName("emp_lat")
     @Expose
@@ -30,6 +37,20 @@ public class LocationTrackBean implements Serializable {
     @SerializedName("emp_timestamp")
     @Expose
     public long employeeTimeStamp;
+
+    @Generated(hash = 404054143)
+    public LocationTrackBean(int employeeLatitue, int employeeLongitude,
+            int employeeId, int employeeSpeed, long employeeTimeStamp) {
+        this.employeeLatitue = employeeLatitue;
+        this.employeeLongitude = employeeLongitude;
+        this.employeeId = employeeId;
+        this.employeeSpeed = employeeSpeed;
+        this.employeeTimeStamp = employeeTimeStamp;
+    }
+
+    @Generated(hash = 27758410)
+    public LocationTrackBean() {
+    }
 
     public int getEmployeeLatitue() {
         return employeeLatitue;
