@@ -5,13 +5,10 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -31,7 +28,6 @@ import com.lotview.app.R;
 import com.lotview.app.databinding.LoginActivityBinding;
 import com.lotview.app.model.bean.LoginResponseBean;
 import com.lotview.app.preferences.AppSharedPrefs;
-import com.lotview.app.qrcodescanner.QrCodeActivity;
 import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Utils;
 import com.lotview.app.views.activity.forgot_password.ForgotPasswordActivity;
@@ -203,7 +199,6 @@ public class LoginActivity extends BaseActivity {
             Utils.showSnackBar(binding, getString(R.string.allow_camera_permission));
         }
     }
-
 
 
     private void displayLocationSettingsRequest() {

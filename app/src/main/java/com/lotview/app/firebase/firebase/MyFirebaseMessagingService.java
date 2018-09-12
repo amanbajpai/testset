@@ -49,27 +49,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         try {
             PushData pushDatabean = new PushData();
             JSONObject jsonObject = new JSONObject(remoteMessage.getData());
-            String PushSound = "";
-            String PushIcon = "";
-            String pushTittle = "";
-            String PushBody = "";
             String PushAdditionalDataJson = "";
-            int PushType = 0;
 
-
-            //  PushIcon = jsonObject.optString("icon");
             pushDatabean.setIcon(jsonObject.optString("icon"));
-            // PushSound = jsonObject.optString("sound");
             pushDatabean.setSound(jsonObject.optString("sound"));
-            //   pushTittle = jsonObject.optString("title");
             pushDatabean.setTitle(jsonObject.optString("title"));
-            //  PushBody = jsonObject.optString("body");
             pushDatabean.setBody(jsonObject.optString("body"));
-            //   PushType = jsonObject.optInt("push_type");
             pushDatabean.setPushType(Integer.valueOf(jsonObject.optString("push_type")));
 
             PushAdditionalDataJson = jsonObject.optString("additional_data");
-
             JSONObject object = new JSONObject(PushAdditionalDataJson);
             int PushAssetId = object.optInt("asset_id");
             int PushEmployeeId = object.optInt("employee_id");
@@ -94,22 +82,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private void addNotification(PushData pushData) {
-//        switch (pushData.getPushType()) {
-//            case 2: // asset request approve
-//                intent = new Intent(this, HomeActivity.class);
-//
-//                break;
-//            case 4: // asset transfer request receiver
-//
-//                break;
-//            case 5: // asset transfer approve
-//                break;
-//            case 6: // asset transfer decline sender/receiver
-//                break;
-//            case 8: // asset submit approve sender
-//                break;
-//
-//        }
 
         // Create an explicit intent for an Activity in your app
         Intent intent = new Intent(this, HomeActivity.class);
