@@ -35,6 +35,7 @@ public class KeyKeepApplication extends MultiDexApplication {
 
     private DaoSession daoSession;
 
+
     private final String TAG = "KeyKeepApplication";
     public static int NOTIFICATION_ID = 1501;
 
