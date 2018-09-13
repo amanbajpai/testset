@@ -21,6 +21,7 @@ import android.widget.SearchView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.lotview.app.R;
+import com.lotview.app.application.KeyKeepApplication;
 import com.lotview.app.databinding.MyAssetListFragmentBinding;
 import com.lotview.app.model.bean.AssetsListResponseBean;
 import com.lotview.app.preferences.AppSharedPrefs;
@@ -123,6 +124,8 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
             if (assetsListResponseBean != null && assetsListResponseBean.getResult() != null && assetsListResponseBean.getResult().size() > 0) {
                 resultArrayList = assetsListResponseBean.getResult();
                 myAssetAdapter.setAssetList(getActivity(), resultArrayList);
+
+                KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().insertOrReplaceInTx(Utils.getLocationDetail(context));
 
             } else {
                 noDataView();

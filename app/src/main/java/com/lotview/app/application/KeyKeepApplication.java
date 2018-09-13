@@ -14,6 +14,7 @@ import com.lotview.app.model.bean.BaseRequestEntity;
 import com.lotview.app.model.location.DaoMaster;
 import com.lotview.app.model.location.DaoSession;
 import com.lotview.app.netcom.Keys;
+import com.lotview.app.netcom.retrofit.RetrofitHolder;
 import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.utils.Utils;
 
@@ -68,10 +69,16 @@ public class KeyKeepApplication extends MultiDexApplication {
             enableStricMode();
             instantiateFabric();
 
-            DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "dining_inn_guest-db");
+            DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "lotview_db");
             Database db = helper.getWritableDb();
 
             daoSession = new DaoMaster(db).newSession();
+
+            /**
+             * init retrofit client to call network services
+             */
+            RetrofitHolder retrofitHolder = new RetrofitHolder(instance);
+
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -79,6 +86,9 @@ public class KeyKeepApplication extends MultiDexApplication {
 
     }
 
+    public DaoSession getDaoSession() {
+        return daoSession;
+    }
 
     private void instantiateFabric() {
         try {

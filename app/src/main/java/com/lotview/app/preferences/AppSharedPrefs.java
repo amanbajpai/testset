@@ -2,7 +2,6 @@ package com.lotview.app.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.location.Location;
 
 /**
  * Created by akshaydashore on 28/8/18

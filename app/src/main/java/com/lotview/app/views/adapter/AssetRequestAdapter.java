@@ -68,7 +68,7 @@ public class AssetRequestAdapter extends RecyclerView.Adapter<AssetRequestAdapte
         holder.tv_stock_number.setText(assetLists.getResult().get(position).getAssetName());
 
         if (bean.getAssetAssginedStatus().equals("1")) {
-            String mEmp_id = AppSharedPrefs.getEmployeeID();
+            String mEmp_id = AppSharedPrefs.getInstance(context).getEmployeeID();
             if (Utils.validateStringToValue(bean.getEmployeeId()).equals(mEmp_id)) {
                 holder.availability_tv.setText(context.getString(R.string.owner_you));
 

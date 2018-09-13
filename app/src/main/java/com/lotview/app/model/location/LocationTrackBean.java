@@ -20,11 +20,11 @@ public class LocationTrackBean implements Serializable {
 
     @SerializedName("emp_lat")
     @Expose
-    public int employeeLatitue;
+    public double employeeLatitue;
 
     @SerializedName("emp_long")
     @Expose
-    public int employeeLongitude;
+    public double employeeLongitude;
 
     @SerializedName("emp_id")
     @Expose
@@ -32,15 +32,15 @@ public class LocationTrackBean implements Serializable {
 
     @SerializedName("emp_speed")
     @Expose
-    public int employeeSpeed;
+    public float employeeSpeed;
 
     @SerializedName("emp_timestamp")
     @Expose
     public long employeeTimeStamp;
 
-    @Generated(hash = 404054143)
-    public LocationTrackBean(int employeeLatitue, int employeeLongitude,
-            int employeeId, int employeeSpeed, long employeeTimeStamp) {
+    @Generated(hash = 1329653950)
+    public LocationTrackBean(double employeeLatitue, double employeeLongitude,
+            int employeeId, float employeeSpeed, long employeeTimeStamp) {
         this.employeeLatitue = employeeLatitue;
         this.employeeLongitude = employeeLongitude;
         this.employeeId = employeeId;
@@ -52,19 +52,23 @@ public class LocationTrackBean implements Serializable {
     public LocationTrackBean() {
     }
 
-    public int getEmployeeLatitue() {
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public double getEmployeeLatitue() {
         return employeeLatitue;
     }
 
-    public void setEmployeeLatitue(int employeeLatitue) {
+    public void setEmployeeLatitue(double employeeLatitue) {
         this.employeeLatitue = employeeLatitue;
     }
 
-    public int getEmployeeLongitude() {
+    public double getEmployeeLongitude() {
         return employeeLongitude;
     }
 
-    public void setEmployeeLongitude(int employeeLongitude) {
+    public void setEmployeeLongitude(double employeeLongitude) {
         this.employeeLongitude = employeeLongitude;
     }
 
@@ -76,11 +80,11 @@ public class LocationTrackBean implements Serializable {
         this.employeeId = employeeId;
     }
 
-    public int getEmployeeSpeed() {
+    public float getEmployeeSpeed() {
         return employeeSpeed;
     }
 
-    public void setEmployeeSpeed(int employeeSpeed) {
+    public void setEmployeeSpeed(float employeeSpeed) {
         this.employeeSpeed = employeeSpeed;
     }
 

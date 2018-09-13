@@ -11,7 +11,6 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -36,7 +35,6 @@ import android.text.method.PasswordTransformationMethod;
 import android.text.method.TransformationMethod;
 import android.util.Base64;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.MotionEvent;
 import android.view.View;
@@ -47,25 +45,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResult;
-import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.gson.Gson;
 import com.lotview.app.BuildConfig;
 import com.lotview.app.R;
 import com.lotview.app.application.KeyKeepApplication;
 import com.lotview.app.interfaces.DialogClickListener;
 import com.lotview.app.model.bean.LoginResponseBean;
+import com.lotview.app.model.location.LocationTrackBean;
 import com.lotview.app.netcom.Keys;
 import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.views.activity.home.HomeActivity;
-import com.lotview.app.views.activity.login.LoginActivity;
 import com.lotview.app.views.base.BaseActivity;
 import com.lotview.app.views.custom_view.CustomProgressDialog;
 import com.lotview.app.views.fragment.home.HomeFragment;
@@ -96,8 +85,9 @@ import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import io.nlopez.smartlocation.SmartLocation;
+
 import static android.content.Context.LOCATION_SERVICE;
-import static io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider.REQUEST_CHECK_SETTINGS;
 
 
 public class Utils {
@@ -107,6 +97,7 @@ public class Utils {
     public static final String OUTPUT_DATE_TIME_FORMATE = "dd-MM-yyyy HH:mm:a";
     public static final String OUTPUT_TIME_FORMATE = "HH:mm:a";
 
+    private static SmartLocation.LocationControl location_control;
 
     public static void showToast(Context context, String message) {
         try {
@@ -1871,6 +1862,16 @@ public class Utils {
         return type;
     }
 
+    public static LocationTrackBean getLocationDetail(Context context) {
+        LocationTrackBean locationTrackBean = new LocationTrackBean();
+        locationTrackBean.setEmployeeId(Integer.valueOf(AppSharedPrefs.getInstance(context).getEmployeeID()));
+        locationTrackBean.setEmployeeLatitue(Double.valueOf(AppSharedPrefs.getLatitude()));
+        locationTrackBean.setEmployeeLongitude(Double.valueOf(AppSharedPrefs.getLongitude()));
+//        locationTrackBean1.setEmployeeSpeed(location.getSpeed());
+        locationTrackBean.setEmployeeTimeStamp(System.currentTimeMillis());
+
+        return locationTrackBean;
+    }
 
 
 }

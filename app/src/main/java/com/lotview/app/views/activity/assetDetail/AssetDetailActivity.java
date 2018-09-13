@@ -75,7 +75,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         /**
          * call web service to get data using qr code
          */
-        mEmp_id = AppSharedPrefs.getEmployeeID();
+        mEmp_id = AppSharedPrefs.getInstance(this).getEmployeeID();
 
         qr_code = getIntent().getStringExtra(AppUtils.SCANED_QR_CODE);
         Utils.showProgressDialog(context, getString(R.string.loading));
