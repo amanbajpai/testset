@@ -40,6 +40,7 @@ import com.lotview.app.views.base.BaseActivity;
 
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
+import io.nlopez.smartlocation.location.config.LocationAccuracy;
 import io.nlopez.smartlocation.location.config.LocationParams;
 
 import static io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider.REQUEST_CHECK_SETTINGS;
@@ -95,20 +96,28 @@ public class LoginActivity extends BaseActivity {
 
     private void getLocation() {
 
-        location_control = SmartLocation.with(context).location();
+        LocationParams.Builder builder = new LocationParams.Builder();
+        builder.setAccuracy(LocationAccuracy.HIGH);
+        builder.setDistance(1);
+        builder.setInterval(1000);
+        LocationParams params = builder.build();
 
 
-                location_control.start(new OnLocationUpdatedListener() {
-                    @Override
-                    public void onLocationUpdated(Location location) {
+        location_control = SmartLocation.with(context).location().config(params);
 
-                        String lat = location.getLatitude() + "";
-                        String lng = location.getLongitude() + "";
-                        Log.e(lat + "onLocationUpdated: ", lng + "<<");
-                        AppSharedPrefs.setLatitude(lat);
-                        AppSharedPrefs.setLatitude(lng);
-                    }
-                });
+        location_control.start(new OnLocationUpdatedListener() {
+            @Override
+            public void onLocationUpdated(Location location) {
+
+                String lat = location.getLatitude() + "";
+                String lng = location.getLongitude() + "";
+                Log.e(lat + "onLocationUpdated: ", lng + "<<");
+                Utils.showToast(context, lat + "<location>" + lng);
+                AppSharedPrefs.setLatitude(lat);
+                AppSharedPrefs.setLatitude(lng);
+
+            }
+        });
 
     }
 
@@ -208,9 +217,9 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if (location_control != null ){
-            location_control.stop();
-        }
+//        if (location_control != null) {
+//            location_control.stop();
+//        }
     }
 
 

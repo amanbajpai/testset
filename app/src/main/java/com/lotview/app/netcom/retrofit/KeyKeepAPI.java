@@ -95,7 +95,8 @@ public interface KeyKeepAPI {
                                           @Query(Keys.EMPLOYEE_ID) String emp_id,
                                           @Query(Keys.REQ_ID) int req_id,
                                           @Query(Keys.EMPLOYEE_LATITUDE) String emp_latitude,
-                                          @Query(Keys.EMPLOYEE_LONGITUDE) String emp_longtitude);
+                                          @Query(Keys.EMPLOYEE_LONGITUDE) String emp_longtitude
+    );
 
 
     @POST(Config.APPROVE_ASSET_REQ_URL)

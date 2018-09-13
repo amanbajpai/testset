@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.lotview.app.R;
 import com.lotview.app.databinding.ActivityForgotPasswordBinding;
+import com.lotview.app.interfaces.DialogClickListener;
 import com.lotview.app.model.bean.ForgotPasswordResponseBean;
 import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Utils;
@@ -18,7 +19,7 @@ import com.lotview.app.views.base.BaseActivity;
 /**
  * Created by akshaydashore on 27/8/18
  */
-public class ForgotPasswordActivity extends BaseActivity {
+public class ForgotPasswordActivity extends BaseActivity implements DialogClickListener{
 
     ActivityForgotPasswordBinding binding;
     ForgotViewModel viewModel;
@@ -70,7 +71,15 @@ public class ForgotPasswordActivity extends BaseActivity {
         public void onChanged(@Nullable ForgotPasswordResponseBean loginBean) {
 
             if (loginBean == null) {
-                Utils.showAlert(context, getString(R.string.error), getString(R.string.enter_employeeid), "ok", "", AppUtils.dialog_ok_click, viewModel);
+                Utils.showAlert(context, getString(R.string.error), getString(R.string.enter_employeeid), "ok", "", AppUtils.dialog_ok_click, ForgotPasswordActivity.this);
+            }
+            if (loginBean.getCode().equals(AppUtils.STATUS_FAIL)) {
+                Utils.showAlert(context, "", loginBean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_click, ForgotPasswordActivity.this);
+                return;
+            }
+            if (loginBean.getCode().equals(AppUtils.STATUS_SUCCESS)) {
+                Utils.showAlert(context, "", loginBean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_to_finish, ForgotPasswordActivity.this);
+                return;
             }
 
         }
@@ -81,11 +90,22 @@ public class ForgotPasswordActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.tv_submit:
                 if (viewModel.checkEmail(binding.etMail.getText().toString())) {
+                    Utils.showProgressDialog(context, getString(R.string.loading));
                     viewModel.forgotPassword(binding);
                 }
                 break;
         }
     }
 
+
+    @Override
+    public void onDialogClick(int which, int requestCode) {
+
+        switch (requestCode) {
+            case AppUtils.dialog_ok_to_finish:
+                finish();
+                break;
+        }
+    }
 
 }

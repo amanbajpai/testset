@@ -22,6 +22,7 @@
         <activity
             android:name="com.lotview.app.views.activity.SplashActivity"
             android:noHistory="true"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionbarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,21 +32,34 @@
 
         <activity
             android:name="com.lotview.app.views.activity.login.LoginActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionbarTheme" />
 
         <activity
             android:name="com.lotview.app.views.activity.forgot_password.ForgotPasswordActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionbarTheme" />
 
         <activity
             android:name="com.lotview.app.views.activity.home.HomeActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionbarTheme" />
 
-        <activity android:name="com.lotview.app.views.activity.changepassword.ChangePasswordActivity" />
-        <activity android:name="com.lotview.app.views.activity.transfer.TransferActivity" />
-        <activity android:name="com.lotview.app.views.activity.AssetListActivity" />
-        <activity android:name="com.lotview.app.qrcodescanner.QrCodeActivity" />
-        <activity android:name="com.lotview.app.views.activity.assetDetail.AssetDetailActivity" />
+        <activity
+            android:name="com.lotview.app.views.activity.changepassword.ChangePasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lotview.app.views.activity.transfer.TransferActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lotview.app.views.activity.AssetListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lotview.app.qrcodescanner.QrCodeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lotview.app.views.activity.assetDetail.AssetDetailActivity"
+            android:screenOrientation="portrait" />
 
 
         <!--Firebase configuration-->

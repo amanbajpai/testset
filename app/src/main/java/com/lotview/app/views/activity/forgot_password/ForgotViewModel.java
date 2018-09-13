@@ -19,7 +19,7 @@ import retrofit2.Response;
 /**
  * Created by akshaydashore on 27/8/18
  */
-public class ForgotViewModel extends BaseViewModel implements DialogClickListener {
+public class ForgotViewModel extends BaseViewModel {
 
     public final MutableLiveData<Integer> validator = new MutableLiveData<>();
     public final MutableLiveData<ForgotPasswordResponseBean> response_validator = new MutableLiveData<>();
@@ -41,6 +41,7 @@ public class ForgotViewModel extends BaseViewModel implements DialogClickListene
 
         if (!Connectivity.isConnected()) {
             validator.setValue(AppUtils.NO_INTERNET);
+            Utils.hideProgressDialog();
             return;
         }
 
@@ -51,20 +52,16 @@ public class ForgotViewModel extends BaseViewModel implements DialogClickListene
         call.enqueue(new Callback<ForgotPasswordResponseBean>() {
             @Override
             public void onResponse(Call<ForgotPasswordResponseBean> call, Response<ForgotPasswordResponseBean> response) {
+                Utils.hideProgressDialog();
                 response_validator.setValue(response.body());
             }
 
             @Override
             public void onFailure(Call<ForgotPasswordResponseBean> call, Throwable t) {
+                Utils.hideProgressDialog();
                 validator.setValue(AppUtils.SERVER_ERROR);
             }
         });
-
     }
 
-
-    @Override
-    public void onDialogClick(int which, int requestCode) {
-
-    }
 }
