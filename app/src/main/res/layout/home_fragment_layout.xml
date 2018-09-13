@@ -38,7 +38,7 @@
                         android:layout_width="@dimen/_60sdp"
                         android:layout_height="@dimen/_60sdp"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/assets" />
+                        android:src="@drawable/car_key" />
 
                     <com.lotview.app.views.custom_view.StyledTextViewLight
                         android:layout_width="wrap_content"

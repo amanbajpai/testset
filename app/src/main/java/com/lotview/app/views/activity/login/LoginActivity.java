@@ -36,6 +36,8 @@ import com.lotview.app.views.base.BaseActivity;
 
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
+import io.nlopez.smartlocation.location.config.LocationAccuracy;
+import io.nlopez.smartlocation.location.config.LocationParams;
 
 import static io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider.REQUEST_CHECK_SETTINGS;
 
@@ -47,6 +49,7 @@ public class LoginActivity extends BaseActivity {
     private LoginActivityBinding binding;
     LoginViewModel viewModel;
     private Context context;
+    private SmartLocation.LocationControl location_control;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,25 +88,32 @@ public class LoginActivity extends BaseActivity {
         } else {
             displayLocationSettingsRequest();
         }
-
-
     }
 
     private void getLocation() {
 
-        SmartLocation.with(context).location()
-                .start(new OnLocationUpdatedListener() {
-                    @Override
-                    public void onLocationUpdated(Location location) {
+        LocationParams.Builder builder = new LocationParams.Builder();
+        builder.setAccuracy(LocationAccuracy.HIGH);
+        builder.setDistance(1);
+        builder.setInterval(1000);
+        LocationParams params = builder.build();
 
-                        String lat = location.getLatitude() + "";
-                        String lng = location.getLongitude() + "";
-                        Log.e(lat + "onLocationUpdated: ", lng + "<<");
-                        AppSharedPrefs.setLatitude(lat);
-                        AppSharedPrefs.setLatitude(lng);
-                    }
 
-                });
+        location_control = SmartLocation.with(context).location().config(params);
+
+        location_control.start(new OnLocationUpdatedListener() {
+            @Override
+            public void onLocationUpdated(Location location) {
+
+                String lat = location.getLatitude() + "";
+                String lng = location.getLongitude() + "";
+                Log.e(lat + "onLocationUpdated: ", lng + "<<");
+                Utils.showToast(context, lat + "<location>" + lng);
+                AppSharedPrefs.setLatitude(lat);
+                AppSharedPrefs.setLatitude(lng);
+
+            }
+        });
 
     }
 
@@ -198,6 +208,14 @@ public class LoginActivity extends BaseActivity {
         } else {
             Utils.showSnackBar(binding, getString(R.string.allow_camera_permission));
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+//        if (location_control != null) {
+//            location_control.stop();
+//        }
     }
 
 
