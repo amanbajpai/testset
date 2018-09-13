@@ -4,9 +4,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 
 import java.io.Serializable;
-import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * Created by ankurrawal on 12/9/18.
@@ -34,22 +34,34 @@ public class LocationTrackBean implements Serializable {
     @Expose
     public float employeeSpeed;
 
-    @SerializedName("emp_timestamp")
+    @SerializedName("emp_timestamp_local")
     @Expose
-    public long employeeTimeStamp;
+    public String employeeTimeStampLocal;
 
-    @Generated(hash = 1329653950)
+    @SerializedName("emp_timestamp_utc")
+    @Expose
+    public String employeeTimeStampLocalUTC;
+
+    @SerializedName("emp_key_id")
+    @Expose
+    public String employee_key_ids;
+
+
+    @Generated(hash = 27758410)
+    public LocationTrackBean() {
+    }
+
+    @Generated(hash = 1240560938)
     public LocationTrackBean(double employeeLatitue, double employeeLongitude,
-            int employeeId, float employeeSpeed, long employeeTimeStamp) {
+            int employeeId, float employeeSpeed, String employeeTimeStampLocal,
+            String employeeTimeStampLocalUTC, String employee_key_ids) {
         this.employeeLatitue = employeeLatitue;
         this.employeeLongitude = employeeLongitude;
         this.employeeId = employeeId;
         this.employeeSpeed = employeeSpeed;
-        this.employeeTimeStamp = employeeTimeStamp;
-    }
-
-    @Generated(hash = 27758410)
-    public LocationTrackBean() {
+        this.employeeTimeStampLocal = employeeTimeStampLocal;
+        this.employeeTimeStampLocalUTC = employeeTimeStampLocalUTC;
+        this.employee_key_ids = employee_key_ids;
     }
 
     public static long getSerialVersionUID() {
@@ -88,11 +100,28 @@ public class LocationTrackBean implements Serializable {
         this.employeeSpeed = employeeSpeed;
     }
 
-    public long getEmployeeTimeStamp() {
-        return employeeTimeStamp;
+
+    public String getEmployee_key_ids() {
+        return employee_key_ids;
     }
 
-    public void setEmployeeTimeStamp(long employeeTimeStamp) {
-        this.employeeTimeStamp = employeeTimeStamp;
+    public void setEmployee_key_ids(String employee_key_ids) {
+        this.employee_key_ids = employee_key_ids;
+    }
+
+    public String getEmployeeTimeStampLocalUTC() {
+        return employeeTimeStampLocalUTC;
+    }
+
+    public void setEmployeeTimeStampLocalUTC(String employeeTimeStampLocalUTC) {
+        this.employeeTimeStampLocalUTC = employeeTimeStampLocalUTC;
+    }
+
+    public String getEmployeeTimeStampLocal() {
+        return employeeTimeStampLocal;
+    }
+
+    public void setEmployeeTimeStampLocal(String employeeTimeStampLocal) {
+        this.employeeTimeStampLocal = employeeTimeStampLocal;
     }
 }

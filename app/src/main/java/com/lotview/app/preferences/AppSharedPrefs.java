@@ -22,6 +22,7 @@ public class AppSharedPrefs {
     public static final String IS_LOGIN = "is_login";
     public static final String LATITUDE = "latitude";
     public static final String LONGITUDE = "longitude";
+    public static final String SPEED = "speed";
 
 
     private static Context mContext = null;
@@ -165,6 +166,16 @@ public class AppSharedPrefs {
 
     public static String getLongitude() {
         return sp.getString(LONGITUDE, "0");
+    }
+
+
+    public static void setSpeed(String speed) {
+        prefEditor.putString(SPEED, speed);
+        prefEditor.commit();
+    }
+
+    public static String getSpeed() {
+        return sp.getString(SPEED, "0");
     }
 
 

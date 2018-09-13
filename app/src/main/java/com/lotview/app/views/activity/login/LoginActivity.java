@@ -46,9 +46,72 @@ import static io.nlopez.smartlocation.location.providers.LocationGooglePlayServi
  */
 public class LoginActivity extends BaseActivity {
 
-    private LoginActivityBinding binding;
     LoginViewModel viewModel;
+    private LoginActivityBinding binding;
+    Observer validatorObserver = new Observer<Integer>() {
+
+        @Override
+        public void onChanged(@Nullable Integer value) {
+            switch (value) {
+
+                case AppUtils.empty_id:
+                    Utils.showSnackBar(binding, getString(R.string.enter_employeeid));
+                    break;
+
+                case AppUtils.empty_password:
+                    Utils.showSnackBar(binding, getString(R.string.enter_password));
+                    break;
+
+                case AppUtils.invalid_mail:
+                    Utils.showSnackBar(binding, getString(R.string.enter_valid_employeeid));
+                    break;
+
+                case AppUtils.NO_INTERNET:
+                    Utils.hideProgressDialog();
+                    Utils.showSnackBar(binding, getString(R.string.internet_connection));
+                    break;
+
+                case AppUtils.SERVER_ERROR:
+                    Utils.showSnackBar(binding, getString(R.string.server_error));
+                    break;
+            }
+        }
+    };
     private Context context;
+    Observer<LoginResponseBean> response_observer = new Observer<LoginResponseBean>() {
+
+        @Override
+        public void onChanged(@Nullable LoginResponseBean loginBean) {
+
+            if (loginBean == null) {
+                Utils.showAlert(context, "", getString(R.string.server_error), getString(R.string.ok), "", AppUtils.dialog_ok_click, viewModel);
+                return;
+            }
+
+            if (loginBean.getCode().equals(AppUtils.STATUS_FAIL)) {
+                Utils.showAlert(context, "", loginBean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_click, viewModel);
+                return;
+            }
+
+            Gson gson = new Gson();
+
+            String user_detail = gson.toJson(loginBean.getResult());
+            String empId = loginBean.getResult().getEmployeeId() + "";
+            String empName = loginBean.getResult().getFirstname() + "";
+            boolean isRemember = true;
+
+            AppSharedPrefs.getInstance(context).setUserDetail(user_detail);
+            AppSharedPrefs.getInstance(context).setEmployeeID(empId);
+            AppSharedPrefs.getInstance(context).setEmployeeName(empName);
+            AppSharedPrefs.getInstance(context).setAccessToken(loginBean.getAccessToken());
+            AppSharedPrefs.getInstance(context).setRememberMe(isRemember);
+            AppSharedPrefs.getInstance(context).setLogin(true);
+            AppSharedPrefs.getInstance(context).setPassword(binding.etPassword.getText().toString());
+
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+            finish();
+        }
+    };
     private SmartLocation.LocationControl location_control;
 
     @Override
@@ -94,7 +157,7 @@ public class LoginActivity extends BaseActivity {
 
         LocationParams.Builder builder = new LocationParams.Builder();
         builder.setAccuracy(LocationAccuracy.HIGH);
-        builder.setDistance(1);
+        builder.setDistance(5); // in Meteres
         builder.setInterval(1000);
         LocationParams params = builder.build();
 
@@ -107,82 +170,14 @@ public class LoginActivity extends BaseActivity {
 
                 String lat = location.getLatitude() + "";
                 String lng = location.getLongitude() + "";
-                Log.e(lat + "onLocationUpdated: ", lng + "<<");
-                Utils.showToast(context, lat + "<location>" + lng);
+                Log.e(lat + " onLocationUpdated: ", lng + "<<");
                 AppSharedPrefs.setLatitude(lat);
                 AppSharedPrefs.setLatitude(lng);
-
+                AppSharedPrefs.setSpeed(location.getSpeed() + "");
             }
         });
 
     }
-
-
-    Observer validatorObserver = new Observer<Integer>() {
-
-        @Override
-        public void onChanged(@Nullable Integer value) {
-            switch (value) {
-
-                case AppUtils.empty_id:
-                    Utils.showSnackBar(binding, getString(R.string.enter_employeeid));
-                    break;
-
-                case AppUtils.empty_password:
-                    Utils.showSnackBar(binding, getString(R.string.enter_password));
-                    break;
-
-                case AppUtils.invalid_mail:
-                    Utils.showSnackBar(binding, getString(R.string.enter_valid_employeeid));
-                    break;
-
-                case AppUtils.NO_INTERNET:
-                    Utils.hideProgressDialog();
-                    Utils.showSnackBar(binding, getString(R.string.internet_connection));
-                    break;
-
-                case AppUtils.SERVER_ERROR:
-                    Utils.showSnackBar(binding, getString(R.string.server_error));
-                    break;
-            }
-        }
-    };
-
-    Observer<LoginResponseBean> response_observer = new Observer<LoginResponseBean>() {
-
-        @Override
-        public void onChanged(@Nullable LoginResponseBean loginBean) {
-
-            if (loginBean == null) {
-                Utils.showAlert(context, "", getString(R.string.server_error), getString(R.string.ok), "", AppUtils.dialog_ok_click, viewModel);
-                return;
-            }
-
-            if (loginBean.getCode().equals(AppUtils.STATUS_FAIL)) {
-                Utils.showAlert(context, "", loginBean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_click, viewModel);
-                return;
-            }
-
-            Gson gson = new Gson();
-
-            String user_detail = gson.toJson(loginBean.getResult());
-            String empId = loginBean.getResult().getEmployeeId() + "";
-            String empName = loginBean.getResult().getFirstname() + "";
-            boolean isRemember = true;
-
-            AppSharedPrefs.getInstance(context).setUserDetail(user_detail);
-            AppSharedPrefs.getInstance(context).setEmployeeID(empId);
-            AppSharedPrefs.getInstance(context).setEmployeeName(empName);
-            AppSharedPrefs.getInstance(context).setAccessToken(loginBean.getAccessToken());
-            AppSharedPrefs.getInstance(context).setRememberMe(isRemember);
-            AppSharedPrefs.getInstance(context).setLogin(true);
-            AppSharedPrefs.getInstance(context).setPassword(binding.etPassword.getText().toString());
-
-            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-            finish();
-        }
-    };
-
 
     @Override
     public void onClick(View view) {
@@ -213,9 +208,9 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onStop() {
         super.onStop();
-//        if (location_control != null) {
-//            location_control.stop();
-//        }
+        if (location_control != null) {
+            location_control.stop();
+        }
     }
 
 

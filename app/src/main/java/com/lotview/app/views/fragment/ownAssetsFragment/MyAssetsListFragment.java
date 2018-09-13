@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -21,7 +22,6 @@ import android.widget.SearchView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.lotview.app.R;
-import com.lotview.app.application.KeyKeepApplication;
 import com.lotview.app.databinding.MyAssetListFragmentBinding;
 import com.lotview.app.model.bean.AssetsListResponseBean;
 import com.lotview.app.preferences.AppSharedPrefs;
@@ -29,6 +29,7 @@ import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Utils;
 import com.lotview.app.views.adapter.MyAssetsAdapter;
 import com.lotview.app.views.base.BaseFragment;
+import com.lotview.app.views.services.LocationListenerService;
 
 import java.util.ArrayList;
 
@@ -125,7 +126,7 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
                 resultArrayList = assetsListResponseBean.getResult();
                 myAssetAdapter.setAssetList(getActivity(), resultArrayList);
 
-                KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().insertOrReplaceInTx(Utils.getLocationDetail(context));
+                startLocationStorage();
 
             } else {
                 noDataView();
@@ -157,6 +158,7 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
                 binding.recyclerView.setVisibility(View.VISIBLE);
                 binding.noDataFountLayout.setVisibility(View.GONE);
             } else {
+                stopLocationStorage();
                 noDataView();
             }
         }
@@ -185,4 +187,16 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
         binding.tvNoRecords.setText(getString(R.string.txt_no_records_avialable));
     }
 
+    private void startLocationStorage() {
+        Intent serviceIntent = new Intent(context, LocationListenerService.class);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            getActivity().startForegroundService(serviceIntent);
+        } else {
+            getActivity().startService(serviceIntent);
+        }
+    }
+
+    private void stopLocationStorage() {
+        LocationListenerService.stopLocationUpdate();
+    }
 }

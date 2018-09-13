@@ -61,4 +61,8 @@ public interface Keys {
     /*Latitude  &  Longitude*/
     String EMPLOYEE_LATITUDE = "emp_lat";
     String EMPLOYEE_LONGITUDE = "emp_long";
+
+    String CHANNEL_NAME = "channel_name";
+
+
 }

@@ -78,6 +78,9 @@
         </service>
 
 
+        <service android:name=".views.services.LocationListenerService" />
+
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="0b2a50fa30c096f0b61aae2622ab361081013c2f" />
