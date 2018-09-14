@@ -144,16 +144,18 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
     private final int[] menuItemIcons = new int[]{
             R.drawable.home,
             R.drawable.slider_pending_req,
-            R.drawable.slider_notification, R.drawable.slider_profile, R.drawable.slider_settings,
+            R.drawable.slider_notification, R.drawable.slider_settings,
             R.drawable.slider_logout
+            /*R.drawable.slider_profile,*/
     };
 
     private final int[] menuItemIconsSelected = new int[]{
 
             R.drawable.home_hover,
             R.drawable.pending_req_hover,
-            R.drawable.notification_hover, R.drawable.profile_hover, R.drawable.settings_hover,
+            R.drawable.notification_hover, R.drawable.settings_hover,
             R.drawable.logout_hover
+            /*R.drawable.profile_hover,*/
     };
 
     private void prepareMenuItemList() {
@@ -267,14 +269,14 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
                 Utils.replaceFragment(HomeActivity.this, new NotificationFragment());
 
                 break;
-            case 3://Profile
+          /*  case 3://Profile
                 setDrawerHover(position);
-                break;
-            case 4://Setting
+                break;*/
+            case 3://Setting
                 setDrawerHover(position);
 
                 break;
-            case 5: //Logout
+            case 4: //Logout
                 setDrawerHover(position);
                 Utils.showAlert(context, getResources().getString(R.string.app_name)
                         , getResources().getString(R.string.logout_message)
@@ -403,7 +405,6 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
     }
 
     private void handlePushCall(PushData pushData) {
-
 
         switch (pushData.getPushType()) {
             case Keys.NOTIFICATION_ASSET_REQUEST_APPROVE:

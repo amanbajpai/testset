@@ -61,7 +61,7 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
         binding.setViewModel(viewModel);
         initializeViews(binding.getRoot());
         Utils.showProgressDialog(context, getString(R.string.loading));
-        viewModel.getMyAssets(binding, AppSharedPrefs.getInstance(context).getEmployeeID());
+        viewModel.getMyAssets(binding, AppSharedPrefs.getInstance(context).getEmployeeID(), "");
         return binding.getRoot();
 
     }
@@ -85,6 +85,7 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
             @Override
             public boolean onQueryTextSubmit(String query) {
                 myAssetAdapter.notifyDataSetChanged();
+                viewModel.getMyAssets(binding, AppSharedPrefs.getInstance(context).getEmployeeID(), query);
                 return false;
             }
 
@@ -96,13 +97,14 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
                     binding.recyclerView.setVisibility(View.VISIBLE);
                     binding.noDataFountLayout.setVisibility(View.GONE);
                     myAssetAdapter.setAssetList(getContext(), resultArrayList);
+                    viewModel.getMyAssets(binding, AppSharedPrefs.getInstance(context).getEmployeeID(), "");
                 } else {
-                    try {
-                        myAssetAdapter.getFilter().filter(newText);
-                        myAssetAdapter.notifyDataSetChanged();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+//                    try {
+//                        myAssetAdapter.getFilter().filter(newText);
+//                        myAssetAdapter.notifyDataSetChanged();
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
 
                 }
 
@@ -166,7 +168,7 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
 
     @Override
     public void onRefresh() {
-        viewModel.getMyAssets(binding, AppSharedPrefs.getInstance(context).getEmployeeID());
+        viewModel.getMyAssets(binding, AppSharedPrefs.getInstance(context).getEmployeeID(), "");
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

@@ -72,7 +72,7 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
         binding.setViewModel(viewModel);
         initializeViews(binding.getRoot());
         Utils.showProgressDialog(context, getString(R.string.loading));
-        viewModel.getAllAssets(binding);
+        viewModel.getAllAssets(binding, "");
         return binding.getRoot();
     }
 
@@ -94,6 +94,8 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
             @Override
             public boolean onQueryTextSubmit(String query) {
                 allAssetAdapter.notifyDataSetChanged();
+                //  Added Search API here
+                viewModel.getAllAssets(binding, query);
                 return false;
             }
 
@@ -104,19 +106,20 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
                     binding.recyclerView.setVisibility(View.VISIBLE);
                     binding.noDataFountLayout.setVisibility(View.GONE);
                     allAssetAdapter.setAssetList(getContext(), resultArrayList);
+                    viewModel.getAllAssets(binding, "");
                 } else {
-                    try {
-                        allAssetAdapter.getFilter().filter(newText);
-                        allAssetAdapter.notifyDataSetChanged();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    // Comitted for Local search
+//                    try {
+//                        allAssetAdapter.getFilter().filter(newText);
+//                        allAssetAdapter.notifyDataSetChanged();
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
                 }
 
                 return false;
             }
         });
-
     }
 
 
@@ -140,7 +143,7 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
 
     @Override
     public void onRefresh() {
-        viewModel.getAllAssets(binding);
+        viewModel.getAllAssets(binding, "");
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

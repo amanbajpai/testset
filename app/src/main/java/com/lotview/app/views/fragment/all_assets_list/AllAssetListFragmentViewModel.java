@@ -22,11 +22,11 @@ public class AllAssetListFragmentViewModel extends BaseViewModel {
     public final MutableLiveData<Integer> validator = new MutableLiveData<>();
     public final MutableLiveData<AssetsListResponseBean> response_validator = new MutableLiveData<>();
 
-    public void getAllAssets(AllAssetListFragmentBinding binding) {
+    public void getAllAssets(AllAssetListFragmentBinding binding, String text_to_search) {
 
         String employeeId = AppSharedPrefs.getInstance(KeyKeepApplication.getInstance()).getEmployeeID();
 
-        Call<AssetsListResponseBean> call = RetrofitHolder.getService().getAssetsList(KeyKeepApplication.getInstance().getBaseEntity(false), employeeId, "0");
+        Call<AssetsListResponseBean> call = RetrofitHolder.getService().getAssetsList(KeyKeepApplication.getInstance().getBaseEntity(false), employeeId, "0", text_to_search);
 
         call.enqueue(new Callback<AssetsListResponseBean>() {
             @Override
@@ -40,4 +40,5 @@ public class AllAssetListFragmentViewModel extends BaseViewModel {
             }
         });
     }
+
 }

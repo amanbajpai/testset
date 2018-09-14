@@ -29,15 +29,12 @@ public interface Keys {
     String PASSWORD = "password";
 
 
-    /**
-     * change password
-     */
     String EMPLOYEE_ID = "employee_id";
     String OLD_PASSWORD = "old_password";
     String NEW_PASSWORD = "new_password";
     String CONFIRM_NEW_PASSWORD = "confirm_new_password";
     String IS_MY_ASSETS = "is_my_assets";
-
+    String TEXT_TO_SEARCH = "search_key";
 
     /**
      * qr code

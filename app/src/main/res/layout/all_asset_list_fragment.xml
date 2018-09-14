@@ -27,6 +27,7 @@
                 android:background="@drawable/search_background"
                 android:focusable="false"
                 android:iconifiedByDefault="false"
+                android:imeOptions="actionSearch"
                 android:queryHint="Search here" />
 
             <com.jcodecraeer.xrecyclerview.XRecyclerView
@@ -40,16 +41,16 @@
             android:id="@+id/no_data_fount_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:orientation="vertical"
-            android:visibility="gone"
-            android:layout_centerInParent="true">
+            android:visibility="gone">
 
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:src="@drawable/no_data_error" />
 

@@ -29,7 +29,8 @@ public interface KeyKeepAPI {
     public Call<ForgotPasswordResponseBean> forgotPassword(@Body BaseRequestEntity baseRequestEntity, @Query(Keys.EMAIL) String email);
 
     @POST(Config.ASSET_LIST_URL)
-    public Call<AssetsListResponseBean> getAssetsList(@Body BaseRequestEntity baseRequestEntity, @Query(Keys.EMPLOYEE_ID) String employeeId, @Query(Keys.IS_MY_ASSETS) String isMyAsset);
+    public Call<AssetsListResponseBean> getAssetsList(@Body BaseRequestEntity baseRequestEntity, @Query(Keys.EMPLOYEE_ID) String employeeId, @Query(Keys.IS_MY_ASSETS) String isMyAsset,
+                                                      @Query(Keys.TEXT_TO_SEARCH) String textToSearch);
 
     @POST(Config.CHANGE_PASSWORD_URL)
     Call<ChangePasswordBean> doChangePassword(
@@ -115,7 +116,7 @@ public interface KeyKeepAPI {
 
     @POST(Config.LOGOUT_REQ_URL)
     Call<BaseResponse> doLogout(@Body BaseRequestEntity baseEntity,
-                                                            @Query(Keys.EMPLOYEE_ID) String emp_id);
+                                @Query(Keys.EMPLOYEE_ID) String emp_id);
 
 
 }

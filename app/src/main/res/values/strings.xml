@@ -6,7 +6,7 @@
         <item>Home</item><!--0-->
         <item>Key Requests</item><!--7-->
         <item>Notifications</item><!--8-->
-        <item>Profile</item>
+        <!-- <item>Profile</item>-->
         <item>Setting</item>
         <item>Logout</item>
     </array>
