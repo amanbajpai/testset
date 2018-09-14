@@ -1864,18 +1864,7 @@ public class Utils {
         return type;
     }
 
-    public static LocationTrackBean getLocationDetail(Context context) {
 
-        LocationTrackBean locationTrackBean = new LocationTrackBean();
-        locationTrackBean.setEmployeeId(Integer.valueOf(AppSharedPrefs.getInstance(context).getEmployeeID()));
-        locationTrackBean.setEmployeeLatitue(Double.valueOf(AppSharedPrefs.getLatitude()));
-        locationTrackBean.setEmployeeLongitude(Double.valueOf(AppSharedPrefs.getLongitude()));
-        locationTrackBean.setEmployeeSpeed(Float.valueOf(AppSharedPrefs.getSpeed()));
-        locationTrackBean.setEmployeeTimeStampLocal(getCurrentTimeStampDate());
-        locationTrackBean.setEmployeeTimeStampLocalUTC(getCurrentUTC());
-
-        return locationTrackBean;
-    }
 
 
 }

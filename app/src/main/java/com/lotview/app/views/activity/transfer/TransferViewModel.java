@@ -28,7 +28,7 @@ public class TransferViewModel extends BaseViewModel {
 
         String employeeId = AppSharedPrefs.getEmployeeID();
 
-        Call<AssetsListResponseBean> call = RetrofitHolder.getService().getAssetsList(KeyKeepApplication.getInstance().getBaseEntity(false), employeeId, "1");
+        Call<AssetsListResponseBean> call = RetrofitHolder.getService().getAssetsList(KeyKeepApplication.getInstance().getBaseEntity(false), employeeId, "1", "");
 
         call.enqueue(new Callback<AssetsListResponseBean>() {
             @Override

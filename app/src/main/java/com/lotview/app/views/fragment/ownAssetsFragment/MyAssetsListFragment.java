@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -118,7 +119,6 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
     public void onClick(View view) {
     }
 
-
     Observer<AssetsListResponseBean> response_observer = new Observer<AssetsListResponseBean>() {
 
         @Override
@@ -127,8 +127,8 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
             if (assetsListResponseBean != null && assetsListResponseBean.getResult() != null && assetsListResponseBean.getResult().size() > 0) {
                 resultArrayList = assetsListResponseBean.getResult();
                 myAssetAdapter.setAssetList(getActivity(), resultArrayList);
-
-                startLocationStorage();
+                storeOwnedKeyIdsPreferences(assetsListResponseBean);
+                //  startLocationStorage();             // Enable this line to start location  Storage to databse need to test with API submission
 
             } else {
                 noDataView();
@@ -200,5 +200,21 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
 
     private void stopLocationStorage() {
         LocationListenerService.stopLocationUpdate();
+    }
+
+    private void storeOwnedKeyIdsPreferences(AssetsListResponseBean assetsListResponseBean) {
+        String ownedKeys = null;
+        if (assetsListResponseBean != null && assetsListResponseBean.getResult().size() > 0) {
+            for (int i = 0; i < assetsListResponseBean.getResult().size(); i++) {
+                if (!TextUtils.isEmpty(assetsListResponseBean.getResult().get(i).getAssetId())) {
+                    if (ownedKeys != null) {
+                        ownedKeys = ownedKeys + "," + assetsListResponseBean.getResult().get(i).getAssetId();
+                    } else {
+                        ownedKeys = assetsListResponseBean.getResult().get(i).getAssetId();
+                    }
+                }
+            }
+            AppSharedPrefs.getInstance(context).setOwnedKeyIds(ownedKeys);
+        }
     }
 }

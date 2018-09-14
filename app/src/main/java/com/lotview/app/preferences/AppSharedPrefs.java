@@ -179,4 +179,14 @@ public class AppSharedPrefs {
     }
 
 
+    public static void setOwnedKeyIds(String speed) {
+        prefEditor.putString(SPEED, speed);
+        prefEditor.commit();
+    }
+
+    public static String getOwnedKeyIds() {
+        return sp.getString(SPEED, "0");
+    }
+
+
 }

@@ -5,6 +5,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
@@ -15,8 +16,10 @@ import android.util.Log;
 
 import com.lotview.app.R;
 import com.lotview.app.application.KeyKeepApplication;
+import com.lotview.app.model.location.LocationTrackBean;
 import com.lotview.app.netcom.Keys;
 import com.lotview.app.preferences.AppSharedPrefs;
+import com.lotview.app.utils.Utils;
 import com.lotview.app.views.activity.home.HomeActivity;
 
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
@@ -32,6 +35,9 @@ public class LocationListenerService extends Service {
     private static final String TAG = "TimerService";
     private static SmartLocation.LocationControl location_control;
     private boolean isToStartLocationUpdate = false;
+    private double latitude;
+    private double longitude;
+    private float speed;
 
     public LocationListenerService(boolean needToStartLocation) {
         isToStartLocationUpdate = needToStartLocation;
@@ -117,6 +123,8 @@ public class LocationListenerService extends Service {
         location_control.start(new OnLocationUpdatedListener() {
             @Override
             public void onLocationUpdated(Location location) {
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
 
                 String lat = location.getLatitude() + "";
                 String lng = location.getLongitude() + "";
@@ -133,5 +141,21 @@ public class LocationListenerService extends Service {
         if (location_control != null) {
             location_control.stop();
         }
+    }
+
+    public LocationTrackBean getLocationBean(Context context) {
+
+        LocationTrackBean locationTrackBean = new LocationTrackBean();
+        locationTrackBean.setEmployeeId(Integer.valueOf(AppSharedPrefs.getInstance(context).getEmployeeID()));
+        locationTrackBean.setEmployeeLatitue(latitude);
+        locationTrackBean.setEmployeeLongitude(longitude);
+        locationTrackBean.setEmployeeSpeed(speed);
+        locationTrackBean.setEmployeeTimeStampLocal(Utils.getCurrentTimeStampDate());
+        locationTrackBean.setEmployeeTimeStampLocalUTC(Utils.getCurrentUTC());
+        locationTrackBean.setEmployee_key_ids(AppSharedPrefs.getInstance(this).getOwnedKeyIds());
+
+        KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().insertOrReplaceInTx(locationTrackBean);
+
+        return locationTrackBean;
     }
 }

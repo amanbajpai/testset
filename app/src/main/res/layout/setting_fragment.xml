@@ -11,7 +11,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:clickable="true">
 
 
         <LinearLayout
@@ -28,17 +29,18 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_3sdp">
 
                 <com.lotview.app.views.custom_view.StyledTextViewRegular
                     android:id="@+id/guide_view_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/tittle_notifications"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/_15sdp"
-                    android:textColor="@color/black"
                     android:layout_marginTop="@dimen/_7sdp"
+                    android:text="@string/tittle_notifications"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/_15sdp" />
 
                 <android.support.v7.widget.SwitchCompat
