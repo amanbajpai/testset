@@ -29,6 +29,9 @@ public interface Config {
     String CANCEL_ASSET_REQ_URL = "assetrequestdecline";
     String APPROVE_ASSET_REQ_URL = "assetrequestapprove";
     String NOTIFICATIONS_REQ_URL = "notificationlist";
+    String NOTIFICATION_ARCHICVE= "notificationarchive";
+    String NOTIFICATION_ENABLE_URL ="notificationenable";
+
 
 
 }

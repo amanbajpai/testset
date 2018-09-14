@@ -233,7 +233,6 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
             } else {
                 Utils.showAlert(context, "", bean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_to_finish, AssetDetailActivity.this);
             }
-
         }
     };
 
@@ -323,7 +322,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         binding.scanButton.setOnClickListener(AssetDetailActivity.this);
         asset_emp_id = Utils.validateInt(resultBean.getEmployeeId()) + "";
         qr_code = resultBean.getQrCodeNumber();
-        tag_number= resultBean.getQrCodeNumber();
+        tag_number= resultBean.getTagNumber();
 
         if (Utils.validateStringValue(resultBean.getEmployeeName()).equals("")) {
             binding.employeeContainer.setVisibility(View.GONE);
@@ -405,7 +404,6 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         if (asset_emp_id == null || asset_emp_id.equals("0")) {
             viewModel.keepAssetRequest(qr_code, mEmp_id);
 
-
             /**
              * Asset handover
              */
@@ -456,6 +454,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
                             "", AppUtils.dialog_ok_click, this);
                     return;
                 }
+                qr_code = qr_tag_number;
                 HAS_SCANNED = true;
                 validateSubmitView();
 

@@ -33,6 +33,7 @@ import com.lotview.app.views.base.BaseActivity;
 import com.lotview.app.views.fragment.asset_request_fragment.AssetRequestFragment;
 import com.lotview.app.views.fragment.home.HomeFragment;
 import com.lotview.app.views.fragment.notifications.NotificationFragment;
+import com.lotview.app.views.fragment.setting.SettingFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +58,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
     public TextView title_tv;
     private static boolean activityVisible;
     private TextView tvProfileUserName;
+    private TextView icon_right;
 
 
     @Override
@@ -75,6 +77,21 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
 
     }
 
+
+    public void setRightButtonEnable(String title, boolean isEnable, View.OnClickListener listener) {
+        if (isEnable) {
+            icon_right.setText(title);
+            icon_right.setVisibility(View.VISIBLE);
+            icon_right.setOnClickListener(listener);
+
+        } else {
+            icon_right.setVisibility(View.GONE);
+            icon_right.setOnClickListener(null);
+        }
+
+    }
+
+
     @Override
     public void initializeViews() {
         try {
@@ -85,6 +102,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
             toolbar = (Toolbar) findViewById(R.id.home_layout_toolbar);
             title_tv = (TextView) findViewById(R.id.title_tv);
             recyclerView = (XRecyclerView) findViewById(R.id.recycler_view);
+            icon_right = findViewById(R.id.icon_right);
             recyclerView.setLoadingMoreEnabled(false);
             recyclerView.setPullRefreshEnabled(false);
             View leftDrawerHeader = View.inflate(context, R.layout.left_drawer_header, null);
@@ -241,6 +259,12 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
             return;
         }
 
+        /**
+         * disable right button
+         */
+        setRightButtonEnable("",false,null);
+
+
         mDrawerLayout.closeDrawer(drawerView);
 
         switch (position) {
@@ -261,13 +285,17 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
                 Utils.replaceFragment(HomeActivity.this, new NotificationFragment());
 
                 break;
+
             case 3://Profile
                 setDrawerHover(position);
                 break;
+
             case 4://Setting
                 setDrawerHover(position);
-
+                title_tv.setText(getString(R.string.setting));
+                Utils.replaceFragment(HomeActivity.this, new SettingFragment());
                 break;
+
             case 5: //Logout
                 setDrawerHover(position);
                 Utils.showAlert(context, getResources().getString(R.string.app_name)

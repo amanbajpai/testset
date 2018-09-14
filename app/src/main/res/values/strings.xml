@@ -113,6 +113,8 @@
     <string name="owner">Key Owner:</string>
     <string name="invalid_qr_code">Invalid qr code</string>
     <string name="employee_id">Employee Id</string>
+    <string name="notification_alert">Do you want to clear all notification</string>
+    <string name="setting">Setting</string>
 
 
 </resources>

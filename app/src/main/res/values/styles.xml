@@ -41,5 +41,9 @@
 
     </style>
 
+    <style name="SwitchCompatTheme">
+        <item name="colorControlActivated">@color/app_blue</item>
+    </style>
+
 
 </resources>
