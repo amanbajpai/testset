@@ -35,7 +35,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
-        Utils.showLog(TAG, "Message==" + remoteMessage.getData());
+
         try {
             if (remoteMessage.getData().size() > 0) {
                 Utils.showLog(TAG, "Data payload==" + remoteMessage.getData());

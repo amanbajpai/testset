@@ -91,7 +91,6 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
             case R.id.chat_rl:
                 break;
         }
-
     }
 
 
@@ -139,7 +138,7 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
                     startActivity(intent);
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Utils.showSnackBar(binding, getString(R.string.unable_to_scan_qr));
+                    Utils.showSnackBar(binding, getString(R.string.invalid_qr_code));
                 }
             }
 

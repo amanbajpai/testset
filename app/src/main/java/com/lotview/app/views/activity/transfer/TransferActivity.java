@@ -3,6 +3,7 @@ package com.lotview.app.views.activity.transfer;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +16,7 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.lotview.app.R;
 import com.lotview.app.databinding.ActivityTransferAssetBinding;
 import com.lotview.app.model.bean.AssetsListResponseBean;
+import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Utils;
 import com.lotview.app.views.adapter.TransferAssetAdapter;
 import com.lotview.app.views.base.BaseActivity;
@@ -23,7 +25,7 @@ import com.lotview.app.views.custom_view.CustomActionBar;
 /**
  * Created by akshaydashore on 31/8/18
  */
-public class TransferActivity extends BaseActivity implements XRecyclerView.LoadingListener {
+public class TransferActivity extends BaseActivity implements XRecyclerView.LoadingListener, TransferAssetAdapter.ActivityForResult {
 
 
     private Context context;
@@ -60,7 +62,6 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
         binding.recyclerView.setLoadingMoreEnabled(false);
         viewModel.response_validator.observe(this, response_observer);
         Utils.hideSoftKeyboard(this);
-
         Utils.showProgressDialog(context, getString(R.string.loading));
         viewModel.getMyAssets(binding);
 
@@ -85,7 +86,7 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
             if (assetsListResponseBean != null && assetsListResponseBean.getResult() != null && assetsListResponseBean.getResult().size() > 0) {
                 LinearLayoutManager manager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
                 binding.recyclerView.setLayoutManager(manager);
-                myAssetAdapter = new TransferAssetAdapter(context, assetsListResponseBean);
+                myAssetAdapter = new TransferAssetAdapter(context, assetsListResponseBean, TransferActivity.this);
                 binding.recyclerView.setAdapter(myAssetAdapter);
             } else {
                 noDataView();
@@ -115,6 +116,19 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
         binding.tvNoRecords.setText(getString(R.string.txt_no_records_avialable));
     }
 
+
+    @Override
+    public void onCallActivityResult(Intent intent) {
+        startActivityForResult(intent, AppUtils.REQ_REFRESH_VIEW);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AppUtils.REQ_REFRESH_VIEW) {
+            viewModel.getMyAssets(binding);
+        }
+    }
 
 }
 

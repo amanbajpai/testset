@@ -108,9 +108,7 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
                 binding.recyclerView.setVisibility(View.VISIBLE);
                 assetRequestAdapter = new AssetRequestAdapter(getActivity(), assetsListResponseBean, typeRequest);
                 binding.recyclerView.setAdapter(assetRequestAdapter);
-                if (typeRequest == AppUtils.STATUS_ASSET_SEND_REQUEST1) {
-                    assetRequestAdapter.setListener(AssetRequestFragment.this);
-                }
+                assetRequestAdapter.setListener(AssetRequestFragment.this);
             } else {
                 noDataView();
             }

@@ -36,9 +36,9 @@
     <string name="login">Login</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="password">Password</string>
-    <string name="enter_employeeid">Please enter employeeId</string>
-    <string name="enter_password">Enter password</string>
-    <string name="enter_valid_employeeid">Please enter valide mailId</string>
+    <string name="enter_employeeid">Please enter employee id</string>
+    <string name="enter_password">Please enter password</string>
+    <string name="enter_valid_employeeid">Please enter valid employee id</string>
     <string name="error">Error</string>
     <string name="server_error">Server Error</string>
     <string name="submit">Submit</string>
@@ -111,6 +111,8 @@
     <string name="tag_number">Tag Number</string>
     <string name="owner_you">Key Owner: You</string>
     <string name="owner">Key Owner:</string>
+    <string name="invalid_qr_code">Invalid qr code</string>
+    <string name="employee_id">Employee Id</string>
 
 
 </resources>

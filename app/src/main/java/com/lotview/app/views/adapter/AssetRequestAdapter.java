@@ -114,7 +114,8 @@ public class AssetRequestAdapter extends RecyclerView.Adapter<AssetRequestAdapte
                     intent.putExtra(AppUtils.ASSET_REQUEST_ID, bean.getAssetEmployeeAssignedLogId());
                     intent.putExtra(AppUtils.SCANED_QR_CODE, bean.getQrCodeNumber());
                     intent.putExtra(AppUtils.ASSET_REQUESTED_BY_EMP_NAME, bean.getRequestedByEmployeeName());
-                    context.startActivity(intent);
+                    if (listener != null)
+                        listener.onCallActivityResult(intent);
                 }
             }
         });

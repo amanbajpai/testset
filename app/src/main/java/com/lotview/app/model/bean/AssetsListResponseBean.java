@@ -77,6 +77,10 @@ public class AssetsListResponseBean extends BaseResponse {
         @Expose
         private String assigned_approved_or_decline_at;
 
+        @SerializedName("assets_hold_remain_datetime")
+        @Expose
+        private String assetsHoldRemainDatetime;
+
         @SerializedName("assets_hold_remain_time")
         @Expose
         private String assets_hold_remain_time;
@@ -100,6 +104,14 @@ public class AssetsListResponseBean extends BaseResponse {
         @Expose
         private String assigned_request_at;
 
+
+        public String getAssetsHoldRemainDatetime() {
+            return assetsHoldRemainDatetime;
+        }
+
+        public void setAssetsHoldRemainDatetime(String assetsHoldRemainDatetime) {
+            this.assetsHoldRemainDatetime = assetsHoldRemainDatetime;
+        }
 
         public String getAssigned_approved_or_decline_at() {
             return assigned_approved_or_decline_at;
