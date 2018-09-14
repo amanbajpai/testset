@@ -101,7 +101,7 @@ public class MyAssetsAdapter extends RecyclerView.Adapter<MyAssetsAdapter.Holder
         }
 
         String date = Utils.formattedDateFromString(Utils.INPUT_DATE_TIME_FORMATE, Utils.OUTPUT_DATE_TIME_FORMATE, bean.getAssigned_approved_or_decline_at());
-        String time = Utils.formattedDateFromString(Utils.INPUT_DATE_TIME_FORMATE, Utils.OUTPUT_TIME_FORMATE, bean.getAssigned_approved_or_decline_at());
+        String time = Utils.formattedDateFromString(Utils.INPUT_TIME_FORMATE, Utils.OUTPUT_HOUR_TIME_FORMATE, bean.getAssets_hold_remain_time());
 
         //currently use to show owner
         holder.assigned_at_tv.setText("Assigned At: " + date);

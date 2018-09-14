@@ -106,6 +106,8 @@ public class Utils {
     public static final String INPUT_DATE_TIME_FORMATE = "yyyy-MM-dd HH:mm:ss";
     public static final String OUTPUT_DATE_TIME_FORMATE = "dd-MM-yyyy HH:mm:a";
     public static final String OUTPUT_TIME_FORMATE = "HH:mm:a";
+    public static final String INPUT_TIME_FORMATE = "HH:mm:ss";
+    public static final String OUTPUT_HOUR_TIME_FORMATE = "HH:mm";
 
 
     public static void showToast(Context context, String message) {

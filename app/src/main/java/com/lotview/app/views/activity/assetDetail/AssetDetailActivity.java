@@ -41,6 +41,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
     private int req_id = -1;
     boolean IS_FROM_SCANNER = false;
     private String assetRequestedByName;
+    private String tag_number;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -322,6 +323,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         binding.scanButton.setOnClickListener(AssetDetailActivity.this);
         asset_emp_id = Utils.validateInt(resultBean.getEmployeeId()) + "";
         qr_code = resultBean.getQrCodeNumber();
+        tag_number= resultBean.getQrCodeNumber();
 
         if (Utils.validateStringValue(resultBean.getEmployeeName()).equals("")) {
             binding.employeeContainer.setVisibility(View.GONE);
@@ -448,7 +450,8 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
                 String result = data.getStringExtra(AppUtils.QR_NUMBER_MANUAL_SCAN_SUCCESS);
                 String qr_tag_number = data.getStringExtra(AppUtils.SCAN_SUCCESS);
 
-                if (!qr_code.equals("") && !qr_tag_number.equals(qr_code)) {
+                if (!tag_number.equals("") && !qr_tag_number.equals(tag_number))
+                {
                     Utils.showAlert(context, "", getString(R.string.sorry_qr_code_does_not_match), "ok", "" +
                             "", AppUtils.dialog_ok_click, this);
                     return;
@@ -472,7 +475,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Utils.showSnackBar(binding, getString(R.string.unable_to_scan_qr));
+                    Utils.showSnackBar(binding, getString(R.string.invalid_qr_code));
                 }
             }
 
@@ -482,7 +485,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == AppUtils.REQUEST_CODE_CAMERA || Utils.onRequestPermissionsResult(permissions, grantResults)) {
+        if (requestCode == AppUtils.REQUEST_CODE_CAMERA && Utils.onRequestPermissionsResult(permissions, grantResults)) {
             startActivityForResult(new Intent(context, QrCodeActivity.class), AppUtils.REQUEST_CODE_QR_SCAN);
         } else {
             Utils.showSnackBar(binding, getString(R.string.allow_camera_permission));

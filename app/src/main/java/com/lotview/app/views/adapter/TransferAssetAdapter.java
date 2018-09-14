@@ -22,12 +22,16 @@ public class TransferAssetAdapter extends RecyclerView.Adapter<TransferAssetAdap
 
     Context context;
     private AssetsListResponseBean assetLists;
+    ActivityForResult listener;
 
-    public TransferAssetAdapter(Context context, AssetsListResponseBean resultAssetList) {
+    public TransferAssetAdapter(Context context, AssetsListResponseBean resultAssetList,ActivityForResult listener) {
         this.context = context;
         this.assetLists = resultAssetList;
+        this.listener = listener;
 
     }
+
+
 
     @NonNull
     @Override
@@ -50,7 +54,7 @@ public class TransferAssetAdapter extends RecyclerView.Adapter<TransferAssetAdap
                 Intent intent = new Intent(context, AssetDetailActivity.class);
                 intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_TRANSFER_ASSET_LIST);
                 intent.putExtra(AppUtils.SCANED_QR_CODE, bean.getQrCodeNumber());
-                context.startActivity(intent);
+                listener.onCallActivityResult(intent);
             }
         });
         holder.assetName.setText(assetLists.getResult().get(position).getAssetName());
@@ -82,6 +86,10 @@ public class TransferAssetAdapter extends RecyclerView.Adapter<TransferAssetAdap
             versionNumber = itemView.findViewById(R.id.tv_version_number);
             availableStatus = itemView.findViewById(R.id.tv_available_status);
         }
+    }
+
+    public interface ActivityForResult {
+        void onCallActivityResult(Intent intent);
     }
 
 }

@@ -19,7 +19,7 @@ import com.lotview.app.views.base.BaseActivity;
 /**
  * Created by akshaydashore on 27/8/18
  */
-public class ForgotPasswordActivity extends BaseActivity implements DialogClickListener{
+public class ForgotPasswordActivity extends BaseActivity implements DialogClickListener {
 
     ActivityForgotPasswordBinding binding;
     ForgotViewModel viewModel;
@@ -53,9 +53,11 @@ public class ForgotPasswordActivity extends BaseActivity implements DialogClickL
                     Utils.showSnackBar(binding, getString(R.string.enter_employeeid));
                     break;
 
-                case AppUtils.empty_password:
-                    Utils.showSnackBar(binding, getString(R.string.enter_password));
+                case AppUtils.invalid_mail:
+                    Utils.showSnackBar(binding, getString(R.string.enter_valid_employeeid));
                     break;
+
+
                 case AppUtils.NO_INTERNET:
                     Utils.hideProgressDialog();
                     Utils.showSnackBar(binding, getString(R.string.internet_connection));
