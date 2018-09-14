@@ -18,10 +18,13 @@ import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.lotview.app.R;
+import com.lotview.app.application.KeyKeepApplication;
 import com.lotview.app.interfaces.DialogClickListener;
 import com.lotview.app.model.LeftMenuDrawerItems;
+import com.lotview.app.model.bean.BaseResponse;
 import com.lotview.app.model.notification.PushData;
 import com.lotview.app.netcom.Keys;
+import com.lotview.app.netcom.retrofit.RetrofitHolder;
 import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Connectivity;
@@ -36,6 +39,10 @@ import com.lotview.app.views.fragment.notifications.NotificationFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -387,9 +394,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
             case AppUtils.dialog_logout_app:
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
-                        Intent intent = new Intent(this, LoginActivity.class);
-                        startActivity(intent);
-                        finish();
+                        doLogout();
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
                         break;
@@ -429,6 +434,39 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
             handlePushCall(pushData);
         }
 
+    }
+
+    public void doLogout() {
+
+        if (!Connectivity.isConnected()) {
+            Utils.hideProgressDialog();
+            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
+        try {
+            String mEmp_id = AppSharedPrefs.getInstance(this).getEmployeeID();
+            Call<BaseResponse> call = RetrofitHolder.getService().doLogout(KeyKeepApplication.getInstance().getBaseEntity(false), mEmp_id);
+
+            call.enqueue(new Callback<BaseResponse>() {
+                @Override
+                public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                    Utils.hideProgressDialog();
+                    Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+
+                @Override
+                public void onFailure(Call<BaseResponse> call, Throwable t) {
+                    Utils.hideProgressDialog();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

@@ -113,4 +113,9 @@ public interface KeyKeepAPI {
                                                             @Query(Keys.EMPLOYEE_ID) String emp_id);
 
 
+    @POST(Config.LOGOUT_REQ_URL)
+    Call<BaseResponse> doLogout(@Body BaseRequestEntity baseEntity,
+                                                            @Query(Keys.EMPLOYEE_ID) String emp_id);
+
+
 }
