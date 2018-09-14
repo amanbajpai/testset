@@ -76,6 +76,19 @@ public class AssetDetailBean extends BaseResponse {
         @Expose
         private String requestedByEmployeeName;
 
+        @SerializedName("tag_number")
+        @Expose
+        private String tagNumber;
+
+
+
+        public String getTagNumber() {
+            return tagNumber;
+        }
+
+        public void setTagNumber(String tagNumber) {
+            this.tagNumber = tagNumber;
+        }
 
         public Integer getAssetId() {
             return assetId;

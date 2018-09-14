@@ -113,6 +113,19 @@ public interface KeyKeepAPI {
     Call<NotificationsResponseBean> getNotificationsRequest(@Body BaseRequestEntity baseEntity,
                                                             @Query(Keys.EMPLOYEE_ID) String emp_id);
 
+    @POST(Config.NOTIFICATION_ARCHICVE)
+    Call<BaseResponse> clearAllNotification(@Body BaseRequestEntity baseEntity,
+                                                            @Query(Keys.EMPLOYEE_ID) String emp_id);
+
+
+    @POST(Config.NOTIFICATION_ENABLE_URL)
+    Call<BaseResponse>enableNotifications(@Body BaseRequestEntity baseEntity,
+                                                         @Query(Keys.EMPLOYEE_ID) String emp_id,
+                                                       @Query(Keys.STATUS) String status
+
+    );
+
+
 
     @POST(Config.LOGOUT_REQ_URL)
     Call<BaseResponse> doLogout(@Body BaseRequestEntity baseEntity,

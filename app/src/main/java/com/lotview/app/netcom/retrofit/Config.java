@@ -30,6 +30,9 @@ public interface Config {
     String APPROVE_ASSET_REQ_URL = "assetrequestapprove";
     String NOTIFICATIONS_REQ_URL = "notificationlist";
     String LOGOUT_REQ_URL = "logout";
+    String NOTIFICATION_ARCHICVE= "notificationarchive";
+    String NOTIFICATION_ENABLE_URL ="notificationenable";
+
 
 
 }

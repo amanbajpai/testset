@@ -62,4 +62,10 @@ public interface Keys {
     String CHANNEL_NAME = "channel_name";
 
 
+
+    /**
+     * setting
+     */
+    String STATUS = "status";
+
 }
