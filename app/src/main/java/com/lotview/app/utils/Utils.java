@@ -1845,6 +1845,17 @@ public class Utils {
         return bean;
     }
 
+
+    public static void setUserDetail(LoginResponseBean.Result userBean) {
+        Gson gson = new Gson();
+        try {
+            String bean = gson.toJson(userBean, LoginResponseBean.Result.class);
+            AppSharedPrefs.getInstance(KeyKeepApplication.getInstance()).setUserDetail(bean);
+        } catch (Exception ex) {
+        }
+    }
+
+
     public static String getAssetType(int assetType) {
         String type = "N/A";
         switch (assetType) {
@@ -1863,8 +1874,6 @@ public class Utils {
         }
         return type;
     }
-
-
 
 
 }

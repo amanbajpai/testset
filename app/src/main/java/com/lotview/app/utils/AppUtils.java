@@ -53,10 +53,10 @@ public interface AppUtils {
      * dialog keys
      */
     int dialog_ok_click = 301;
-    int dialog_request_succes = 301;
     int dialog_ok_to_finish = 302;
     int dialog_yes_no_to_finish_app = 303;
     int dialog_logout_app = 304;
+    int dialog_request_succes = 305;
 
 
     /**

@@ -17,6 +17,7 @@ import com.lotview.app.R;
 import com.lotview.app.databinding.SettingFragmentBinding;
 import com.lotview.app.interfaces.DialogClickListener;
 import com.lotview.app.model.bean.BaseResponse;
+import com.lotview.app.model.bean.LoginResponseBean;
 import com.lotview.app.model.bean.NotificationsResponseBean;
 import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Utils;
@@ -26,11 +27,12 @@ import com.lotview.app.views.base.BaseFragment;
 /**
  * Created by akshaydashore on 14/9/18
  */
-public class SettingFragment extends BaseFragment implements CompoundButton.OnCheckedChangeListener ,DialogClickListener {
+public class SettingFragment extends BaseFragment implements CompoundButton.OnCheckedChangeListener, DialogClickListener {
 
     SettingFragmentBinding binding;
     private SettingViewModel viewModel;
     private Context context;
+    private LoginResponseBean.Result userBean;
 
 
     @Override
@@ -48,8 +50,12 @@ public class SettingFragment extends BaseFragment implements CompoundButton.OnCh
         binding.setViewModel(viewModel);
         viewModel.validator.observe(this, validatorObserver);
         viewModel.response_validator.observe(this, response_observer);
+        userBean = Utils.getUserDetail();
+        if (userBean != null && Utils.validateInt(userBean.getEnableNotification()) == 1) {
+            binding.notificationSwitch.setChecked(true);
+        }
+        binding.notificationSwitch.setOnCheckedChangeListener(SettingFragment.this);
         return binding.getRoot();
-
     }
 
 
@@ -76,15 +82,22 @@ public class SettingFragment extends BaseFragment implements CompoundButton.OnCh
 
         @Override
         public void onChanged(@Nullable BaseResponse bean) {
-            binding.guideViewSwitch.setOnCheckedChangeListener(null);
 
+            binding.notificationSwitch.setOnCheckedChangeListener(null);
             if (bean.getCode() == AppUtils.STATUS_SUCCESS) {
-                Utils.showAlert(context,"",bean.getMessage(),"ok","cancel",AppUtils.dialog_ok_click,SettingFragment.this);
-            }else {
-                Utils.showAlert(context,"",bean.getMessage(),"ok","cancel",AppUtils.dialog_ok_click,SettingFragment.this);
+                Utils.showAlert(context, "", bean.getMessage(), "ok", "", AppUtils.dialog_ok_click, SettingFragment.this);
+            } else {
+                Utils.showAlert(context, "", bean.getMessage(), "ok", "", AppUtils.dialog_ok_click, SettingFragment.this);
             }
+            if (binding.notificationSwitch.isChecked()) {
+                userBean.setEnableNotification(1);
+            } else {
+                userBean.setEnableNotification(0);
+            }
+            Utils.setUserDetail(userBean);
 
-            binding.guideViewSwitch.setOnCheckedChangeListener(SettingFragment.this);
+            binding.notificationSwitch.setOnCheckedChangeListener(SettingFragment.this);
+
         }
     };
 

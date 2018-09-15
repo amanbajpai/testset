@@ -39,7 +39,21 @@ public class LoginResponseBean extends BaseResponse {
         private String chatUrl;
 
 
-        public Integer getEmployeeId() {
+       @SerializedName("enable_notification")
+       @Expose
+       private Integer enableNotification;
+
+
+
+       public Integer getEnableNotification() {
+           return enableNotification;
+       }
+
+       public void setEnableNotification(Integer enableNotification) {
+           this.enableNotification = enableNotification;
+       }
+
+       public Integer getEmployeeId() {
             return employeeId;
         }
 

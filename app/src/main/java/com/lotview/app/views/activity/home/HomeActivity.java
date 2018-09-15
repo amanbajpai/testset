@@ -422,6 +422,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
                         doLogout();
+                        AppSharedPrefs.getInstance(context).setLogin(false);
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
                         break;

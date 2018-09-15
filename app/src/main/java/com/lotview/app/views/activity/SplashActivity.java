@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.lotview.app.R;
+import com.lotview.app.preferences.AppSharedPrefs;
+import com.lotview.app.views.activity.home.HomeActivity;
 import com.lotview.app.views.activity.login.LoginActivity;
 
 
@@ -33,7 +35,14 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(context, LoginActivity.class));
+
+                if (AppSharedPrefs.getInstance(context).isLogin()) {
+                    startActivity(new Intent(context, HomeActivity.class));
+                    finish();
+                } else {
+                    startActivity(new Intent(context, LoginActivity.class));
+                }
+
             }
         }, 3000);
     }

@@ -135,12 +135,6 @@ public class LoginActivity extends BaseActivity {
         viewModel.response_validator.observe(this, response_observer);
         viewModel.validator.observe(this, validatorObserver);
 
-        if (AppSharedPrefs.getInstance(context).isLogin() && AppSharedPrefs.getInstance(context).getRememberMe()) {
-            LoginResponseBean.Result bean = Utils.getUserDetail();
-            binding.etMail.setText(bean.getEmail());
-            binding.etPassword.setText(AppSharedPrefs.getInstance(context).getPassword());
-            binding.rememberCheckbox.setChecked(true);
-        }
 
         if (Utils.isGpsEnable(context)) {
             if (Utils.checkPermissions(this, AppUtils.LOCATION_PERMISSIONS)) {

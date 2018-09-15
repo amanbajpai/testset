@@ -81,7 +81,7 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
 //        binding.recycleNotification.setAdapter(notificationsListAdapter);
         binding.recycleNotification.setLoadingListener(this);
         binding.recycleNotification.setLoadingMoreEnabled(false);
-        binding.recycleNotification.setPullRefreshEnabled(true);
+        binding.recycleNotification.setPullRefreshEnabled(false);
         viewModel.response_validator.observe(this, response_observer);
         viewModel.validator_clear_notification.observe(this, observer_clear_notification);
         Utils.hideSoftKeyboard(getActivity());
@@ -97,7 +97,6 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
             case R.id.icon_right:
                 Utils.showAlert(context, "", getString(R.string.notification_alert), "ok", "cancel", AppUtils.dialog_ok_click, this);
                 break;
-
         }
     }
 
@@ -130,11 +129,11 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
                 resultArrayList = notificationsResponseBean.getResult();
                 notificationsListAdapter = new NotificationsListAdapter(context, resultArrayList);
                 binding.recycleNotification.setAdapter(notificationsListAdapter);
-
 //                notificationsListAdapter.setNotificationList(getActivity(), resultArrayList);
 
             } else {
                 noDataView();
+                activity.setRightButtonEnable("",false,null);
             }
         }
     };
@@ -148,8 +147,10 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
             if (bean.getCode().equals(AppUtils.STATUS_SUCCESS)) {
                 resultArrayList.clear();
                 notificationsListAdapter.notifyDataSetChanged();
-                Utils.showAlert(context, "", bean.getMessage(), "ok", "cancel", AppUtils.dialog_request_succes, NotificationFragment.this);
+                Utils.showAlert(context, "", bean.getMessage(), "ok", "", AppUtils.dialog_request_succes, NotificationFragment.this);
                 noDataView();
+                activity.setRightButtonEnable("",false,null);
+
             } else {
                 Utils.showSnackBar(binding, bean.getMessage());
             }
