@@ -417,6 +417,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
                         Intent intent = new Intent(this, LoginActivity.class);
+                        AppSharedPrefs.getInstance(context).setLogin(false);
                         startActivity(intent);
                         finish();
                         break;

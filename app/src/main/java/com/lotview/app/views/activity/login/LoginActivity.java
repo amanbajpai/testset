@@ -74,10 +74,6 @@ public class LoginActivity extends BaseActivity {
         viewModel.response_validator.observe(this, response_observer);
         viewModel.validator.observe(this, validatorObserver);
 
-        if (AppSharedPrefs.getInstance(context).isLogin()) {
-            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-            finish();
-        }
 
         if (Utils.isGpsEnable(context)) {
             if (Utils.checkPermissions(this, AppUtils.LOCATION_PERMISSIONS)) {

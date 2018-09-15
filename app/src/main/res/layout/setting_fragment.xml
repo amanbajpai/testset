@@ -42,12 +42,11 @@
                     android:textSize="@dimen/_15sdp" />
 
                 <android.support.v7.widget.SwitchCompat
-                    android:id="@+id/guide_view_switch"
+                    android:id="@+id/notification_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:checked="true"
                     android:padding="@dimen/_10sdp"
                     android:switchMinWidth="@dimen/_40sdp"
                     android:theme="@style/SwitchCompatTheme" />
