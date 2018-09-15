@@ -56,7 +56,7 @@ android {
     productFlavors {
 
         flavorCDN {
-            buildConfigField "String", "BASE_URL", '"https://www.cdnsolutionsgroup.com/KeyKeep/assetapi/public/v1/employee/"'
+            buildConfigField "String", "BASE_URL", '"https://www.cdnsolutionsgroup.com/KeyKeep/assetapi/public/v1/"'
         }
     }
 

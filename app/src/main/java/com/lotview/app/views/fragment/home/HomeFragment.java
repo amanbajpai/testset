@@ -24,6 +24,7 @@ import com.lotview.app.views.activity.assetDetail.AssetDetailActivity;
 import com.lotview.app.views.activity.chat.ChatActivity;
 import com.lotview.app.views.activity.transfer.TransferActivity;
 import com.lotview.app.views.base.BaseFragment;
+import com.lotview.app.views.fragment.testDrive.TestDriveAssetDetailFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -88,6 +89,11 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
                 break;
 
             case R.id.takeout_rl:
+                if (Utils.checkPermissions(getActivity(), AppUtils.STORAGE_CAMERA_PERMISSIONS)) {
+                    startActivityForResult(new Intent(context, QrCodeActivity.class), AppUtils.REQUEST_CODE_QR_SCAN_FOR_DRIVE);
+                } else {
+                    requestPermissions(AppUtils.STORAGE_CAMERA_PERMISSIONS, AppUtils.REQUEST_CODE_CAMERA_FOR_DRIVE);
+                }
                 break;
 
             case R.id.chat_rl:
@@ -102,11 +108,20 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == AppUtils.REQUEST_CODE_CAMERA && Utils.onRequestPermissionsResult(permissions, grantResults)) {
-            startActivityForResult(new Intent(context, QrCodeActivity.class), AppUtils.REQUEST_CODE_QR_SCAN);
-        } else {
-            Utils.showSnackBar(binding, getString(R.string.allow_camera_permission));
+        if (requestCode == AppUtils.REQUEST_CODE_CAMERA) {
+            if (Utils.onRequestPermissionsResult(permissions, grantResults)) {
+                startActivityForResult(new Intent(context, QrCodeActivity.class), AppUtils.REQUEST_CODE_QR_SCAN);
+            } else {
+                Utils.showSnackBar(binding, getString(R.string.allow_camera_permission));
+            }
+        } else if (requestCode == AppUtils.REQUEST_CODE_CAMERA_FOR_DRIVE) {
+            if (Utils.onRequestPermissionsResult(permissions, grantResults)) {
+                startActivityForResult(new Intent(context, QrCodeActivity.class), AppUtils.REQUEST_CODE_QR_SCAN_FOR_DRIVE);
+            } else {
+                Utils.showSnackBar(binding, getString(R.string.allow_camera_permission));
+            }
         }
+
     }
 
     @Override
@@ -127,7 +142,7 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
             if (data.getBooleanExtra(AppUtils.IS_MANUAL_QR, false)) {
                 String result = data.getStringExtra(AppUtils.QR_NUMBER_MANUAL_SCAN_SUCCESS);
                 String qr_tag_number = data.getStringExtra(AppUtils.SCAN_SUCCESS);
-                Intent intent = new Intent(context, AssetDetailActivity.class);
+                Intent intent = new Intent(context, TestDriveAssetDetailFragment.class);
                 intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.SCAN_SUCCESS);
                 intent.putExtra(AppUtils.SCANED_QR_CODE, qr_tag_number);
                 startActivity(intent);
@@ -137,7 +152,42 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     result = jsonObject.getString("qr_code_number");
-                    Intent intent = new Intent(context, AssetDetailActivity.class);
+                    Intent intent = new Intent(context, TestDriveAssetDetailFragment.class);
+                    intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_SCANED_CODE);
+                    intent.putExtra(AppUtils.SCANED_QR_CODE, result);
+                    startActivity(intent);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Utils.showSnackBar(binding, getString(R.string.invalid_qr_code));
+                }
+            }
+
+            /**
+             * call for test drive scanner
+             */
+        } else if (requestCode == AppUtils.REQUEST_CODE_QR_SCAN_FOR_DRIVE) {
+
+            if (resultCode != getActivity().RESULT_OK) {
+                Utils.showSnackBar(binding, getString(R.string.unable_to_scan_qr));
+                return;
+            }
+            if (data == null)
+                return;
+            //Getting the passed result
+            if (data.getBooleanExtra(AppUtils.IS_MANUAL_QR, false)) {
+                String result = data.getStringExtra(AppUtils.QR_NUMBER_MANUAL_SCAN_SUCCESS);
+                String qr_tag_number = data.getStringExtra(AppUtils.SCAN_SUCCESS);
+                Intent intent = new Intent(context, TestDriveAssetDetailFragment.class);
+                intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.SCAN_SUCCESS);
+                intent.putExtra(AppUtils.SCANED_QR_CODE, qr_tag_number);
+                startActivity(intent);
+
+            } else {
+                String result = data.getStringExtra(AppUtils.SCAN_SUCCESS);
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    result = jsonObject.getString("qr_code_number");
+                    Intent intent = new Intent(context, TestDriveAssetDetailFragment.class);
                     intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_SCANED_CODE);
                     intent.putExtra(AppUtils.SCANED_QR_CODE, result);
                     startActivity(intent);
