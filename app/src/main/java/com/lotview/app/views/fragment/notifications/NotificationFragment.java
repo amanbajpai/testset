@@ -8,32 +8,23 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.lotview.app.R;
-import com.lotview.app.application.KeyKeepApplication;
 import com.lotview.app.databinding.FragmentNotificationBinding;
 import com.lotview.app.interfaces.DialogClickListener;
 import com.lotview.app.model.bean.BaseResponse;
-import com.lotview.app.model.bean.LoginResponseBean;
 import com.lotview.app.model.bean.NotificationsResponseBean;
-import com.lotview.app.netcom.retrofit.RetrofitHolder;
 import com.lotview.app.utils.AppUtils;
-import com.lotview.app.utils.Connectivity;
 import com.lotview.app.utils.Utils;
 import com.lotview.app.views.activity.home.HomeActivity;
 import com.lotview.app.views.adapter.NotificationsListAdapter;
 import com.lotview.app.views.base.BaseFragment;
 
 import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by ankurrawal on 6/9/18.
@@ -53,7 +44,6 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = getActivity();
-        activity = (HomeActivity) getActivity();
     }
 
 
@@ -133,7 +123,7 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
 
             } else {
                 noDataView();
-                activity.setRightButtonEnable("",false,null);
+                activity.setRightButtonEnable("", false, null);
             }
         }
     };
@@ -149,7 +139,7 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
                 notificationsListAdapter.notifyDataSetChanged();
                 Utils.showAlert(context, "", bean.getMessage(), "ok", "", AppUtils.dialog_request_succes, NotificationFragment.this);
                 noDataView();
-                activity.setRightButtonEnable("",false,null);
+                activity.setRightButtonEnable("", false, null);
 
             } else {
                 Utils.showSnackBar(binding, bean.getMessage());

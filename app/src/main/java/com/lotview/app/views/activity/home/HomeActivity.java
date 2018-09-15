@@ -14,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -67,7 +68,6 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
     private TextView tvProfileUserName;
     private TextView icon_right;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,8 +95,8 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
             icon_right.setVisibility(View.GONE);
             icon_right.setOnClickListener(null);
         }
-
     }
+
 
 
     @Override
@@ -270,7 +270,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
         /**
          * disable right button
          */
-        setRightButtonEnable("",false,null);
+        setRightButtonEnable("", false, null);
 
 
         mDrawerLayout.closeDrawer(drawerView);

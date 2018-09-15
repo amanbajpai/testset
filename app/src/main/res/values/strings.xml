@@ -117,6 +117,7 @@
     <string name="setting">Setting</string>
 
     <string name="chat_header">Chat</string>
+    <string name="chat_no_internet">It seems you are not connected to Internet, Please check you connections and try again.</string>
 
 
 </resources>

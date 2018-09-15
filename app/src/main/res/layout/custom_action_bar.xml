@@ -44,8 +44,8 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/_10sdp"
             android:gravity="center"
-            android:src="@drawable/ic_back"
-            android:textSize="@dimen/_17sdp"
+            android:padding="@dimen/_5sdp"
+            android:src="@drawable/cross"
             android:visibility="invisible" />
 
     </RelativeLayout>
