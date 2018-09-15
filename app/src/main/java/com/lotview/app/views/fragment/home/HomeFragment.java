@@ -7,18 +7,21 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.lotview.app.R;
 import com.lotview.app.interfaces.DialogClickListener;
+import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.qrcodescanner.QrCodeActivity;
 import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Connectivity;
 import com.lotview.app.utils.Utils;
 import com.lotview.app.views.activity.AssetListActivity;
 import com.lotview.app.views.activity.assetDetail.AssetDetailActivity;
+import com.lotview.app.views.activity.chat.ChatActivity;
 import com.lotview.app.views.activity.transfer.TransferActivity;
 import com.lotview.app.views.base.BaseFragment;
 
@@ -56,7 +59,6 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
     }
 
 
-
     @Override
     public void onClick(View v) {
 
@@ -89,6 +91,9 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
                 break;
 
             case R.id.chat_rl:
+                if (!TextUtils.isEmpty(AppSharedPrefs.getInstance(context).getChatUrl())) {
+                    startActivity(new Intent(context, ChatActivity.class));
+                }
                 break;
         }
     }

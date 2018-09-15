@@ -23,7 +23,8 @@ public class AppSharedPrefs {
     public static final String LATITUDE = "latitude";
     public static final String LONGITUDE = "longitude";
     public static final String SPEED = "speed";
-
+    public static final String CHAT_URL = "chat_url";
+    public static final String MY_OWN_KEY_IDS_URL = "my_key_ids";
 
     private static Context mContext = null;
     public static AppSharedPrefs instance = null;
@@ -179,13 +180,23 @@ public class AppSharedPrefs {
     }
 
 
-    public static void setOwnedKeyIds(String speed) {
-        prefEditor.putString(SPEED, speed);
+    public static void setOwnedKeyIds(String myKeys) {
+        prefEditor.putString(MY_OWN_KEY_IDS_URL, myKeys);
         prefEditor.commit();
     }
 
     public static String getOwnedKeyIds() {
-        return sp.getString(SPEED, "0");
+        return sp.getString(MY_OWN_KEY_IDS_URL, "");
+    }
+
+    /*Chat URL*/
+    public static void setChatUrl(String chaturl) {
+        prefEditor.putString(CHAT_URL, chaturl);
+        prefEditor.commit();
+    }
+
+    public static String getChatUrl() {
+        return sp.getString(CHAT_URL, "");
     }
 
 

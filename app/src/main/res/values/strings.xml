@@ -116,5 +116,7 @@
     <string name="notification_alert">Do you want to clear all notification</string>
     <string name="setting">Setting</string>
 
+    <string name="chat_header">Chat</string>
+
 
 </resources>

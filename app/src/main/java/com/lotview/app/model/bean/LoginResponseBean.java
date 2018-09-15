@@ -20,7 +20,7 @@ public class LoginResponseBean extends BaseResponse {
         this.result = result;
     }
 
-   public class Result {
+    public class Result {
 
         @SerializedName("employee_id")
         @Expose
@@ -34,6 +34,10 @@ public class LoginResponseBean extends BaseResponse {
         @SerializedName("lastname")
         @Expose
         private String lastname;
+        @SerializedName("chat_url")
+        @Expose
+        private String chatUrl;
+
 
         public Integer getEmployeeId() {
             return employeeId;
@@ -67,6 +71,13 @@ public class LoginResponseBean extends BaseResponse {
             this.lastname = lastname;
         }
 
+        public String getChatUrl() {
+            return chatUrl;
+        }
+
+        public void setChatUrl(String chatUrl) {
+            this.chatUrl = chatUrl;
+        }
     }
 
 }

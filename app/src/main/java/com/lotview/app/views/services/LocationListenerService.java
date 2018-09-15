@@ -117,7 +117,6 @@ public class LocationListenerService extends Service {
         builder.setInterval(1000);
         LocationParams params = builder.build();
 
-
         location_control = SmartLocation.with(this).location().config(params);
 
         location_control.start(new OnLocationUpdatedListener() {
