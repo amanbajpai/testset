@@ -107,7 +107,10 @@ public class LoginActivity extends BaseActivity {
             AppSharedPrefs.getInstance(context).setRememberMe(isRemember);
             AppSharedPrefs.getInstance(context).setLogin(true);
             AppSharedPrefs.getInstance(context).setPassword(binding.etPassword.getText().toString());
-            AppSharedPrefs.getInstance(context).setChatUrl(loginBean.getResult().getChatUrl());
+
+            String url = loginBean.getResult().getChatUrl();
+            url = url.replaceAll(" ", "%20");
+            AppSharedPrefs.getInstance(context).setChatUrl(url);
 
 
             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
