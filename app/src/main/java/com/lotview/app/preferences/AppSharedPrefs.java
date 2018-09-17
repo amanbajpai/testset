@@ -25,6 +25,8 @@ public class AppSharedPrefs {
     public static final String SPEED = "speed";
     public static final String CHAT_URL = "chat_url";
     public static final String MY_OWN_KEY_IDS_URL = "my_key_ids";
+    public static final String DRIVE_START = "Drive_Start";
+    public static final String QR_CODE = "Qr_code";
 
     private static Context mContext = null;
     public static AppSharedPrefs instance = null;
@@ -199,5 +201,24 @@ public class AppSharedPrefs {
         return sp.getString(CHAT_URL, "");
     }
 
+
+    public static void setDriveStart(boolean b) {
+        prefEditor.putBoolean(DRIVE_START, b);
+        prefEditor.commit();
+    }
+
+    public static boolean getDriveStart() {
+        return sp.getBoolean(DRIVE_START, false);
+    }
+
+
+    public void setQrCode(String qr_code) {
+        prefEditor.putString(QR_CODE, qr_code);
+        prefEditor.commit();
+    }
+
+    public String getQrCode() {
+        return sp.getString(QR_CODE, "");
+    }
 
 }

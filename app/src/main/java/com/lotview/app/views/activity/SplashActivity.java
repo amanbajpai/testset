@@ -9,8 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.lotview.app.R;
 import com.lotview.app.preferences.AppSharedPrefs;
+import com.lotview.app.utils.AppUtils;
 import com.lotview.app.views.activity.home.HomeActivity;
 import com.lotview.app.views.activity.login.LoginActivity;
+import com.lotview.app.views.fragment.testDrive.TestDriveAssetDetailFragment;
 
 
 /**
@@ -36,7 +38,15 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                if (AppSharedPrefs.getInstance(context).isLogin()) {
+                if (AppSharedPrefs.getInstance(context).getDriveStart()) {
+
+                    String code = AppSharedPrefs.getInstance(context).getQrCode();
+                    Intent intent = new Intent(context, TestDriveAssetDetailFragment.class);
+                    intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_SCANED_CODE);
+                    intent.putExtra(AppUtils.SCANED_QR_CODE, code);
+                    startActivity(intent);
+
+                } else if (AppSharedPrefs.getInstance(context).isLogin()) {
                     startActivity(new Intent(context, HomeActivity.class));
                     finish();
                 } else {

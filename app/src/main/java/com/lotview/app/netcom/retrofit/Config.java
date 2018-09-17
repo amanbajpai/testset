@@ -13,26 +13,27 @@ public interface Config {
     /**
      * Login
      */
-    String LOGIN_URL = "login";
-    String FORGOT_PASSWORD_URL = "forgotpassword";
-    String ASSET_LIST_URL = "assetslist";
-    String CHANGE_PASSWORD_URL = "changepassword";
-    String ASSET_DETAIL = "assetdetail";
-    //    String KEEP_ASSET_REQUEST ="assetkeeprequest"; // Old Api when reques t need to be approved from the admin side.
-    String KEEP_ASSET_REQUEST = "assetdirectapprove"; // Updated API for the same when request is directly approved by admin
-    String ASSET_HANDOVER_REQUEST = "assethandoverrequest";
-    String ASSET_TRANSFER_REQUEST = "assettransferrequest";
+    String LOGIN_URL = "employee/login";
+    String FORGOT_PASSWORD_URL = "employee/forgotpassword";
+    String ASSET_LIST_URL = "employee/assetslist";
+    String CHANGE_PASSWORD_URL = "employee/changepassword";
+    String ASSET_DETAIL = "employee/assetdetail";
+    //    String KEEP_ASSET_REQUEST ="employee/assetkeeprequest"; // Old Api when reques t need to be approved from the admin side.
+    String KEEP_ASSET_REQUEST = "employee/assetdirectapprove"; // Updated API for the same when request is directly approved by admin
+    String ASSET_HANDOVER_REQUEST = "employee/assethandoverrequest";
+    String ASSET_TRANSFER_REQUEST = "employee/assettransferrequest";
 
-    String ASSET_PENDING_SEND_REQUEST = "pendingsendrequest";
-    String ASSET_PENDING_RECIEVE_REQUEST = "pendingreceiverequest";
+    String ASSET_PENDING_SEND_REQUEST = "employee/pendingsendrequest";
+    String ASSET_PENDING_RECIEVE_REQUEST = "employee/pendingreceiverequest";
 
-    String CANCEL_ASSET_REQ_URL = "assetrequestdecline";
-    String APPROVE_ASSET_REQ_URL = "assetrequestapprove";
-    String NOTIFICATIONS_REQ_URL = "notificationlist";
-    String LOGOUT_REQ_URL = "logout";
-    String NOTIFICATION_ARCHICVE= "notificationarchive";
-    String NOTIFICATION_ENABLE_URL ="notificationenable";
+    String CANCEL_ASSET_REQ_URL = "employee/assetrequestdecline";
+    String APPROVE_ASSET_REQ_URL = "employee/assetrequestapprove";
+    String NOTIFICATIONS_REQ_URL = "employee/notificationlist";
+    String LOGOUT_REQ_URL = "employee/logout";
+    String NOTIFICATION_ARCHICVE= "employee/notificationarchive";
+    String NOTIFICATION_ENABLE_URL ="employee/notificationenable";
 
+    String EMPLOYEE_TRACKER_URL ="company/employeeassettrack";
 
 
 }
