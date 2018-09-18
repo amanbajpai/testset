@@ -51,6 +51,7 @@ public class LocationListenerService extends Service {
     private double latitude;
     private double longitude;
     private float speed;
+    int trackLocationGap=120000;
 
     Handler trackLocationFrequentlyHandler = new Handler();
     Runnable trackLocationFrequentlyRunnable = new Runnable() {
@@ -94,7 +95,7 @@ public class LocationListenerService extends Service {
             //  if (isToStartLocationUpdate) {
             getLocation();
 
-            trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, 30000);
+            trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
             //  }
 
         }
@@ -212,7 +213,7 @@ public class LocationListenerService extends Service {
                 TrackLocationBaseResponse trackLocationBaseResponse = response.body();
                 if (trackLocationBaseResponse.getSuccess()) {
                     if (trackLocationBaseResponse.getResultArray().size() > 0) {
-                        trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, 30000);
+                        trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
                     } else {
                         trackLocationFrequentlyHandler.removeCallbacks(trackLocationFrequentlyRunnable);
                     }
