@@ -9,6 +9,7 @@ import com.lotview.app.BuildConfig;
 public interface Config {
 
     public static final String BASE_URL = BuildConfig.BASE_URL;
+   // public static final String BASE_URL = "http://192.168.0.54/keykeep/assetapi/public/v1/";
 
     /**
      * Login

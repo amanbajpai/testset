@@ -15,7 +15,7 @@ public class BaseRequestEntity {
     private String device_token;
     private String token_type;
     private String access_token;
-    private String asset_employee_test_drive_id;
+
     public int employee_id;
     public int company_id;
 
@@ -66,14 +66,6 @@ public class BaseRequestEntity {
 
     public void setAccess_token(String access_token) {
         this.access_token = access_token;
-    }
-
-    public String getAsset_employee_test_drive_id() {
-        return asset_employee_test_drive_id;
-    }
-
-    public void setAsset_employee_test_drive_id(String asset_employee_test_drive_id) {
-        this.asset_employee_test_drive_id = asset_employee_test_drive_id;
     }
 
     public int getEmployee_id() {
