@@ -88,14 +88,14 @@ public class TestDriveAssetViewModel extends BaseViewModel {
     }
 
     public void doStopTestDrive(String emp_id, int asset_id, String start_latitude, String start_logitude,
-                                 String start_date_time, String start_date_time_utc) {
+                                String start_date_time, String start_date_time_utc) {
 
         if (!Connectivity.isConnected()) {
             validator.setValue(AppUtils.NO_INTERNET);
             return;
         }
 
-        Call<BaseResponse> call = RetrofitHolder.getService().doStartTestDrive(
+        Call<BaseResponse> call = RetrofitHolder.getService().doStopTestDrive(
                 KeyKeepApplication.getBaseEntity(true),
                 emp_id, asset_id, start_latitude, start_logitude, start_date_time, start_date_time_utc);
 

@@ -32,7 +32,6 @@ public class TestDriveAssetDetailFragment extends BaseActivity implements Dialog
     TestDriveAssetDetailBinding binding;
     TestDriveAssetViewModel viewModel;
     private String mEmp_id;
-    private String asset_emp_id;
     private String qr_code;
     boolean IS_FROM_SCANNER = false;
     private String assetRequestedByName;
@@ -235,7 +234,6 @@ public class TestDriveAssetDetailFragment extends BaseActivity implements Dialog
 
         binding.make.setText(resultBean.getDescription());
         binding.driveStartButton.setOnClickListener(TestDriveAssetDetailFragment.this);
-        asset_emp_id = Utils.validateInt(resultBean.getEmployeeId()) + "";
         qr_code = resultBean.getQrCodeNumber();
         tag_number = resultBean.getTagNumber();
 
@@ -273,6 +271,8 @@ public class TestDriveAssetDetailFragment extends BaseActivity implements Dialog
                     AppSharedPrefs.getInstance(context).setQrCode("");
                     binding.driveStartButton.setText(R.string.start_drive);
 
+                    Utils.showProgressDialog(context, getString(R.string.loading));
+                    viewModel.doStopTestDrive(mEmp_id, assetId, AppSharedPrefs.getLatitude(), AppSharedPrefs.getLongitude(), Utils.getCurrentTimeStampDate(), Utils.getCurrentUTCTimeStampDate());
 
                 } else {
                     AppSharedPrefs.getInstance(context).setDriveStart(true);
@@ -280,6 +280,7 @@ public class TestDriveAssetDetailFragment extends BaseActivity implements Dialog
                     setCustomActionBar();
                     AppSharedPrefs.getInstance(context).setQrCode(qr_code);
                     binding.driveStartButton.setText(R.string.drive_started);
+
                     Utils.showProgressDialog(context, getString(R.string.loading));
                     viewModel.doStartTestDrive(mEmp_id, assetId, AppSharedPrefs.getLatitude(), AppSharedPrefs.getLongitude(), Utils.getCurrentTimeStampDate(), Utils.getCurrentUTCTimeStampDate());
                 }

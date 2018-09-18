@@ -140,19 +140,16 @@ public interface KeyKeepAPI {
                                         @Query(Keys.TEST_DRIVE_START_DATETIME_UTC) String start_date_time_utc
     );
 
-//    asset_employee_test_drive_id:1
-//    end_date_time:2018-09-18 14:30:30
-//    end_latitude:28.25486
-//    end_longitude:76.32569
+//    asset_employee_test_drive_id:1 need to send this
 
-    @POST(Config.START_TEST_DRIVE_URL)
+    @POST(Config.END_TEST_DRIVE_URL)
     Call<BaseResponse> doStopTestDrive(@Body BaseRequestEntity baseEntity,
                                        @Query(Keys.EMPLOYEE_ID) String emp_id,
                                        @Query(Keys.ASSET_ID) int assetId,
-                                       @Query(Keys.TEST_DRIVE_START_LATITUDE) String start_latitude,
-                                       @Query(Keys.TEST_DRIVE_START_LONGITUDE) String start_longitude,
-                                       @Query(Keys.TEST_DRIVE_START_DATETIME) String start_date_time,
-                                       @Query(Keys.TEST_DRIVE_START_DATETIME_UTC) String start_date_time_utc
+                                       @Query(Keys.TEST_DRIVE_END_LATITUDE) String stop_latitude,
+                                       @Query(Keys.TEST_DRIVE_END_LONGITUDE) String sttop_longitude,
+                                       @Query(Keys.TEST_DRIVE_END_DATETIME) String stop_date_time,
+                                       @Query(Keys.TEST_DRIVE_END_DATETIME_UTC) String stop_date_time_utc
     );
 
 
