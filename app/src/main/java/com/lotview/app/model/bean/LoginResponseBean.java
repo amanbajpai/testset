@@ -25,6 +25,9 @@ public class LoginResponseBean extends BaseResponse {
         @SerializedName("employee_id")
         @Expose
         private Integer employeeId;
+        @SerializedName("company_id")
+        @Expose
+        private Integer companyId;
         @SerializedName("email")
         @Expose
         private String email;
@@ -38,7 +41,6 @@ public class LoginResponseBean extends BaseResponse {
         @Expose
         private String chatUrl;
 
-        public int company_id;
 
 
        @SerializedName("enable_notification")
@@ -95,12 +97,12 @@ public class LoginResponseBean extends BaseResponse {
             this.chatUrl = chatUrl;
         }
 
-        public int getCompany_id() {
-            return company_id;
+        public Integer getCompanyId() {
+            return companyId;
         }
 
-        public void setCompany_id(int company_id) {
-            this.company_id = company_id;
+        public void setCompanyId(Integer companyId) {
+            this.companyId = companyId;
         }
     }
 

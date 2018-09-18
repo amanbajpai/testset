@@ -17,7 +17,7 @@ import android.util.Log;
 
 import com.lotview.app.R;
 import com.lotview.app.application.KeyKeepApplication;
-import com.lotview.app.model.bean.BaseResponse;
+import com.lotview.app.model.bean.TrackLocationBaseResponse;
 import com.lotview.app.model.bean.LocationTrackBeanList;
 import com.lotview.app.model.bean.LoginResponseBean;
 import com.lotview.app.model.location.LocationTrackBean;
@@ -57,8 +57,6 @@ public class LocationListenerService extends Service {
         public void run() {
 
             TrackEmployeeAssets();
-            trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, 120000);
-
         }
     };
 
@@ -95,7 +93,7 @@ public class LocationListenerService extends Service {
             //  if (isToStartLocationUpdate) {
             getLocation();
 
-            trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable,120000);
+            trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, 120000);
             //  }
 
         }
@@ -195,6 +193,7 @@ public class LocationListenerService extends Service {
         locationTrackBeanList.setDevice_type(Keys.TYPE_ANDROID);
         locationTrackBeanList.setAsset_employee_test_drive_id("0");
         locationTrackBeanList.setEmployee_id(Integer.valueOf(AppSharedPrefs.getInstance(this).getEmployeeID()));
+        locationTrackBeanList.setCompany_id(Integer.valueOf(AppSharedPrefs.getInstance(this).getCompanyID()));
 
         if (AppSharedPrefs.getInstance(this).getPushDeviceToken() != null && AppSharedPrefs.getInstance(this).getPushDeviceToken().trim().length() > 0) {
             locationTrackBeanList.setDevice_token(AppSharedPrefs.getInstance(this).getPushDeviceToken());
@@ -203,28 +202,29 @@ public class LocationListenerService extends Service {
         }
         locationTrackBeanList.setToken_type(Keys.TOKEN_TYPE);
         locationTrackBeanList.setAccess_token(AppSharedPrefs.getInstance(this).getAccessToken());
-        //Call<BaseResponse> call = RetrofitHolder.getService().trackeEmployee(KeyKeepApplication.getInstance().getBaseEntity(false), locationTrackBeanList);
-
-        Call<BaseResponse> call = RetrofitHolder.getService().trackeEmployee(locationTrackBeanList);
+        Call<TrackLocationBaseResponse> call = RetrofitHolder.getService().trackeEmployee(locationTrackBeanList);
 
 
-        call.enqueue(new Callback<BaseResponse>() {
+        call.enqueue(new Callback<TrackLocationBaseResponse>() {
             @Override
-            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
-                BaseResponse baseResponse = response.body();
-                if (baseResponse.getSuccess()) {
+            public void onResponse(Call<TrackLocationBaseResponse> call, Response<TrackLocationBaseResponse> response) {
+                TrackLocationBaseResponse trackLocationBaseResponse = response.body();
+                if (trackLocationBaseResponse.getSuccess()) {
+                    if (trackLocationBaseResponse.getResultArray().size() > 0) {
+                        trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, 120000);
+                    } else {
+                        trackLocationFrequentlyHandler.removeCallbacks(trackLocationFrequentlyRunnable);
+                    }
+
                     for (int i = 0; i < trackBeanArrayList.size(); i++) {
                         locationTrackBeanList.getLocationTrackBeanArrayList().get(i).setEmployeeDataIsSync(true);
                         KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().update(locationTrackBeanList.getLocationTrackBeanArrayList().get(i));
                     }
-
-                   } else {
-
                 }
             }
 
             @Override
-            public void onFailure(Call<BaseResponse> call, Throwable t) {
+            public void onFailure(Call<TrackLocationBaseResponse> call, Throwable t) {
             }
         });
     }

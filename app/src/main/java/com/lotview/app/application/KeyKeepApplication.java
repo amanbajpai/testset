@@ -172,6 +172,11 @@ public class KeyKeepApplication extends MultiDexApplication {
             baseRequestEntity.setEmployee_id(0);
         }
 
+        if (AppSharedPrefs.getInstance(instance).getCompanyID() != null && AppSharedPrefs.getInstance(instance).getCompanyID().trim().length() > 0) {
+            baseRequestEntity.setCompany_id(Integer.valueOf(AppSharedPrefs.getInstance(instance).getCompanyID()));
+        }else{
+            baseRequestEntity.setCompany_id(0);
+        }
 
         //put firebase app token here from preferences
         if (AppSharedPrefs.getInstance(instance).getPushDeviceToken() != null && AppSharedPrefs.getInstance(instance).getPushDeviceToken().trim().length() > 0) {

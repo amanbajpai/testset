@@ -9,6 +9,7 @@ import com.lotview.app.model.bean.ForgotPasswordResponseBean;
 import com.lotview.app.model.bean.LocationTrackBeanList;
 import com.lotview.app.model.bean.LoginResponseBean;
 import com.lotview.app.model.bean.NotificationsResponseBean;
+import com.lotview.app.model.bean.TrackLocationBaseResponse;
 import com.lotview.app.model.location.LocationTrackBean;
 import com.lotview.app.netcom.Keys;
 
@@ -140,7 +141,7 @@ public interface KeyKeepAPI {
 //    @Field("track_data[]") ArrayList<LocationTrackBean> lostProjectReasons
 
     @POST(Config.EMPLOYEE_TRACKER_URL)
-    Call<BaseResponse> trackeEmployee(/*@Body BaseRequestEntity baseEntity,*/
+    Call<TrackLocationBaseResponse> trackeEmployee(/*@Body BaseRequestEntity baseEntity,*/
                                       @Body LocationTrackBeanList locationTrackBeanList);
 
 
