@@ -123,7 +123,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
             recyclerView.setAdapter(leftDrawerListAdapter);
             prepareMenuItemList();
             setDrawerHover(0);
-            tvProfileUserName.setText(AppSharedPrefs.getEmployeeName());
+            tvProfileUserName.setText(AppSharedPrefs.getInstance(context).getEmployeeName());
 
         } catch (Exception ex) {
             ex.printStackTrace();

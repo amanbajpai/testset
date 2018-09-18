@@ -9,6 +9,7 @@ import android.os.StrictMode;
 import android.support.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
+import com.facebook.stetho.Stetho;
 import com.lotview.app.BuildConfig;
 import com.lotview.app.model.bean.BaseRequestEntity;
 import com.lotview.app.model.location.DaoMaster;
@@ -83,7 +84,7 @@ public class KeyKeepApplication extends MultiDexApplication {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
+    Stetho.initializeWithDefaults(this);
     }
 
     public DaoSession getDaoSession() {
@@ -163,6 +164,19 @@ public class KeyKeepApplication extends MultiDexApplication {
         baseRequestEntity.setApi_key(Keys.API_KEY);
         baseRequestEntity.setDevice_id(Utils.getDeviceID());
         baseRequestEntity.setDevice_type(Keys.TYPE_ANDROID);
+        baseRequestEntity.setAsset_employee_test_drive_id("0");
+
+        if (AppSharedPrefs.getInstance(instance).getEmployeeID() != null && AppSharedPrefs.getInstance(instance).getEmployeeID().trim().length() > 0) {
+            baseRequestEntity.setEmployee_id(Integer.valueOf(AppSharedPrefs.getInstance(instance).getEmployeeID()));
+        }else{
+            baseRequestEntity.setEmployee_id(0);
+        }
+
+        if (AppSharedPrefs.getInstance(instance).getCompanyID() != null && AppSharedPrefs.getInstance(instance).getCompanyID().trim().length() > 0) {
+            baseRequestEntity.setCompany_id(Integer.valueOf(AppSharedPrefs.getInstance(instance).getCompanyID()));
+        }else{
+            baseRequestEntity.setCompany_id(0);
+        }
 
         //put firebase app token here from preferences
         if (AppSharedPrefs.getInstance(instance).getPushDeviceToken() != null && AppSharedPrefs.getInstance(instance).getPushDeviceToken().trim().length() > 0) {

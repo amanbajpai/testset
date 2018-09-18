@@ -36,7 +36,7 @@ public interface Config {
     String END_TEST_DRIVE_URL = "employee/employeetestdriveend";
 
 
-    String EMPLOYEE_TRACKER_URL = "company/employeeassettrack";
+    String EMPLOYEE_TRACKER_URL ="employee/employeeassettrack";
 
 
 }

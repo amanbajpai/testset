@@ -6,12 +6,19 @@ import com.lotview.app.model.bean.BaseRequestEntity;
 import com.lotview.app.model.bean.BaseResponse;
 import com.lotview.app.model.bean.ChangePasswordBean;
 import com.lotview.app.model.bean.ForgotPasswordResponseBean;
+import com.lotview.app.model.bean.LocationTrackBeanList;
 import com.lotview.app.model.bean.LoginResponseBean;
 import com.lotview.app.model.bean.NotificationsResponseBean;
+import com.lotview.app.model.bean.TrackLocationBaseResponse;
+import com.lotview.app.model.location.LocationTrackBean;
 import com.lotview.app.netcom.Keys;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -154,9 +161,8 @@ public interface KeyKeepAPI {
 
 
     @POST(Config.EMPLOYEE_TRACKER_URL)
-    Call<BaseResponse> trackeEmployee(@Body BaseRequestEntity baseEntity,
-                                      @Query(Keys.EMPLOYEE_ID) String emp_id
-    );
+    Call<TrackLocationBaseResponse> trackeEmployee(/*@Body BaseRequestEntity baseEntity,*/
+                                      @Body LocationTrackBeanList locationTrackBeanList);
 
 
 }

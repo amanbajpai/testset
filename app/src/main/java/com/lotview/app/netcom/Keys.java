@@ -61,6 +61,11 @@ public interface Keys {
 
     String CHANNEL_NAME = "channel_name";
 
+    String LOCAL_DATE_TIME="local_date_time";
+    String UTC_DATE_TIME="utc_date_time";
+    String SPEED="speed";
+    String ASSET_ID="asset_id";
+    String ASSET_EMPOLOYEE_TEST_DRIVE_ID="asset_employee_test_drive_id";
 
     /**
      * setting

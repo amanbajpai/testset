@@ -10,22 +10,34 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.lotview.app.R;
 import com.lotview.app.application.KeyKeepApplication;
+import com.lotview.app.model.bean.TrackLocationBaseResponse;
+import com.lotview.app.model.bean.LocationTrackBeanList;
+import com.lotview.app.model.bean.LoginResponseBean;
 import com.lotview.app.model.location.LocationTrackBean;
 import com.lotview.app.netcom.Keys;
+import com.lotview.app.netcom.retrofit.RetrofitHolder;
 import com.lotview.app.preferences.AppSharedPrefs;
+import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Utils;
 import com.lotview.app.views.activity.home.HomeActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
 import io.nlopez.smartlocation.location.config.LocationAccuracy;
 import io.nlopez.smartlocation.location.config.LocationParams;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by ankurrawal on 13/9/18.
@@ -38,6 +50,15 @@ public class LocationListenerService extends Service {
     private double latitude;
     private double longitude;
     private float speed;
+
+    Handler trackLocationFrequentlyHandler = new Handler();
+    Runnable trackLocationFrequentlyRunnable = new Runnable() {
+        @Override
+        public void run() {
+
+            TrackEmployeeAssets();
+        }
+    };
 
     public LocationListenerService(boolean needToStartLocation) {
         isToStartLocationUpdate = needToStartLocation;
@@ -71,12 +92,15 @@ public class LocationListenerService extends Service {
         if (intent != null) {
             //  if (isToStartLocationUpdate) {
             getLocation();
+
+            trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, 120000);
             //  }
 
         }
 
         return START_STICKY;
     }
+
 
     @Override
     public IBinder onBind(Intent arg0) {
@@ -130,8 +154,9 @@ public class LocationListenerService extends Service {
                 Log.e(lat + "onLocationUpdated: ", lng + "<<");
                 AppSharedPrefs.setLatitude(lat);
                 AppSharedPrefs.setLongitude(lng);
+                speed = location.getSpeed();
                 AppSharedPrefs.setSpeed(location.getSpeed() + "");
-
+                getLocationBean(LocationListenerService.this);
             }
         });
     }
@@ -145,7 +170,6 @@ public class LocationListenerService extends Service {
     public LocationTrackBean getLocationBean(Context context) {
 
         LocationTrackBean locationTrackBean = new LocationTrackBean();
-        locationTrackBean.setEmployeeId(Integer.valueOf(AppSharedPrefs.getInstance(context).getEmployeeID()));
         locationTrackBean.setEmployeeLatitue(latitude);
         locationTrackBean.setEmployeeLongitude(longitude);
         locationTrackBean.setEmployeeSpeed(speed);
@@ -158,5 +182,51 @@ public class LocationListenerService extends Service {
         return locationTrackBean;
     }
 
+
+    private void TrackEmployeeAssets() {
+        ArrayList<LocationTrackBean> trackBeanArrayList = (ArrayList<LocationTrackBean>) KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().loadAll();
+
+        LocationTrackBeanList locationTrackBeanList = new LocationTrackBeanList();
+        locationTrackBeanList.setLocationTrackBeanArrayList(trackBeanArrayList);
+        locationTrackBeanList.setApi_key(Keys.API_KEY);
+        locationTrackBeanList.setDevice_id(Utils.getDeviceID());
+        locationTrackBeanList.setDevice_type(Keys.TYPE_ANDROID);
+        locationTrackBeanList.setAsset_employee_test_drive_id("0");
+        locationTrackBeanList.setEmployee_id(Integer.valueOf(AppSharedPrefs.getInstance(this).getEmployeeID()));
+        locationTrackBeanList.setCompany_id(Integer.valueOf(AppSharedPrefs.getInstance(this).getCompanyID()));
+
+        if (AppSharedPrefs.getInstance(this).getPushDeviceToken() != null && AppSharedPrefs.getInstance(this).getPushDeviceToken().trim().length() > 0) {
+            locationTrackBeanList.setDevice_token(AppSharedPrefs.getInstance(this).getPushDeviceToken());
+        } else {
+            locationTrackBeanList.setDevice_token("aaaaaaa");
+        }
+        locationTrackBeanList.setToken_type(Keys.TOKEN_TYPE);
+        locationTrackBeanList.setAccess_token(AppSharedPrefs.getInstance(this).getAccessToken());
+        Call<TrackLocationBaseResponse> call = RetrofitHolder.getService().trackeEmployee(locationTrackBeanList);
+
+
+        call.enqueue(new Callback<TrackLocationBaseResponse>() {
+            @Override
+            public void onResponse(Call<TrackLocationBaseResponse> call, Response<TrackLocationBaseResponse> response) {
+                TrackLocationBaseResponse trackLocationBaseResponse = response.body();
+                if (trackLocationBaseResponse.getSuccess()) {
+                    if (trackLocationBaseResponse.getResultArray().size() > 0) {
+                        trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, 120000);
+                    } else {
+                        trackLocationFrequentlyHandler.removeCallbacks(trackLocationFrequentlyRunnable);
+                    }
+
+                    for (int i = 0; i < trackBeanArrayList.size(); i++) {
+                        locationTrackBeanList.getLocationTrackBeanArrayList().get(i).setEmployeeDataIsSync(true);
+                        KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().update(locationTrackBeanList.getLocationTrackBeanArrayList().get(i));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TrackLocationBaseResponse> call, Throwable t) {
+            }
+        });
+    }
 
 }

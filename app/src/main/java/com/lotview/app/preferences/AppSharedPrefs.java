@@ -15,6 +15,7 @@ public class AppSharedPrefs {
     private static final String PUSH_DEVICE_TOKEN = "push_device_token";
     private static final String User_DETAIL = "user_detail";
     private static final String EMPLOYEE_ID = "employee_id";
+    private static final String COMPANY_ID = "company_id";
     private static final String EMPLOYEE_NAME = "employee_name";
     private static final String LOGIN_PASSWORD = "login_password";
 
@@ -108,6 +109,20 @@ public class AppSharedPrefs {
         return sp.getString(User_DETAIL, null);
     }
 
+
+    /**
+     * company id
+     *
+     * @param value
+     */
+    public static void setCompanyID(String value) {
+        prefEditor.putString(COMPANY_ID, value);
+        prefEditor.commit();
+    }
+
+    public static String getCompanyID() {
+        return sp.getString(COMPANY_ID, "");
+    }
 
     /**
      * employee id
