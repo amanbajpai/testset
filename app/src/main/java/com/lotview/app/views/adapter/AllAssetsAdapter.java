@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lotview.app.R;
@@ -20,6 +21,7 @@ import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Utils;
 import com.lotview.app.views.activity.assetDetail.AssetDetailActivity;
+import com.lotview.app.views.activity.chat.ChatActivity;
 import com.lotview.app.views.custom_view.StyledTextViewBold;
 
 import java.util.ArrayList;
@@ -83,7 +85,7 @@ public class AllAssetsAdapter extends RecyclerView.Adapter<AllAssetsAdapter.Hold
         if (Utils.validateIntValue(bean.getAssetType()).equals(AppUtils.ASSET_CUSTOMER)) {
             holder.vinNumber.setText(Utils.validateStringToValue(bean.getCustomerName()));
         } else {
-            holder.vinNumber.setText("Vin Number: "+assetLists.get(position).getVin());
+            holder.vinNumber.setText("Vin Number: " + assetLists.get(position).getVin());
         }
 
         // stock number
@@ -93,17 +95,28 @@ public class AllAssetsAdapter extends RecyclerView.Adapter<AllAssetsAdapter.Hold
             String mEmp_id = AppSharedPrefs.getEmployeeID();
             if (Utils.validateStringToValue(bean.getEmployeeId()).equals(mEmp_id)) {
                 holder.availability_tv.setText(context.getString(R.string.owner_you));
+                holder.chatIconLayout.setVisibility(View.GONE);
 
             } else {
-                holder.availability_tv.setText(context.getString(R.string.owner) + " "+bean.getEmployeeName());
+                holder.availability_tv.setText(context.getString(R.string.owner) + " " + bean.getEmployeeName());
+                holder.chatIconLayout.setVisibility(View.VISIBLE);
             }
         } else {
             holder.availability_tv.setText(context.getString(R.string.txt_status_available));
+            holder.chatIconLayout.setVisibility(View.GONE);
         }
 
         //currently use to show owner
         String type = Utils.getAssetType(bean.getAssetType());
         holder.asset_type.setText(type);
+
+        holder.chatImgView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ChatActivity.class);
+                context.startActivity(intent);
+            }
+        });
     }
 
 
@@ -126,6 +139,8 @@ public class AllAssetsAdapter extends RecyclerView.Adapter<AllAssetsAdapter.Hold
 
     class Holder extends RecyclerView.ViewHolder {
 
+        private final LinearLayout chatIconLayout;
+        private final ImageView chatImgView;
         private TextView vinNumber, asset_type, availability_tv;
         StyledTextViewBold tv_stock_number;
 
@@ -135,8 +150,9 @@ public class AllAssetsAdapter extends RecyclerView.Adapter<AllAssetsAdapter.Hold
             asset_type = itemView.findViewById(R.id.asset_type);
             vinNumber = itemView.findViewById(R.id.tv_vin_number);
             availability_tv = itemView.findViewById(R.id.availability_tv);
+            chatIconLayout = itemView.findViewById(R.id.chat_icon_layout);
+            chatImgView = itemView.findViewById(R.id.chat_img_view);
         }
-
     }
 
 /*

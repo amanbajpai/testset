@@ -171,7 +171,7 @@ public class LoginActivity extends BaseActivity {
                 String lng = location.getLongitude() + "";
                 Log.e(lat + " onLocationUpdated: ", lng + "<<");
                 AppSharedPrefs.setLatitude(lat);
-                AppSharedPrefs.setLatitude(lng);
+                AppSharedPrefs.setLongitude(lng);
                 AppSharedPrefs.setSpeed(location.getSpeed() + "");
             }
         });

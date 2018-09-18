@@ -13,6 +13,7 @@ import com.lotview.app.R;
 import com.lotview.app.databinding.TestDriveAssetDetailBinding;
 import com.lotview.app.interfaces.DialogClickListener;
 import com.lotview.app.model.bean.AssetDetailBean;
+import com.lotview.app.model.bean.BaseResponse;
 import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Utils;
@@ -37,6 +38,7 @@ public class TestDriveAssetDetailFragment extends BaseActivity implements Dialog
     private String assetRequestedByName;
     private String tag_number;
     private boolean isDriveStart;
+    private int assetId = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,6 +67,10 @@ public class TestDriveAssetDetailFragment extends BaseActivity implements Dialog
         binding.setViewModel(viewModel);
         viewModel.validator.observe(this, observer);
         viewModel.response_validator.observe(this, response_observer);
+        viewModel.response_testdrive_start.observe(this, responseTestDriveStart);
+        viewModel.response_testdrive_stop.observe(this, responseTestDriveStop);
+
+
         /**
          * call web service to get data using qr code
          */
@@ -111,6 +117,60 @@ public class TestDriveAssetDetailFragment extends BaseActivity implements Dialog
     };
 
 
+    /**
+     * Test Drive Start observer
+     */
+    Observer<BaseResponse> responseTestDriveStart = new Observer<BaseResponse>() {
+        @Override
+        public void onChanged(@Nullable BaseResponse bean) {
+            Utils.hideProgressDialog();
+            if (bean == null) {
+                Utils.showAlert(context, "", getString(R.string.server_error), getString(R.string.ok), "", AppUtils.dialog_ok_click, TestDriveAssetDetailFragment.this);
+                return;
+            }
+
+            if (bean.getCode().equals(AppUtils.STATUS_FAIL)) {
+                Utils.showAlert(context, "", bean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_click, TestDriveAssetDetailFragment.this);
+                if (IS_FROM_SCANNER) {
+                    Utils.showAlert(context, "", bean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_to_finish, TestDriveAssetDetailFragment.this);
+                }
+                return;
+            }
+            if (bean.getCode().equals(AppUtils.STATUS_SUCCESS)) {
+
+            }
+
+        }
+    };
+
+
+    /**
+     * Test Drive Stop observer
+     */
+    Observer<BaseResponse> responseTestDriveStop = new Observer<BaseResponse>() {
+        @Override
+        public void onChanged(@Nullable BaseResponse bean) {
+            Utils.hideProgressDialog();
+            if (bean == null) {
+                Utils.showAlert(context, "", getString(R.string.server_error), getString(R.string.ok), "", AppUtils.dialog_ok_click, TestDriveAssetDetailFragment.this);
+                return;
+            }
+
+            if (bean.getCode().equals(AppUtils.STATUS_FAIL)) {
+                Utils.showAlert(context, "", bean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_click, TestDriveAssetDetailFragment.this);
+                if (IS_FROM_SCANNER) {
+                    Utils.showAlert(context, "", bean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_to_finish, TestDriveAssetDetailFragment.this);
+                }
+                return;
+            }
+            if (bean.getCode().equals(AppUtils.STATUS_SUCCESS)) {
+
+            }
+
+        }
+    };
+
+
     Observer<Integer> observer = new Observer<Integer>() {
 
         @Override
@@ -136,7 +196,7 @@ public class TestDriveAssetDetailFragment extends BaseActivity implements Dialog
      */
     private void setDataFromBean(AssetDetailBean bean) {
         AssetDetailBean.Result resultBean = bean.getResult();
-
+        assetId = resultBean.getAssetId();
         binding.assetName.setText(resultBean.getAssetName());
         binding.assetType.setText(Utils.getAssetType(resultBean.getAssetType()));
         binding.versionNumber.setText(resultBean.getVersionNumber());
@@ -212,12 +272,16 @@ public class TestDriveAssetDetailFragment extends BaseActivity implements Dialog
                     setCustomActionBar();
                     AppSharedPrefs.getInstance(context).setQrCode("");
                     binding.driveStartButton.setText(R.string.start_drive);
+
+
                 } else {
                     AppSharedPrefs.getInstance(context).setDriveStart(true);
                     isDriveStart = true;
                     setCustomActionBar();
                     AppSharedPrefs.getInstance(context).setQrCode(qr_code);
                     binding.driveStartButton.setText(R.string.drive_started);
+                    Utils.showProgressDialog(context, getString(R.string.loading));
+                    viewModel.doStartTestDrive(mEmp_id, assetId, AppSharedPrefs.getLatitude(), AppSharedPrefs.getLongitude(), Utils.getCurrentTimeStampDate(), Utils.getCurrentUTCTimeStampDate());
                 }
 
                 break;

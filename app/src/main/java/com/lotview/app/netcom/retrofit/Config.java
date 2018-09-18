@@ -30,10 +30,12 @@ public interface Config {
     String APPROVE_ASSET_REQ_URL = "employee/assetrequestapprove";
     String NOTIFICATIONS_REQ_URL = "employee/notificationlist";
     String LOGOUT_REQ_URL = "employee/logout";
-    String NOTIFICATION_ARCHICVE= "employee/notificationarchive";
-    String NOTIFICATION_ENABLE_URL ="employee/notificationenable";
+    String NOTIFICATION_ARCHICVE = "employee/notificationarchive";
+    String NOTIFICATION_ENABLE_URL = "employee/notificationenable";
+    String START_TEST_DRIVE_URL = "employee/employeetestdrivestart";
 
-    String EMPLOYEE_TRACKER_URL ="company/employeeassettrack";
+
+    String EMPLOYEE_TRACKER_URL = "company/employeeassettrack";
 
 
 }
