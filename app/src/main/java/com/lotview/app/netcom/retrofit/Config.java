@@ -33,7 +33,7 @@ public interface Config {
     String NOTIFICATION_ARCHICVE= "employee/notificationarchive";
     String NOTIFICATION_ENABLE_URL ="employee/notificationenable";
 
-    String EMPLOYEE_TRACKER_URL ="company/employeeassettrack";
+    String EMPLOYEE_TRACKER_URL ="employee/employeeassettrack";
 
 
 }

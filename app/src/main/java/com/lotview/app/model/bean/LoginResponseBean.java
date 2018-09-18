@@ -38,6 +38,8 @@ public class LoginResponseBean extends BaseResponse {
         @Expose
         private String chatUrl;
 
+        public int company_id;
+
 
        @SerializedName("enable_notification")
        @Expose
@@ -91,6 +93,14 @@ public class LoginResponseBean extends BaseResponse {
 
         public void setChatUrl(String chatUrl) {
             this.chatUrl = chatUrl;
+        }
+
+        public int getCompany_id() {
+            return company_id;
+        }
+
+        public void setCompany_id(int company_id) {
+            this.company_id = company_id;
         }
     }
 

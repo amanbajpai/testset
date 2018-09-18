@@ -26,43 +26,47 @@ public class LocationTrackBean implements Serializable {
     @Expose
     public double employeeLongitude;
 
-    @SerializedName("emp_id")
-    @Expose
-    public int employeeId;
-
-    @SerializedName("emp_speed")
+    @SerializedName("speed")
     @Expose
     public float employeeSpeed;
 
-    @SerializedName("emp_timestamp_local")
+    @SerializedName("local_date_time")
     @Expose
     public String employeeTimeStampLocal;
 
-    @SerializedName("emp_timestamp_utc")
+    @SerializedName("utc_date_time")
     @Expose
     public String employeeTimeStampLocalUTC;
 
-    @SerializedName("emp_key_id")
+    @SerializedName("asset_id")
     @Expose
     public String employee_key_ids;
 
 
-    @Generated(hash = 27758410)
-    public LocationTrackBean() {
+    @SerializedName("emp_data_issync")
+    @Expose
+    public boolean employeeDataIsSync;
+
+
+    public LocationTrackBean(){
+
     }
 
-    @Generated(hash = 1240560938)
+
+    @Generated(hash = 2029617118)
     public LocationTrackBean(double employeeLatitue, double employeeLongitude,
-            int employeeId, float employeeSpeed, String employeeTimeStampLocal,
-            String employeeTimeStampLocalUTC, String employee_key_ids) {
+            float employeeSpeed, String employeeTimeStampLocal,
+            String employeeTimeStampLocalUTC, String employee_key_ids,
+            boolean employeeDataIsSync) {
         this.employeeLatitue = employeeLatitue;
         this.employeeLongitude = employeeLongitude;
-        this.employeeId = employeeId;
         this.employeeSpeed = employeeSpeed;
         this.employeeTimeStampLocal = employeeTimeStampLocal;
         this.employeeTimeStampLocalUTC = employeeTimeStampLocalUTC;
         this.employee_key_ids = employee_key_ids;
+        this.employeeDataIsSync = employeeDataIsSync;
     }
+    
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -82,14 +86,6 @@ public class LocationTrackBean implements Serializable {
 
     public void setEmployeeLongitude(double employeeLongitude) {
         this.employeeLongitude = employeeLongitude;
-    }
-
-    public int getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
     }
 
     public float getEmployeeSpeed() {
@@ -123,5 +119,17 @@ public class LocationTrackBean implements Serializable {
 
     public void setEmployeeTimeStampLocal(String employeeTimeStampLocal) {
         this.employeeTimeStampLocal = employeeTimeStampLocal;
+    }
+
+    public boolean isEmployeeDataIsSync() {
+        return employeeDataIsSync;
+    }
+
+    public void setEmployeeDataIsSync(boolean employeeDataIsSync) {
+        this.employeeDataIsSync = employeeDataIsSync;
+    }
+
+    public boolean getEmployeeDataIsSync() {
+        return this.employeeDataIsSync;
     }
 }

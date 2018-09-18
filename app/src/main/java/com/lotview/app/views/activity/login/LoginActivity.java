@@ -102,6 +102,7 @@ public class LoginActivity extends BaseActivity {
 
             AppSharedPrefs.getInstance(context).setUserDetail(user_detail);
             AppSharedPrefs.getInstance(context).setEmployeeID(empId);
+            AppSharedPrefs.getInstance(context).setQrCode(empId);
             AppSharedPrefs.getInstance(context).setEmployeeName(empName);
             AppSharedPrefs.getInstance(context).setAccessToken(loginBean.getAccessToken());
             AppSharedPrefs.getInstance(context).setRememberMe(isRemember);
