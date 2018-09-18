@@ -222,7 +222,6 @@ public class TestDriveAssetDetailFragment extends BaseActivity implements Dialog
 
                 break;
         }
-
     }
 
 
