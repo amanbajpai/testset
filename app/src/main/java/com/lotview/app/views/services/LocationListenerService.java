@@ -184,9 +184,9 @@ public class LocationListenerService extends Service {
         }
         // If Logging for Testdrive then need to send "TestDrive Id received in response of start Testdrive", otherwise 0.
         if (!TextUtils.isEmpty(AppSharedPrefs.getTestDriveId()) && AppSharedPrefs.getTestDriveId().length() > 0) {
-            locationTrackBean.setAsset_employee_test_drive_id(Integer.valueOf(AppSharedPrefs.getTestDriveId()));
+            locationTrackBean.setTestDriveAssetId(Integer.valueOf(AppSharedPrefs.getTestDriveId()));
         } else {
-            locationTrackBean.setAsset_employee_test_drive_id(0);
+            locationTrackBean.setTestDriveAssetId(0);
         }
 
         KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().insert(locationTrackBean);

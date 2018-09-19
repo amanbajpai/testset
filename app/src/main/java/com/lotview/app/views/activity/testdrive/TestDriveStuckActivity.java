@@ -39,8 +39,8 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
-        viewModel.response_testdrive_stop.observe(this, responseTestDriveStop);
-        viewModel.response_check_ifany_testdrive.observe(this, responseIfTestDriveRunning);
+
+
     }
 
     @Override
@@ -58,8 +58,11 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
         binding = DataBindingUtil.setContentView(this, R.layout.activity_test_drive_layout);
         viewModel = ViewModelProviders.of(this).get(TestDriveStuckViewModel.class);
         binding.setViewModel(viewModel);
+        viewModel.response_testdrive_stop.observe(this, responseTestDriveStop);
+        viewModel.response_check_ifany_testdrive.observe(this, responseIfTestDriveRunning);
         binding.tvKeyName.setText(AppSharedPrefs.getAssetNameforRunningTestDrive());
         isDriveStart = AppSharedPrefs.isTestDriveRunning();
+        viewModel.doCheckIfTestDriveIsRuning(AppSharedPrefs.getInstance(context).getEmployeeID());
     }
 
     @Override
@@ -155,7 +158,10 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
     @Override
     protected void onResume() {
         super.onResume();
-        viewModel.doCheckIfTestDriveIsRuning(AppSharedPrefs.getEmployeeID());
+        if (viewModel != null) {
+            viewModel.doCheckIfTestDriveIsRuning(AppSharedPrefs.getInstance(context).getEmployeeID());
+        }
+
     }
 
 

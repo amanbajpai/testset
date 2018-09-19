@@ -223,9 +223,6 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
                 ArrayList<EmployeeOwnedAssetsListResponse.Result> resultArrayList = employeeOwnedAssetsListResponse.getResults();
                 if (resultArrayList.size() > 0) {
                     startLocationStorage();
-                    AppSharedPrefs.getInstance(context).setTestDriveRunning(true);
-                } else {
-                    AppSharedPrefs.getInstance(context).setTestDriveRunning(false);
                 }
             }
         }
