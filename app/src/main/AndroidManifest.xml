@@ -68,6 +68,10 @@
             android:name=".views.activity.chat.ChatActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".views.activity.testdrive.TestDriveStuckActivity"
+            android:screenOrientation="portrait" />
+
 
         <!--Firebase configuration-->
         <service android:name=".firebase.firebase.DeleteTokenService" />

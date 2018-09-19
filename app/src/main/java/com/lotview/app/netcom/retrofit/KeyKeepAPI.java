@@ -5,6 +5,7 @@ import com.lotview.app.model.bean.AssetsListResponseBean;
 import com.lotview.app.model.bean.BaseRequestEntity;
 import com.lotview.app.model.bean.BaseResponse;
 import com.lotview.app.model.bean.ChangePasswordBean;
+import com.lotview.app.model.bean.CheckIfAnyTestDriveResponseBean;
 import com.lotview.app.model.bean.EmployeeOwnedAssetsListResponse;
 import com.lotview.app.model.bean.ForgotPasswordResponseBean;
 import com.lotview.app.model.bean.LocationTrackBeanList;
@@ -162,6 +163,11 @@ public interface KeyKeepAPI {
     @POST(Config.EMPLOYEE_ASSET_URL)
     Call<EmployeeOwnedAssetsListResponse> getAssetOwnedByEmployee(@Body BaseRequestEntity baseEntity,
                                                                   @Query(Keys.EMPLOYEE_ID) String emp_id
+    );
+
+    @POST(Config.CHECK_RUNNING_TESTDRIVE_URL)
+    Call<CheckIfAnyTestDriveResponseBean> doCheckifAnyTestDriveRunning(@Body BaseRequestEntity baseEntity,
+                                                                       @Query(Keys.ASSET_EMPOLOYEE_TEST_DRIVE_ID) String asset_employee_test_drive_id
     );
 
 

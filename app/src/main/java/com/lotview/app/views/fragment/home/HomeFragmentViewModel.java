@@ -22,6 +22,7 @@ public class HomeFragmentViewModel extends ViewModel {
 
 
     public final MutableLiveData<Integer> validator = new MutableLiveData<>();
+
     public final MutableLiveData<EmployeeOwnedAssetsListResponse> response_allassets_owned = new MutableLiveData<>();
 
     public void getCurrentAssetsOwned() {

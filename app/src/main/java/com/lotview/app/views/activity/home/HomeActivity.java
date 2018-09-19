@@ -14,7 +14,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -96,7 +95,6 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
             icon_right.setOnClickListener(null);
         }
     }
-
 
 
     @Override

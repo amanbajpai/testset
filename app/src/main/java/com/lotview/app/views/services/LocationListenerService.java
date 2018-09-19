@@ -176,7 +176,7 @@ public class LocationListenerService extends Service {
         locationTrackBean.setEmployeeTimeStampLocalUTC(Utils.getCurrentUTC());
         locationTrackBean.setEmployee_key_ids(AppSharedPrefs.getInstance(this).getOwnedKeyIds());
         // If Logging for Testdrive then need to send 1 otherwise 0.
-        if (AppSharedPrefs.getDriveStart()) {
+        if (AppSharedPrefs.isTestDriveRunning()) {
             locationTrackBean.setAsset_employee_test_drive_id(1);
         } else {
             locationTrackBean.setAsset_employee_test_drive_id(0);

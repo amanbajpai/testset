@@ -89,6 +89,7 @@
     <string name="request_key">Request Key</string>
     <string name="confirm_request">Confirm Request</string>
     <string name="asset_detail">Key Detail</string>
+    <string name="heading_test_drive">Test Drive</string>
     <string name="txt_no_records_avialable">No records available</string>
     <string name="txt_qr_code_screen_title">Scan</string>
     <string name="txt_my_profile">Profile</string>

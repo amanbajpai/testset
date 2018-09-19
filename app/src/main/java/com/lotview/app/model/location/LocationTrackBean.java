@@ -8,6 +8,7 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
 
 import java.io.Serializable;
+import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * Created by ankurrawal on 12/9/18.
@@ -67,6 +68,25 @@ public class LocationTrackBean implements Serializable {
 
     public LocationTrackBean() {
 
+    }
+
+
+    @Generated(hash = 920016775)
+    public LocationTrackBean(Long empTrackId, double employeeLatitue,
+            double employeeLongitude, float employeeSpeed,
+            String employeeTimeStampLocal, String employeeTimeStampLocalUTC,
+            String employee_key_ids, boolean employeeDataIsSync,
+            int asset_employee_test_drive_id, int testDriveAssetId) {
+        this.empTrackId = empTrackId;
+        this.employeeLatitue = employeeLatitue;
+        this.employeeLongitude = employeeLongitude;
+        this.employeeSpeed = employeeSpeed;
+        this.employeeTimeStampLocal = employeeTimeStampLocal;
+        this.employeeTimeStampLocalUTC = employeeTimeStampLocalUTC;
+        this.employee_key_ids = employee_key_ids;
+        this.employeeDataIsSync = employeeDataIsSync;
+        this.asset_employee_test_drive_id = asset_employee_test_drive_id;
+        this.testDriveAssetId = testDriveAssetId;
     }
 
 

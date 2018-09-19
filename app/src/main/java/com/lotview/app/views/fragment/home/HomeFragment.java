@@ -61,7 +61,7 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
         binding.chatRl.setOnClickListener(this);
 
         viewModel.response_allassets_owned.observe(this, responseAssetsOwnedCurrently);
-        viewModel.getCurrentAssetsOwned();
+
 
     }
 
@@ -223,9 +223,9 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
                 ArrayList<EmployeeOwnedAssetsListResponse.Result> resultArrayList = employeeOwnedAssetsListResponse.getResults();
                 if (resultArrayList.size() > 0) {
                     startLocationStorage();
-                    AppSharedPrefs.getInstance(context).setDriveStart(true);
+                    AppSharedPrefs.getInstance(context).setTestDriveRunning(true);
                 } else {
-                    AppSharedPrefs.getInstance(context).setDriveStart(false);
+                    AppSharedPrefs.getInstance(context).setTestDriveRunning(false);
                 }
             }
         }
@@ -242,5 +242,10 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
         }
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        Utils.showProgressDialog(context, getString(R.string.loading));
+        viewModel.getCurrentAssetsOwned();
+    }
 }

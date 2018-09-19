@@ -85,4 +85,6 @@ public interface Keys {
     String TEST_DRIVE_END_DATETIME_UTC = "end_date_time_utc";
 
 
+    String ASSET_NAME = "asset_name";
+
 }

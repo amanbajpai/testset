@@ -87,35 +87,6 @@ public class TestDriveAssetViewModel extends BaseViewModel {
 
     }
 
-    public void doStopTestDrive(String emp_id, int asset_id, String start_latitude, String start_logitude,
-                                String start_date_time, String start_date_time_utc, String test_drive_id) {
-
-        if (!Connectivity.isConnected()) {
-            validator.setValue(AppUtils.NO_INTERNET);
-            return;
-        }
-
-        Call<TestDriveResponseBean> call = RetrofitHolder.getService().doStopTestDrive(
-                KeyKeepApplication.getBaseEntity(true),
-                emp_id, asset_id, start_latitude, start_logitude, start_date_time, start_date_time_utc, test_drive_id);
-
-        call.enqueue(new Callback<TestDriveResponseBean>() {
-
-            @Override
-            public void onResponse(Call<TestDriveResponseBean> call, Response<TestDriveResponseBean> response) {
-                Utils.hideProgressDialog();
-                TestDriveResponseBean bean = response.body();
-                response_testdrive_stop.setValue(bean);
-            }
-
-            @Override
-            public void onFailure(Call<TestDriveResponseBean> call, Throwable t) {
-                Utils.hideProgressDialog();
-                validator.setValue(AppUtils.SERVER_ERROR);
-            }
-        });
-
-    }
 
 
 }
