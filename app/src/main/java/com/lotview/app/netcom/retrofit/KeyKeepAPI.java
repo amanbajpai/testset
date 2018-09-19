@@ -1,6 +1,7 @@
 package com.lotview.app.netcom.retrofit;
 
 import com.lotview.app.model.bean.AssetDetailBean;
+import com.lotview.app.model.bean.AssetLocationResponseBean;
 import com.lotview.app.model.bean.AssetsListResponseBean;
 import com.lotview.app.model.bean.BaseRequestEntity;
 import com.lotview.app.model.bean.BaseResponse;
@@ -169,5 +170,9 @@ public interface KeyKeepAPI {
     Call<TrackLocationBaseResponse> trackeEmployee(/*@Body BaseRequestEntity baseEntity,*/
                                                    @Body LocationTrackBeanList locationTrackBeanList);
 
+    //    asset_employee_test_drive_id:1 need to send this
+
+    @POST(Config.ASSET_CURRENT_LOCATION_URL)
+    Call<AssetLocationResponseBean> getAssetCurrentLocation(@Body BaseRequestEntity baseEntity, @Query(Keys.ASSET_ID) int asset_id);
 
 }

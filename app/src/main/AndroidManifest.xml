@@ -61,9 +61,9 @@
         <activity
             android:name=".views.activity.chat.ChatActivity"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".views.activity.keyMap.KeyOnMapActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".views.activity.keyMap.KeyOnMapActivity"
+            android:screenOrientation="portrait" />
 
         <!-- Firebase configuration -->
         <service android:name=".firebase.firebase.DeleteTokenService" />
@@ -82,12 +82,11 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="0b2a50fa30c096f0b61aae2622ab361081013c2f" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-
+        <activity android:name=".views.activity.history.HistoryActivity"></activity>
     </application>
 
 </manifest>

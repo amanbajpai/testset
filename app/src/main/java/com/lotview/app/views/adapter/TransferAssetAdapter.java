@@ -53,6 +53,7 @@ public class TransferAssetAdapter extends RecyclerView.Adapter<TransferAssetAdap
                 AssetsListResponseBean.Result bean = assetLists.getResult().get(position);
                 Intent intent = new Intent(context, AssetDetailActivity.class);
                 intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_TRANSFER_ASSET_LIST);
+                intent.putExtra(AppUtils.ASSET_ID,bean.getAssetId());
                 intent.putExtra(AppUtils.SCANED_QR_CODE, bean.getQrCodeNumber());
                 listener.onCallActivityResult(intent);
             }

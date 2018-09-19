@@ -38,6 +38,7 @@ public interface Config {
 
     String EMPLOYEE_TRACKER_URL = "employee/employeeassettrack";
     String EMPLOYEE_ASSET_URL = "employee/myassetslist";
+    String ASSET_CURRENT_LOCATION_URL = "employee/assetcurrentlocation";
 
 
 }

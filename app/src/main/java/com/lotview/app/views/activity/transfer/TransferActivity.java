@@ -46,7 +46,7 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
     public void setCustomActionBar() {
         super.setCustomActionBar();
         CustomActionBar customActionBar = new CustomActionBar(this);
-        customActionBar.setActionbar(getString(R.string.transfer_asset), true, false, this);
+        customActionBar.setActionbar(getString(R.string.transfer_asset), true, false,false,false, this);
     }
 
     @Override

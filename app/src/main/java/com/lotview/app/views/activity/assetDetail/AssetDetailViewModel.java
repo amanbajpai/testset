@@ -72,8 +72,8 @@ public class AssetDetailViewModel extends ViewModel {
             return;
         }
 
-        String lat  = AppSharedPrefs.getLatitude();
-        String lng  = AppSharedPrefs.getLongitude();
+        String lat = AppSharedPrefs.getLatitude();
+        String lng = AppSharedPrefs.getLongitude();
 
         Call<AssetDetailBean> call = RetrofitHolder.getService().sendHandoverRequest(
                 KeyKeepApplication.getBaseEntity(true),
@@ -151,8 +151,8 @@ public class AssetDetailViewModel extends ViewModel {
             return;
         }
 
-        String lat  = AppSharedPrefs.getLatitude();
-        String lng  = AppSharedPrefs.getLongitude();
+        String lat = AppSharedPrefs.getLatitude();
+        String lng = AppSharedPrefs.getLongitude();
 
         Call<AssetDetailBean> call = RetrofitHolder.getService().keepAssetRequest(
                 KeyKeepApplication.getBaseEntity(true),
@@ -190,8 +190,8 @@ public class AssetDetailViewModel extends ViewModel {
             return;
         }
 
-        String lat  = AppSharedPrefs.getLatitude();
-        String lng  = AppSharedPrefs.getLongitude();
+        String lat = AppSharedPrefs.getLatitude();
+        String lng = AppSharedPrefs.getLongitude();
 
         Call<BaseResponse> call = RetrofitHolder.getService().approveAssetRequest(
                 KeyKeepApplication.getBaseEntity(true),
@@ -223,8 +223,8 @@ public class AssetDetailViewModel extends ViewModel {
             return;
         }
 
-        String lat  = AppSharedPrefs.getLatitude();
-        String lng  = AppSharedPrefs.getLongitude();
+        String lat = AppSharedPrefs.getLatitude();
+        String lng = AppSharedPrefs.getLongitude();
         Call<BaseResponse> call = RetrofitHolder.getService().cancelAssetRequest(
                 KeyKeepApplication.getBaseEntity(true),
                 emp_id,

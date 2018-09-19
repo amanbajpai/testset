@@ -62,7 +62,7 @@ public class ChatActivity extends BaseActivity {
     @Override
     public void setCustomActionBar() {
         CustomActionBar customActionBar = new CustomActionBar(this);
-        customActionBar.setActionbar(getString(R.string.chat_header), false, true, this);
+        customActionBar.setActionbar(getString(R.string.chat_header), false, true,false,false, this);
     }
 
 
