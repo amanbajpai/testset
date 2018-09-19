@@ -49,7 +49,7 @@ public class LocationListenerService extends Service {
     private double latitude;
     private double longitude;
     private float speed;
-    int trackLocationGap=120000;
+    int trackLocationGap = 120000;
 
     Handler trackLocationFrequentlyHandler = new Handler();
     Runnable trackLocationFrequentlyRunnable = new Runnable() {
@@ -234,7 +234,7 @@ public class LocationListenerService extends Service {
                         KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao()
                                 .update(locationTrackBean);
                     }
-                }else{
+                } else {
                     trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
                 }
             }
