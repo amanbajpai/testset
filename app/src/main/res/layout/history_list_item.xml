@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:cardElevation="@dimen/_5sdp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:id="@+id/main_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.15"
+                android:orientation="vertical"
+                android:padding="@dimen/_3sdp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:orientation="horizontal">
+
+                    <com.lotview.app.views.custom_view.StyledTextViewBold
+                        android:id="@+id/tv_trans_disc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_16sdp" />
+
+                </RelativeLayout>
+
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.15"
+                android:orientation="vertical"
+                android:padding="@dimen/_3sdp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:orientation="horizontal">
+
+                    <com.lotview.app.views.custom_view.StyledTextViewRegular
+                        android:id="@+id/tv_created"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_16sdp" />
+
+                </RelativeLayout>
+
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

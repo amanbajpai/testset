@@ -24,6 +24,7 @@ import com.lotview.app.utils.Connectivity;
 import com.lotview.app.utils.Utils;
 import com.lotview.app.views.activity.AssetListActivity;
 import com.lotview.app.views.activity.chat.ChatActivity;
+import com.lotview.app.views.activity.history.HistoryActivity;
 import com.lotview.app.views.activity.transfer.TransferActivity;
 import com.lotview.app.views.base.BaseFragment;
 import com.lotview.app.views.fragment.testDrive.TestDriveAssetDetailFragment;
@@ -88,6 +89,7 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
                 break;
 
             case R.id.history_rl:
+                startActivity(new Intent(context, HistoryActivity.class));
                 break;
 
             case R.id.hand_over_rl:

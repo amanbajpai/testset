@@ -47,9 +47,9 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
     public void setCustomActionBar() {
         CustomActionBar customActionBar = new CustomActionBar(this);
         if (isDriveStart) {
-            customActionBar.setActionbar(getString(R.string.test_drive), false, false, this);
+            customActionBar.setActionbar(getString(R.string.test_drive), false, false,false,false, this);
         } else {
-            customActionBar.setActionbar(getString(R.string.test_drive), true, false, this);
+            customActionBar.setActionbar(getString(R.string.test_drive), true, false,false,false, this);
         }
     }
 

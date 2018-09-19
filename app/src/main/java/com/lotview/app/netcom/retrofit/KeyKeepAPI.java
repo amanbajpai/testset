@@ -9,6 +9,7 @@ import com.lotview.app.model.bean.ChangePasswordBean;
 import com.lotview.app.model.bean.CheckIfAnyTestDriveResponseBean;
 import com.lotview.app.model.bean.EmployeeOwnedAssetsListResponse;
 import com.lotview.app.model.bean.ForgotPasswordResponseBean;
+import com.lotview.app.model.bean.HistoryResponseBean;
 import com.lotview.app.model.bean.LocationTrackBeanList;
 import com.lotview.app.model.bean.LoginResponseBean;
 import com.lotview.app.model.bean.NotificationsResponseBean;
@@ -180,5 +181,8 @@ public interface KeyKeepAPI {
 
     @POST(Config.ASSET_CURRENT_LOCATION_URL)
     Call<AssetLocationResponseBean> getAssetCurrentLocation(@Body BaseRequestEntity baseEntity, @Query(Keys.ASSET_ID) int asset_id);
+
+    @POST(Config.HISTORY_LIST_URL)
+    Call<HistoryResponseBean> getHistoryList(@Body BaseRequestEntity baseRequestEntity,@Query(Keys.LAST_ASSET_TRANSACTION_LOG_ID) int last_asset_transaction_log_id);
 
 }

@@ -83,6 +83,7 @@ public interface Keys {
     String TEST_DRIVE_END_LONGITUDE = "end_longitude";
     String TEST_DRIVE_START_DATETIME_UTC = "start_date_time_utc";
     String TEST_DRIVE_END_DATETIME_UTC = "end_date_time_utc";
+    String LAST_ASSET_TRANSACTION_LOG_ID = "last_asset_transaction_log_id";
 
 
     String ASSET_NAME = "asset_name";
