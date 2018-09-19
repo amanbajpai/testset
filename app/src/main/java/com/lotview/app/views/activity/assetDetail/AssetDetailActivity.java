@@ -20,6 +20,8 @@ import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.qrcodescanner.QrCodeActivity;
 import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Utils;
+import com.lotview.app.views.activity.keyMap.KeyOnMapActivity;
+import com.lotview.app.views.activity.keyMap.KeyOnMapViewModel;
 import com.lotview.app.views.base.BaseActivity;
 import com.lotview.app.views.custom_view.CustomActionBar;
 import org.json.JSONException;
@@ -55,7 +57,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
     @Override
     public void setCustomActionBar() {
         CustomActionBar customActionBar = new CustomActionBar(this);
-        customActionBar.setActionbar(getString(R.string.asset_detail), true, false, this);
+        customActionBar.setActionbar(getString(R.string.asset_detail), true, false,true,false, this);
     }
 
 
@@ -353,6 +355,12 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
 
             case R.id.left_iv:
                 finish();
+                break;
+
+            case R.id.map_iv:
+                Intent i=new Intent(this, KeyOnMapActivity.class);
+                i.putExtra(AppUtils.ASSET_ID,getIntent().getStringExtra(AppUtils.ASSET_ID));
+                startActivity(i);
                 break;
 
             case R.id.accept_tv:

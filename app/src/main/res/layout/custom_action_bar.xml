@@ -48,5 +48,26 @@
             android:src="@drawable/cross"
             android:visibility="invisible" />
 
+        <ImageView
+            android:id="@+id/map_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:gravity="center"
+            android:padding="@dimen/_5sdp"
+            android:src="@android:drawable/ic_dialog_map"
+            android:visibility="invisible" />
+        <ImageView
+            android:id="@+id/refresh_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:gravity="center"
+            android:padding="@dimen/_5sdp"
+            android:src="@drawable/refresh"
+            android:visibility="invisible" />
+
     </RelativeLayout>
 </android.support.v7.widget.Toolbar>

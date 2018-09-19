@@ -17,7 +17,7 @@ public class CustomActionBar {
     private AppCompatActivity activity;
     private View.OnClickListener clickListener;
     ImageView left_iv;
-    ImageView right_iv;
+    ImageView right_iv,map_iv,refresh_iv;
     TextView center_tv;
 
     public CustomActionBar(AppCompatActivity activity) {
@@ -31,9 +31,11 @@ public class CustomActionBar {
      * @param titleString
      * @param show_right
      * @param show_left
+     * @param show_map
+     * @param show_refresh
      * @param onClickListener
      */
-    public void setActionbar(String titleString, boolean show_right, boolean show_left, View.OnClickListener onClickListener) {
+    public void setActionbar(String titleString, boolean show_left, boolean show_right,boolean show_map,boolean show_refresh, View.OnClickListener onClickListener) {
 
         this.clickListener = onClickListener;
         ActionBar actionBar = activity.getSupportActionBar();
@@ -50,6 +52,8 @@ public class CustomActionBar {
 
         left_iv = actionbarView.findViewById(R.id.left_iv);
         right_iv = actionbarView.findViewById(R.id.right_iv);
+        map_iv = actionbarView.findViewById(R.id.map_iv);
+        refresh_iv = actionbarView.findViewById(R.id.refresh_iv);
         center_tv = (TextView) actionbarView.findViewById(R.id.center_tv);
 
 
@@ -59,6 +63,19 @@ public class CustomActionBar {
         }
 
         if (show_right) {
+            right_iv.setVisibility(View.VISIBLE);
+            right_iv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (clickListener != null) {
+                        clickListener.onClick(v);
+                    }
+
+                }
+            });
+        }
+
+        if (show_left) {
             left_iv.setVisibility(View.VISIBLE);
             left_iv.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -73,9 +90,21 @@ public class CustomActionBar {
             });
         }
 
-        if (show_left) {
-            right_iv.setVisibility(View.VISIBLE);
-            right_iv.setOnClickListener(new View.OnClickListener() {
+        if (show_map) {
+            map_iv.setVisibility(View.VISIBLE);
+            map_iv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (clickListener != null) {
+                        clickListener.onClick(v);
+                    }
+
+                }
+            });
+        }
+        if (show_refresh) {
+            refresh_iv.setVisibility(View.VISIBLE);
+            refresh_iv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (clickListener != null) {
