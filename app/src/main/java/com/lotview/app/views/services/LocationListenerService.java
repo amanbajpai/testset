@@ -13,24 +13,22 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.lotview.app.R;
 import com.lotview.app.application.KeyKeepApplication;
-import com.lotview.app.model.bean.TrackLocationBaseResponse;
 import com.lotview.app.model.bean.LocationTrackBeanList;
-import com.lotview.app.model.bean.LoginResponseBean;
+import com.lotview.app.model.bean.TrackLocationBaseResponse;
 import com.lotview.app.model.location.LocationTrackBean;
 import com.lotview.app.model.location.LocationTrackBeanDao;
 import com.lotview.app.netcom.Keys;
 import com.lotview.app.netcom.retrofit.RetrofitHolder;
 import com.lotview.app.preferences.AppSharedPrefs;
-import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Utils;
 import com.lotview.app.views.activity.home.HomeActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
@@ -118,7 +116,7 @@ public class LocationListenerService extends Service {
             KeyKeepApplication.getInstance().getSystemService(NotificationManager.class).createNotificationChannel(channel);
             Notification notification = new NotificationCompat.Builder(KeyKeepApplication.getInstance(), Keys.CHANNEL_NAME)
                     .setContentTitle(KeyKeepApplication.getInstance().getString(R.string.app_name))
-//                .setContentText(getNotificationText())
+                    .setContentText("Lotview is syncing in background.")
                     .setAutoCancel(true)
                     .setChannelId(Keys.CHANNEL_NAME)
                     .setSound(null)
@@ -155,7 +153,7 @@ public class LocationListenerService extends Service {
                 String lng = location.getLongitude() + "";
                 Log.e(lat + "onLocationUpdated: ", lng + "<<");
                 AppSharedPrefs.setLatitude(lat);
-                AppSharedPrefs.setLatitude(lng);
+                AppSharedPrefs.setLongitude(lng);
                 speed = location.getSpeed();
                 AppSharedPrefs.setSpeed(location.getSpeed() + "");
                 getLocationBean(LocationListenerService.this);
@@ -178,7 +176,18 @@ public class LocationListenerService extends Service {
         locationTrackBean.setEmployeeTimeStampLocal(Utils.getCurrentTimeStampDate());
         locationTrackBean.setEmployeeTimeStampLocalUTC(Utils.getCurrentUTC());
         locationTrackBean.setEmployee_key_ids(AppSharedPrefs.getInstance(this).getOwnedKeyIds());
-        locationTrackBean.setAsset_employee_test_drive_id("0");
+        // If Logging for Testdrive then need to send 1 otherwise 0.
+        if (AppSharedPrefs.getDriveStart()) {
+            locationTrackBean.setAsset_employee_test_drive_id(1);
+        } else {
+            locationTrackBean.setAsset_employee_test_drive_id(0);
+        }
+        // If Logging for Testdrive then need to send "TestDrive Id received in response of start Testdrive", otherwise 0.
+        if (!TextUtils.isEmpty(AppSharedPrefs.getTestDriveId()) && AppSharedPrefs.getTestDriveId().length() > 0) {
+            locationTrackBean.setAsset_employee_test_drive_id(Integer.valueOf(AppSharedPrefs.getTestDriveId()));
+        } else {
+            locationTrackBean.setAsset_employee_test_drive_id(0);
+        }
 
         KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().insert(locationTrackBean);
 

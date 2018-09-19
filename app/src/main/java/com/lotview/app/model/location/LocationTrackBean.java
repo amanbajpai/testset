@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
 
@@ -57,27 +56,17 @@ public class LocationTrackBean implements Serializable {
 
     @SerializedName("asset_employee_test_drive_id")
     @Expose
-    private String asset_employee_test_drive_id;
+    /*Put 1 for testdrive and 0 for tracking*/
+    private int asset_employee_test_drive_id;
 
-    public LocationTrackBean(){
+    @SerializedName("test_drive_asset_id")
+    @Expose
+    /*0 for tracking and if tesdrive is on*/
+    private int testDriveAssetId;
 
-    }
 
+    public LocationTrackBean() {
 
-    @Generated(hash = 944074655)
-    public LocationTrackBean(Long empTrackId, double employeeLatitue,
-            double employeeLongitude, float employeeSpeed, String employeeTimeStampLocal,
-            String employeeTimeStampLocalUTC, String employee_key_ids,
-            boolean employeeDataIsSync, String asset_employee_test_drive_id) {
-        this.empTrackId = empTrackId;
-        this.employeeLatitue = employeeLatitue;
-        this.employeeLongitude = employeeLongitude;
-        this.employeeSpeed = employeeSpeed;
-        this.employeeTimeStampLocal = employeeTimeStampLocal;
-        this.employeeTimeStampLocalUTC = employeeTimeStampLocalUTC;
-        this.employee_key_ids = employee_key_ids;
-        this.employeeDataIsSync = employeeDataIsSync;
-        this.asset_employee_test_drive_id = asset_employee_test_drive_id;
     }
 
 
@@ -146,13 +135,6 @@ public class LocationTrackBean implements Serializable {
         return this.employeeDataIsSync;
     }
 
-    public String getAsset_employee_test_drive_id() {
-        return asset_employee_test_drive_id;
-    }
-
-    public void setAsset_employee_test_drive_id(String asset_employee_test_drive_id) {
-        this.asset_employee_test_drive_id = asset_employee_test_drive_id;
-    }
 
     public Long getEmpTrackId() {
         return empTrackId;
@@ -160,5 +142,21 @@ public class LocationTrackBean implements Serializable {
 
     public void setEmpTrackId(Long empTrackId) {
         this.empTrackId = empTrackId;
+    }
+
+    public int getAsset_employee_test_drive_id() {
+        return asset_employee_test_drive_id;
+    }
+
+    public void setAsset_employee_test_drive_id(int asset_employee_test_drive_id) {
+        this.asset_employee_test_drive_id = asset_employee_test_drive_id;
+    }
+
+    public int getTestDriveAssetId() {
+        return testDriveAssetId;
+    }
+
+    public void setTestDriveAssetId(int testDriveAssetId) {
+        this.testDriveAssetId = testDriveAssetId;
     }
 }
