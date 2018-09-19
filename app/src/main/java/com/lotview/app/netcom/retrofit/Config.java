@@ -35,8 +35,7 @@ public interface Config {
     String START_TEST_DRIVE_URL = "employee/employeetestdrivestart";
     String END_TEST_DRIVE_URL = "employee/employeetestdriveend";
 
-
-    String EMPLOYEE_TRACKER_URL ="employee/employeeassettrack";
+    String EMPLOYEE_TRACKER_URL = "employee/employeeassettrack";
 
 
 }

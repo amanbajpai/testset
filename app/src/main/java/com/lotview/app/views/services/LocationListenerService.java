@@ -17,19 +17,16 @@ import android.util.Log;
 
 import com.lotview.app.R;
 import com.lotview.app.application.KeyKeepApplication;
-import com.lotview.app.model.bean.TrackLocationBaseResponse;
 import com.lotview.app.model.bean.LocationTrackBeanList;
-import com.lotview.app.model.bean.LoginResponseBean;
+import com.lotview.app.model.bean.TrackLocationBaseResponse;
 import com.lotview.app.model.location.LocationTrackBean;
 import com.lotview.app.netcom.Keys;
 import com.lotview.app.netcom.retrofit.RetrofitHolder;
 import com.lotview.app.preferences.AppSharedPrefs;
-import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Utils;
 import com.lotview.app.views.activity.home.HomeActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
@@ -116,7 +113,7 @@ public class LocationListenerService extends Service {
             KeyKeepApplication.getInstance().getSystemService(NotificationManager.class).createNotificationChannel(channel);
             Notification notification = new NotificationCompat.Builder(KeyKeepApplication.getInstance(), Keys.CHANNEL_NAME)
                     .setContentTitle(KeyKeepApplication.getInstance().getString(R.string.app_name))
-//                .setContentText(getNotificationText())
+                .setContentText("Lotview is syncing in background.")
                     .setAutoCancel(true)
                     .setChannelId(Keys.CHANNEL_NAME)
                     .setSound(null)

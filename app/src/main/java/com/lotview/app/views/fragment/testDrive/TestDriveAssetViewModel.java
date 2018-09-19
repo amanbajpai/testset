@@ -4,7 +4,7 @@ import android.arch.lifecycle.MutableLiveData;
 
 import com.lotview.app.application.KeyKeepApplication;
 import com.lotview.app.model.bean.AssetDetailBean;
-import com.lotview.app.model.bean.BaseResponse;
+import com.lotview.app.model.bean.TestDriveResponseBean;
 import com.lotview.app.netcom.retrofit.RetrofitHolder;
 import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Connectivity;
@@ -23,8 +23,8 @@ public class TestDriveAssetViewModel extends BaseViewModel {
 
     MutableLiveData<Integer> validator = new MutableLiveData<>();
     MutableLiveData<AssetDetailBean> response_validator = new MutableLiveData<>();
-    MutableLiveData<BaseResponse> response_testdrive_start = new MutableLiveData<>();
-    MutableLiveData<BaseResponse> response_testdrive_stop = new MutableLiveData<>();
+    MutableLiveData<TestDriveResponseBean> response_testdrive_start = new MutableLiveData<>();
+    MutableLiveData<TestDriveResponseBean> response_testdrive_stop = new MutableLiveData<>();
 
 
     public void getAssetDetail(String qr_code, String emp_id) {
@@ -65,21 +65,21 @@ public class TestDriveAssetViewModel extends BaseViewModel {
             return;
         }
 
-        Call<BaseResponse> call = RetrofitHolder.getService().doStartTestDrive(
+        Call<TestDriveResponseBean> call = RetrofitHolder.getService().doStartTestDrive(
                 KeyKeepApplication.getBaseEntity(true),
                 emp_id, asset_id, start_latitude, start_logitude, start_date_time, start_date_time_utc);
 
-        call.enqueue(new Callback<BaseResponse>() {
+        call.enqueue(new Callback<TestDriveResponseBean>() {
 
             @Override
-            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+            public void onResponse(Call<TestDriveResponseBean> call, Response<TestDriveResponseBean> response) {
                 Utils.hideProgressDialog();
-                BaseResponse bean = response.body();
+                TestDriveResponseBean bean = response.body();
                 response_testdrive_start.setValue(bean);
             }
 
             @Override
-            public void onFailure(Call<BaseResponse> call, Throwable t) {
+            public void onFailure(Call<TestDriveResponseBean> call, Throwable t) {
                 Utils.hideProgressDialog();
                 validator.setValue(AppUtils.SERVER_ERROR);
             }
@@ -88,28 +88,28 @@ public class TestDriveAssetViewModel extends BaseViewModel {
     }
 
     public void doStopTestDrive(String emp_id, int asset_id, String start_latitude, String start_logitude,
-                                String start_date_time, String start_date_time_utc) {
+                                String start_date_time, String start_date_time_utc, String test_drive_id) {
 
         if (!Connectivity.isConnected()) {
             validator.setValue(AppUtils.NO_INTERNET);
             return;
         }
 
-        Call<BaseResponse> call = RetrofitHolder.getService().doStopTestDrive(
+        Call<TestDriveResponseBean> call = RetrofitHolder.getService().doStopTestDrive(
                 KeyKeepApplication.getBaseEntity(true),
-                emp_id, asset_id, start_latitude, start_logitude, start_date_time, start_date_time_utc);
+                emp_id, asset_id, start_latitude, start_logitude, start_date_time, start_date_time_utc, test_drive_id);
 
-        call.enqueue(new Callback<BaseResponse>() {
+        call.enqueue(new Callback<TestDriveResponseBean>() {
 
             @Override
-            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+            public void onResponse(Call<TestDriveResponseBean> call, Response<TestDriveResponseBean> response) {
                 Utils.hideProgressDialog();
-                BaseResponse bean = response.body();
+                TestDriveResponseBean bean = response.body();
                 response_testdrive_stop.setValue(bean);
             }
 
             @Override
-            public void onFailure(Call<BaseResponse> call, Throwable t) {
+            public void onFailure(Call<TestDriveResponseBean> call, Throwable t) {
                 Utils.hideProgressDialog();
                 validator.setValue(AppUtils.SERVER_ERROR);
             }

@@ -28,6 +28,7 @@ public class AppSharedPrefs {
     public static final String MY_OWN_KEY_IDS_URL = "my_key_ids";
     public static final String DRIVE_START = "Drive_Start";
     public static final String QR_CODE = "Qr_code";
+    public static final String TEST_DRIVE_ID = "test_drive_id";
 
     private static Context mContext = null;
     public static AppSharedPrefs instance = null;
@@ -235,5 +236,15 @@ public class AppSharedPrefs {
     public String getQrCode() {
         return sp.getString(QR_CODE, "");
     }
+
+    public void setTestDriveID(String qr_code) {
+        prefEditor.putString(TEST_DRIVE_ID, qr_code);
+        prefEditor.commit();
+    }
+
+    public String getTestDriveId() {
+        return sp.getString(TEST_DRIVE_ID, "");
+    }
+
 
 }

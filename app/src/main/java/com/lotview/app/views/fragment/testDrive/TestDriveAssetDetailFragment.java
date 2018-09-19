@@ -13,7 +13,7 @@ import com.lotview.app.R;
 import com.lotview.app.databinding.TestDriveAssetDetailBinding;
 import com.lotview.app.interfaces.DialogClickListener;
 import com.lotview.app.model.bean.AssetDetailBean;
-import com.lotview.app.model.bean.BaseResponse;
+import com.lotview.app.model.bean.TestDriveResponseBean;
 import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Utils;
@@ -119,9 +119,9 @@ public class TestDriveAssetDetailFragment extends BaseActivity implements Dialog
     /**
      * Test Drive Start observer
      */
-    Observer<BaseResponse> responseTestDriveStart = new Observer<BaseResponse>() {
+    Observer<TestDriveResponseBean> responseTestDriveStart = new Observer<TestDriveResponseBean>() {
         @Override
-        public void onChanged(@Nullable BaseResponse bean) {
+        public void onChanged(@Nullable TestDriveResponseBean bean) {
             Utils.hideProgressDialog();
             if (bean == null) {
                 Utils.showAlert(context, "", getString(R.string.server_error), getString(R.string.ok), "", AppUtils.dialog_ok_click, TestDriveAssetDetailFragment.this);
@@ -136,7 +136,10 @@ public class TestDriveAssetDetailFragment extends BaseActivity implements Dialog
                 return;
             }
             if (bean.getCode().equals(AppUtils.STATUS_SUCCESS)) {
-
+                AppSharedPrefs.getInstance(context).setDriveStart(true);
+                isDriveStart = true;
+                AppSharedPrefs.getInstance(context).setTestDriveID(bean.getResult().getAssetEmployeeTestDriveId());
+                binding.driveStartButton.setText(R.string.drive_started);
             }
 
         }
@@ -146,9 +149,9 @@ public class TestDriveAssetDetailFragment extends BaseActivity implements Dialog
     /**
      * Test Drive Stop observer
      */
-    Observer<BaseResponse> responseTestDriveStop = new Observer<BaseResponse>() {
+    Observer<TestDriveResponseBean> responseTestDriveStop = new Observer<TestDriveResponseBean>() {
         @Override
-        public void onChanged(@Nullable BaseResponse bean) {
+        public void onChanged(@Nullable TestDriveResponseBean bean) {
             Utils.hideProgressDialog();
             if (bean == null) {
                 Utils.showAlert(context, "", getString(R.string.server_error), getString(R.string.ok), "", AppUtils.dialog_ok_click, TestDriveAssetDetailFragment.this);
@@ -163,7 +166,10 @@ public class TestDriveAssetDetailFragment extends BaseActivity implements Dialog
                 return;
             }
             if (bean.getCode().equals(AppUtils.STATUS_SUCCESS)) {
-
+                AppSharedPrefs.getInstance(context).setDriveStart(false);
+                isDriveStart = false;
+                AppSharedPrefs.getInstance(context).setTestDriveID("");
+                binding.driveStartButton.setText(R.string.start_drive);
             }
 
         }
@@ -265,22 +271,14 @@ public class TestDriveAssetDetailFragment extends BaseActivity implements Dialog
 
             case R.id.drive_start_button:
                 if (isDriveStart) {
-                    AppSharedPrefs.getInstance(context).setDriveStart(false);
-                    isDriveStart = false;
                     setCustomActionBar();
                     AppSharedPrefs.getInstance(context).setQrCode("");
-                    binding.driveStartButton.setText(R.string.start_drive);
-
                     Utils.showProgressDialog(context, getString(R.string.loading));
-                    viewModel.doStopTestDrive(mEmp_id, assetId, AppSharedPrefs.getLatitude(), AppSharedPrefs.getLongitude(), Utils.getCurrentTimeStampDate(), Utils.getCurrentUTCTimeStampDate());
+                    viewModel.doStopTestDrive(mEmp_id, assetId, AppSharedPrefs.getLatitude(), AppSharedPrefs.getLongitude(), Utils.getCurrentTimeStampDate(), Utils.getCurrentUTCTimeStampDate(), AppSharedPrefs.getInstance(context).getTestDriveId());
 
                 } else {
-                    AppSharedPrefs.getInstance(context).setDriveStart(true);
-                    isDriveStart = true;
                     setCustomActionBar();
                     AppSharedPrefs.getInstance(context).setQrCode(qr_code);
-                    binding.driveStartButton.setText(R.string.drive_started);
-
                     Utils.showProgressDialog(context, getString(R.string.loading));
                     viewModel.doStartTestDrive(mEmp_id, assetId, AppSharedPrefs.getLatitude(), AppSharedPrefs.getLongitude(), Utils.getCurrentTimeStampDate(), Utils.getCurrentUTCTimeStampDate());
                 }

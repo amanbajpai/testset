@@ -17,7 +17,6 @@ public class LocationTrackBean implements Serializable {
 
     private static final long serialVersionUID = 7526472295622776147L;
 
-
     @SerializedName("emp_lat")
     @Expose
     public double employeeLatitue;
@@ -48,16 +47,16 @@ public class LocationTrackBean implements Serializable {
     public boolean employeeDataIsSync;
 
 
-    public LocationTrackBean(){
+    public LocationTrackBean() {
 
     }
 
 
     @Generated(hash = 2029617118)
     public LocationTrackBean(double employeeLatitue, double employeeLongitude,
-            float employeeSpeed, String employeeTimeStampLocal,
-            String employeeTimeStampLocalUTC, String employee_key_ids,
-            boolean employeeDataIsSync) {
+                             float employeeSpeed, String employeeTimeStampLocal,
+                             String employeeTimeStampLocalUTC, String employee_key_ids,
+                             boolean employeeDataIsSync) {
         this.employeeLatitue = employeeLatitue;
         this.employeeLongitude = employeeLongitude;
         this.employeeSpeed = employeeSpeed;
@@ -66,7 +65,7 @@ public class LocationTrackBean implements Serializable {
         this.employee_key_ids = employee_key_ids;
         this.employeeDataIsSync = employeeDataIsSync;
     }
-    
+
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
