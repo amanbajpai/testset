@@ -123,4 +123,10 @@
     <string name="start_drive">Start Drive</string>
 
 
+    <string name="google_maps_key">AIzaSyDUzFLr_RoI5PItlCd12Tn-8YEqO210B94</string>
+    <string name="firebase_key">0b2a50fa30c096f0b61aae2622ab361081013c2f</string>
+
+
+
+
 </resources>

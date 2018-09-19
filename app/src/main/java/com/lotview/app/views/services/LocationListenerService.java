@@ -216,6 +216,7 @@ public class LocationListenerService extends Service {
                         trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
                     } else {
                         trackLocationFrequentlyHandler.removeCallbacks(trackLocationFrequentlyRunnable);
+                        stopSelf();
                     }
 
                     for (int i = 0; i < trackBeanArrayList.size(); i++) {
@@ -224,6 +225,8 @@ public class LocationListenerService extends Service {
                         KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao()
                                 .update(locationTrackBean);
                     }
+                }else{
+                    trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
                 }
             }
 
