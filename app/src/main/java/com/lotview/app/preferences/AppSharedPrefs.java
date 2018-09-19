@@ -228,21 +228,21 @@ public class AppSharedPrefs {
     }
 
 
-    public void setQrCode(String qr_code) {
+    public static void setQrCode(String qr_code) {
         prefEditor.putString(QR_CODE, qr_code);
         prefEditor.commit();
     }
 
-    public String getQrCode() {
+    public static String getQrCode() {
         return sp.getString(QR_CODE, "");
     }
 
-    public void setTestDriveID(String qr_code) {
-        prefEditor.putString(TEST_DRIVE_ID, qr_code);
+    public static void setTestDriveID(String testDriveID) {
+        prefEditor.putString(TEST_DRIVE_ID, testDriveID);
         prefEditor.commit();
     }
 
-    public String getTestDriveId() {
+    public static String getTestDriveId() {
         return sp.getString(TEST_DRIVE_ID, "");
     }
 

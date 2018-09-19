@@ -5,6 +5,7 @@ import com.lotview.app.model.bean.AssetsListResponseBean;
 import com.lotview.app.model.bean.BaseRequestEntity;
 import com.lotview.app.model.bean.BaseResponse;
 import com.lotview.app.model.bean.ChangePasswordBean;
+import com.lotview.app.model.bean.EmployeeOwnedAssetsListResponse;
 import com.lotview.app.model.bean.ForgotPasswordResponseBean;
 import com.lotview.app.model.bean.LocationTrackBeanList;
 import com.lotview.app.model.bean.LoginResponseBean;
@@ -147,14 +148,20 @@ public interface KeyKeepAPI {
 
     @POST(Config.END_TEST_DRIVE_URL)
     Call<TestDriveResponseBean> doStopTestDrive(@Body BaseRequestEntity baseEntity,
-                                       @Query(Keys.EMPLOYEE_ID) String emp_id,
-                                       @Query(Keys.ASSET_ID) int assetId,
-                                       @Query(Keys.TEST_DRIVE_END_LATITUDE) String stop_latitude,
-                                       @Query(Keys.TEST_DRIVE_END_LONGITUDE) String stop_longitude,
-                                       @Query(Keys.TEST_DRIVE_END_DATETIME) String stop_date_time,
-                                       @Query(Keys.TEST_DRIVE_END_DATETIME_UTC) String stop_date_time_utc,
-                                       @Query(Keys.ASSET_EMPOLOYEE_TEST_DRIVE_ID) String test_drive_id
+                                                @Query(Keys.EMPLOYEE_ID) String emp_id,
+                                                @Query(Keys.ASSET_ID) int assetId,
+                                                @Query(Keys.TEST_DRIVE_END_LATITUDE) String stop_latitude,
+                                                @Query(Keys.TEST_DRIVE_END_LONGITUDE) String stop_longitude,
+                                                @Query(Keys.TEST_DRIVE_END_DATETIME) String stop_date_time,
+                                                @Query(Keys.TEST_DRIVE_END_DATETIME_UTC) String stop_date_time_utc,
+                                                @Query(Keys.ASSET_EMPOLOYEE_TEST_DRIVE_ID) String test_drive_id
 
+    );
+
+
+    @POST(Config.EMPLOYEE_ASSET_URL)
+    Call<EmployeeOwnedAssetsListResponse> getAssetOwnedByEmployee(@Body BaseRequestEntity baseEntity,
+                                                                  @Query(Keys.EMPLOYEE_ID) String emp_id
     );
 
 

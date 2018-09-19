@@ -1,9 +1,11 @@
 package com.lotview.app.views.fragment.home;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,20 +16,23 @@ import android.view.ViewGroup;
 
 import com.lotview.app.R;
 import com.lotview.app.interfaces.DialogClickListener;
+import com.lotview.app.model.bean.EmployeeOwnedAssetsListResponse;
 import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.qrcodescanner.QrCodeActivity;
 import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Connectivity;
 import com.lotview.app.utils.Utils;
 import com.lotview.app.views.activity.AssetListActivity;
-import com.lotview.app.views.activity.assetDetail.AssetDetailActivity;
 import com.lotview.app.views.activity.chat.ChatActivity;
 import com.lotview.app.views.activity.transfer.TransferActivity;
 import com.lotview.app.views.base.BaseFragment;
 import com.lotview.app.views.fragment.testDrive.TestDriveAssetDetailFragment;
+import com.lotview.app.views.services.LocationListenerService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class HomeFragment extends BaseFragment implements DialogClickListener {
 
@@ -54,8 +59,9 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
         binding.handOverRl.setOnClickListener(this);
         binding.takeoutRl.setOnClickListener(this);
         binding.chatRl.setOnClickListener(this);
-//      viewModel.validator.observe(this, observer);
-//      viewModel.respose_validator.observe(this, response_observer);
+
+        viewModel.response_allassets_owned.observe(this, responseAssetsOwnedCurrently);
+        viewModel.getCurrentAssetsOwned();
 
     }
 
@@ -206,4 +212,35 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
     public void onDialogClick(int which, int requestCode) {
 
     }
+
+    Observer<EmployeeOwnedAssetsListResponse> responseAssetsOwnedCurrently = new Observer<EmployeeOwnedAssetsListResponse>() {
+
+        @Override
+        public void onChanged(@Nullable EmployeeOwnedAssetsListResponse employeeOwnedAssetsListResponse) {
+
+            Utils.hideProgressDialog();
+            if (employeeOwnedAssetsListResponse != null && employeeOwnedAssetsListResponse.getResults() != null && employeeOwnedAssetsListResponse.getResults().size() > 0) {
+                ArrayList<EmployeeOwnedAssetsListResponse.Result> resultArrayList = employeeOwnedAssetsListResponse.getResults();
+                if (resultArrayList.size() > 0) {
+                    startLocationStorage();
+                    AppSharedPrefs.getInstance(context).setDriveStart(true);
+                } else {
+                    AppSharedPrefs.getInstance(context).setDriveStart(false);
+                }
+            }
+        }
+    };
+
+
+    private void startLocationStorage() {
+        Intent serviceIntent = new Intent(context, LocationListenerService.class);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            getActivity().startForegroundService(serviceIntent);
+            //((HomeActivity)context).finish();
+        } else {
+            getActivity().startService(serviceIntent);
+        }
+    }
+
+
 }
