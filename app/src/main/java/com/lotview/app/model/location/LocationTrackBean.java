@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Index;
 
 import java.io.Serializable;
 
@@ -16,6 +18,13 @@ import java.io.Serializable;
 public class LocationTrackBean implements Serializable {
 
     private static final long serialVersionUID = 7526472295622776147L;
+
+
+    @Id(autoincrement = true)
+    @Index(unique = true)
+    @SerializedName("track_id")
+    @Expose
+    public Long empTrackId;
 
     @SerializedName("emp_lat")
     @Expose
@@ -46,6 +55,9 @@ public class LocationTrackBean implements Serializable {
     @Expose
     public boolean employeeDataIsSync;
 
+    @SerializedName("asset_employee_test_drive_id")
+    @Expose
+    private String asset_employee_test_drive_id;
 
     public LocationTrackBean() {
 
@@ -64,6 +76,7 @@ public class LocationTrackBean implements Serializable {
         this.employeeTimeStampLocalUTC = employeeTimeStampLocalUTC;
         this.employee_key_ids = employee_key_ids;
         this.employeeDataIsSync = employeeDataIsSync;
+        this.asset_employee_test_drive_id = asset_employee_test_drive_id;
     }
 
 
@@ -130,5 +143,21 @@ public class LocationTrackBean implements Serializable {
 
     public boolean getEmployeeDataIsSync() {
         return this.employeeDataIsSync;
+    }
+
+    public String getAsset_employee_test_drive_id() {
+        return asset_employee_test_drive_id;
+    }
+
+    public void setAsset_employee_test_drive_id(String asset_employee_test_drive_id) {
+        this.asset_employee_test_drive_id = asset_employee_test_drive_id;
+    }
+
+    public Long getEmpTrackId() {
+        return empTrackId;
+    }
+
+    public void setEmpTrackId(Long empTrackId) {
+        this.empTrackId = empTrackId;
     }
 }

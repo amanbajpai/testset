@@ -20,6 +20,7 @@ import com.lotview.app.application.KeyKeepApplication;
 import com.lotview.app.model.bean.LocationTrackBeanList;
 import com.lotview.app.model.bean.TrackLocationBaseResponse;
 import com.lotview.app.model.location.LocationTrackBean;
+import com.lotview.app.model.location.LocationTrackBeanDao;
 import com.lotview.app.netcom.Keys;
 import com.lotview.app.netcom.retrofit.RetrofitHolder;
 import com.lotview.app.preferences.AppSharedPrefs;
@@ -90,7 +91,7 @@ public class LocationListenerService extends Service {
             //  if (isToStartLocationUpdate) {
             getLocation();
 
-            trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, 120000);
+            trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, 30000);
             //  }
 
         }
@@ -173,22 +174,22 @@ public class LocationListenerService extends Service {
         locationTrackBean.setEmployeeTimeStampLocal(Utils.getCurrentTimeStampDate());
         locationTrackBean.setEmployeeTimeStampLocalUTC(Utils.getCurrentUTC());
         locationTrackBean.setEmployee_key_ids(AppSharedPrefs.getInstance(this).getOwnedKeyIds());
+        locationTrackBean.setAsset_employee_test_drive_id("0");
 
-        KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().insertOrReplaceInTx(locationTrackBean);
+        KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().insert(locationTrackBean);
 
         return locationTrackBean;
     }
 
 
     private void TrackEmployeeAssets() {
-        ArrayList<LocationTrackBean> trackBeanArrayList = (ArrayList<LocationTrackBean>) KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().loadAll();
+        ArrayList<LocationTrackBean> trackBeanArrayList = (ArrayList<LocationTrackBean>) KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().queryBuilder().where(LocationTrackBeanDao.Properties.EmployeeDataIsSync.eq(0)).list();
 
         LocationTrackBeanList locationTrackBeanList = new LocationTrackBeanList();
         locationTrackBeanList.setLocationTrackBeanArrayList(trackBeanArrayList);
         locationTrackBeanList.setApi_key(Keys.API_KEY);
         locationTrackBeanList.setDevice_id(Utils.getDeviceID());
         locationTrackBeanList.setDevice_type(Keys.TYPE_ANDROID);
-        locationTrackBeanList.setAsset_employee_test_drive_id("0");
         locationTrackBeanList.setEmployee_id(Integer.valueOf(AppSharedPrefs.getInstance(this).getEmployeeID()));
         locationTrackBeanList.setCompany_id(Integer.valueOf(AppSharedPrefs.getInstance(this).getCompanyID()));
 
@@ -208,20 +209,23 @@ public class LocationListenerService extends Service {
                 TrackLocationBaseResponse trackLocationBaseResponse = response.body();
                 if (trackLocationBaseResponse.getSuccess()) {
                     if (trackLocationBaseResponse.getResultArray().size() > 0) {
-                        trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, 120000);
+                        trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, 30000);
                     } else {
                         trackLocationFrequentlyHandler.removeCallbacks(trackLocationFrequentlyRunnable);
                     }
 
                     for (int i = 0; i < trackBeanArrayList.size(); i++) {
-                        locationTrackBeanList.getLocationTrackBeanArrayList().get(i).setEmployeeDataIsSync(true);
-                        KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().update(locationTrackBeanList.getLocationTrackBeanArrayList().get(i));
+                        LocationTrackBean locationTrackBean = trackBeanArrayList.get(i);
+                        locationTrackBean.setEmployeeDataIsSync(true);
+                        KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao()
+                                .update(locationTrackBean);
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<TrackLocationBaseResponse> call, Throwable t) {
+
             }
         });
     }

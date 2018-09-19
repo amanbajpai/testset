@@ -164,7 +164,6 @@ public class KeyKeepApplication extends MultiDexApplication {
         baseRequestEntity.setApi_key(Keys.API_KEY);
         baseRequestEntity.setDevice_id(Utils.getDeviceID());
         baseRequestEntity.setDevice_type(Keys.TYPE_ANDROID);
-        baseRequestEntity.setAsset_employee_test_drive_id("0");
 
         if (AppSharedPrefs.getInstance(instance).getEmployeeID() != null && AppSharedPrefs.getInstance(instance).getEmployeeID().trim().length() > 0) {
             baseRequestEntity.setEmployee_id(Integer.valueOf(AppSharedPrefs.getInstance(instance).getEmployeeID()));

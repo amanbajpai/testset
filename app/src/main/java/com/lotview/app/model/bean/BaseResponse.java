@@ -28,7 +28,6 @@ public class BaseResponse {
     @Expose
     private String message;
 
-
     public String getTokenType() {
         return tokenType;
     }
@@ -68,5 +67,6 @@ public class BaseResponse {
     public void setMessage(String message) {
         this.message = message;
     }
+
 
 }
