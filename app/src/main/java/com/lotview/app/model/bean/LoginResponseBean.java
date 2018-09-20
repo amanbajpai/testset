@@ -49,6 +49,10 @@ public class LoginResponseBean extends BaseResponse {
         @Expose
         private Integer enableNotification;
 
+        public Integer getEnableNotification() {
+            return enableNotification;
+        }
+
         @SerializedName("running_test_drive")
         @Expose
         private RunningTestDriveResponse runningTestDriveResponse;

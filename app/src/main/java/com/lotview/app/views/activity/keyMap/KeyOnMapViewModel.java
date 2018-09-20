@@ -5,23 +5,15 @@ import android.arch.lifecycle.ViewModel;
 import android.location.Address;
 import android.location.Location;
 import android.os.Handler;
-import android.util.Log;
 
-import com.lotview.app.application.KeyKeepApplication;
 import com.lotview.app.databinding.ActivityKeyOnMapBinding;
-import com.lotview.app.model.bean.AssetDetailBean;
 import com.lotview.app.model.bean.AssetLocationResponseBean;
 import com.lotview.app.model.bean.TrackLocationRequestEntity;
 import com.lotview.app.netcom.retrofit.RetrofitHolder;
-import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Connectivity;
-import com.lotview.app.utils.Utils;
-import com.lotview.app.views.activity.home.HomeActivity;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Locale;
 
 import io.nlopez.smartlocation.OnReverseGeocodingListener;
 import io.nlopez.smartlocation.SmartLocation;
@@ -33,10 +25,10 @@ import retrofit2.Response;
  * Created by nazimakauser on 19/9/18.
  */
 
-public class KeyOnMapViewModel extends ViewModel{
+public class KeyOnMapViewModel extends ViewModel {
     MutableLiveData<Integer> validator = new MutableLiveData<>();
     MutableLiveData<AssetLocationResponseBean> response_validator = new MutableLiveData<>();
-    String address="";
+    String address = "";
 
     public void getLatLong(int asset_id, ActivityKeyOnMapBinding binding, TrackLocationRequestEntity trackLocationRequestEntity) {
 
@@ -55,7 +47,7 @@ public class KeyOnMapViewModel extends ViewModel{
 
                 if (bean.getResult().getLocation().equalsIgnoreCase("")) {
 
-                    getAddress(bean.getResult().getEmp_lat(),bean.getResult().getEmp_long(),binding);
+                    getAddress(bean.getResult().getEmp_lat(), bean.getResult().getEmp_long(), binding);
 
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -63,8 +55,11 @@ public class KeyOnMapViewModel extends ViewModel{
                             bean.getResult().setLocation(address);
                             response_validator.setValue(bean);
                         }
-                    },2000);
+                    }, 2000);
 
+                } else {
+                    bean.getResult().setLocation(bean.getResult().getLocation());
+                    response_validator.setValue(bean);
                 }
 
             }
@@ -78,15 +73,15 @@ public class KeyOnMapViewModel extends ViewModel{
     }
 
     public void getAddress(double lat, double lng, ActivityKeyOnMapBinding binding) {
-        Location location=new Location("");
+        Location location = new Location("");
         location.setLatitude(lat);
         location.setLongitude(lng);
 
-        SmartLocation.with(binding.getRoot().getContext()).geocoding().reverse(location,new OnReverseGeocodingListener() {
+        SmartLocation.with(binding.getRoot().getContext()).geocoding().reverse(location, new OnReverseGeocodingListener() {
             @Override
             public void onAddressResolved(Location location, List<Address> results) {
                 if (results.size() > 0) {
-                    address = results.get(0).getAddressLine(0)+"\n"+results.get(0).getAddressLine(1);
+                    address = results.get(0).getAddressLine(0) + "\n" + results.get(0).getAddressLine(1);
                 }
             }
         });

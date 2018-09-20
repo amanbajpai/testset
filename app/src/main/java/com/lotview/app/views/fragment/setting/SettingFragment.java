@@ -7,7 +7,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +17,8 @@ import com.lotview.app.databinding.SettingFragmentBinding;
 import com.lotview.app.interfaces.DialogClickListener;
 import com.lotview.app.model.bean.BaseResponse;
 import com.lotview.app.model.bean.LoginResponseBean;
-import com.lotview.app.model.bean.NotificationsResponseBean;
 import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Utils;
-import com.lotview.app.views.adapter.NotificationsListAdapter;
 import com.lotview.app.views.base.BaseFragment;
 
 /**
