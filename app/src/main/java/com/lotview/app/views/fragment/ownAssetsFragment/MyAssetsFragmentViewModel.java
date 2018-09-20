@@ -7,6 +7,7 @@ import com.lotview.app.databinding.MyAssetListFragmentBinding;
 import com.lotview.app.model.bean.AssetsListResponseBean;
 import com.lotview.app.netcom.retrofit.RetrofitHolder;
 import com.lotview.app.utils.AppUtils;
+import com.lotview.app.utils.Connectivity;
 import com.lotview.app.utils.Utils;
 import com.lotview.app.views.base.BaseViewModel;
 
@@ -23,8 +24,11 @@ public class MyAssetsFragmentViewModel extends BaseViewModel {
 
     public void getMyAssets(MyAssetListFragmentBinding binding, String empID, String text_to_search) {
 
-
-        Call<AssetsListResponseBean> call = RetrofitHolder.getService().getAssetsList(KeyKeepApplication.getInstance().getBaseEntity(false), empID, "1", text_to_search);
+        if (!Connectivity.isConnected()) {
+            validator.setValue(AppUtils.NO_INTERNET);
+            return;
+        }
+        Call<AssetsListResponseBean> call = RetrofitHolder.getService().getAssetsList(KeyKeepApplication.getInstance().getBaseEntity(false), "1", text_to_search);
 
         call.enqueue(new Callback<AssetsListResponseBean>() {
             @Override

@@ -48,7 +48,11 @@ public interface Keys {
     int NOTIFICATION_ASSET_TRANSFER_APPROVE = 5;
     int NOTIFICATION_ASSET_TRANSFER_DECLINE = 6;
     int NOTIFICATION_ASSET_SUBMIT_APPROVE = 8;
-
+    int NOTIFICATION_ASSET_SUBMIT_DECLINE = 9;
+    int NOTIFICATION_ASSET_HOLD_TIME_EXCEED = 10;
+    int NOTIFICATION_SUPER_ADMIN_NOTIFICATION_TO_COMPANY = 11;
+    int NOTIFICATION_COMPANY_ADMIN_NOTIFICATION_TO_EMPLOYEE = 12;
+    int NOTIFICATION_CHAT_COMMUNICATION_BETWEEN_EMPLOYEE_TO_EMPLOYEE_AN = 13;
     /**
      * approved request
      */
@@ -84,6 +88,8 @@ public interface Keys {
     String TEST_DRIVE_END_LONGITUDE = "end_longitude";
     String TEST_DRIVE_START_DATETIME_UTC = "start_date_time_utc";
     String TEST_DRIVE_END_DATETIME_UTC = "end_date_time_utc";
+    String LAST_ASSET_TRANSACTION_LOG_ID = "last_asset_transaction_log_id";
+    String LAST_NOTIFICATION_ID = "last_notification_id";
 
 
     String ASSET_NAME = "asset_name";

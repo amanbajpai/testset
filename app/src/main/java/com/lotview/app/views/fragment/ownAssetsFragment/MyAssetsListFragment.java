@@ -77,6 +77,7 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
         binding.recyclerView.setPullRefreshEnabled(true);
         myAssetAdapter = new MyAssetsAdapter(context, resultArrayList, AppUtils.STATUS_TRANSFER_ASSET_LIST);
         binding.recyclerView.setAdapter(myAssetAdapter);
+        viewModel.validator.observe(this, observer);
         viewModel.response_validator.observe(this, response_observer);
         Utils.hideSoftKeyboard(getActivity());
         binding.simpleSearchView.setQueryHint("Search here");
@@ -132,6 +133,25 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
 
             } else {
                 noDataView();
+            }
+        }
+    };
+
+    Observer<Integer> observer = new Observer<Integer>() {
+
+        @Override
+        public void onChanged(@Nullable Integer value) {
+            switch (value) {
+
+                case AppUtils.NO_INTERNET:
+                    Utils.hideProgressDialog();
+                    Utils.showSnackBar(binding, getString(R.string.internet_connection));
+                    break;
+
+                case AppUtils.SERVER_ERROR:
+                    Utils.hideProgressDialog();
+                    Utils.showSnackBar(binding, getString(R.string.server_error));
+                    break;
             }
         }
     };

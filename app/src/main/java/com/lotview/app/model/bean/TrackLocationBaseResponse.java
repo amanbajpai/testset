@@ -29,9 +29,11 @@ public class TrackLocationBaseResponse extends BaseResponse{
         @SerializedName("asset_id")
         @Expose
         private int asset_id;
+
         @SerializedName("asset_name")
         @Expose
         private String asset_name;
+
         @SerializedName("asset_type")
         @Expose
         private String asset_type;

@@ -8,6 +8,7 @@ import com.lotview.app.model.bean.EmployeeOwnedAssetsListResponse;
 import com.lotview.app.netcom.retrofit.RetrofitHolder;
 import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.utils.AppUtils;
+import com.lotview.app.utils.Connectivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,9 +28,14 @@ public class HomeFragmentViewModel extends ViewModel {
 
     public void getCurrentAssetsOwned() {
 
+        if (!Connectivity.isConnected()) {
+            validator.setValue(AppUtils.NO_INTERNET);
+            return;
+        }
+
         String employeeId = AppSharedPrefs.getInstance(KeyKeepApplication.getInstance()).getEmployeeID();
 
-        Call<EmployeeOwnedAssetsListResponse> call = RetrofitHolder.getService().getAssetOwnedByEmployee(KeyKeepApplication.getInstance().getBaseEntity(false), employeeId);
+        Call<EmployeeOwnedAssetsListResponse> call = RetrofitHolder.getService().getAssetOwnedByEmployee(KeyKeepApplication.getInstance().getBaseEntity(false));
 
         call.enqueue(new Callback<EmployeeOwnedAssetsListResponse>() {
             @Override

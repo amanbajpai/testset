@@ -47,6 +47,12 @@ public class AppSharedPrefs {
         return instance;
     }
 
+    public static void clearPref(){
+
+        prefEditor.clear();
+        prefEditor.commit();
+        prefEditor.apply();
+    }
 
     public static void setLogin(boolean login) {
         prefEditor.putBoolean(IS_LOGIN, login);

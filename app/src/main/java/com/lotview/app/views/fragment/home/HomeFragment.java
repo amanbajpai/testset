@@ -24,6 +24,7 @@ import com.lotview.app.utils.Connectivity;
 import com.lotview.app.utils.Utils;
 import com.lotview.app.views.activity.AssetListActivity;
 import com.lotview.app.views.activity.chat.ChatActivity;
+import com.lotview.app.views.activity.history.HistoryActivity;
 import com.lotview.app.views.activity.transfer.TransferActivity;
 import com.lotview.app.views.base.BaseFragment;
 import com.lotview.app.views.fragment.testDrive.TestDriveAssetDetailFragment;
@@ -60,6 +61,7 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
         binding.takeoutRl.setOnClickListener(this);
         binding.chatRl.setOnClickListener(this);
 
+        viewModel.validator.observe(this, observer);
         viewModel.response_allassets_owned.observe(this, responseAssetsOwnedCurrently);
 
 
@@ -88,6 +90,7 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
                 break;
 
             case R.id.history_rl:
+                startActivity(new Intent(context, HistoryActivity.class));
                 break;
 
             case R.id.hand_over_rl:
@@ -227,6 +230,25 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
                 } else {
                     AppSharedPrefs.getInstance(context).setTestDriveRunning(false);
                 }
+            }
+        }
+    };
+
+    Observer<Integer> observer = new Observer<Integer>() {
+
+        @Override
+        public void onChanged(@Nullable Integer value) {
+            switch (value) {
+
+                case AppUtils.NO_INTERNET:
+                    Utils.hideProgressDialog();
+                    Utils.showSnackBar(binding, getString(R.string.internet_connection));
+                    break;
+
+                case AppUtils.SERVER_ERROR:
+                    Utils.hideProgressDialog();
+                    Utils.showSnackBar(binding, getString(R.string.server_error));
+                    break;
             }
         }
     };

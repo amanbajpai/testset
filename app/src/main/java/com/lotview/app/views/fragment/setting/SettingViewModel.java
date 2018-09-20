@@ -37,7 +37,7 @@ public class SettingViewModel extends BaseViewModel {
 
         String employeeId = AppSharedPrefs.getInstance(KeyKeepApplication.getInstance()).getEmployeeID();
 
-        Call<BaseResponse> call = RetrofitHolder.getService().enableNotifications(KeyKeepApplication.getInstance().getBaseEntity(false), employeeId, status);
+        Call<BaseResponse> call = RetrofitHolder.getService().enableNotifications(KeyKeepApplication.getInstance().getBaseEntity(false), status);
 
         call.enqueue(new Callback<BaseResponse>() {
 

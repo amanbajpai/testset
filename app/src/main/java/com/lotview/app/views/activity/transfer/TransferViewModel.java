@@ -8,6 +8,7 @@ import com.lotview.app.model.bean.AssetsListResponseBean;
 import com.lotview.app.netcom.retrofit.RetrofitHolder;
 import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.utils.AppUtils;
+import com.lotview.app.utils.Connectivity;
 import com.lotview.app.utils.Utils;
 import com.lotview.app.views.base.BaseViewModel;
 
@@ -26,9 +27,14 @@ public class TransferViewModel extends BaseViewModel {
 
     public void getMyAssets(ActivityTransferAssetBinding binding) {
 
+        if (!Connectivity.isConnected()) {
+            validator.setValue(AppUtils.NO_INTERNET);
+            return;
+        }
+
         String employeeId = AppSharedPrefs.getEmployeeID();
 
-        Call<AssetsListResponseBean> call = RetrofitHolder.getService().getAssetsList(KeyKeepApplication.getInstance().getBaseEntity(false), employeeId, "1", "");
+        Call<AssetsListResponseBean> call = RetrofitHolder.getService().getAssetsList(KeyKeepApplication.getInstance().getBaseEntity(false), "1", "");
 
         call.enqueue(new Callback<AssetsListResponseBean>() {
             @Override

@@ -5,6 +5,7 @@ package com.lotview.app.views.activity.home;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -30,6 +31,7 @@ import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Connectivity;
 import com.lotview.app.utils.Utils;
 import com.lotview.app.views.activity.AssetListActivity;
+import com.lotview.app.views.activity.chat.ChatActivity;
 import com.lotview.app.views.activity.login.LoginActivity;
 import com.lotview.app.views.adapter.LeftDrawerListAdapter;
 import com.lotview.app.views.base.BaseActivity;
@@ -37,6 +39,7 @@ import com.lotview.app.views.fragment.asset_request_fragment.AssetRequestFragmen
 import com.lotview.app.views.fragment.home.HomeFragment;
 import com.lotview.app.views.fragment.notifications.NotificationFragment;
 import com.lotview.app.views.fragment.setting.SettingFragment;
+import com.lotview.app.views.services.LocationListenerService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -446,6 +449,21 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
             case Keys.NOTIFICATION_ASSET_SUBMIT_APPROVE:
                 startActivity(new Intent(context, AssetListActivity.class));
                 break;
+            case Keys.NOTIFICATION_ASSET_SUBMIT_DECLINE:
+                startActivity(new Intent(context, AssetListActivity.class));
+                break;
+            case Keys.NOTIFICATION_ASSET_HOLD_TIME_EXCEED:
+                startActivity(new Intent(context, AssetListActivity.class));
+                break;
+            case Keys.NOTIFICATION_SUPER_ADMIN_NOTIFICATION_TO_COMPANY:
+                Utils.replaceFragment(HomeActivity.this, new NotificationFragment());
+                break;
+            case Keys.NOTIFICATION_COMPANY_ADMIN_NOTIFICATION_TO_EMPLOYEE:
+                Utils.replaceFragment(HomeActivity.this, new NotificationFragment());
+                break;
+            case Keys.NOTIFICATION_CHAT_COMMUNICATION_BETWEEN_EMPLOYEE_TO_EMPLOYEE_AN:
+                startActivity(new Intent(context, ChatActivity.class));
+                break;
 
         }
     }
@@ -473,11 +491,14 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
 
         try {
             String mEmp_id = AppSharedPrefs.getInstance(this).getEmployeeID();
-            Call<BaseResponse> call = RetrofitHolder.getService().doLogout(KeyKeepApplication.getInstance().getBaseEntity(false), mEmp_id);
+            Call<BaseResponse> call = RetrofitHolder.getService().doLogout(KeyKeepApplication.getInstance().getBaseEntity(false));
 
             call.enqueue(new Callback<BaseResponse>() {
                 @Override
                 public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                    AppSharedPrefs.getInstance(HomeActivity.this).clearPref();
+                    Intent serviceIntent = new Intent(context, LocationListenerService.class);
+                    stopService(serviceIntent);
                     Utils.hideProgressDialog();
                     Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
                     startActivity(intent);

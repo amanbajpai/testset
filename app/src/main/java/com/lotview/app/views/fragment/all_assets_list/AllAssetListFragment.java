@@ -57,6 +57,25 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
         }
     };
 
+    Observer<Integer> observer = new Observer<Integer>() {
+
+        @Override
+        public void onChanged(@Nullable Integer value) {
+            switch (value) {
+
+                case AppUtils.NO_INTERNET:
+                    Utils.hideProgressDialog();
+                    Utils.showSnackBar(binding, getString(R.string.internet_connection));
+                    break;
+
+                case AppUtils.SERVER_ERROR:
+                    Utils.hideProgressDialog();
+                    Utils.showSnackBar(binding, getString(R.string.server_error));
+                    break;
+            }
+        }
+    };
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +105,10 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
         binding.recyclerView.setLoadingListener(this);
         binding.recyclerView.setLoadingMoreEnabled(false);
         binding.recyclerView.setPullRefreshEnabled(true);
+
+        viewModel.validator.observe(this,observer );
         viewModel.response_validator.observe(this, response_observer);
+
         Utils.hideSoftKeyboard(getActivity());
         binding.simpleSearchView.setQueryHint("Search here");
 

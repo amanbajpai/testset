@@ -126,6 +126,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         context = this;
         initializeViews();
+
     }
 
     @Override
