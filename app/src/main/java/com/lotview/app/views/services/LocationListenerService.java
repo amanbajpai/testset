@@ -17,7 +17,6 @@ import android.util.Log;
 
 import com.lotview.app.R;
 import com.lotview.app.application.KeyKeepApplication;
-import com.lotview.app.model.bean.BaseRequestEntity;
 import com.lotview.app.model.bean.LocationTrackBeanList;
 import com.lotview.app.model.bean.TrackLocationBaseResponse;
 import com.lotview.app.model.location.LocationTrackBean;
@@ -139,7 +138,7 @@ public class LocationListenerService extends Service {
         LocationParams.Builder builder = new LocationParams.Builder();
         builder.setAccuracy(LocationAccuracy.HIGH);
         builder.setDistance(5); // in Meteres
-//        builder.setInterval(1000);
+        builder.setInterval(120000); // 2 min
         LocationParams params = builder.build();
 
         location_control = SmartLocation.with(this).location().config(params);
@@ -198,7 +197,7 @@ public class LocationListenerService extends Service {
     private void TrackEmployeeAssets() {
         ArrayList<LocationTrackBean> trackBeanArrayList = (ArrayList<LocationTrackBean>) KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().queryBuilder().where(LocationTrackBeanDao.Properties.EmployeeDataIsSync.eq(0)).list();
 
-        if(!Connectivity.isConnected()&& trackBeanArrayList!=null&& trackBeanArrayList.size()>0 ) {
+        if (!Connectivity.isConnected() && trackBeanArrayList != null && trackBeanArrayList.size() > 0) {
 
             LocationTrackBeanList locationTrackBeanList = new LocationTrackBeanList();
             locationTrackBeanList.setLocationTrackBeanArrayList(trackBeanArrayList);
@@ -248,7 +247,7 @@ public class LocationListenerService extends Service {
 
                 }
             });
-        }else{
+        } else {
             trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
         }
     }

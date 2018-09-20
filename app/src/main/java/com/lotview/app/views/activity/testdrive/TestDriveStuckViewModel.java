@@ -92,7 +92,7 @@ public class TestDriveStuckViewModel extends BaseViewModel {
 
         String employeeId = AppSharedPrefs.getInstance(KeyKeepApplication.getInstance()).getEmployeeID();
 
-        Call<EmployeeOwnedAssetsListResponse> call = RetrofitHolder.getService().getAssetOwnedByEmployee(KeyKeepApplication.getInstance().getBaseEntity(false), employeeId);
+        Call<EmployeeOwnedAssetsListResponse> call = RetrofitHolder.getService().getAssetOwnedByEmployee(KeyKeepApplication.getInstance().getBaseEntity(false));
 
         call.enqueue(new Callback<EmployeeOwnedAssetsListResponse>() {
             @Override
