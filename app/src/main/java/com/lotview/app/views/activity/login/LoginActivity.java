@@ -116,11 +116,21 @@ public class LoginActivity extends BaseActivity {
             url = url.replaceAll(" ", "%20");
             AppSharedPrefs.getInstance(context).setChatUrl(url);
 
-            if (loginBean.getResult().getRunningTestDriveResponse() != null && loginBean.getResult().getRunningTestDriveResponse().getTest_drive_start_status().equalsIgnoreCase("1")) {
-                AppSharedPrefs.getInstance(context).setTestDriveID(loginBean.getResult().getRunningTestDriveResponse().getAsset_employee_test_drive_id());
-                AppSharedPrefs.setTestDriveAssetId(loginBean.getResult().getRunningTestDriveResponse().getAsset_id());
-                startActivity(new Intent(LoginActivity.this, TestDriveStuckActivity.class));
-                finish();
+            if (loginBean.getResult().getRunningTestDriveResponse() != null) {
+                if (loginBean.getResult().getRunningTestDriveResponse().getTest_drive_start_status() != null) {
+
+                    AppSharedPrefs.getInstance(context).setTestDriveID(loginBean.getResult().getRunningTestDriveResponse().getAsset_employee_test_drive_id());
+                    AppSharedPrefs.setTestDriveAssetId(loginBean.getResult().getRunningTestDriveResponse().getAsset_id());
+                    startActivity(new Intent(LoginActivity.this, TestDriveStuckActivity.class));
+                    finish();
+
+                } else {
+                    AppSharedPrefs.getInstance(context).setTestDriveID("0");
+                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    finish();
+                }
+
+
             } else {
                 startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                 finish();

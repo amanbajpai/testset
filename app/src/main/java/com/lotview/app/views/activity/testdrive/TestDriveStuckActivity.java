@@ -66,7 +66,7 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
         viewModel.response_assets_owned.observe(this, responseAssetsOwnedCurrently);
 
         binding.tvTestDriveStop.setOnClickListener(this);
-        binding.tvKeyName.setText(AppSharedPrefs.getAssetNameforRunningTestDrive());
+
         isDriveStart = AppSharedPrefs.isTestDriveRunning();
 
         viewModel.doCheckIfTestDriveIsRuning(AppSharedPrefs.getTestDriveId());
