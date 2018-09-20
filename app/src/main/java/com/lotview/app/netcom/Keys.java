@@ -47,6 +47,7 @@ public interface Keys {
     int NOTIFICATION_ASSET_TRANSFER_APPROVE = 5;
     int NOTIFICATION_ASSET_TRANSFER_DECLINE = 6;
     int NOTIFICATION_ASSET_SUBMIT_APPROVE = 8;
+    int NOTIFICATION_CHAT_PUSH = 12;
 
     /**
      * approved request
@@ -84,6 +85,7 @@ public interface Keys {
     String TEST_DRIVE_START_DATETIME_UTC = "start_date_time_utc";
     String TEST_DRIVE_END_DATETIME_UTC = "end_date_time_utc";
     String LAST_ASSET_TRANSACTION_LOG_ID = "last_asset_transaction_log_id";
+    String LAST_NOTIFICATION_ID = "last_notification_id";
 
 
     String ASSET_NAME = "asset_name";

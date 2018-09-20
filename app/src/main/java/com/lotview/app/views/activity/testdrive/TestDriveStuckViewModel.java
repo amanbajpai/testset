@@ -36,7 +36,7 @@ public class TestDriveStuckViewModel extends BaseViewModel {
 
         Call<TestDriveResponseBean> call = RetrofitHolder.getService().doStopTestDrive(
                 KeyKeepApplication.getBaseEntity(true),
-                emp_id, asset_id, start_latitude, start_logitude, start_date_time, start_date_time_utc, test_drive_id);
+                asset_id, start_latitude, start_logitude, start_date_time, start_date_time_utc, test_drive_id);
 
         call.enqueue(new Callback<TestDriveResponseBean>() {
 

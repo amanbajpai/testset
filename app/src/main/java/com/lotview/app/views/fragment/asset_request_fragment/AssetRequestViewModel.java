@@ -9,6 +9,7 @@ import com.lotview.app.model.bean.AssetsListResponseBean;
 import com.lotview.app.netcom.retrofit.RetrofitHolder;
 import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.utils.AppUtils;
+import com.lotview.app.utils.Connectivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,9 +25,15 @@ public class AssetRequestViewModel extends ViewModel {
 
     public void getAssetsPendingSendRequest(AssetRequestSendRecieveFragmentBinding binding) {
 
+        if (!Connectivity.isConnected()) {
+            validator.setValue(AppUtils.NO_INTERNET);
+            return;
+        }
+
+
         String employeeId = AppSharedPrefs.getEmployeeID();
 
-        Call<AssetsListResponseBean> call = RetrofitHolder.getService().getAssetPendingSendRequest(KeyKeepApplication.getInstance().getBaseEntity(false), employeeId);
+        Call<AssetsListResponseBean> call = RetrofitHolder.getService().getAssetPendingSendRequest(KeyKeepApplication.getInstance().getBaseEntity(false));
 
         call.enqueue(new Callback<AssetsListResponseBean>() {
             @Override
@@ -43,9 +50,14 @@ public class AssetRequestViewModel extends ViewModel {
 
     public void getAssetsPendingRecieveRequest(AssetRequestSendRecieveFragmentBinding binding) {
 
+        if (!Connectivity.isConnected()) {
+            validator.setValue(AppUtils.NO_INTERNET);
+            return;
+        }
+
         String employeeId = AppSharedPrefs.getEmployeeID();
 
-        Call<AssetsListResponseBean> call = RetrofitHolder.getService().getAssetPendingRecieveRequest(KeyKeepApplication.getInstance().getBaseEntity(false), employeeId);
+        Call<AssetsListResponseBean> call = RetrofitHolder.getService().getAssetPendingRecieveRequest(KeyKeepApplication.getInstance().getBaseEntity(false));
 
         call.enqueue(new Callback<AssetsListResponseBean>() {
 
@@ -60,4 +72,6 @@ public class AssetRequestViewModel extends ViewModel {
             }
         });
     }
+
+
 }

@@ -61,8 +61,7 @@ public class ChangePasswordViewModel extends BaseViewModel {
                 KeyKeepApplication.getInstance().getBaseEntity(true)
                 , oldpassword
                 , password
-                , c_password
-                , emp_id);
+                , c_password);
 
         call.enqueue(new Callback<ChangePasswordBean>() {
             @Override

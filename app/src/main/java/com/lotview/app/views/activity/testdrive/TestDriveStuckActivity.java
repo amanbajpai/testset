@@ -39,6 +39,7 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
+        viewModel.validator.observe(this, observer);
         viewModel.response_testdrive_stop.observe(this, responseTestDriveStop);
         viewModel.response_check_ifany_testdrive.observe(this, responseIfTestDriveRunning);
     }
@@ -99,6 +100,25 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
                 AppSharedPrefs.setTestDriveRunning(false);
                 AppSharedPrefs.getInstance(context).setTestDriveID("");
                 startActivity(new Intent(context, HomeActivity.class));
+            }
+        }
+    };
+
+    Observer<Integer> observer = new Observer<Integer>() {
+
+        @Override
+        public void onChanged(@Nullable Integer value) {
+            switch (value) {
+
+                case AppUtils.NO_INTERNET:
+                    Utils.hideProgressDialog();
+                    Utils.showSnackBar(binding, getString(R.string.internet_connection));
+                    break;
+
+                case AppUtils.SERVER_ERROR:
+                    Utils.hideProgressDialog();
+                    Utils.showSnackBar(binding, getString(R.string.server_error));
+                    break;
             }
         }
     };
