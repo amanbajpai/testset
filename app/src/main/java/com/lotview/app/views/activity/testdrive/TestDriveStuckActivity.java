@@ -116,6 +116,25 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
         }
     };
 
+    Observer<Integer> observer = new Observer<Integer>() {
+
+        @Override
+        public void onChanged(@Nullable Integer value) {
+            switch (value) {
+
+                case AppUtils.NO_INTERNET:
+                    Utils.hideProgressDialog();
+                    Utils.showSnackBar(binding, getString(R.string.internet_connection));
+                    break;
+
+                case AppUtils.SERVER_ERROR:
+                    Utils.hideProgressDialog();
+                    Utils.showSnackBar(binding, getString(R.string.server_error));
+                    break;
+            }
+        }
+    };
+
 
     private void setViewForRunningTestDrive() {
         binding.tvKeyName.setText(checkIfAnyTestDriveResponseBean.getAsset_name());

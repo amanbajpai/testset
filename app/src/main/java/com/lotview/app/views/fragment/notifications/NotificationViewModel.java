@@ -29,7 +29,7 @@ public class NotificationViewModel extends BaseViewModel {
     public final MutableLiveData<BaseResponse> validator_clear_notification = new MutableLiveData<>();
 
 
-    public void getNotifications(FragmentNotificationBinding binding) {
+    public void getNotifications(int last_notif_id) {
 
 
         if (!Connectivity.isConnected()) {
@@ -38,9 +38,7 @@ public class NotificationViewModel extends BaseViewModel {
             return;
         }
 
-        String employeeId = AppSharedPrefs.getInstance(KeyKeepApplication.getInstance()).getEmployeeID();
-
-        Call<NotificationsResponseBean> call = RetrofitHolder.getService().getNotificationsRequest(KeyKeepApplication.getInstance().getBaseEntity(false), employeeId);
+        Call<NotificationsResponseBean> call = RetrofitHolder.getService().getNotificationsRequest(KeyKeepApplication.getInstance().getBaseEntity(false), last_notif_id);
 
         call.enqueue(new Callback<NotificationsResponseBean>() {
             @Override
@@ -68,7 +66,7 @@ public class NotificationViewModel extends BaseViewModel {
 
         String employeeId = AppSharedPrefs.getInstance(KeyKeepApplication.getInstance()).getEmployeeID();
 
-        Call<BaseResponse> call = RetrofitHolder.getService().clearAllNotification(KeyKeepApplication.getInstance().getBaseEntity(false), employeeId);
+        Call<BaseResponse> call = RetrofitHolder.getService().clearAllNotification(KeyKeepApplication.getInstance().getBaseEntity(false));
 
         call.enqueue(new Callback<BaseResponse>() {
 

@@ -21,9 +21,12 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.lotview.app.R;
+import com.lotview.app.application.KeyKeepApplication;
 import com.lotview.app.databinding.ActivityKeyOnMapBinding;
 import com.lotview.app.interfaces.DialogClickListener;
 import com.lotview.app.model.bean.AssetLocationResponseBean;
+import com.lotview.app.model.bean.TrackLocationRequestEntity;
+import com.lotview.app.netcom.Keys;
 import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Utils;
@@ -70,9 +73,33 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
                 .findFragmentById(R.id.map);
 
         assetId=Integer.parseInt(getIntent().getStringExtra(AppUtils.ASSET_ID));
-        keyOnMapViewModel.getLatLong(assetId);
 
+        getLatLon();
 
+    }
+
+    private void getLatLon() {
+        Utils.showProgressDialog(context, getString(R.string.loading));
+
+        TrackLocationRequestEntity trackLocationRequestEntity=new TrackLocationRequestEntity();
+        trackLocationRequestEntity.setEmp_current_lat(AppSharedPrefs.getLatitude());
+        trackLocationRequestEntity.setEmp_current_long(AppSharedPrefs.getLongitude());
+
+        trackLocationRequestEntity.setApi_key(Keys.API_KEY);
+        trackLocationRequestEntity.setDevice_id(Utils.getDeviceID());
+        trackLocationRequestEntity.setDevice_type(Keys.TYPE_ANDROID);
+        trackLocationRequestEntity.setEmployee_id(Integer.valueOf(AppSharedPrefs.getInstance(this).getEmployeeID()));
+        trackLocationRequestEntity.setCompany_id(Integer.valueOf(AppSharedPrefs.getInstance(this).getCompanyID()));
+
+        if (AppSharedPrefs.getInstance(this).getPushDeviceToken() != null && AppSharedPrefs.getInstance(this).getPushDeviceToken().trim().length() > 0) {
+            trackLocationRequestEntity.setDevice_token(AppSharedPrefs.getInstance(this).getPushDeviceToken());
+        } else {
+            trackLocationRequestEntity.setDevice_token("aaaaaaa");
+        }
+        trackLocationRequestEntity.setToken_type(Keys.TOKEN_TYPE);
+        trackLocationRequestEntity.setAccess_token(AppSharedPrefs.getInstance(this).getAccessToken());
+
+        keyOnMapViewModel.getLatLong(assetId,keyOnMapBinding,trackLocationRequestEntity);
     }
 
 
@@ -99,7 +126,8 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
                 finish();
                 break;
             case R.id.refresh_iv:
-                keyOnMapViewModel.getLatLong(assetId);
+
+                getLatLon();
                 break;
         }
     }
@@ -115,6 +143,7 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
                     break;
 
                 case AppUtils.SERVER_ERROR:
+                    Utils.hideProgressDialog();
                     Utils.showSnackBar(keyOnMapBinding, getString(R.string.server_error));
                     break;
             }
@@ -137,7 +166,7 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
             if (bean.getCode().equals(AppUtils.STATUS_SUCCESS)) {
                 showMarker(bean.getResult().getEmp_lat(),bean.getResult().getEmp_long(),bean.getResult().getLocation());
             }
-
+            Utils.hideProgressDialog();
         }
     };
 

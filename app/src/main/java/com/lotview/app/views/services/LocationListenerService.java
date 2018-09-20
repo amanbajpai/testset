@@ -17,6 +17,7 @@ import android.util.Log;
 
 import com.lotview.app.R;
 import com.lotview.app.application.KeyKeepApplication;
+import com.lotview.app.model.bean.BaseRequestEntity;
 import com.lotview.app.model.bean.LocationTrackBeanList;
 import com.lotview.app.model.bean.TrackLocationBaseResponse;
 import com.lotview.app.model.location.LocationTrackBean;
@@ -24,6 +25,7 @@ import com.lotview.app.model.location.LocationTrackBeanDao;
 import com.lotview.app.netcom.Keys;
 import com.lotview.app.netcom.retrofit.RetrofitHolder;
 import com.lotview.app.preferences.AppSharedPrefs;
+import com.lotview.app.utils.Connectivity;
 import com.lotview.app.utils.Utils;
 import com.lotview.app.views.activity.home.HomeActivity;
 
@@ -140,7 +142,6 @@ public class LocationListenerService extends Service {
 //        builder.setInterval(1000);
         LocationParams params = builder.build();
 
-
         location_control = SmartLocation.with(this).location().config(params);
 
         location_control.start(new OnLocationUpdatedListener() {
@@ -197,11 +198,11 @@ public class LocationListenerService extends Service {
     private void TrackEmployeeAssets() {
         ArrayList<LocationTrackBean> trackBeanArrayList = (ArrayList<LocationTrackBean>) KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().queryBuilder().where(LocationTrackBeanDao.Properties.EmployeeDataIsSync.eq(0)).list();
 
-        if (trackBeanArrayList != null && trackBeanArrayList.size() > 0) {
-
+        if(!Connectivity.isConnected()&& trackBeanArrayList!=null&& trackBeanArrayList.size()>0 ) {
 
             LocationTrackBeanList locationTrackBeanList = new LocationTrackBeanList();
             locationTrackBeanList.setLocationTrackBeanArrayList(trackBeanArrayList);
+
             locationTrackBeanList.setApi_key(Keys.API_KEY);
             locationTrackBeanList.setDevice_id(Utils.getDeviceID());
             locationTrackBeanList.setDevice_type(Keys.TYPE_ANDROID);
@@ -215,7 +216,8 @@ public class LocationListenerService extends Service {
             }
             locationTrackBeanList.setToken_type(Keys.TOKEN_TYPE);
             locationTrackBeanList.setAccess_token(AppSharedPrefs.getInstance(this).getAccessToken());
-            Call<TrackLocationBaseResponse> call = RetrofitHolder.getService().trackeEmployee(locationTrackBeanList);
+
+            Call<TrackLocationBaseResponse> call = RetrofitHolder.getService().trackEmployee(locationTrackBeanList);
 
 
             call.enqueue(new Callback<TrackLocationBaseResponse>() {
@@ -246,7 +248,7 @@ public class LocationListenerService extends Service {
 
                 }
             });
-        } else {
+        }else{
             trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
         }
     }

@@ -7,11 +7,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.multidex.MultiDexApplication;
+import android.widget.Switch;
 
 import com.crashlytics.android.Crashlytics;
 import com.facebook.stetho.Stetho;
 import com.lotview.app.BuildConfig;
 import com.lotview.app.model.bean.BaseRequestEntity;
+import com.lotview.app.model.bean.LocationTrackBeanList;
+import com.lotview.app.model.bean.TrackLocationRequestEntity;
 import com.lotview.app.model.location.DaoMaster;
 import com.lotview.app.model.location.DaoSession;
 import com.lotview.app.netcom.Keys;
@@ -161,6 +164,7 @@ public class KeyKeepApplication extends MultiDexApplication {
 
     public static BaseRequestEntity getBaseEntity(boolean includeToken) {
         BaseRequestEntity baseRequestEntity = new BaseRequestEntity();
+
         baseRequestEntity.setApi_key(Keys.API_KEY);
         baseRequestEntity.setDevice_id(Utils.getDeviceID());
         baseRequestEntity.setDevice_type(Keys.TYPE_ANDROID);
@@ -189,5 +193,6 @@ public class KeyKeepApplication extends MultiDexApplication {
         }
         return baseRequestEntity;
     }
+
 
 }

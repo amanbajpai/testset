@@ -36,7 +36,7 @@ public class TestDriveAssetViewModel extends BaseViewModel {
 
         Call<AssetDetailBean> call = RetrofitHolder.getService().getAssetDetail(
                 KeyKeepApplication.getBaseEntity(true),
-                emp_id, qr_code);
+                qr_code);
 
         call.enqueue(new Callback<AssetDetailBean>() {
 
@@ -67,7 +67,7 @@ public class TestDriveAssetViewModel extends BaseViewModel {
 
         Call<TestDriveResponseBean> call = RetrofitHolder.getService().doStartTestDrive(
                 KeyKeepApplication.getBaseEntity(true),
-                emp_id, asset_id, start_latitude, start_logitude, start_date_time, start_date_time_utc, qr_code_no);
+                 asset_id, start_latitude, start_logitude, start_date_time, start_date_time_utc, qr_code_no);
 
         call.enqueue(new Callback<TestDriveResponseBean>() {
 

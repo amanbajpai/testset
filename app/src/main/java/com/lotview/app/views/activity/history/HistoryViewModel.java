@@ -10,6 +10,7 @@ import com.lotview.app.model.bean.HistoryResponseBean;
 import com.lotview.app.netcom.retrofit.RetrofitHolder;
 import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.utils.AppUtils;
+import com.lotview.app.utils.Connectivity;
 import com.lotview.app.views.base.BaseViewModel;
 
 import retrofit2.Call;
@@ -26,8 +27,11 @@ public class HistoryViewModel extends BaseViewModel {
 
     public void getHistoryList(int last_asset_transaction_log_id) {
 
+        if (!Connectivity.isConnected()) {
+            validator.setValue(AppUtils.NO_INTERNET);
+            return;
+        }
         Call<HistoryResponseBean> call = RetrofitHolder.getService().getHistoryList(KeyKeepApplication.getInstance().getBaseEntity(false), last_asset_transaction_log_id);
-
         call.enqueue(new Callback<HistoryResponseBean>() {
             @Override
             public void onResponse(Call<HistoryResponseBean> call, Response<HistoryResponseBean> response) {

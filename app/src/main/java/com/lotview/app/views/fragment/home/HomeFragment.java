@@ -61,6 +61,7 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
         binding.takeoutRl.setOnClickListener(this);
         binding.chatRl.setOnClickListener(this);
 
+        viewModel.validator.observe(this, observer);
         viewModel.response_allassets_owned.observe(this, responseAssetsOwnedCurrently);
 
 
@@ -226,6 +227,25 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
                 if (resultArrayList.size() > 0) {
                     startLocationStorage();
                 }
+            }
+        }
+    };
+
+    Observer<Integer> observer = new Observer<Integer>() {
+
+        @Override
+        public void onChanged(@Nullable Integer value) {
+            switch (value) {
+
+                case AppUtils.NO_INTERNET:
+                    Utils.hideProgressDialog();
+                    Utils.showSnackBar(binding, getString(R.string.internet_connection));
+                    break;
+
+                case AppUtils.SERVER_ERROR:
+                    Utils.hideProgressDialog();
+                    Utils.showSnackBar(binding, getString(R.string.server_error));
+                    break;
             }
         }
     };

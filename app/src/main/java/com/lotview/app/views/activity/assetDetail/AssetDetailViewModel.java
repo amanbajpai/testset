@@ -39,7 +39,7 @@ public class AssetDetailViewModel extends ViewModel {
 
         Call<AssetDetailBean> call = RetrofitHolder.getService().getAssetDetail(
                 KeyKeepApplication.getBaseEntity(true),
-                emp_id, qr_code);
+                 qr_code);
 
         call.enqueue(new Callback<AssetDetailBean>() {
 
@@ -77,7 +77,6 @@ public class AssetDetailViewModel extends ViewModel {
 
         Call<AssetDetailBean> call = RetrofitHolder.getService().sendHandoverRequest(
                 KeyKeepApplication.getBaseEntity(true),
-                emp_id,
                 qr_code,
                 "1", lat, lng
         );
@@ -115,7 +114,6 @@ public class AssetDetailViewModel extends ViewModel {
 
         Call<AssetDetailBean> call = RetrofitHolder.getService().sendTransferRequest(
                 KeyKeepApplication.getBaseEntity(true),
-                emp_id,
                 qr_code
         );
 
@@ -156,7 +154,6 @@ public class AssetDetailViewModel extends ViewModel {
 
         Call<AssetDetailBean> call = RetrofitHolder.getService().keepAssetRequest(
                 KeyKeepApplication.getBaseEntity(true),
-                emp_id,
                 qr_code, lat, lng
         );
 
@@ -195,7 +192,6 @@ public class AssetDetailViewModel extends ViewModel {
 
         Call<BaseResponse> call = RetrofitHolder.getService().approveAssetRequest(
                 KeyKeepApplication.getBaseEntity(true),
-                emp_id,
                 req_id, lat, lng);
 
         call.enqueue(new Callback<BaseResponse>() {
@@ -227,7 +223,6 @@ public class AssetDetailViewModel extends ViewModel {
         String lng = AppSharedPrefs.getLongitude();
         Call<BaseResponse> call = RetrofitHolder.getService().cancelAssetRequest(
                 KeyKeepApplication.getBaseEntity(true),
-                emp_id,
                 req_id, lat, lng);
 
         call.enqueue(new Callback<BaseResponse>() {
