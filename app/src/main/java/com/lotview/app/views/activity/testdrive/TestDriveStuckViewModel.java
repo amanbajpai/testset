@@ -4,8 +4,10 @@ import android.arch.lifecycle.MutableLiveData;
 
 import com.lotview.app.application.KeyKeepApplication;
 import com.lotview.app.model.bean.CheckIfAnyTestDriveResponseBean;
+import com.lotview.app.model.bean.EmployeeOwnedAssetsListResponse;
 import com.lotview.app.model.bean.TestDriveResponseBean;
 import com.lotview.app.netcom.retrofit.RetrofitHolder;
+import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Connectivity;
 import com.lotview.app.utils.Utils;
@@ -24,6 +26,7 @@ public class TestDriveStuckViewModel extends BaseViewModel {
     MutableLiveData<Integer> validator = new MutableLiveData<>();
     MutableLiveData<TestDriveResponseBean> response_testdrive_stop = new MutableLiveData<>();
     MutableLiveData<CheckIfAnyTestDriveResponseBean> response_check_ifany_testdrive = new MutableLiveData<>();
+    MutableLiveData<EmployeeOwnedAssetsListResponse> response_assets_owned = new MutableLiveData<>();
 
 
     public void doStopTestDrive(String emp_id, int asset_id, String start_latitude, String start_logitude,
@@ -57,7 +60,7 @@ public class TestDriveStuckViewModel extends BaseViewModel {
     }
 
 
-    public void doCheckIfTestDriveIsRuning(String emp_id) {
+    public void doCheckIfTestDriveIsRuning(String testDriveId) {
 
         if (!Connectivity.isConnected()) {
             validator.setValue(AppUtils.NO_INTERNET);
@@ -65,7 +68,7 @@ public class TestDriveStuckViewModel extends BaseViewModel {
         }
 
         Call<CheckIfAnyTestDriveResponseBean> call = RetrofitHolder.getService().doCheckifAnyTestDriveRunning(
-                KeyKeepApplication.getBaseEntity(true), emp_id);
+                KeyKeepApplication.getBaseEntity(true), testDriveId);
 
         call.enqueue(new Callback<CheckIfAnyTestDriveResponseBean>() {
 
@@ -82,7 +85,26 @@ public class TestDriveStuckViewModel extends BaseViewModel {
                 validator.setValue(AppUtils.SERVER_ERROR);
             }
         });
+    }
 
+
+    public void getCurrentAssetsOwned() {
+
+        String employeeId = AppSharedPrefs.getInstance(KeyKeepApplication.getInstance()).getEmployeeID();
+
+        Call<EmployeeOwnedAssetsListResponse> call = RetrofitHolder.getService().getAssetOwnedByEmployee(KeyKeepApplication.getInstance().getBaseEntity(false), employeeId);
+
+        call.enqueue(new Callback<EmployeeOwnedAssetsListResponse>() {
+            @Override
+            public void onResponse(Call<EmployeeOwnedAssetsListResponse> call, Response<EmployeeOwnedAssetsListResponse> response) {
+                response_assets_owned.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<EmployeeOwnedAssetsListResponse> call, Throwable t) {
+                validator.setValue(AppUtils.SERVER_ERROR);
+            }
+        });
     }
 
 

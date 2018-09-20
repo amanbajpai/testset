@@ -58,7 +58,7 @@ public class TestDriveAssetViewModel extends BaseViewModel {
 
 
     public void doStartTestDrive(String emp_id, int asset_id, String start_latitude, String start_logitude,
-                                 String start_date_time, String start_date_time_utc) {
+                                 String start_date_time, String start_date_time_utc, String qr_code_no) {
 
         if (!Connectivity.isConnected()) {
             validator.setValue(AppUtils.NO_INTERNET);
@@ -67,7 +67,7 @@ public class TestDriveAssetViewModel extends BaseViewModel {
 
         Call<TestDriveResponseBean> call = RetrofitHolder.getService().doStartTestDrive(
                 KeyKeepApplication.getBaseEntity(true),
-                emp_id, asset_id, start_latitude, start_logitude, start_date_time, start_date_time_utc);
+                emp_id, asset_id, start_latitude, start_logitude, start_date_time, start_date_time_utc, qr_code_no);
 
         call.enqueue(new Callback<TestDriveResponseBean>() {
 
@@ -86,7 +86,6 @@ public class TestDriveAssetViewModel extends BaseViewModel {
         });
 
     }
-
 
 
 }

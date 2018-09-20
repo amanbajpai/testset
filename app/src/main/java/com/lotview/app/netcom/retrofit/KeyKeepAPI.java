@@ -144,7 +144,8 @@ public interface KeyKeepAPI {
                                                  @Query(Keys.TEST_DRIVE_START_LATITUDE) String start_latitude,
                                                  @Query(Keys.TEST_DRIVE_START_LONGITUDE) String start_longitude,
                                                  @Query(Keys.TEST_DRIVE_START_DATETIME) String start_date_time,
-                                                 @Query(Keys.TEST_DRIVE_START_DATETIME_UTC) String start_date_time_utc
+                                                 @Query(Keys.TEST_DRIVE_START_DATETIME_UTC) String start_date_time_utc,
+                                                 @Query(Keys.QR_CODE_NUMBER) String qr_code_number
     );
 
 //    asset_employee_test_drive_id:1 need to send this
@@ -183,6 +184,6 @@ public interface KeyKeepAPI {
     Call<AssetLocationResponseBean> getAssetCurrentLocation(@Body BaseRequestEntity baseEntity, @Query(Keys.ASSET_ID) int asset_id);
 
     @POST(Config.HISTORY_LIST_URL)
-    Call<HistoryResponseBean> getHistoryList(@Body BaseRequestEntity baseRequestEntity,@Query(Keys.LAST_ASSET_TRANSACTION_LOG_ID) int last_asset_transaction_log_id);
+    Call<HistoryResponseBean> getHistoryList(@Body BaseRequestEntity baseRequestEntity, @Query(Keys.LAST_ASSET_TRANSACTION_LOG_ID) int last_asset_transaction_log_id);
 
 }

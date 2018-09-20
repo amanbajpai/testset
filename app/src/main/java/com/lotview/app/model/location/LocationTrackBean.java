@@ -53,14 +53,14 @@ public class LocationTrackBean implements Serializable {
     @Expose
     public boolean employeeDataIsSync;
 
+    /*Put Test Drive ID if testdrive is ON otherwise 0 for tracking*/
     @SerializedName("asset_employee_test_drive_id")
     @Expose
-    /*Put 1 for testdrive and 0 for tracking*/
     private int asset_employee_test_drive_id;
 
+    /*0 for tracking and if tesdrive is on Id of asset for which testdrive is on*/
     @SerializedName("test_drive_asset_id")
     @Expose
-    /*0 for tracking and if tesdrive is on*/
     private int testDriveAssetId;
 
 

@@ -32,6 +32,7 @@ import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Utils;
 import com.lotview.app.views.activity.forgot_password.ForgotPasswordActivity;
 import com.lotview.app.views.activity.home.HomeActivity;
+import com.lotview.app.views.activity.testdrive.TestDriveStuckActivity;
 import com.lotview.app.views.base.BaseActivity;
 
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
@@ -47,6 +48,7 @@ import static io.nlopez.smartlocation.location.providers.LocationGooglePlayServi
 public class LoginActivity extends BaseActivity {
 
     LoginViewModel viewModel;
+    private Context context;
     private LoginActivityBinding binding;
     Observer validatorObserver = new Observer<Integer>() {
 
@@ -77,8 +79,8 @@ public class LoginActivity extends BaseActivity {
             }
         }
     };
-    private Context context;
-    Observer<LoginResponseBean> response_observer = new Observer<LoginResponseBean>() {
+
+    Observer<LoginResponseBean> login_response_observer = new Observer<LoginResponseBean>() {
 
         @Override
         public void onChanged(@Nullable LoginResponseBean loginBean) {
@@ -114,9 +116,16 @@ public class LoginActivity extends BaseActivity {
             url = url.replaceAll(" ", "%20");
             AppSharedPrefs.getInstance(context).setChatUrl(url);
 
+            if (loginBean.getResult().getRunningTestDriveResponse() != null && loginBean.getResult().getRunningTestDriveResponse().getTest_drive_start_status().equalsIgnoreCase("1")) {
+                AppSharedPrefs.getInstance(context).setTestDriveID(loginBean.getResult().getRunningTestDriveResponse().getAsset_employee_test_drive_id());
+                AppSharedPrefs.setTestDriveAssetId(loginBean.getResult().getRunningTestDriveResponse().getAsset_id());
+                startActivity(new Intent(LoginActivity.this, TestDriveStuckActivity.class));
+                finish();
+            } else {
+                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                finish();
+            }
 
-            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-            finish();
         }
     };
     private SmartLocation.LocationControl location_control;
@@ -137,7 +146,7 @@ public class LoginActivity extends BaseActivity {
         binding.tvLogin.setOnClickListener(this);
         binding.tvForgotPassword.setOnClickListener(this);
         viewModel.validator.observe(this, validatorObserver);
-        viewModel.response_validator.observe(this, response_observer);
+        viewModel.response_validator.observe(this, login_response_observer);
         viewModel.validator.observe(this, validatorObserver);
 
 

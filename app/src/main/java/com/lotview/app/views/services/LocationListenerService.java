@@ -13,7 +13,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.lotview.app.R;
@@ -138,8 +137,9 @@ public class LocationListenerService extends Service {
         LocationParams.Builder builder = new LocationParams.Builder();
         builder.setAccuracy(LocationAccuracy.HIGH);
         builder.setDistance(5); // in Meteres
-        builder.setInterval(1000);
+//        builder.setInterval(1000);
         LocationParams params = builder.build();
+
 
         location_control = SmartLocation.with(this).location().config(params);
 
@@ -176,16 +176,15 @@ public class LocationListenerService extends Service {
         locationTrackBean.setEmployeeTimeStampLocal(Utils.getCurrentTimeStampDate());
         locationTrackBean.setEmployeeTimeStampLocalUTC(Utils.getCurrentUTC());
         locationTrackBean.setEmployee_key_ids(AppSharedPrefs.getInstance(this).getOwnedKeyIds());
-        // If Logging for Testdrive then need to send 1 otherwise 0.
+
+
         if (AppSharedPrefs.isTestDriveRunning()) {
-            locationTrackBean.setAsset_employee_test_drive_id(1);
+             /*Put Test Drive ID if testdrive is ON otherwise 0 for tracking*/
+            locationTrackBean.setAsset_employee_test_drive_id(Integer.valueOf(AppSharedPrefs.getTestDriveId()));
+             /*0 for tracking and if tesdrive is on Id of asset for which testdrive is on*/
+            locationTrackBean.setTestDriveAssetId(Integer.valueOf(AppSharedPrefs.getTestDriveAssetId()));
         } else {
             locationTrackBean.setAsset_employee_test_drive_id(0);
-        }
-        // If Logging for Testdrive then need to send "TestDrive Id received in response of start Testdrive", otherwise 0.
-        if (!TextUtils.isEmpty(AppSharedPrefs.getTestDriveId()) && AppSharedPrefs.getTestDriveId().length() > 0) {
-            locationTrackBean.setTestDriveAssetId(Integer.valueOf(AppSharedPrefs.getTestDriveId()));
-        } else {
             locationTrackBean.setTestDriveAssetId(0);
         }
 
@@ -198,52 +197,58 @@ public class LocationListenerService extends Service {
     private void TrackEmployeeAssets() {
         ArrayList<LocationTrackBean> trackBeanArrayList = (ArrayList<LocationTrackBean>) KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().queryBuilder().where(LocationTrackBeanDao.Properties.EmployeeDataIsSync.eq(0)).list();
 
-        LocationTrackBeanList locationTrackBeanList = new LocationTrackBeanList();
-        locationTrackBeanList.setLocationTrackBeanArrayList(trackBeanArrayList);
-        locationTrackBeanList.setApi_key(Keys.API_KEY);
-        locationTrackBeanList.setDevice_id(Utils.getDeviceID());
-        locationTrackBeanList.setDevice_type(Keys.TYPE_ANDROID);
-        locationTrackBeanList.setEmployee_id(Integer.valueOf(AppSharedPrefs.getInstance(this).getEmployeeID()));
-        locationTrackBeanList.setCompany_id(Integer.valueOf(AppSharedPrefs.getInstance(this).getCompanyID()));
-
-        if (AppSharedPrefs.getInstance(this).getPushDeviceToken() != null && AppSharedPrefs.getInstance(this).getPushDeviceToken().trim().length() > 0) {
-            locationTrackBeanList.setDevice_token(AppSharedPrefs.getInstance(this).getPushDeviceToken());
-        } else {
-            locationTrackBeanList.setDevice_token("aaaaaaa");
-        }
-        locationTrackBeanList.setToken_type(Keys.TOKEN_TYPE);
-        locationTrackBeanList.setAccess_token(AppSharedPrefs.getInstance(this).getAccessToken());
-        Call<TrackLocationBaseResponse> call = RetrofitHolder.getService().trackeEmployee(locationTrackBeanList);
+        if (trackBeanArrayList != null && trackBeanArrayList.size() > 0) {
 
 
-        call.enqueue(new Callback<TrackLocationBaseResponse>() {
-            @Override
-            public void onResponse(Call<TrackLocationBaseResponse> call, Response<TrackLocationBaseResponse> response) {
-                TrackLocationBaseResponse trackLocationBaseResponse = response.body();
-                if (trackLocationBaseResponse.getSuccess()) {
-                    if (trackLocationBaseResponse.getResultArray().size() > 0) {
-                        trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
+            LocationTrackBeanList locationTrackBeanList = new LocationTrackBeanList();
+            locationTrackBeanList.setLocationTrackBeanArrayList(trackBeanArrayList);
+            locationTrackBeanList.setApi_key(Keys.API_KEY);
+            locationTrackBeanList.setDevice_id(Utils.getDeviceID());
+            locationTrackBeanList.setDevice_type(Keys.TYPE_ANDROID);
+            locationTrackBeanList.setEmployee_id(Integer.valueOf(AppSharedPrefs.getInstance(this).getEmployeeID()));
+            locationTrackBeanList.setCompany_id(Integer.valueOf(AppSharedPrefs.getInstance(this).getCompanyID()));
+
+            if (AppSharedPrefs.getInstance(this).getPushDeviceToken() != null && AppSharedPrefs.getInstance(this).getPushDeviceToken().trim().length() > 0) {
+                locationTrackBeanList.setDevice_token(AppSharedPrefs.getInstance(this).getPushDeviceToken());
+            } else {
+                locationTrackBeanList.setDevice_token("aaaaaaa");
+            }
+            locationTrackBeanList.setToken_type(Keys.TOKEN_TYPE);
+            locationTrackBeanList.setAccess_token(AppSharedPrefs.getInstance(this).getAccessToken());
+            Call<TrackLocationBaseResponse> call = RetrofitHolder.getService().trackeEmployee(locationTrackBeanList);
+
+
+            call.enqueue(new Callback<TrackLocationBaseResponse>() {
+                @Override
+                public void onResponse(Call<TrackLocationBaseResponse> call, Response<TrackLocationBaseResponse> response) {
+                    TrackLocationBaseResponse trackLocationBaseResponse = response.body();
+                    if (trackLocationBaseResponse.getSuccess()) {
+                        if (trackLocationBaseResponse.getResultArray().size() > 0) {
+                            trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
+                        } else {
+                            trackLocationFrequentlyHandler.removeCallbacks(trackLocationFrequentlyRunnable);
+                            stopSelf();
+                        }
+
+                        for (int i = 0; i < trackBeanArrayList.size(); i++) {
+                            LocationTrackBean locationTrackBean = trackBeanArrayList.get(i);
+                            locationTrackBean.setEmployeeDataIsSync(true);
+                            KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao()
+                                    .update(locationTrackBean);
+                        }
                     } else {
-                        trackLocationFrequentlyHandler.removeCallbacks(trackLocationFrequentlyRunnable);
-                        stopSelf();
+                        trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
                     }
-
-                    for (int i = 0; i < trackBeanArrayList.size(); i++) {
-                        LocationTrackBean locationTrackBean = trackBeanArrayList.get(i);
-                        locationTrackBean.setEmployeeDataIsSync(true);
-                        KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao()
-                                .update(locationTrackBean);
-                    }
-                } else {
-                    trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
                 }
-            }
 
-            @Override
-            public void onFailure(Call<TrackLocationBaseResponse> call, Throwable t) {
+                @Override
+                public void onFailure(Call<TrackLocationBaseResponse> call, Throwable t) {
 
-            }
-        });
+                }
+            });
+        } else {
+            trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
+        }
     }
 
 }

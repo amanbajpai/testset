@@ -30,6 +30,7 @@ public class AppSharedPrefs {
     public static final String QR_CODE = "Qr_code";
     public static final String TEST_DRIVE_ID = "test_drive_id";
     public static final String ASSET_NAME_TEST_DRIVE = "asset_name_test_drive";
+    public static final String TEST_DRIVE_ASSET_ID = "test_drive_asset_id";
 
     private static Context mContext = null;
     public static AppSharedPrefs instance = null;
@@ -254,6 +255,15 @@ public class AppSharedPrefs {
 
     public static String getAssetNameforRunningTestDrive() {
         return sp.getString(ASSET_NAME_TEST_DRIVE, "");
+    }
+
+    public static void setTestDriveAssetId(String testDriveID) {
+        prefEditor.putString(TEST_DRIVE_ASSET_ID, testDriveID);
+        prefEditor.commit();
+    }
+
+    public static String getTestDriveAssetId() {
+        return sp.getString(TEST_DRIVE_ASSET_ID, "");
     }
 
 
