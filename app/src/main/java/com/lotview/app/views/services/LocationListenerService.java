@@ -115,7 +115,7 @@ public class LocationListenerService extends Service {
             channel.setSound(null, null);
             KeyKeepApplication.getInstance().getSystemService(NotificationManager.class).createNotificationChannel(channel);
             Notification notification = new NotificationCompat.Builder(KeyKeepApplication.getInstance(), Keys.CHANNEL_NAME)
-                    .setContentTitle(KeyKeepApplication.getInstance().getString(R.string.app_name))
+//                    .setContentTitle(KeyKeepApplication.getInstance().getString(R.string.app_name))
                     .setContentText("Lotview is syncing in background.")
                     .setAutoCancel(true)
                     .setChannelId(Keys.CHANNEL_NAME)
@@ -128,7 +128,6 @@ public class LocationListenerService extends Service {
                     .setLocalOnly(true)
                     .build();
             startForeground(101, notification);
-            Log.e(TAG, "onStartCommand: ");
         }
     }
 
@@ -199,6 +198,8 @@ public class LocationListenerService extends Service {
 
         if (!Connectivity.isConnected() && trackBeanArrayList != null && trackBeanArrayList.size() > 0) {
 
+            setForegroundNotification();
+
             LocationTrackBeanList locationTrackBeanList = new LocationTrackBeanList();
             locationTrackBeanList.setLocationTrackBeanArrayList(trackBeanArrayList);
 
@@ -248,6 +249,11 @@ public class LocationListenerService extends Service {
                 }
             });
         } else {
+            // Hide notification here
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            }
+
             trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
         }
     }
