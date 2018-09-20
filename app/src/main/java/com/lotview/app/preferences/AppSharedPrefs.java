@@ -15,6 +15,7 @@ public class AppSharedPrefs {
     private static final String PUSH_DEVICE_TOKEN = "push_device_token";
     private static final String User_DETAIL = "user_detail";
     private static final String EMPLOYEE_ID = "employee_id";
+    private static final String COMPANY_ID = "company_id";
     private static final String EMPLOYEE_NAME = "employee_name";
     private static final String LOGIN_PASSWORD = "login_password";
 
@@ -27,6 +28,8 @@ public class AppSharedPrefs {
     public static final String MY_OWN_KEY_IDS_URL = "my_key_ids";
     public static final String DRIVE_START = "Drive_Start";
     public static final String QR_CODE = "Qr_code";
+    public static final String TEST_DRIVE_ID = "test_drive_id";
+    public static final String ASSET_NAME_TEST_DRIVE = "asset_name_test_drive";
 
     private static Context mContext = null;
     public static AppSharedPrefs instance = null;
@@ -108,6 +111,20 @@ public class AppSharedPrefs {
         return sp.getString(User_DETAIL, null);
     }
 
+
+    /**
+     * company id
+     *
+     * @param value
+     */
+    public static void setCompanyID(String value) {
+        prefEditor.putString(COMPANY_ID, value);
+        prefEditor.commit();
+    }
+
+    public static String getCompanyID() {
+        return sp.getString(COMPANY_ID, "");
+    }
 
     /**
      * employee id
@@ -202,23 +219,42 @@ public class AppSharedPrefs {
     }
 
 
-    public static void setDriveStart(boolean b) {
+    public static void setTestDriveRunning(boolean b) {
         prefEditor.putBoolean(DRIVE_START, b);
         prefEditor.commit();
     }
 
-    public static boolean getDriveStart() {
+    public static boolean isTestDriveRunning() {
         return sp.getBoolean(DRIVE_START, false);
     }
 
 
-    public void setQrCode(String qr_code) {
+    public static void setQrCode(String qr_code) {
         prefEditor.putString(QR_CODE, qr_code);
         prefEditor.commit();
     }
 
-    public String getQrCode() {
+    public static String getQrCode() {
         return sp.getString(QR_CODE, "");
     }
+
+    public static void setTestDriveID(String testDriveID) {
+        prefEditor.putString(TEST_DRIVE_ID, testDriveID);
+        prefEditor.commit();
+    }
+
+    public static String getTestDriveId() {
+        return sp.getString(TEST_DRIVE_ID, "");
+    }
+
+    public static void setAssetNameforRunningTestDrive(String testDriveID) {
+        prefEditor.putString(ASSET_NAME_TEST_DRIVE, testDriveID);
+        prefEditor.commit();
+    }
+
+    public static String getAssetNameforRunningTestDrive() {
+        return sp.getString(ASSET_NAME_TEST_DRIVE, "");
+    }
+
 
 }

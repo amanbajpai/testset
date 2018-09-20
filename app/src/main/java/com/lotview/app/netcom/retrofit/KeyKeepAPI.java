@@ -1,13 +1,19 @@
 package com.lotview.app.netcom.retrofit;
 
 import com.lotview.app.model.bean.AssetDetailBean;
+import com.lotview.app.model.bean.AssetLocationResponseBean;
 import com.lotview.app.model.bean.AssetsListResponseBean;
 import com.lotview.app.model.bean.BaseRequestEntity;
 import com.lotview.app.model.bean.BaseResponse;
 import com.lotview.app.model.bean.ChangePasswordBean;
+import com.lotview.app.model.bean.CheckIfAnyTestDriveResponseBean;
+import com.lotview.app.model.bean.EmployeeOwnedAssetsListResponse;
 import com.lotview.app.model.bean.ForgotPasswordResponseBean;
+import com.lotview.app.model.bean.LocationTrackBeanList;
 import com.lotview.app.model.bean.LoginResponseBean;
 import com.lotview.app.model.bean.NotificationsResponseBean;
+import com.lotview.app.model.bean.TestDriveResponseBean;
+import com.lotview.app.model.bean.TrackLocationBaseResponse;
 import com.lotview.app.netcom.Keys;
 
 import retrofit2.Call;
@@ -130,11 +136,49 @@ public interface KeyKeepAPI {
     Call<BaseResponse> doLogout(@Body BaseRequestEntity baseEntity,
                                 @Query(Keys.EMPLOYEE_ID) String emp_id);
 
-
-    @POST(Config.EMPLOYEE_TRACKER_URL)
-    Call<BaseResponse> trackeEmployee(@Body BaseRequestEntity baseEntity,
-                                      @Query(Keys.EMPLOYEE_ID) String emp_id
+    @POST(Config.START_TEST_DRIVE_URL)
+    Call<TestDriveResponseBean> doStartTestDrive(@Body BaseRequestEntity baseEntity,
+                                                 @Query(Keys.EMPLOYEE_ID) String emp_id,
+                                                 @Query(Keys.ASSET_ID) int assetId,
+                                                 @Query(Keys.TEST_DRIVE_START_LATITUDE) String start_latitude,
+                                                 @Query(Keys.TEST_DRIVE_START_LONGITUDE) String start_longitude,
+                                                 @Query(Keys.TEST_DRIVE_START_DATETIME) String start_date_time,
+                                                 @Query(Keys.TEST_DRIVE_START_DATETIME_UTC) String start_date_time_utc
     );
 
+//    asset_employee_test_drive_id:1 need to send this
+
+    @POST(Config.END_TEST_DRIVE_URL)
+    Call<TestDriveResponseBean> doStopTestDrive(@Body BaseRequestEntity baseEntity,
+                                                @Query(Keys.EMPLOYEE_ID) String emp_id,
+                                                @Query(Keys.ASSET_ID) int assetId,
+                                                @Query(Keys.TEST_DRIVE_END_LATITUDE) String stop_latitude,
+                                                @Query(Keys.TEST_DRIVE_END_LONGITUDE) String stop_longitude,
+                                                @Query(Keys.TEST_DRIVE_END_DATETIME) String stop_date_time,
+                                                @Query(Keys.TEST_DRIVE_END_DATETIME_UTC) String stop_date_time_utc,
+                                                @Query(Keys.ASSET_EMPOLOYEE_TEST_DRIVE_ID) String test_drive_id
+
+    );
+
+
+    @POST(Config.EMPLOYEE_ASSET_URL)
+    Call<EmployeeOwnedAssetsListResponse> getAssetOwnedByEmployee(@Body BaseRequestEntity baseEntity,
+                                                                  @Query(Keys.EMPLOYEE_ID) String emp_id
+    );
+
+    @POST(Config.CHECK_RUNNING_TESTDRIVE_URL)
+    Call<CheckIfAnyTestDriveResponseBean> doCheckifAnyTestDriveRunning(@Body BaseRequestEntity baseEntity,
+                                                                       @Query(Keys.ASSET_EMPOLOYEE_TEST_DRIVE_ID) String asset_employee_test_drive_id
+    );
+
+
+    @POST(Config.EMPLOYEE_TRACKER_URL)
+    Call<TrackLocationBaseResponse> trackeEmployee(/*@Body BaseRequestEntity baseEntity,*/
+                                                   @Body LocationTrackBeanList locationTrackBeanList);
+
+    //    asset_employee_test_drive_id:1 need to send this
+
+    @POST(Config.ASSET_CURRENT_LOCATION_URL)
+    Call<AssetLocationResponseBean> getAssetCurrentLocation(@Body BaseRequestEntity baseEntity, @Query(Keys.ASSET_ID) int asset_id);
 
 }

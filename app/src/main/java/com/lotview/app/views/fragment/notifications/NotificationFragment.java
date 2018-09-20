@@ -44,6 +44,7 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = getActivity();
+        activity = ((HomeActivity) context);
     }
 
 

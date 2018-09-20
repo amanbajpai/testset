@@ -14,7 +14,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -98,7 +97,6 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
     }
 
 
-
     @Override
     public void initializeViews() {
         try {
@@ -123,7 +121,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
             recyclerView.setAdapter(leftDrawerListAdapter);
             prepareMenuItemList();
             setDrawerHover(0);
-            tvProfileUserName.setText(AppSharedPrefs.getEmployeeName());
+            tvProfileUserName.setText(AppSharedPrefs.getInstance(context).getEmployeeName());
 
         } catch (Exception ex) {
             ex.printStackTrace();

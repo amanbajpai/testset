@@ -128,7 +128,7 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
                 resultArrayList = assetsListResponseBean.getResult();
                 myAssetAdapter.setAssetList(getActivity(), resultArrayList);
                 storeOwnedKeyIdsPreferences(assetsListResponseBean);
-                //  startLocationStorage();             // Enable this line to start location  Storage to databse need to test with API submission
+                  startLocationStorage();             // Enable this line to start location  Storage to databse need to test with API submission
 
             } else {
                 noDataView();

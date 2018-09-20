@@ -97,11 +97,13 @@ public class LoginActivity extends BaseActivity {
 
             String user_detail = gson.toJson(loginBean.getResult());
             String empId = loginBean.getResult().getEmployeeId() + "";
+            String comId = loginBean.getResult().getCompanyId() + "";
             String empName = loginBean.getResult().getFirstname() + "";
             boolean isRemember = true;
 
             AppSharedPrefs.getInstance(context).setUserDetail(user_detail);
             AppSharedPrefs.getInstance(context).setEmployeeID(empId);
+            AppSharedPrefs.getInstance(context).setCompanyID(comId);
             AppSharedPrefs.getInstance(context).setEmployeeName(empName);
             AppSharedPrefs.getInstance(context).setAccessToken(loginBean.getAccessToken());
             AppSharedPrefs.getInstance(context).setRememberMe(isRemember);
@@ -171,7 +173,7 @@ public class LoginActivity extends BaseActivity {
                 String lng = location.getLongitude() + "";
                 Log.e(lat + " onLocationUpdated: ", lng + "<<");
                 AppSharedPrefs.setLatitude(lat);
-                AppSharedPrefs.setLatitude(lng);
+                AppSharedPrefs.setLongitude(lng);
                 AppSharedPrefs.setSpeed(location.getSpeed() + "");
             }
         });

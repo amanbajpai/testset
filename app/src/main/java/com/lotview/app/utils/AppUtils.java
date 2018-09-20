@@ -18,6 +18,7 @@ public interface AppUtils {
     String SCAN_FAIL = "scan_fail";
     String ASSET_STATUS_CODE = "asset_status_code";
     String ASSET_REQUEST_ID = "asset_req_id";
+    String ASSET_ID = "asset_id";
 
     String ASSET_REQUESTED_BY_EMP_NAME = "asset_requested_by_emp_name";
     /**

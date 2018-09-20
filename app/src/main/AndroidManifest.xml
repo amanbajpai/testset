@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-
     <application
         android:name="com.lotview.app.application.KeyKeepApplication"
         android:allowBackup="true"
@@ -18,79 +17,81 @@
         android:roundIcon="@drawable/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
-            android:name="com.lotview.app.views.activity.SplashActivity"
+            android:name=".views.activity.SplashActivity"
             android:noHistory="true"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.lotview.app.views.activity.login.LoginActivity"
+            android:name=".views.activity.login.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbarTheme" />
-
         <activity
-            android:name="com.lotview.app.views.activity.forgot_password.ForgotPasswordActivity"
+            android:name=".views.activity.forgot_password.ForgotPasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbarTheme" />
-
         <activity
-            android:name="com.lotview.app.views.activity.home.HomeActivity"
+            android:name=".views.activity.home.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbarTheme" />
-
         <activity
-            android:name="com.lotview.app.views.activity.changepassword.ChangePasswordActivity"
+            android:name=".views.activity.changepassword.ChangePasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.lotview.app.views.activity.transfer.TransferActivity"
+            android:name=".views.activity.transfer.TransferActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.lotview.app.views.activity.AssetListActivity"
+            android:name=".views.activity.AssetListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.lotview.app.qrcodescanner.QrCodeActivity"
+            android:name=".qrcodescanner.QrCodeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.lotview.app.views.activity.assetDetail.AssetDetailActivity"
+            android:name=".views.activity.assetDetail.AssetDetailActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".views.fragment.testDrive.TestDriveAssetDetailFragment"
             android:screenOrientation="portrait" />
         <activity
             android:name=".views.activity.chat.ChatActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.activity.keyMap.KeyOnMapActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".views.activity.testdrive.TestDriveStuckActivity"
+            android:screenOrientation="portrait" />
 
 
-        <!--Firebase configuration-->
+        <!-- Firebase configuration -->
         <service android:name=".firebase.firebase.DeleteTokenService" />
-
         <service android:name=".firebase.firebase.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service android:name=".firebase.firebase.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-
-
         <service android:name=".views.services.LocationListenerService" />
-
 
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="0b2a50fa30c096f0b61aae2622ab361081013c2f" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
 
+        <activity android:name=".views.activity.history.HistoryActivity"></activity>
     </application>
+
 </manifest>

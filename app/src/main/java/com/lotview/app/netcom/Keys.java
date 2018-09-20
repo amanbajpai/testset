@@ -61,11 +61,30 @@ public interface Keys {
 
     String CHANNEL_NAME = "channel_name";
 
-
+    String LOCAL_DATE_TIME = "local_date_time";
+    String UTC_DATE_TIME = "utc_date_time";
+    String SPEED = "speed";
+    String ASSET_EMPOLOYEE_TEST_DRIVE_ID = "asset_employee_test_drive_id";
 
     /**
      * setting
      */
     String STATUS = "status";
+
+    /*TestDrive*/
+
+
+    String ASSET_ID = "asset_id";
+    String TEST_DRIVE_START_LATITUDE = "start_latitude";
+    String TEST_DRIVE_START_LONGITUDE = "start_longitude";
+    String TEST_DRIVE_START_DATETIME = "start_date_time";
+    String TEST_DRIVE_END_DATETIME = "end_date_time";
+    String TEST_DRIVE_END_LATITUDE = "end_latitude";
+    String TEST_DRIVE_END_LONGITUDE = "end_longitude";
+    String TEST_DRIVE_START_DATETIME_UTC = "start_date_time_utc";
+    String TEST_DRIVE_END_DATETIME_UTC = "end_date_time_utc";
+
+
+    String ASSET_NAME = "asset_name";
 
 }

@@ -100,7 +100,7 @@ public class QrCodeActivity extends AppCompatActivity implements Callback, OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_code);
         CustomActionBar customActionBar = new CustomActionBar(this);
-        customActionBar.setActionbar(getString(R.string.txt_qr_code_screen_title), true, false, this);
+        customActionBar.setActionbar(getString(R.string.txt_qr_code_screen_title), true, false,false,false, this);
         initView();
         initData();
         mApplicationContext = getApplicationContext();
