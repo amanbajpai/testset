@@ -40,6 +40,7 @@ public interface Keys {
      * qr code
      */
     String QR_CODE_NUMBER = "qr_code_number";
+    String BOX_QR_CODE_NUMBER = "keybox_qr_code_number";
 
     /*Notification Type*/
     int NOTIFICATION_ASSET_REQUEST_APPROVE = 2;

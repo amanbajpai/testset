@@ -79,6 +79,7 @@ public interface KeyKeepAPI {
             @Body BaseRequestEntity baseRequestEntity,
             @Query(Keys.EMPLOYEE_ID) String employeeId,
             @Query(Keys.QR_CODE_NUMBER) String qr_code_number,
+            @Query(Keys.BOX_QR_CODE_NUMBER) String box_qr_number,
             @Query(Keys.SUBMIT_USER_TYPE) String submit_user_type,
             @Query(Keys.EMPLOYEE_LATITUDE) String emp_latitude,
             @Query(Keys.EMPLOYEE_LONGITUDE) String emp_longtitude

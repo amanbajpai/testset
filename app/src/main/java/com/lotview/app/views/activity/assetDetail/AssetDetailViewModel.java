@@ -65,7 +65,7 @@ public class AssetDetailViewModel extends ViewModel {
      * @param qr_code
      * @param emp_id
      */
-    public void sendHandoverRequest(String qr_code, String emp_id) {
+    public void sendHandoverRequest(String qr_code, String emp_id,String box_number) {
 
         if (!Connectivity.isConnected()) {
             validator.setValue(AppUtils.NO_INTERNET);
@@ -79,6 +79,7 @@ public class AssetDetailViewModel extends ViewModel {
                 KeyKeepApplication.getBaseEntity(true),
                 emp_id,
                 qr_code,
+                box_number,
                 "1", lat, lng
         );
 

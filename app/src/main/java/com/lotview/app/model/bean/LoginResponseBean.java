@@ -41,15 +41,24 @@ public class LoginResponseBean extends BaseResponse {
         @Expose
         private String chatUrl;
 
+        @SerializedName("qr_code_number")
+        @Expose
+        private String qrCodeNumber;
 
-
-       @SerializedName("enable_notification")
+        @SerializedName("enable_notification")
        @Expose
        private Integer enableNotification;
 
 
+        public String getQrCodeNumber() {
+            return qrCodeNumber;
+        }
 
-       public Integer getEnableNotification() {
+        public void setQrCodeNumber(String qrCodeNumber) {
+            this.qrCodeNumber = qrCodeNumber;
+        }
+
+        public Integer getEnableNotification() {
            return enableNotification;
        }
 
