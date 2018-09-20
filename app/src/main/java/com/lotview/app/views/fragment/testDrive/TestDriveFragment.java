@@ -76,7 +76,6 @@ public class TestDriveFragment extends BaseFragment {
     }
 
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 

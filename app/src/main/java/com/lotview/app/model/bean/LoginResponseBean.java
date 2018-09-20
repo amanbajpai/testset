@@ -41,6 +41,10 @@ public class LoginResponseBean extends BaseResponse {
         @Expose
         private String chatUrl;
 
+        @SerializedName("qr_code_number")
+        @Expose
+        private String qrCodeNumber;
+
         @SerializedName("enable_notification")
         @Expose
         private Integer enableNotification;
@@ -49,6 +53,13 @@ public class LoginResponseBean extends BaseResponse {
         @Expose
         private RunningTestDriveResponse runningTestDriveResponse;
 
+        public String getQrCodeNumber() {
+            return qrCodeNumber;
+        }
+
+        public void setQrCodeNumber(String qrCodeNumber) {
+            this.qrCodeNumber = qrCodeNumber;
+        }
         public RunningTestDriveResponse getRunningTestDriveResponse() {
             return runningTestDriveResponse;
         }
@@ -57,9 +68,7 @@ public class LoginResponseBean extends BaseResponse {
             this.runningTestDriveResponse = runningTestDriveResponse;
         }
 
-        public Integer getEnableNotification() {
-            return enableNotification;
-        }
+
 
         public void setEnableNotification(Integer enableNotification) {
             this.enableNotification = enableNotification;
