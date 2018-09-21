@@ -8,11 +8,9 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.location.Location;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -31,7 +29,6 @@ import com.lotview.app.views.activity.home.HomeActivity;
 
 import java.util.ArrayList;
 
-import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
 import io.nlopez.smartlocation.location.config.LocationAccuracy;
 import io.nlopez.smartlocation.location.config.LocationParams;
@@ -52,6 +49,7 @@ public class LocationListenerService extends Service {
     private double longitude;
     private float speed;
     int trackLocationGap = 120000;
+    LocationParams.Builder builder = null;
 
 
     Handler trackLocationFrequentlyHandler = new Handler();
@@ -137,7 +135,7 @@ public class LocationListenerService extends Service {
 
     private void getLocation() {
 
-        LocationParams.Builder builder = new LocationParams.Builder();
+        builder = new LocationParams.Builder();
         builder.setAccuracy(LocationAccuracy.HIGH);
         builder.setDistance(5); // in Meteres
         builder.setInterval(120000); // 2 min
@@ -145,19 +143,18 @@ public class LocationListenerService extends Service {
 
         location_control = SmartLocation.with(this).location().config(params);
 
-        location_control.start(new OnLocationUpdatedListener() {
-            @Override
-            public void onLocationUpdated(Location location) {
-                latitude = location.getLatitude();
-                longitude = location.getLongitude();
+        location_control.start(location -> {
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
 
-                String lat = location.getLatitude() + "";
-                String lng = location.getLongitude() + "";
-                Log.e(lat + "onLocationUpdated: ", lng + "<<");
-                AppSharedPrefs.setLatitude(lat);
-                AppSharedPrefs.setLongitude(lng);
-                speed = location.getSpeed();
-                AppSharedPrefs.setSpeed(location.getSpeed() + "");
+            String lat = location.getLatitude() + "";
+            String lng = location.getLongitude() + "";
+            Log.e(lat + "onLocationUpdated: ", lng + "<<");
+            AppSharedPrefs.setLatitude(lat);
+            AppSharedPrefs.setLongitude(lng);
+            speed = location.getSpeed();
+            AppSharedPrefs.setSpeed(location.getSpeed() + "");
+            if (latitude != 0 && longitude != 0) {
                 getLocationBean(LocationListenerService.this);
             }
         });
@@ -199,7 +196,7 @@ public class LocationListenerService extends Service {
     private void TrackEmployeeAssets() {
         ArrayList<LocationTrackBean> trackBeanArrayList = (ArrayList<LocationTrackBean>) KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().queryBuilder().where(LocationTrackBeanDao.Properties.EmployeeDataIsSync.eq(0)).list();
 
-        if (!Connectivity.isConnected() && trackBeanArrayList != null && trackBeanArrayList.size() > 0) {
+        if (Connectivity.isConnected() && trackBeanArrayList != null && trackBeanArrayList.size() > 0) {
 
             setForegroundNotification();
 
@@ -215,10 +212,12 @@ public class LocationListenerService extends Service {
             if (AppSharedPrefs.getInstance(this).getPushDeviceToken() != null && AppSharedPrefs.getInstance(this).getPushDeviceToken().trim().length() > 0) {
                 locationTrackBeanList.setDevice_token(AppSharedPrefs.getInstance(this).getPushDeviceToken());
             } else {
-                locationTrackBeanList.setDevice_token("aaaaaaa");
+                locationTrackBeanList.setDevice_token("");
             }
             locationTrackBeanList.setToken_type(Keys.TOKEN_TYPE);
             locationTrackBeanList.setAccess_token(AppSharedPrefs.getInstance(this).getAccessToken());
+            locationTrackBeanList.setEmp_current_lat(AppSharedPrefs.getLatitude());
+            locationTrackBeanList.setEmp_current_long(AppSharedPrefs.getLongitude());
 
             Call<TrackLocationBaseResponse> call = RetrofitHolder.getService().trackEmployee(locationTrackBeanList);
 
@@ -254,9 +253,9 @@ public class LocationListenerService extends Service {
         } else {
             // Hide notification here
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                    manager.deleteNotificationChannel(Keys.CHANNEL_NAME);
-                    manager.cancel(SERVICE_NOTIFICATION_ID);
+                NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                manager.deleteNotificationChannel(Keys.CHANNEL_NAME);
+                manager.cancel(SERVICE_NOTIFICATION_ID);
             }
             trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
         }

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.lotview.app.R;
 import com.lotview.app.application.KeyKeepApplication;
+import com.lotview.app.firebase.firebase.DeleteTokenService;
 import com.lotview.app.interfaces.DialogClickListener;
 import com.lotview.app.model.LeftMenuDrawerItems;
 import com.lotview.app.model.bean.BaseResponse;
@@ -483,6 +484,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
 
         if (!Connectivity.isConnected()) {
             Utils.hideProgressDialog();
+            doLogoutwork();
             Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
@@ -495,13 +497,8 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
             call.enqueue(new Callback<BaseResponse>() {
                 @Override
                 public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
-                    AppSharedPrefs.getInstance(HomeActivity.this).clearPref();
-                    Intent serviceIntent = new Intent(context, LocationListenerService.class);
-                    stopService(serviceIntent);
                     Utils.hideProgressDialog();
-                    Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                    finish();
+                    doLogoutwork();
                 }
 
                 @Override
@@ -514,5 +511,23 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
         }
     }
 
+    private void doLogoutwork() {
+        try {
+            Intent intent = new Intent(context, DeleteTokenService.class);
+            startService(intent);
+
+            AppSharedPrefs.getInstance(HomeActivity.this).clearPref();
+            Intent serviceIntent = new Intent(context, LocationListenerService.class);
+            stopService(serviceIntent);
+
+            Intent intent1 = new Intent(HomeActivity.this, LoginActivity.class);
+            startActivity(intent1);
+            finish();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
 
 }

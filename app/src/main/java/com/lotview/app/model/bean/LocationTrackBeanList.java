@@ -11,7 +11,7 @@ import java.util.List;
  * Created by nazimakauser on 17/9/18.
  */
 
-public class LocationTrackBeanList extends BaseRequestEntity{
+public class LocationTrackBeanList extends TrackLocationRequestEntity {
 
     @SerializedName("track_data")
     @Expose

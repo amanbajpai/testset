@@ -83,11 +83,13 @@
 
         <!-- Firebase configuration -->
         <service android:name=".firebase.firebase.DeleteTokenService" />
+
         <service android:name=".firebase.firebase.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <service android:name=".firebase.firebase.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />

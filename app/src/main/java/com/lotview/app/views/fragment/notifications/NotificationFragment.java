@@ -168,12 +168,12 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
         resultArrayList.clear();
         viewModel.getNotifications(0);
         //clear all data
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                binding.recycleNotification.refreshComplete();
-            }
-        }, 2000);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                binding.recycleNotification.refreshComplete();
+//            }
+//        }, 2000);
     }
 
     @Override

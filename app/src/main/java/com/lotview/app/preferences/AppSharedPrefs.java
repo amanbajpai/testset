@@ -48,11 +48,15 @@ public class AppSharedPrefs {
         return instance;
     }
 
-    public static void clearPref(){
+    public static void clearPref() {
+
+        String deviceToken = getPushDeviceToken();
 
         prefEditor.clear();
         prefEditor.commit();
         prefEditor.apply();
+
+        setPushDeviceToken(deviceToken);
     }
 
     public static void setLogin(boolean login) {

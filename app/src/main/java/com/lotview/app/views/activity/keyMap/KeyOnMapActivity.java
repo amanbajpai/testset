@@ -4,13 +4,8 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -21,7 +16,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.lotview.app.R;
-import com.lotview.app.application.KeyKeepApplication;
 import com.lotview.app.databinding.ActivityKeyOnMapBinding;
 import com.lotview.app.interfaces.DialogClickListener;
 import com.lotview.app.model.bean.AssetLocationResponseBean;
@@ -30,8 +24,6 @@ import com.lotview.app.netcom.Keys;
 import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Utils;
-import com.lotview.app.views.activity.assetDetail.AssetDetailActivity;
-import com.lotview.app.views.activity.assetDetail.AssetDetailViewModel;
 import com.lotview.app.views.base.BaseActivity;
 import com.lotview.app.views.custom_view.CustomActionBar;
 
@@ -40,7 +32,7 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
     SupportMapFragment mapFragment;
     ActivityKeyOnMapBinding keyOnMapBinding;
     KeyOnMapViewModel keyOnMapViewModel;
-    int assetId=0;
+    int assetId = 0;
     private Context context;
 
     @Override
@@ -56,7 +48,7 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
     @Override
     public void setCustomActionBar() {
         CustomActionBar customActionBar = new CustomActionBar(this);
-        customActionBar.setActionbar(getString(R.string.asset_detail), true, false,false,true, this);
+        customActionBar.setActionbar(getString(R.string.asset_detail), true, false, false, true, this);
     }
 
 
@@ -72,7 +64,7 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
 
-        assetId=Integer.parseInt(getIntent().getStringExtra(AppUtils.ASSET_ID));
+        assetId = Integer.parseInt(getIntent().getStringExtra(AppUtils.ASSET_ID));
 
         getLatLon();
 
@@ -81,7 +73,7 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
     private void getLatLon() {
         Utils.showProgressDialog(context, getString(R.string.loading));
 
-        TrackLocationRequestEntity trackLocationRequestEntity=new TrackLocationRequestEntity();
+        TrackLocationRequestEntity trackLocationRequestEntity = new TrackLocationRequestEntity();
         trackLocationRequestEntity.setEmp_current_lat(AppSharedPrefs.getLatitude());
         trackLocationRequestEntity.setEmp_current_long(AppSharedPrefs.getLongitude());
 
@@ -94,16 +86,16 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
         if (AppSharedPrefs.getInstance(this).getPushDeviceToken() != null && AppSharedPrefs.getInstance(this).getPushDeviceToken().trim().length() > 0) {
             trackLocationRequestEntity.setDevice_token(AppSharedPrefs.getInstance(this).getPushDeviceToken());
         } else {
-            trackLocationRequestEntity.setDevice_token("aaaaaaa");
+            trackLocationRequestEntity.setDevice_token("");
         }
         trackLocationRequestEntity.setToken_type(Keys.TOKEN_TYPE);
         trackLocationRequestEntity.setAccess_token(AppSharedPrefs.getInstance(this).getAccessToken());
 
-        keyOnMapViewModel.getLatLong(assetId,keyOnMapBinding,trackLocationRequestEntity);
+        keyOnMapViewModel.getLatLong(assetId, keyOnMapBinding, trackLocationRequestEntity);
     }
 
 
-    private void showMarker(double emp_lat,double emp_long,String location) {
+    private void showMarker(double emp_lat, double emp_long, String location) {
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
@@ -131,6 +123,7 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
                 break;
         }
     }
+
     Observer<Integer> observer = new Observer<Integer>() {
 
         @Override
@@ -164,7 +157,7 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
                 return;
             }
             if (bean.getCode().equals(AppUtils.STATUS_SUCCESS)) {
-                showMarker(bean.getResult().getEmp_lat(),bean.getResult().getEmp_long(),bean.getResult().getLocation());
+                showMarker(bean.getResult().getEmp_lat(), bean.getResult().getEmp_long(), bean.getResult().getLocation());
             }
 
         }

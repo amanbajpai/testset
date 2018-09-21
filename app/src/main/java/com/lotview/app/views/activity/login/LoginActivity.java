@@ -189,12 +189,16 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onLocationUpdated(Location location) {
 
-                String lat = location.getLatitude() + "";
-                String lng = location.getLongitude() + "";
-                Log.e(lat + " onLocationUpdated: ", lng + "<<");
-                AppSharedPrefs.setLatitude(lat);
-                AppSharedPrefs.setLongitude(lng);
-                AppSharedPrefs.setSpeed(location.getSpeed() + "");
+
+                if (location.getLatitude() != 0 && location.getLongitude() != 0) {
+                    String lat = location.getLatitude() + "";
+                    String lng = location.getLongitude() + "";
+                    Log.e(" onLocationUpdated: ", lat + " " + lng);
+                    AppSharedPrefs.setLatitude(lat);
+                    AppSharedPrefs.setLongitude(lng);
+                    AppSharedPrefs.setSpeed(location.getSpeed() + "");
+
+                }
             }
         });
 
