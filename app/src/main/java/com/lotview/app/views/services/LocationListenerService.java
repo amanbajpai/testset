@@ -12,6 +12,7 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -44,12 +45,14 @@ import retrofit2.Response;
 
 public class LocationListenerService extends Service {
     private static final String TAG = "TimerService";
+    public static final int SERVICE_NOTIFICATION_ID = 101;
     private static SmartLocation.LocationControl location_control;
     private boolean isToStartLocationUpdate = false;
     private double latitude;
     private double longitude;
     private float speed;
     int trackLocationGap = 120000;
+
 
     Handler trackLocationFrequentlyHandler = new Handler();
     Runnable trackLocationFrequentlyRunnable = new Runnable() {
@@ -127,7 +130,7 @@ public class LocationListenerService extends Service {
                     .setColor(Color.BLUE)
                     .setLocalOnly(true)
                     .build();
-            startForeground(101, notification);
+            startForeground(SERVICE_NOTIFICATION_ID, notification);
         }
     }
 
@@ -251,11 +254,13 @@ public class LocationListenerService extends Service {
         } else {
             // Hide notification here
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
+                    NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                    manager.deleteNotificationChannel(Keys.CHANNEL_NAME);
+                    manager.cancel(SERVICE_NOTIFICATION_ID);
             }
-
             trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
         }
+
     }
 
 }
