@@ -128,6 +128,8 @@
 
     <string name="google_maps_key">AIzaSyDUzFLr_RoI5PItlCd12Tn-8YEqO210B94</string>
     <string name="firebase_key">0b2a50fa30c096f0b61aae2622ab361081013c2f</string>
+    <string name="stock_number">Stock Number</string>
+    <string name="start_date">Start Date</string>
 
 
 </resources>

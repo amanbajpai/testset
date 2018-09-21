@@ -109,6 +109,7 @@ public class LocationListenerService extends Service {
     }
 
     public void setForegroundNotification() {
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             PendingIntent pendingIntent = PendingIntent.getActivity(KeyKeepApplication.getInstance(), 101, new Intent(KeyKeepApplication.getInstance(), HomeActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -122,7 +123,8 @@ public class LocationListenerService extends Service {
                     .setChannelId(Keys.CHANNEL_NAME_BACKGROUND)
                     .setSound(null)
                     .setContentIntent(pendingIntent)
-                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setSmallIcon(R.mipmap.notification_icon)
+                    .setColor(getResources().getColor(R.color.app_blue))
                     .setShowWhen(true)
                     .setOnlyAlertOnce(true)
                     .setColor(Color.BLUE)

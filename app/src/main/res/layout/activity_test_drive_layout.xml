@@ -23,33 +23,51 @@
             android:padding="@dimen/_15sdp">
 
             <com.lotview.app.views.custom_view.StyledTextViewBold
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/_5sdp"
+                android:text="@string/stock_number"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp" />
+
+
+            <com.lotview.app.views.custom_view.StyledTextViewRegular
                 android:id="@+id/tv_key_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_5sdp"
-                android:text="BMW CAR"
+                android:text="N/A"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16sdp" />
 
 
             <com.lotview.app.views.custom_view.StyledTextViewBold
-                android:id="@+id/tv_started_datetime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_5sdp"
-                android:text=""
+                android:text="@string/start_date"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16sdp" />
 
 
-           <!-- <com.lotview.app.views.custom_view.StyledTextViewBold
-                android:id="@+id/tv_end_datetime"
+            <com.lotview.app.views.custom_view.StyledTextViewRegular
+                android:id="@+id/tv_started_datetime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_5sdp"
-                android:text=""
+                android:text="N/A"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_16sdp" />-->
+                android:textSize="@dimen/_16sdp" />
+
+
+            <!-- <com.lotview.app.views.custom_view.StyledTextViewBold
+                 android:id="@+id/tv_end_datetime"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:paddingLeft="@dimen/_5sdp"
+                 android:text=""
+                 android:textColor="@color/black"
+                 android:textSize="@dimen/_16sdp" />-->
 
 
         </LinearLayout>
