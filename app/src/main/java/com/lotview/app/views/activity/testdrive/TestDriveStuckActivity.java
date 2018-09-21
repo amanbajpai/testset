@@ -198,7 +198,6 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
         Intent serviceIntent = new Intent(context, LocationListenerService.class);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForegroundService(serviceIntent);
-            //((HomeActivity)context).finish();
         } else {
             startService(serviceIntent);
         }

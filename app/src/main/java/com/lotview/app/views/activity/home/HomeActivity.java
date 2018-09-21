@@ -456,9 +456,13 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
                 startActivity(new Intent(context, AssetListActivity.class));
                 break;
             case Keys.NOTIFICATION_SUPER_ADMIN_NOTIFICATION_TO_COMPANY:
+                setDrawerHover(2);
+                title_tv.setText(getString(R.string.tittle_notifications));
                 Utils.replaceFragment(HomeActivity.this, new NotificationFragment());
                 break;
             case Keys.NOTIFICATION_COMPANY_ADMIN_NOTIFICATION_TO_EMPLOYEE:
+                setDrawerHover(2);
+                title_tv.setText(getString(R.string.tittle_notifications));
                 Utils.replaceFragment(HomeActivity.this, new NotificationFragment());
                 break;
             case Keys.NOTIFICATION_CHAT_COMMUNICATION_BETWEEN_EMPLOYEE_TO_EMPLOYEE_AN:
@@ -516,9 +520,11 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
             Intent intent = new Intent(context, DeleteTokenService.class);
             startService(intent);
 
-            AppSharedPrefs.getInstance(HomeActivity.this).clearPref();
             Intent serviceIntent = new Intent(context, LocationListenerService.class);
             stopService(serviceIntent);
+
+            AppSharedPrefs.getInstance(HomeActivity.this).clearPref();
+
 
             Intent intent1 = new Intent(HomeActivity.this, LoginActivity.class);
             startActivity(intent1);

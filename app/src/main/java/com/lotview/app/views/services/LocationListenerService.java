@@ -112,14 +112,14 @@ public class LocationListenerService extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             PendingIntent pendingIntent = PendingIntent.getActivity(KeyKeepApplication.getInstance(), 101, new Intent(KeyKeepApplication.getInstance(), HomeActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
 
-            NotificationChannel channel = new NotificationChannel(Keys.CHANNEL_NAME, "Fetching", NotificationManager.IMPORTANCE_HIGH);
+            NotificationChannel channel = new NotificationChannel(Keys.CHANNEL_NAME_BACKGROUND, "Fetching", NotificationManager.IMPORTANCE_HIGH);
             channel.setSound(null, null);
             KeyKeepApplication.getInstance().getSystemService(NotificationManager.class).createNotificationChannel(channel);
-            Notification notification = new NotificationCompat.Builder(KeyKeepApplication.getInstance(), Keys.CHANNEL_NAME)
+            Notification notification = new NotificationCompat.Builder(KeyKeepApplication.getInstance(), Keys.CHANNEL_NAME_BACKGROUND)
 //                    .setContentTitle(KeyKeepApplication.getInstance().getString(R.string.app_name))
                     .setContentText("Lotview is syncing in background.")
                     .setAutoCancel(true)
-                    .setChannelId(Keys.CHANNEL_NAME)
+                    .setChannelId(Keys.CHANNEL_NAME_BACKGROUND)
                     .setSound(null)
                     .setContentIntent(pendingIntent)
                     .setSmallIcon(R.mipmap.ic_launcher)
@@ -254,7 +254,7 @@ public class LocationListenerService extends Service {
             // Hide notification here
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                manager.deleteNotificationChannel(Keys.CHANNEL_NAME);
+                manager.deleteNotificationChannel(Keys.CHANNEL_NAME_BACKGROUND);
                 manager.cancel(SERVICE_NOTIFICATION_ID);
             }
             trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
