@@ -63,6 +63,18 @@
         <activity
             android:name=".qrcodescanner.QrCodeActivity"
             android:screenOrientation="portrait" />
+
+
+
+        <activity
+            android:name=".qrcodescanner.CaptureCodeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".qrcodescanner.ScannerActivity"
+            android:screenOrientation="portrait" />
+
+
+
         <activity
             android:name=".views.activity.assetDetail.AssetDetailActivity"
             android:screenOrientation="portrait" />
