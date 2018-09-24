@@ -85,6 +85,7 @@ public interface KeyKeepAPI {
             @Body BaseRequestEntity baseRequestEntity,
             /*@Query(Keys.EMPLOYEE_ID) String employeeId,*/
             @Query(Keys.QR_CODE_NUMBER) String qr_code_number,
+            @Query(Keys.BOX_QR_CODE_NUMBER) String box_qr_number,
             @Query(Keys.SUBMIT_USER_TYPE) String submit_user_type,
             @Query(Keys.EMPLOYEE_LATITUDE) String emp_latitude,
             @Query(Keys.EMPLOYEE_LONGITUDE) String emp_longtitude
@@ -149,7 +150,8 @@ public interface KeyKeepAPI {
                                                  @Query(Keys.TEST_DRIVE_START_LATITUDE) String start_latitude,
                                                  @Query(Keys.TEST_DRIVE_START_LONGITUDE) String start_longitude,
                                                  @Query(Keys.TEST_DRIVE_START_DATETIME) String start_date_time,
-                                                 @Query(Keys.TEST_DRIVE_START_DATETIME_UTC) String start_date_time_utc
+                                                 @Query(Keys.TEST_DRIVE_START_DATETIME_UTC) String start_date_time_utc,
+                                                 @Query(Keys.QR_CODE_NUMBER) String qr_code_number
     );
 
 //    asset_employee_test_drive_id:1 need to send this

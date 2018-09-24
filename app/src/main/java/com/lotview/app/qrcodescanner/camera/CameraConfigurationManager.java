@@ -4,6 +4,7 @@ package com.lotview.app.qrcodescanner.camera;
 import android.content.Context;
 import android.graphics.Point;
 import android.hardware.Camera;
+import android.os.Build;
 import android.util.Log;
 
 
@@ -54,7 +55,11 @@ final class CameraConfigurationManager {
         parameters.setPreviewSize(mCameraResolution.width, mCameraResolution.height);
         parameters.setPictureSize(mPictureResolution.width, mPictureResolution.height);
         setZoom(parameters);
-        camera.setDisplayOrientation(90);
+        if (Build.MODEL.equalsIgnoreCase("Nexus 5x")){
+            camera.setDisplayOrientation(270);
+        }else {
+            camera.setDisplayOrientation(90);
+        }
         camera.setParameters(parameters);
     }
 

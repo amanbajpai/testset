@@ -5,7 +5,6 @@ package com.lotview.app.views.activity.home;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -473,10 +472,11 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
     protected void onNewIntent(Intent intent) {
 
         if (intent != null && intent.hasExtra(Keys.NOTIFICATION_DATA)) {
-            PushData pushData = (PushData) this.getIntent().getSerializableExtra(Keys.NOTIFICATION_DATA);
-            handlePushCall(pushData);
+            if (!AppSharedPrefs.isTestDriveRunning()) {
+                PushData pushData = (PushData) this.getIntent().getSerializableExtra(Keys.NOTIFICATION_DATA);
+                handlePushCall(pushData);
+            }
         }
-
     }
 
     public void doLogout() {
@@ -490,7 +490,6 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
         }
 
         try {
-            String mEmp_id = AppSharedPrefs.getInstance(this).getEmployeeID();
             Call<BaseResponse> call = RetrofitHolder.getService().doLogout(KeyKeepApplication.getInstance().getBaseEntity(false));
 
             call.enqueue(new Callback<BaseResponse>() {

@@ -50,6 +50,7 @@ public interface AppUtils {
     int REQUEST_CODE_LOCATION = 211;
     int REQUEST_CODE_QR_SCAN_FOR_DRIVE = 212;
     int REQUEST_CODE_CAMERA_FOR_DRIVE = 213;
+    int REQUEST_QR_SCAN_FOR_BOX_VERIFY = 214;
 
 
 

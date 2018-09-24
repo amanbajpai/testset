@@ -110,8 +110,7 @@ dependencies {
     compile('io.nlopez.smartlocation:library:3.3.3') {
         transitive = false
     }
-
-
+    compile('com.journeyapps:zxing-android-embedded:3.6.0') { transitive = false }
     debugCompile 'com.facebook.stetho:stetho:1.5.0'
 }
 

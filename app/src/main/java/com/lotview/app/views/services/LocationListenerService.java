@@ -12,13 +12,12 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.lotview.app.R;
 import com.lotview.app.application.KeyKeepApplication;
-import com.lotview.app.model.bean.BaseRequestEntity;
 import com.lotview.app.model.bean.LocationTrackBeanList;
 import com.lotview.app.model.bean.TrackLocationBaseResponse;
 import com.lotview.app.model.location.LocationTrackBean;
@@ -46,12 +45,14 @@ import retrofit2.Response;
 
 public class LocationListenerService extends Service {
     private static final String TAG = "TimerService";
+    public static final int SERVICE_NOTIFICATION_ID = 101;
     private static SmartLocation.LocationControl location_control;
     private boolean isToStartLocationUpdate = false;
     private double latitude;
     private double longitude;
     private float speed;
-    int trackLocationGap=120000;
+    int trackLocationGap = 120000;
+
 
     Handler trackLocationFrequentlyHandler = new Handler();
     Runnable trackLocationFrequentlyRunnable = new Runnable() {
@@ -117,7 +118,7 @@ public class LocationListenerService extends Service {
             channel.setSound(null, null);
             KeyKeepApplication.getInstance().getSystemService(NotificationManager.class).createNotificationChannel(channel);
             Notification notification = new NotificationCompat.Builder(KeyKeepApplication.getInstance(), Keys.CHANNEL_NAME)
-                    .setContentTitle(KeyKeepApplication.getInstance().getString(R.string.app_name))
+//                    .setContentTitle(KeyKeepApplication.getInstance().getString(R.string.app_name))
                     .setContentText("Lotview is syncing in background.")
                     .setAutoCancel(true)
                     .setChannelId(Keys.CHANNEL_NAME)
@@ -129,8 +130,7 @@ public class LocationListenerService extends Service {
                     .setColor(Color.BLUE)
                     .setLocalOnly(true)
                     .build();
-            startForeground(101, notification);
-            Log.e(TAG, "onStartCommand: ");
+            startForeground(SERVICE_NOTIFICATION_ID, notification);
         }
     }
 
@@ -140,7 +140,7 @@ public class LocationListenerService extends Service {
         LocationParams.Builder builder = new LocationParams.Builder();
         builder.setAccuracy(LocationAccuracy.HIGH);
         builder.setDistance(5); // in Meteres
-        builder.setInterval(1000);
+        builder.setInterval(120000); // 2 min
         LocationParams params = builder.build();
 
         location_control = SmartLocation.with(this).location().config(params);
@@ -178,17 +178,16 @@ public class LocationListenerService extends Service {
         locationTrackBean.setEmployeeTimeStampLocal(Utils.getCurrentTimeStampDate());
         locationTrackBean.setEmployeeTimeStampLocalUTC(Utils.getCurrentUTC());
         locationTrackBean.setEmployee_key_ids(AppSharedPrefs.getInstance(this).getOwnedKeyIds());
-        // If Logging for Testdrive then need to send 1 otherwise 0.
+
+
         if (AppSharedPrefs.isTestDriveRunning()) {
-            locationTrackBean.setAsset_employee_test_drive_id(1);
-        } else {
-            locationTrackBean.setAsset_employee_test_drive_id(0);
-        }
-        // If Logging for Testdrive then need to send "TestDrive Id received in response of start Testdrive", otherwise 0.
-        if (!TextUtils.isEmpty(AppSharedPrefs.getTestDriveId()) && AppSharedPrefs.getTestDriveId().length() > 0) {
+             /*Put Test Drive ID if testdrive is ON otherwise 0 for tracking*/
             locationTrackBean.setAsset_employee_test_drive_id(Integer.valueOf(AppSharedPrefs.getTestDriveId()));
+             /*0 for tracking and if tesdrive is on Id of asset for which testdrive is on*/
+            locationTrackBean.setTestDriveAssetId(Integer.valueOf(AppSharedPrefs.getTestDriveAssetId()));
         } else {
             locationTrackBean.setAsset_employee_test_drive_id(0);
+            locationTrackBean.setTestDriveAssetId(0);
         }
 
         KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().insert(locationTrackBean);
@@ -200,7 +199,9 @@ public class LocationListenerService extends Service {
     private void TrackEmployeeAssets() {
         ArrayList<LocationTrackBean> trackBeanArrayList = (ArrayList<LocationTrackBean>) KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().queryBuilder().where(LocationTrackBeanDao.Properties.EmployeeDataIsSync.eq(0)).list();
 
-        if(!Connectivity.isConnected()&& trackBeanArrayList!=null&& trackBeanArrayList.size()>0 ) {
+        if (!Connectivity.isConnected() && trackBeanArrayList != null && trackBeanArrayList.size() > 0) {
+
+            setForegroundNotification();
 
             LocationTrackBeanList locationTrackBeanList = new LocationTrackBeanList();
             locationTrackBeanList.setLocationTrackBeanArrayList(trackBeanArrayList);
@@ -250,9 +251,16 @@ public class LocationListenerService extends Service {
 
                 }
             });
-        }else{
+        } else {
+            // Hide notification here
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                    manager.deleteNotificationChannel(Keys.CHANNEL_NAME);
+                    manager.cancel(SERVICE_NOTIFICATION_ID);
+            }
             trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
         }
+
     }
 
 }

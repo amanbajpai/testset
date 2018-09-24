@@ -16,14 +16,15 @@ import com.lotview.app.databinding.ActivityAssetDetailLayoutBinding;
 import com.lotview.app.interfaces.DialogClickListener;
 import com.lotview.app.model.bean.AssetDetailBean;
 import com.lotview.app.model.bean.BaseResponse;
+import com.lotview.app.model.bean.LoginResponseBean;
 import com.lotview.app.preferences.AppSharedPrefs;
-import com.lotview.app.qrcodescanner.QrCodeActivity;
+import com.lotview.app.qrcodescanner.ScannerActivity;
 import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.Utils;
 import com.lotview.app.views.activity.keyMap.KeyOnMapActivity;
-import com.lotview.app.views.activity.keyMap.KeyOnMapViewModel;
 import com.lotview.app.views.base.BaseActivity;
 import com.lotview.app.views.custom_view.CustomActionBar;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,6 +45,10 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
     boolean IS_FROM_SCANNER = false;
     private String assetRequestedByName;
     private String tag_number;
+    private boolean isBoxScanned;
+
+    private String box_number;
+    private String asset_name;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,7 +62,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
     @Override
     public void setCustomActionBar() {
         CustomActionBar customActionBar = new CustomActionBar(this);
-        customActionBar.setActionbar(getString(R.string.asset_detail), true, false,true,false, this);
+        customActionBar.setActionbar(getString(R.string.asset_detail), true, false, true, false, this);
     }
 
 
@@ -80,6 +85,8 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
          */
         mEmp_id = AppSharedPrefs.getInstance(this).getEmployeeID();
 
+        LoginResponseBean.Result bean = Utils.getUserDetail();
+        box_number = bean.getQrCodeNumber();
         qr_code = getIntent().getStringExtra(AppUtils.SCANED_QR_CODE);
         Utils.showProgressDialog(context, getString(R.string.loading));
         ASSET_STATUS = getIntent().getIntExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_SCANED_CODE);
@@ -324,7 +331,8 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         binding.scanButton.setOnClickListener(AssetDetailActivity.this);
         asset_emp_id = Utils.validateInt(resultBean.getEmployeeId()) + "";
         qr_code = resultBean.getQrCodeNumber();
-        tag_number= resultBean.getTagNumber();
+        tag_number = resultBean.getTagNumber();
+        asset_name = resultBean.getAssetName();
 
         if (Utils.validateStringValue(resultBean.getEmployeeName()).equals("")) {
             binding.employeeContainer.setVisibility(View.GONE);
@@ -337,7 +345,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
             binding.requestContainer.setVisibility(View.GONE);
         }
 
-        if (Utils.validateIntValue(bean.getResult().getAssetType()) != AppUtils.ASSET_CUSTOMER){
+        if (Utils.validateIntValue(bean.getResult().getAssetType()) != AppUtils.ASSET_CUSTOMER) {
             binding.customerDetailLayout.setVisibility(View.GONE);
         }
 
@@ -358,8 +366,8 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
                 break;
 
             case R.id.map_iv:
-                Intent i=new Intent(this, KeyOnMapActivity.class);
-                i.putExtra(AppUtils.ASSET_ID,getIntent().getStringExtra(AppUtils.ASSET_ID));
+                Intent i = new Intent(this, KeyOnMapActivity.class);
+                i.putExtra(AppUtils.ASSET_ID, getIntent().getStringExtra(AppUtils.ASSET_ID));
                 startActivity(i);
                 break;
 
@@ -388,10 +396,15 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
     private void callSubmit() {
 
         if (IS_FROM_SCANNER || HAS_SCANNED) {
+            if (!hasBoxVerify()) {
+                startActivityForResult(new Intent(context, ScannerActivity.class), AppUtils.REQUEST_QR_SCAN_FOR_BOX_VERIFY);
+                return;
+            }
             beforeSendRequestValidation();
+
         } else {
             if (Utils.checkPermissions(this, AppUtils.STORAGE_CAMERA_PERMISSIONS)) {
-                startActivityForResult(new Intent(context, QrCodeActivity.class), AppUtils.REQUEST_CODE_QR_SCAN);
+                startActivityForResult(new Intent(context, ScannerActivity.class), AppUtils.REQUEST_CODE_QR_SCAN);
             } else {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     requestPermissions(AppUtils.STORAGE_CAMERA_PERMISSIONS, AppUtils.REQUEST_CODE_CAMERA);
@@ -399,6 +412,15 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
             }
         }
     }
+
+    private boolean hasBoxVerify() {
+        //Check handover condition
+        if (asset_emp_id.equals(mEmp_id)) {
+            return isBoxScanned;
+        }
+        return true;
+    }
+
 
     /**
      * validate request for request,handover and transfer
@@ -416,7 +438,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
              * Asset handover
              */
         } else if (asset_emp_id.equals(mEmp_id)) {
-            viewModel.sendHandoverRequest(qr_code, mEmp_id);
+            viewModel.sendHandoverRequest(qr_code, mEmp_id, box_number);
 
             /**
              * Asset transfer
@@ -456,8 +478,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
                 String result = data.getStringExtra(AppUtils.QR_NUMBER_MANUAL_SCAN_SUCCESS);
                 String qr_tag_number = data.getStringExtra(AppUtils.SCAN_SUCCESS);
 
-                if (!tag_number.equals("") && !qr_tag_number.equals(tag_number))
-                {
+                if (!tag_number.equals("") && !qr_tag_number.equals(tag_number)) {
                     Utils.showAlert(context, "", getString(R.string.sorry_qr_code_does_not_match), "ok", "" +
                             "", AppUtils.dialog_ok_click, this);
                     return;
@@ -481,19 +502,76 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
                     validateSubmitView();
 
                 } catch (JSONException e) {
-                    e.printStackTrace();
-                    Utils.showSnackBar(binding, getString(R.string.invalid_qr_code));
+//                    e.printStackTrace();
+//                    Utils.showSnackBar(binding, getString(R.string.invalid_qr_code));
+                    if (!asset_name.equals("") && !result.equals(asset_name)) {
+                        Utils.showAlert(context, "", getString(R.string.sorry_qr_code_does_not_match), "ok", "" +
+                                "", AppUtils.dialog_ok_click, this);
+                        return;
+                    }
+                    HAS_SCANNED = true;
+                    validateSubmitView();
                 }
             }
 
+        } else if (requestCode == AppUtils.REQUEST_QR_SCAN_FOR_BOX_VERIFY) {
+            if (resultCode != RESULT_OK || data == null) {
+                Utils.showSnackBar(binding, getString(R.string.unable_to_scan_qr));
+                return;
+            }
+            if (data == null)
+                return;
+
+
+            //Getting the passed result
+            if (data.getBooleanExtra(AppUtils.IS_MANUAL_QR, false)) {
+                String qr_tag_number = data.getStringExtra(AppUtils.SCAN_SUCCESS);
+                if (!qr_tag_number.equals("") && qr_tag_number.equals(box_number)) {
+                    isBoxScanned = true;
+                } else {
+                    isBoxScanned = false;
+                    Utils.showAlert(context, "", getString(R.string.sorry_qr_code_does_not_match), "ok", "" +
+                            "", AppUtils.dialog_ok_click, this);
+                    return;
+                }
+
+            } else {
+                String result = data.getStringExtra(AppUtils.SCAN_SUCCESS);
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String qr = jsonObject.getString("qr_code_number");
+                    if (!qr.equals("") && qr.equals(box_number)) {
+                        isBoxScanned = true;
+                    } else {
+                        isBoxScanned = false;
+                        Utils.showAlert(context, "", getString(R.string.sorry_qr_code_does_not_match), "ok", "" +
+                                "", AppUtils.dialog_ok_click, this);
+                        return;
+                    }
+
+                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                    Utils.showSnackBar(binding, getString(R.string.invalid_qr_code));
+                    if (!result.equals("") && result.equals(box_number)) {
+                        isBoxScanned = true;
+                    } else {
+                        isBoxScanned = false;
+                        Utils.showAlert(context, "", getString(R.string.sorry_qr_code_does_not_match), "ok", "" +
+                                "", AppUtils.dialog_ok_click, this);
+                        return;
+                    }
+                }
+            }
         }
+
+
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == AppUtils.REQUEST_CODE_CAMERA && Utils.onRequestPermissionsResult(permissions, grantResults)) {
-            startActivityForResult(new Intent(context, QrCodeActivity.class), AppUtils.REQUEST_CODE_QR_SCAN);
+            startActivityForResult(new Intent(context, ScannerActivity.class), AppUtils.REQUEST_CODE_QR_SCAN);
         } else {
             Utils.showSnackBar(binding, getString(R.string.allow_camera_permission));
         }

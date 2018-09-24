@@ -135,8 +135,8 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
 
         @Override
         public void onChanged(@Nullable Integer value) {
+            Utils.hideProgressDialog();
             switch (value) {
-
                 case AppUtils.NO_INTERNET:
                     Utils.hideProgressDialog();
                     Utils.showSnackBar(keyOnMapBinding, getString(R.string.internet_connection));
@@ -153,7 +153,7 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
     Observer<AssetLocationResponseBean> response_observer = new Observer<AssetLocationResponseBean>() {
         @Override
         public void onChanged(@Nullable AssetLocationResponseBean bean) {
-
+            Utils.hideProgressDialog();
             if (bean == null) {
                 Utils.showAlert(context, "", getString(R.string.server_error), getString(R.string.ok), "", AppUtils.dialog_ok_click, KeyOnMapActivity.this);
                 return;
@@ -166,7 +166,7 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
             if (bean.getCode().equals(AppUtils.STATUS_SUCCESS)) {
                 showMarker(bean.getResult().getEmp_lat(),bean.getResult().getEmp_long(),bean.getResult().getLocation());
             }
-            Utils.hideProgressDialog();
+
         }
     };
 

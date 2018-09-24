@@ -4,11 +4,11 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
 
 import java.io.Serializable;
-import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * Created by ankurrawal on 12/9/18.
@@ -18,7 +18,6 @@ import org.greenrobot.greendao.annotation.Generated;
 public class LocationTrackBean implements Serializable {
 
     private static final long serialVersionUID = 7526472295622776147L;
-
 
     @Id(autoincrement = true)
     @Index(unique = true)
@@ -50,19 +49,18 @@ public class LocationTrackBean implements Serializable {
     @Expose
     public String employee_key_ids;
 
-
     @SerializedName("emp_data_issync")
     @Expose
     public boolean employeeDataIsSync;
 
+    /*Put Test Drive ID if testdrive is ON otherwise 0 for tracking*/
     @SerializedName("asset_employee_test_drive_id")
     @Expose
-    /*Put 1 for testdrive and 0 for tracking*/
     private int asset_employee_test_drive_id;
 
+    /*0 for tracking and if tesdrive is on Id of asset for which testdrive is on*/
     @SerializedName("test_drive_asset_id")
     @Expose
-    /*0 for tracking and if tesdrive is on*/
     private int testDriveAssetId;
 
 
@@ -73,10 +71,10 @@ public class LocationTrackBean implements Serializable {
 
     @Generated(hash = 920016775)
     public LocationTrackBean(Long empTrackId, double employeeLatitue,
-            double employeeLongitude, float employeeSpeed,
-            String employeeTimeStampLocal, String employeeTimeStampLocalUTC,
-            String employee_key_ids, boolean employeeDataIsSync,
-            int asset_employee_test_drive_id, int testDriveAssetId) {
+                             double employeeLongitude, float employeeSpeed,
+                             String employeeTimeStampLocal, String employeeTimeStampLocalUTC,
+                             String employee_key_ids, boolean employeeDataIsSync,
+                             int asset_employee_test_drive_id, int testDriveAssetId) {
         this.empTrackId = empTrackId;
         this.employeeLatitue = employeeLatitue;
         this.employeeLongitude = employeeLongitude;

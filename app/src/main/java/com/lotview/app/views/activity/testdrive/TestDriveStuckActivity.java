@@ -8,12 +8,14 @@ import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.lotview.app.R;
 import com.lotview.app.databinding.ActivityTestDriveLayoutBinding;
 import com.lotview.app.interfaces.DialogClickListener;
 import com.lotview.app.model.bean.CheckIfAnyTestDriveResponseBean;
+import com.lotview.app.model.bean.EmployeeOwnedAssetsListResponse;
 import com.lotview.app.model.bean.TestDriveResponseBean;
 import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.utils.AppUtils;
@@ -22,6 +24,8 @@ import com.lotview.app.views.activity.home.HomeActivity;
 import com.lotview.app.views.base.BaseActivity;
 import com.lotview.app.views.custom_view.CustomActionBar;
 import com.lotview.app.views.services.LocationListenerService;
+
+import java.util.ArrayList;
 
 /**
  * Created by ankurrawal on 18/9/18.
@@ -33,24 +37,22 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
     private TestDriveStuckViewModel viewModel;
     private boolean isDriveStart;
     private Context context;
-    private CheckIfAnyTestDriveResponseBean checkIfAnyTestDriveResponseBean = null;
+    private CheckIfAnyTestDriveResponseBean.Result checkIfAnyTestDriveResponseBean = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
-        viewModel.validator.observe(this, observer);
-        viewModel.response_testdrive_stop.observe(this, responseTestDriveStop);
-        viewModel.response_check_ifany_testdrive.observe(this, responseIfTestDriveRunning);
+        initializeViews();
     }
 
     @Override
     public void setCustomActionBar() {
         CustomActionBar customActionBar = new CustomActionBar(this);
         if (isDriveStart) {
-            customActionBar.setActionbar(getString(R.string.test_drive), false, false,false,false, this);
+            customActionBar.setActionbar(getString(R.string.test_drive), false, false, false, false, this);
         } else {
-            customActionBar.setActionbar(getString(R.string.test_drive), true, false,false,false, this);
+            customActionBar.setActionbar(getString(R.string.test_drive), true, false, false, false, this);
         }
     }
 
@@ -59,8 +61,17 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
         binding = DataBindingUtil.setContentView(this, R.layout.activity_test_drive_layout);
         viewModel = ViewModelProviders.of(this).get(TestDriveStuckViewModel.class);
         binding.setViewModel(viewModel);
-        binding.tvKeyName.setText(AppSharedPrefs.getAssetNameforRunningTestDrive());
+        viewModel.response_testdrive_stop.observe(this, responseTestDriveStop);
+        viewModel.response_check_ifany_testdrive.observe(this, responseIfTestDriveRunning);
+        viewModel.response_assets_owned.observe(this, responseAssetsOwnedCurrently);
+
+        binding.tvTestDriveStop.setOnClickListener(this);
+
         isDriveStart = AppSharedPrefs.isTestDriveRunning();
+
+        viewModel.doCheckIfTestDriveIsRuning(AppSharedPrefs.getTestDriveId());
+        viewModel.getCurrentAssetsOwned();
+
     }
 
     @Override
@@ -72,7 +83,7 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
                 if (isDriveStart) {
                     setCustomActionBar();
                     Utils.showProgressDialog(context, getString(R.string.loading));
-                    viewModel.doStopTestDrive(AppSharedPrefs.getEmployeeID(), Integer.valueOf(checkIfAnyTestDriveResponseBean.getResult().getAsset_id()), AppSharedPrefs.getLatitude(), AppSharedPrefs.getLongitude(), Utils.getCurrentTimeStampDate(), Utils.getCurrentUTCTimeStampDate(), AppSharedPrefs.getInstance(context).getTestDriveId());
+                    viewModel.doStopTestDrive(AppSharedPrefs.getEmployeeID(), Integer.valueOf(checkIfAnyTestDriveResponseBean.getAsset_id()), AppSharedPrefs.getLatitude(), AppSharedPrefs.getLongitude(), Utils.getCurrentTimeStampDate(), Utils.getCurrentUTCTimeStampDate(), AppSharedPrefs.getInstance(context).getTestDriveId());
 
                 }
 
@@ -92,7 +103,8 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
                 Utils.showAlert(context, "", getString(R.string.server_error), getString(R.string.ok), "", AppUtils.dialog_ok_click, TestDriveStuckActivity.this);
                 return;
             } else if (bean.getCode().equals(AppUtils.STATUS_SUCCESS)) {
-                checkIfAnyTestDriveResponseBean = bean;
+                checkIfAnyTestDriveResponseBean = bean.getResult();
+                AppSharedPrefs.setTestDriveAssetId(checkIfAnyTestDriveResponseBean.getAsset_id());
                 setViewForRunningTestDrive();
                 AppSharedPrefs.setTestDriveRunning(true);
                 startLocationStorage();
@@ -125,8 +137,8 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
 
 
     private void setViewForRunningTestDrive() {
-        binding.tvKeyName.setText(checkIfAnyTestDriveResponseBean.getResult().getAsset_name());
-        binding.tvStartedDatetime.setText("Start time: " + checkIfAnyTestDriveResponseBean.getResult().getStart_date_time());
+        binding.tvKeyName.setText(checkIfAnyTestDriveResponseBean.getAsset_name());
+        binding.tvStartedDatetime.setText("Start time: " + checkIfAnyTestDriveResponseBean.getStart_date_time());
     }
 
 
@@ -148,7 +160,6 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
                 AppSharedPrefs.getInstance(context).setTestDriveID("");
                 startActivity(new Intent(context, HomeActivity.class));
             }
-
         }
     };
 
@@ -176,7 +187,10 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
     @Override
     protected void onResume() {
         super.onResume();
-        viewModel.doCheckIfTestDriveIsRuning(AppSharedPrefs.getEmployeeID());
+        if (viewModel != null) {
+            viewModel.doCheckIfTestDriveIsRuning(AppSharedPrefs.getInstance(context).getTestDriveId());
+        }
+
     }
 
 
@@ -187,6 +201,38 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
             //((HomeActivity)context).finish();
         } else {
             startService(serviceIntent);
+        }
+    }
+
+    Observer<EmployeeOwnedAssetsListResponse> responseAssetsOwnedCurrently = new Observer<EmployeeOwnedAssetsListResponse>() {
+
+        @Override
+        public void onChanged(@Nullable EmployeeOwnedAssetsListResponse employeeOwnedAssetsListResponse) {
+
+            Utils.hideProgressDialog();
+            if (employeeOwnedAssetsListResponse != null && employeeOwnedAssetsListResponse.getResults() != null && employeeOwnedAssetsListResponse.getResults().size() > 0) {
+                ArrayList<EmployeeOwnedAssetsListResponse.Result> resultArrayList = employeeOwnedAssetsListResponse.getResults();
+                if (resultArrayList.size() > 0) {
+                    storeOwnedKeyIdsPreferences(employeeOwnedAssetsListResponse);
+                    startLocationStorage();
+                }
+            }
+        }
+    };
+
+    private void storeOwnedKeyIdsPreferences(EmployeeOwnedAssetsListResponse employeeOwnedAssetsListResponse) {
+        String ownedKeys = null;
+        if (employeeOwnedAssetsListResponse != null && employeeOwnedAssetsListResponse.getResults().size() > 0) {
+            for (int i = 0; i < employeeOwnedAssetsListResponse.getResults().size(); i++) {
+                if (!TextUtils.isEmpty(employeeOwnedAssetsListResponse.getResults().get(i).getAsset_id())) {
+                    if (ownedKeys != null) {
+                        ownedKeys = ownedKeys + "," + employeeOwnedAssetsListResponse.getResults().get(i).getAsset_id();
+                    } else {
+                        ownedKeys = employeeOwnedAssetsListResponse.getResults().get(i).getAsset_id();
+                    }
+                }
+            }
+            AppSharedPrefs.getInstance(context).setOwnedKeyIds(ownedKeys);
         }
     }
 
