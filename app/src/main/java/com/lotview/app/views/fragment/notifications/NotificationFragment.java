@@ -183,7 +183,7 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
             public void run() {
                 binding.recycleNotification.loadMoreComplete();
             }
-        }, 2000);
+        }, 1000);
     }
 
 
