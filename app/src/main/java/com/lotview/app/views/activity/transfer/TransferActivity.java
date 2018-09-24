@@ -116,12 +116,14 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
 
     @Override
     public void onRefresh() {
+        Utils.showProgressDialog(context, getString(R.string.loading));
+        viewModel.getMyAssets(binding);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 binding.recyclerView.refreshComplete();
             }
-        }, 2000);
+        }, 1000);
     }
 
     @Override

@@ -33,7 +33,7 @@ import java.util.ArrayList;
 /**
  * Created by akshaydashore on 23/8/18
  */
-public class AllAssetListFragment extends BaseFragment implements XRecyclerView.LoadingListener {
+public class AllAssetListFragment extends BaseFragment implements XRecyclerView.LoadingListener ,AllAssetsAdapter.OnActivityResult {
 
     AllAssetListFragmentViewModel viewModel;
     private Context context;
@@ -100,7 +100,7 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
         resultArrayList = new ArrayList<>();
         LinearLayoutManager manager = new LinearLayoutManager(context);
         binding.recyclerView.setLayoutManager(manager);
-        allAssetAdapter = new AllAssetsAdapter(context, resultArrayList, AppUtils.STATUS_ALL_ASSET_LIST);
+        allAssetAdapter = new AllAssetsAdapter(context, resultArrayList, AppUtils.STATUS_ALL_ASSET_LIST,this);
         binding.recyclerView.setAdapter(allAssetAdapter);
         binding.recyclerView.setLoadingListener(this);
         binding.recyclerView.setLoadingMoreEnabled(false);
@@ -165,6 +165,8 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
 
     @Override
     public void onRefresh() {
+        Utils.showProgressDialog(context, getString(R.string.loading));
+        resultArrayList.clear();
         viewModel.getAllAssets(binding, "");
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -200,4 +202,19 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
         binding.tvNoRecords.setText(getString(R.string.txt_no_records_avialable));
     }
 
+    @Override
+    public void CallOnActivityResult(Intent intent) {
+        startActivityForResult(intent,AppUtils.REQ_REFRESH_VIEW);
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AppUtils.REQ_REFRESH_VIEW) {
+            resultArrayList.clear();
+            Utils.showProgressDialog(context, getString(R.string.loading));
+            viewModel.getAllAssets(binding, "");
+        }
+    }
 }

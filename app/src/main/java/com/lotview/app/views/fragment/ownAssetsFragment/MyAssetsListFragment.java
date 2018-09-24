@@ -38,7 +38,7 @@ import java.util.ArrayList;
  * Created by akshaydashore on 23/8/18
  */
 
-public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.LoadingListener {
+public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.LoadingListener,MyAssetsAdapter.OnActivityResult {
 
     private Context context;
     private MyAssetListFragmentBinding binding;
@@ -75,7 +75,7 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
         binding.recyclerView.setLoadingListener(this);
         binding.recyclerView.setLoadingMoreEnabled(false);
         binding.recyclerView.setPullRefreshEnabled(true);
-        myAssetAdapter = new MyAssetsAdapter(context, resultArrayList, AppUtils.STATUS_TRANSFER_ASSET_LIST);
+        myAssetAdapter = new MyAssetsAdapter(context, resultArrayList, AppUtils.STATUS_TRANSFER_ASSET_LIST,this);
         binding.recyclerView.setAdapter(myAssetAdapter);
         viewModel.validator.observe(this, observer);
         viewModel.response_validator.observe(this, response_observer);
@@ -188,6 +188,9 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
 
     @Override
     public void onRefresh() {
+
+        Utils.showProgressDialog(context, getString(R.string.loading));
+        resultArrayList.clear();
         viewModel.getMyAssets(binding, AppSharedPrefs.getInstance(context).getEmployeeID(), "");
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -237,4 +240,22 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
             AppSharedPrefs.getInstance(context).setOwnedKeyIds(ownedKeys);
         }
     }
+
+
+    @Override
+    public void CallOnActivityResult(Intent intent) {
+        startActivityForResult(intent,AppUtils.REQ_REFRESH_VIEW);
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AppUtils.REQ_REFRESH_VIEW) {
+            resultArrayList.clear();
+            Utils.showProgressDialog(context, getString(R.string.loading));
+            viewModel.getMyAssets(binding, AppSharedPrefs.getInstance(context).getEmployeeID(), "");
+        }
+    }
+
 }
