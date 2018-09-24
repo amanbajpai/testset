@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.lotview.app.R;
 import com.lotview.app.model.bean.AssetsListResponseBean;
 import com.lotview.app.utils.AppUtils;
+import com.lotview.app.utils.Utils;
 import com.lotview.app.views.activity.assetDetail.AssetDetailActivity;
 
 /**
@@ -59,14 +60,18 @@ public class TransferAssetAdapter extends RecyclerView.Adapter<TransferAssetAdap
             }
         });
         holder.assetName.setText(assetLists.getResult().get(position).getAssetName());
-        holder.modelNumber.setText(assetLists.getResult().get(position).getModelNumber());
-        holder.vinNumber.setText(assetLists.getResult().get(position).getVin());
-        holder.versionNumber.setText(assetLists.getResult().get(position).getVersionNumber());
+        holder.vinNumber.setText("VIN Number: "+assetLists.getResult().get(position).getVin());
+
+        holder.assignedAt.setText("Assigned At: "+Utils.formattedDateFromString(Utils.INPUT_DATE_TIME_FORMATE, Utils.OUTPUT_DATE_TIME_FORMATE, assetLists.getResult().get(position).getAssigned_approved_or_decline_at()));
+        holder.remainingTime.setText("Remaining Time: "+assetLists.getResult().get(position).getAssets_hold_remain_time());
+
+
+       /* holder.versionNumber.setText(assetLists.getResult().get(position).getVersionNumber());
         if (assetLists.getResult().get(position).getAssetAssginedStatus().equalsIgnoreCase("1")) {
             holder.availableStatus.setText(context.getString(R.string.txt_status_available));
         } else {
             holder.availableStatus.setText(context.getString(R.string.txt_status_unavailable));
-        }
+        }*/
     }
 
 
@@ -77,15 +82,14 @@ public class TransferAssetAdapter extends RecyclerView.Adapter<TransferAssetAdap
 
     class Holder extends RecyclerView.ViewHolder {
 
-        private AppCompatTextView assetName, modelNumber, vinNumber, versionNumber, availableStatus;
+        private AppCompatTextView assetName, vinNumber, assignedAt,remainingTime;
 
         public Holder(View itemView) {
             super(itemView);
             assetName = itemView.findViewById(R.id.tv_asset_name);
-            modelNumber = itemView.findViewById(R.id.tv_model_number);
+            assignedAt = itemView.findViewById(R.id.tv_assigned_at);
+            remainingTime = itemView.findViewById(R.id.tv_remaining_time);
             vinNumber = itemView.findViewById(R.id.tv_vin_number);
-            versionNumber = itemView.findViewById(R.id.tv_version_number);
-            availableStatus = itemView.findViewById(R.id.tv_available_status);
         }
     }
 

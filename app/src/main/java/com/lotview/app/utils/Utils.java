@@ -94,10 +94,10 @@ public class Utils {
 
     private static final String TAG = "Utils";
     public static final String INPUT_DATE_TIME_FORMATE = "yyyy-MM-dd HH:mm:ss";
-    public static final String OUTPUT_DATE_TIME_FORMATE = "dd-MM-yyyy HH:mm:a";
+    public static final String OUTPUT_DATE_TIME_FORMATE = "dd-MM-yyyy HH:mm a";
     public static final String OUTPUT_TIME_FORMATE = "HH:mm:a";
     public static final String INPUT_TIME_FORMATE = "HH:mm:ss";
-    public static final String OUTPUT_HOUR_TIME_FORMATE = "HH:mm";
+    public static final String OUTPUT_HOUR_TIME_FORMATE = "HH:mm:ss";
 
     private static SmartLocation.LocationControl location_control;
 
@@ -1861,7 +1861,7 @@ public class Utils {
         switch (assetType) {
 
             case 1:
-                type = "New";
+                type = "New Car";
                 break;
             case 2:
                 type = "Used";

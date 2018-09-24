@@ -49,7 +49,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:padding="@dimen/_5sdp">
+                            android:paddingLeft="@dimen/_5sdp"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:paddingRight="@dimen/_5sdp">
 
                             <com.lotview.app.views.custom_view.StyledTextViewBold
                                 android:id="@+id/tv_tittle"
@@ -60,7 +62,6 @@
                                 android:textSize="@dimen/_16sdp" />
 
                         </RelativeLayout>
-
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -73,6 +74,21 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Available"
+                                android:textColor="@color/dark_gray_color"
+                                android:textSize="@dimen/_14sdp" />
+
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingLeft="@dimen/_5sdp">
+
+                            <com.lotview.app.views.custom_view.StyledTextViewMedium
+                                android:id="@+id/tv_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
                                 android:textColor="@color/dark_gray_color"
                                 android:textSize="@dimen/_14sdp" />
 

@@ -100,13 +100,14 @@ public class LoginActivity extends BaseActivity {
             String user_detail = gson.toJson(loginBean.getResult());
             String empId = loginBean.getResult().getEmployeeId() + "";
             String comId = loginBean.getResult().getCompanyId() + "";
-            String empName = loginBean.getResult().getFirstname() + "";
+            String empFirstName = loginBean.getResult().getFirstname() + "";
+            String empLastName = loginBean.getResult().getLastname() + "";
             boolean isRemember = true;
 
             AppSharedPrefs.getInstance(context).setUserDetail(user_detail);
             AppSharedPrefs.getInstance(context).setEmployeeID(empId);
             AppSharedPrefs.getInstance(context).setCompanyID(comId);
-            AppSharedPrefs.getInstance(context).setEmployeeName(empName);
+            AppSharedPrefs.getInstance(context).setEmployeeName(empFirstName+" "+empLastName);
             AppSharedPrefs.getInstance(context).setAccessToken(loginBean.getAccessToken());
             AppSharedPrefs.getInstance(context).setRememberMe(isRemember);
             AppSharedPrefs.getInstance(context).setLogin(true);

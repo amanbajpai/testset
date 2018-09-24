@@ -93,11 +93,14 @@
     <string name="heading_test_drive">Test Drive</string>
     <string name="txt_no_records_avialable">No records available</string>
     <string name="txt_qr_code_screen_title">Scan</string>
+    <string name="txt_qr_code_screen_title_from_home">Scan QR Code</string>
+    <string name="txt_qr_code_screen_title_from_keydetail">Key Scanner (QR)</string>
+    <string name="txt_qr_code_screen_title_from_transfer_ownership">Scan Box QR code</string>
     <string name="txt_my_profile">Profile</string>
     <string name="txt_home">Home</string>
     <string name="txt_all_asset">All Keys</string>
     <string name="txt_my_asset">My Keys</string>
-    <string name="transfer_asset">Transfer Key</string>
+    <string name="transfer_asset">Transfer</string>
     <string name="transfer_ownership">Transfer Ownership</string>
     <string name="confirm_transfer">Confirm Transfer</string>
     <string name="sorry_qr_code_does_not_match">Sorry this qr code does not match this asset</string>

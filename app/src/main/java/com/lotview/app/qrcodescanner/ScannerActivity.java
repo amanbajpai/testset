@@ -12,6 +12,8 @@ import com.lotview.app.R;
 import com.lotview.app.utils.AppUtils;
 import com.lotview.app.utils.LogUtils;
 
+import java.util.ArrayList;
+
 public class ScannerActivity extends AppCompatActivity {
 
     private static final String IS_MANUAL_QR = "manual";
@@ -23,6 +25,7 @@ public class ScannerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activity = this;
         setContentView(R.layout.activity_main);
+        CaptureCodeActivity.setTitle(getIntent().getStringExtra("title"));
         new IntentIntegrator(this).setCaptureActivity(CaptureCodeActivity.class).initiateScan();
     }
 

@@ -210,8 +210,6 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
                         break;
                 }
                 break;
-
-
         }
     }
 }
