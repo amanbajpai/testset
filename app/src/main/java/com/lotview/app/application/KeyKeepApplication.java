@@ -7,14 +7,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.multidex.MultiDexApplication;
-import android.widget.Switch;
 
 import com.crashlytics.android.Crashlytics;
 import com.facebook.stetho.Stetho;
 import com.lotview.app.BuildConfig;
 import com.lotview.app.model.bean.BaseRequestEntity;
-import com.lotview.app.model.bean.LocationTrackBeanList;
-import com.lotview.app.model.bean.TrackLocationRequestEntity;
 import com.lotview.app.model.location.DaoMaster;
 import com.lotview.app.model.location.DaoSession;
 import com.lotview.app.netcom.Keys;
@@ -87,7 +84,7 @@ public class KeyKeepApplication extends MultiDexApplication {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-    Stetho.initializeWithDefaults(this);
+        Stetho.initializeWithDefaults(this);
     }
 
     public DaoSession getDaoSession() {
@@ -96,9 +93,9 @@ public class KeyKeepApplication extends MultiDexApplication {
 
     private void instantiateFabric() {
         try {
-            if (!BuildConfig.DEBUG) {
+          //  if (!BuildConfig.DEBUG) {
                 Fabric.with(this, new Crashlytics());
-            }
+          //  }
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -171,13 +168,13 @@ public class KeyKeepApplication extends MultiDexApplication {
 
         if (AppSharedPrefs.getInstance(instance).getEmployeeID() != null && AppSharedPrefs.getInstance(instance).getEmployeeID().trim().length() > 0) {
             baseRequestEntity.setEmployee_id(Integer.valueOf(AppSharedPrefs.getInstance(instance).getEmployeeID()));
-        }else{
+        } else {
             baseRequestEntity.setEmployee_id(0);
         }
 
         if (AppSharedPrefs.getInstance(instance).getCompanyID() != null && AppSharedPrefs.getInstance(instance).getCompanyID().trim().length() > 0) {
             baseRequestEntity.setCompany_id(Integer.valueOf(AppSharedPrefs.getInstance(instance).getCompanyID()));
-        }else{
+        } else {
             baseRequestEntity.setCompany_id(0);
         }
 
@@ -185,7 +182,7 @@ public class KeyKeepApplication extends MultiDexApplication {
         if (AppSharedPrefs.getInstance(instance).getPushDeviceToken() != null && AppSharedPrefs.getInstance(instance).getPushDeviceToken().trim().length() > 0) {
             baseRequestEntity.setDevice_token(AppSharedPrefs.getInstance(instance).getPushDeviceToken());
         } else {
-            baseRequestEntity.setDevice_token("aaaaaaa");
+            baseRequestEntity.setDevice_token("");
         }
         if (includeToken) {
             baseRequestEntity.setToken_type(Keys.TOKEN_TYPE);

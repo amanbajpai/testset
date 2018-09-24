@@ -236,6 +236,7 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
             if (employeeOwnedAssetsListResponse != null && employeeOwnedAssetsListResponse.getResults() != null && employeeOwnedAssetsListResponse.getResults().size() > 0) {
                 ArrayList<EmployeeOwnedAssetsListResponse.Result> resultArrayList = employeeOwnedAssetsListResponse.getResults();
                 if (resultArrayList.size() > 0) {
+                    storeOwnedKeyIdsPreferences(employeeOwnedAssetsListResponse);
                     startLocationStorage();
                 }
             }
@@ -277,5 +278,21 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
         super.onResume();
         Utils.showProgressDialog(context, getString(R.string.loading));
         viewModel.getCurrentAssetsOwned();
+    }
+
+    private void storeOwnedKeyIdsPreferences(EmployeeOwnedAssetsListResponse employeeOwnedAssetsListResponse) {
+        String ownedKeys = null;
+        if (employeeOwnedAssetsListResponse != null && employeeOwnedAssetsListResponse.getResults().size() > 0) {
+            for (int i = 0; i < employeeOwnedAssetsListResponse.getResults().size(); i++) {
+                if (!TextUtils.isEmpty(employeeOwnedAssetsListResponse.getResults().get(i).getAsset_id())) {
+                    if (ownedKeys != null) {
+                        ownedKeys = ownedKeys + "," + employeeOwnedAssetsListResponse.getResults().get(i).getAsset_id();
+                    } else {
+                        ownedKeys = employeeOwnedAssetsListResponse.getResults().get(i).getAsset_id();
+                    }
+                }
+            }
+            AppSharedPrefs.getInstance(context).setOwnedKeyIds(ownedKeys);
+        }
     }
 }

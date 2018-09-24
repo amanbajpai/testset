@@ -29,10 +29,10 @@ public class LoginViewModel extends BaseViewModel implements DialogClickListener
         if (Utils.isStringsEmpty(text)) {
             validator.setValue(AppUtils.empty_id);
             return false;
-        } else if (!Utils.isValideEmail(text)) {
+        } /*else if (!Utils.isValideEmail(text)) {
             validator.setValue(AppUtils.invalid_mail);
             return false;
-        }
+        }*/
         return true;
     }
 
@@ -70,8 +70,8 @@ public class LoginViewModel extends BaseViewModel implements DialogClickListener
             return;
         }
 
-        String email = binding.etMail.getText().toString();
-        String password = binding.etPassword.getText().toString();
+        String email = binding.etMail.getText().toString().trim();
+        String password = binding.etPassword.getText().toString().trim();
 
         Call<LoginResponseBean> call = RetrofitHolder.getService().doLogin(KeyKeepApplication.getInstance().getBaseEntity(false), email, password);
 

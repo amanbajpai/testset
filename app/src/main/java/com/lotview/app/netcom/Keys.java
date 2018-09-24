@@ -64,7 +64,8 @@ public interface Keys {
     String EMPLOYEE_LATITUDE = "emp_lat";
     String EMPLOYEE_LONGITUDE = "emp_long";
 
-    String CHANNEL_NAME = "channel_name";
+    String CHANNEL_NAME_BACKGROUND = "channel_name";
+    String CHANNEL_PUSH = "channel_name";
 
     String LOCAL_DATE_TIME = "local_date_time";
     String UTC_DATE_TIME = "utc_date_time";

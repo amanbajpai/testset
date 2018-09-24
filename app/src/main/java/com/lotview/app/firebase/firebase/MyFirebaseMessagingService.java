@@ -1,7 +1,11 @@
 package com.lotview.app.firebase.firebase;
 
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
@@ -10,7 +14,6 @@ import android.support.v4.app.NotificationManagerCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.lotview.app.R;
-import com.lotview.app.application.KeyKeepApplication;
 import com.lotview.app.model.notification.PushAdditionalData;
 import com.lotview.app.model.notification.PushData;
 import com.lotview.app.netcom.Keys;
@@ -30,6 +33,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseMsgService";
     private Map<String, String> params;
     public static int value = 1;
+    String CHANNEL_ID = "push_cannel_id";
 
 
     @Override
@@ -59,54 +63,67 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             PushAdditionalDataJson = jsonObject.optString("additional_data");
             JSONObject object = new JSONObject(PushAdditionalDataJson);
-            int PushAssetId = object.optInt("asset_id");
-            int PushEmployeeId = object.optInt("employee_id");
-            int PushCompanyId = object.optInt("company_id");
+            int pushAssetId = object.optInt("asset_id");
+            int pushEmployeeId = object.optInt("employee_id");
+            int pushCompanyId = object.optInt("company_id");
 
             PushAdditionalData pushAdditionalDataBean = new PushAdditionalData();
-            pushAdditionalDataBean.setAssetId(PushAssetId);
-            pushAdditionalDataBean.setEmployeeId(PushEmployeeId);
-            pushAdditionalDataBean.setCompanyId(PushCompanyId);
+            pushAdditionalDataBean.setAssetId(pushAssetId);
+            pushAdditionalDataBean.setEmployeeId(pushEmployeeId);
+            pushAdditionalDataBean.setCompanyId(pushCompanyId);
 
             pushDatabean.setAdditionalData(pushAdditionalDataBean);
 
             if (AppSharedPrefs.getInstance(getApplicationContext()).isLogin() && checkIfNotificationEnabled()) {
-//                addNotification(PushType, PushBody, pushTittle, push_data);
-                addNotification(pushDatabean);
+                showNotification(this, pushDatabean);
             }
-
+//
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
-    private void addNotification(PushData pushData) {
 
-        // Create an explicit intent for an Activity in your app
+    public void showNotification(Context context, PushData pushData) {
+
         Intent intent = new Intent(this, HomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.putExtra(Keys.NOTIFICATION_DATA, pushData);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        int notificationId = 1;
+        String channelId = "channel-01";
+        String channelName = "Channel Name";
+        int importance = NotificationManager.IMPORTANCE_HIGH;
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel mChannel = new NotificationChannel(
+                    channelId, channelName, importance);
+            notificationManager.createNotificationChannel(mChannel);
+        }
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, channelId);
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder.setSmallIcon(R.mipmap.notification_icon);
-            builder.setColor(getResources().getColor(R.color.app_blue));
+            mBuilder.setSmallIcon(R.mipmap.notification_icon);
+            mBuilder.setColor(getResources().getColor(R.color.app_blue));
         } else {
-            builder.setSmallIcon(R.mipmap.ic_launcher);
+            mBuilder.setSmallIcon(R.mipmap.ic_launcher);
         }
-        builder.setContentTitle(pushData.getTitle());
-        builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
-        builder.setStyle(new NotificationCompat.BigTextStyle()
-                .bigText(pushData.getBody()));
-        // Set the intent that will fire when the user taps the notification
-        builder.setContentIntent(pendingIntent);
-        builder.setAutoCancel(true);
-        notificationManager.notify(KeyKeepApplication.NOTIFICATION_ID, builder.build());
+        mBuilder.setContentTitle(pushData.getTitle());
+        mBuilder.setContentText(pushData.getBody());
 
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addNextIntent(intent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(
+                0,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+        mBuilder.setContentIntent(resultPendingIntent);
+
+        notificationManager.notify(notificationId, mBuilder.build());
     }
 
 
