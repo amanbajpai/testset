@@ -58,6 +58,11 @@ android {
         flavorCDN {
             buildConfigField "String", "BASE_URL", '"https://www.cdnsolutionsgroup.com/KeyKeep/assetapi/public/v1/"'
         }
+        flavorAWS {
+            buildConfigField "String", "BASE_URL", '"http://18.224.46.253/assetapi/public/v1/"'
+        }
+
+
     }
 
 }

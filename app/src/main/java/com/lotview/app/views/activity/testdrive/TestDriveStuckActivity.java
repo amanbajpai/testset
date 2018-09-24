@@ -19,6 +19,7 @@ import com.lotview.app.model.bean.EmployeeOwnedAssetsListResponse;
 import com.lotview.app.model.bean.TestDriveResponseBean;
 import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.utils.AppUtils;
+import com.lotview.app.utils.Connectivity;
 import com.lotview.app.utils.Utils;
 import com.lotview.app.views.activity.home.HomeActivity;
 import com.lotview.app.views.base.BaseActivity;
@@ -80,13 +81,17 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
         switch (v.getId()) {
 
             case R.id.tv_test_drive_stop:
-                if (isDriveStart) {
-                    setCustomActionBar();
-                    Utils.showProgressDialog(context, getString(R.string.loading));
-                    viewModel.doStopTestDrive(AppSharedPrefs.getEmployeeID(), Integer.valueOf(checkIfAnyTestDriveResponseBean.getAsset_id()), AppSharedPrefs.getLatitude(), AppSharedPrefs.getLongitude(), Utils.getCurrentTimeStampDate(), Utils.getCurrentUTCTimeStampDate(), AppSharedPrefs.getInstance(context).getTestDriveId());
+                if (Connectivity.isConnected()) {
+                    if (isDriveStart) {
 
+                        setCustomActionBar();
+                        Utils.showProgressDialog(context, getString(R.string.loading));
+                        viewModel.doStopTestDrive(AppSharedPrefs.getEmployeeID(), Integer.valueOf(checkIfAnyTestDriveResponseBean.getAsset_id()), AppSharedPrefs.getLatitude(), AppSharedPrefs.getLongitude(), Utils.getCurrentTimeStampDate(), Utils.getCurrentUTCTimeStampDate(), AppSharedPrefs.getInstance(context).getTestDriveId());
+
+                    }
+                } else {
+                    Utils.showAlert(context, "", getString(R.string.internet_connection), "ok", "", AppUtils.dialog_ok_click, TestDriveStuckActivity.this);
                 }
-
                 break;
         }
 
