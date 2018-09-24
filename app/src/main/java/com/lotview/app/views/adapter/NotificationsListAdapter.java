@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.lotview.app.R;
 import com.lotview.app.databinding.NotificationRecyclerItemBinding;
 import com.lotview.app.model.bean.NotificationsResponseBean;
+import com.lotview.app.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -47,6 +48,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter<Notifications
 
         holder.binding.tvTittle.setText(notificationsResponseBean.getNotificationTitle());
         holder.binding.tvBody.setText(notificationsResponseBean.getNotificationDescription());
+        holder.binding.tvTime.setText(Utils.formattedDateFromString(Utils.INPUT_DATE_TIME_FORMATE, Utils.OUTPUT_DATE_TIME_FORMATE, notificationsResponseBean.getNotification_created_time()));
     }
 
     public void setNotificationList(Context context, ArrayList<NotificationsResponseBean.Result> resultArrayList) {

@@ -89,7 +89,11 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
 
             case R.id.scan_rl:
                 if (Utils.checkPermissions(getActivity(), AppUtils.STORAGE_CAMERA_PERMISSIONS)) {
-                    startActivityForResult(new Intent(context, ScannerActivity.class), AppUtils.REQUEST_CODE_QR_SCAN);
+                  //  startActivityForResult(new Intent(context, ScannerActivity.class), AppUtils.REQUEST_CODE_QR_SCAN);
+                    Intent i = new Intent(getActivity(),ScannerActivity.class);
+                    i.putExtra("title", getString(R.string.txt_qr_code_screen_title_from_home));
+                    startActivityForResult(i, AppUtils.REQUEST_CODE_QR_SCAN);
+
                 } else {
                     requestPermissions(AppUtils.STORAGE_CAMERA_PERMISSIONS, AppUtils.REQUEST_CODE_CAMERA);
                 }
@@ -105,7 +109,12 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
 
             case R.id.takeout_rl:
                 if (Utils.checkPermissions(getActivity(), AppUtils.STORAGE_CAMERA_PERMISSIONS)) {
-                    startActivityForResult(new Intent(context, ScannerActivity.class), AppUtils.REQUEST_CODE_QR_SCAN_FOR_DRIVE);
+                   // startActivityForResult(new Intent(context, ScannerActivity.class), AppUtils.REQUEST_CODE_QR_SCAN_FOR_DRIVE);
+
+                    Intent i = new Intent(getActivity(),ScannerActivity.class);
+                    i.putExtra("title", getString(R.string.txt_qr_code_screen_title_from_home));
+                    startActivityForResult(i, AppUtils.REQUEST_CODE_QR_SCAN_FOR_DRIVE);
+
                 } else {
                     requestPermissions(AppUtils.STORAGE_CAMERA_PERMISSIONS, AppUtils.REQUEST_CODE_CAMERA_FOR_DRIVE);
                 }
@@ -125,13 +134,23 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == AppUtils.REQUEST_CODE_CAMERA) {
             if (Utils.onRequestPermissionsResult(permissions, grantResults)) {
-                startActivityForResult(new Intent(context, ScannerActivity.class), AppUtils.REQUEST_CODE_QR_SCAN);
+               // startActivityForResult(new Intent(context, ScannerActivity.class), AppUtils.REQUEST_CODE_QR_SCAN);
+
+                Intent i = new Intent(getActivity(),ScannerActivity.class);
+                i.putExtra("title", getString(R.string.txt_qr_code_screen_title_from_home));
+                startActivityForResult(i, AppUtils.REQUEST_CODE_QR_SCAN);
+
             } else {
                 Utils.showSnackBar(binding, getString(R.string.allow_camera_permission));
             }
         } else if (requestCode == AppUtils.REQUEST_CODE_CAMERA_FOR_DRIVE) {
             if (Utils.onRequestPermissionsResult(permissions, grantResults)) {
-                startActivityForResult(new Intent(context, ScannerActivity.class), AppUtils.REQUEST_CODE_QR_SCAN_FOR_DRIVE);
+                //startActivityForResult(new Intent(context, ScannerActivity.class), AppUtils.REQUEST_CODE_QR_SCAN_FOR_DRIVE);
+
+                Intent i = new Intent(getActivity(),ScannerActivity.class);
+                i.putExtra("title", getString(R.string.txt_qr_code_screen_title_from_home));
+                startActivityForResult(i, AppUtils.REQUEST_CODE_QR_SCAN_FOR_DRIVE);
+
             } else {
                 Utils.showSnackBar(binding, getString(R.string.allow_camera_permission));
             }

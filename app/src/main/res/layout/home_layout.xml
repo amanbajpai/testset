@@ -29,41 +29,42 @@
                 android:minHeight="?attr/actionBarSize"
                 app:navigationIcon="@drawable/menu">
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                 <com.lotview.app.views.custom_view.StyledTextViewLight
                     android:id="@+id/title_tv"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_toLeftOf="@+id/icon_right"
                     android:ellipsize="end"
-                    android:foregroundGravity="center_vertical"
-                    android:gravity="center_vertical"
-                    android:maxLength="12"
+                    android:gravity="center"
                     android:maxLines="1"
                     android:padding="@dimen/_5sdp"
+                    android:text="Notifications"
                     android:src="@drawable/menu"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_16sdp"
-                    android:visibility="gone" />
+                    android:visibility="invisible" />
 
 
                 <com.lotview.app.views.custom_view.StyledTextViewLight
                     android:id="@+id/icon_right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:ellipsize="end"
-                    android:foregroundGravity="center_vertical"
                     android:maxLines="1"
                     android:padding="@dimen/_5sdp"
                     android:src="@drawable/menu"
                     android:text="Clear All"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_16sdp"
-                    android:visibility="gone" />
+                    android:textSize="@dimen/_14sdp"
+                    android:visibility="invisible" />
 
-
+                </RelativeLayout>
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
 

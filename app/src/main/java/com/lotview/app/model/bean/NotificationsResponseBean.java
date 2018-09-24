@@ -45,6 +45,10 @@ public class NotificationsResponseBean extends BaseResponse {
         @Expose
         private String title;
 
+        @SerializedName("created_at")
+        @Expose
+        private String notification_created_time;
+
         public String getNotificationId() {
             return notificationId;
         }
@@ -83,6 +87,14 @@ public class NotificationsResponseBean extends BaseResponse {
 
         public void setTitle(String title) {
             this.title = title;
+        }
+
+        public String getNotification_created_time() {
+            return notification_created_time;
+        }
+
+        public void setNotification_created_time(String notification_created_time) {
+            this.notification_created_time = notification_created_time;
         }
     }
 }

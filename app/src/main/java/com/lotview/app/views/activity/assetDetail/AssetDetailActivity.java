@@ -358,7 +358,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         switch (v.getId()) {
 
             case R.id.scan_button:
-                callSubmit();
+                callSubmit(binding.scanButton.getText().toString());
                 break;
 
             case R.id.left_iv:
@@ -393,18 +393,33 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
     /**
      * Put action onclick according to status code
      */
-    private void callSubmit() {
+    private void callSubmit(String from) {
 
         if (IS_FROM_SCANNER || HAS_SCANNED) {
             if (!hasBoxVerify()) {
-                startActivityForResult(new Intent(context, ScannerActivity.class), AppUtils.REQUEST_QR_SCAN_FOR_BOX_VERIFY);
+            //    startActivityForResult(new Intent(context, ScannerActivity.class), AppUtils.REQUEST_QR_SCAN_FOR_BOX_VERIFY);
+
+                Intent i = new Intent(this,ScannerActivity.class);
+                i.putExtra("title", getString(R.string.txt_qr_code_screen_title_from_keydetail));
+                startActivityForResult(i, AppUtils.REQUEST_QR_SCAN_FOR_BOX_VERIFY);
+
+
                 return;
             }
             beforeSendRequestValidation();
 
         } else {
             if (Utils.checkPermissions(this, AppUtils.STORAGE_CAMERA_PERMISSIONS)) {
-                startActivityForResult(new Intent(context, ScannerActivity.class), AppUtils.REQUEST_CODE_QR_SCAN);
+                //startActivityForResult(new Intent(context, ScannerActivity.class), AppUtils.REQUEST_CODE_QR_SCAN);
+
+                Intent i = new Intent(this,ScannerActivity.class);
+                if(from.equalsIgnoreCase("Request Key")){
+                    i.putExtra("title", getString(R.string.txt_qr_code_screen_title_from_keydetail));
+                }else{
+                    i.putExtra("title", getString(R.string.txt_qr_code_screen_title_from_transfer_ownership));
+                }
+                startActivityForResult(i, AppUtils.REQUEST_CODE_QR_SCAN);
+
             } else {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     requestPermissions(AppUtils.STORAGE_CAMERA_PERMISSIONS, AppUtils.REQUEST_CODE_CAMERA);
@@ -571,7 +586,10 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == AppUtils.REQUEST_CODE_CAMERA && Utils.onRequestPermissionsResult(permissions, grantResults)) {
-            startActivityForResult(new Intent(context, ScannerActivity.class), AppUtils.REQUEST_CODE_QR_SCAN);
+            Intent i = new Intent(this,ScannerActivity.class);
+            i.putExtra("title", getString(R.string.txt_qr_code_screen_title_from_keydetail));
+            startActivityForResult(i, AppUtils.REQUEST_CODE_QR_SCAN);
+
         } else {
             Utils.showSnackBar(binding, getString(R.string.allow_camera_permission));
         }

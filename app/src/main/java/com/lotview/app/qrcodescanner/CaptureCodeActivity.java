@@ -18,7 +18,11 @@ public class CaptureCodeActivity extends AppCompatActivity implements View.OnCli
     private CaptureManager capture;
     private DecoratedBarcodeView barcodeScannerView;
     private final int CUSTOMIZED_REQUEST_CODE=113;
+    public static String title="";
 
+    public static void setTitle(String title) {
+        CaptureCodeActivity.title = title;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +30,7 @@ public class CaptureCodeActivity extends AppCompatActivity implements View.OnCli
 
         setContentView(R.layout.capture_code_activity);
         CustomActionBar customActionBar = new CustomActionBar(this);
-        customActionBar.setActionbar(getString(R.string.txt_qr_code_screen_title), true, false,false,false, this);
+        customActionBar.setActionbar(title, true, false,false,false, this);
 
         barcodeScannerView = (DecoratedBarcodeView)findViewById(R.id.zxing_barcode_scanner);
 

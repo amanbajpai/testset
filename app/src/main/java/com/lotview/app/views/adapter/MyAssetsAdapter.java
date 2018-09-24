@@ -83,7 +83,7 @@ public class MyAssetsAdapter extends RecyclerView.Adapter<MyAssetsAdapter.Holder
         if (Utils.validateIntValue(bean.getAssetType()).equals(AppUtils.ASSET_CUSTOMER)) {
             holder.vinNumber.setText(Utils.validateStringToValue(bean.getCustomerName()));
         } else {
-            holder.vinNumber.setText("Vin Number: " + assetLists.get(position).getVin());
+            holder.vinNumber.setText("VIN Number: " + assetLists.get(position).getVin());
         }
 
         // stock number
