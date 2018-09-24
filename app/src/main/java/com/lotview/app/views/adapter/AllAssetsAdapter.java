@@ -38,12 +38,14 @@ public class AllAssetsAdapter extends RecyclerView.Adapter<AllAssetsAdapter.Hold
     private ArrayList<AssetsListResponseBean.Result> assetfilteredFinalList;
     private AllAssetsSearchFilter filter;
     int REQ_TYPE;
+    OnActivityResult listener;
 
-    public AllAssetsAdapter(Context context, ArrayList<AssetsListResponseBean.Result> resultAssetList, int REQ_TYPE) {
+    public AllAssetsAdapter(Context context, ArrayList<AssetsListResponseBean.Result> resultAssetList, int REQ_TYPE, OnActivityResult onActivityResult) {
         this.context = context;
         this.assetLists = resultAssetList;
         this.assetfilteredFinalList = resultAssetList;
         this.REQ_TYPE = REQ_TYPE;
+        this.listener = onActivityResult;
     }
 
     public void setAssetList(Context context, ArrayList<AssetsListResponseBean.Result> resultAssetList) {
@@ -71,10 +73,10 @@ public class AllAssetsAdapter extends RecyclerView.Adapter<AllAssetsAdapter.Hold
 
                 AssetsListResponseBean.Result bean = assetLists.get(position);
                 Intent intent = new Intent(context, AssetDetailActivity.class);
-                intent.putExtra(AppUtils.ASSET_ID,bean.getAssetId());
+                intent.putExtra(AppUtils.ASSET_ID, bean.getAssetId());
                 intent.putExtra(AppUtils.ASSET_STATUS_CODE, REQ_TYPE);
                 intent.putExtra(AppUtils.SCANED_QR_CODE, bean.getQrCodeNumber());
-                context.startActivity(intent);
+                listener.CallOnActivityResult(intent);
 
             }
         });
@@ -244,4 +246,9 @@ public class AllAssetsAdapter extends RecyclerView.Adapter<AllAssetsAdapter.Hold
         }
     }
 
+
+   public interface OnActivityResult {
+
+        public void CallOnActivityResult(Intent intent);
+    }
 }

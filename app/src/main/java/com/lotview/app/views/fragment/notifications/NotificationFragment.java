@@ -67,7 +67,6 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
 
         Utils.showProgressDialog(context, getString(R.string.loading));
         viewModel.getNotifications(0);
-
         resultArrayList = new ArrayList<>();
         LinearLayoutManager manager = new LinearLayoutManager(context);
         binding.recycleNotification.setLayoutManager(manager);
@@ -133,13 +132,13 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
                 notificationsListAdapter.setNotificationList(context, resultArrayList);
 
             } else {
-                activity.setRightButtonEnable("", false, null);
                 if (resultArrayList.size() > 0) {
                     Utils.showSnackBar(binding, getString(R.string.no_more_data));
                 } else {
                     noDataView();
-                }
+                    activity.setRightButtonEnable("", false, null);
 
+                }
             }
         }
     };
@@ -168,12 +167,12 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
         resultArrayList.clear();
         viewModel.getNotifications(0);
         //clear all data
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                binding.recycleNotification.refreshComplete();
-//            }
-//        }, 2000);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                binding.recycleNotification.refreshComplete();
+            }
+        }, 1000);
     }
 
     @Override
@@ -210,6 +209,7 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
                         break;
                 }
                 break;
+
         }
     }
 }
