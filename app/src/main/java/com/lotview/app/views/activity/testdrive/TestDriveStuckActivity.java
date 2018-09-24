@@ -44,6 +44,7 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
+        isDriveStart = AppSharedPrefs.isTestDriveRunning();
         initializeViews();
     }
 
@@ -68,7 +69,6 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
 
         binding.tvTestDriveStop.setOnClickListener(this);
 
-        isDriveStart = AppSharedPrefs.isTestDriveRunning();
 
         viewModel.doCheckIfTestDriveIsRuning(AppSharedPrefs.getTestDriveId());
         viewModel.getCurrentAssetsOwned();
@@ -108,6 +108,7 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
                 Utils.showAlert(context, "", getString(R.string.server_error), getString(R.string.ok), "", AppUtils.dialog_ok_click, TestDriveStuckActivity.this);
                 return;
             } else if (bean.getCode().equals(AppUtils.STATUS_SUCCESS)) {
+                isDriveStart = true;
                 checkIfAnyTestDriveResponseBean = bean.getResult();
                 AppSharedPrefs.setTestDriveAssetId(checkIfAnyTestDriveResponseBean.getAsset_id());
                 setViewForRunningTestDrive();
