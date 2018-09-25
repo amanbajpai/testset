@@ -53,8 +53,8 @@
                     android:layout_marginLeft="@dimen/_15sdp"
                     android:layout_marginRight="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:hint="@string/employee_id"
-                    android:text="@string/employee_id"
+                    android:hint="@string/employee_email_id"
+                    android:text="@string/employee_email_id"
                     android:textColorHint="@color/colorAccent"
                     android:textSize="@dimen/_13sdp">
 
@@ -98,6 +98,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_15sdp"
                     android:layout_marginRight="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_15sdp">
 
                     <com.lotview.app.views.custom_view.StyledTextViewRegular
@@ -135,9 +136,9 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:buttonTint="@color/app_blue"
                     android:text="@string/remember_me"
-                    android:visibility="invisible"
                     android:textColor="@color/text_gray"
-                    android:textSize="@dimen/_12sdp" />
+                    android:textSize="@dimen/_12sdp"
+                    android:visibility="gone" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
 

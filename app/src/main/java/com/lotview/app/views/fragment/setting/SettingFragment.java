@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
+import com.lotview.app.BuildConfig;
 import com.lotview.app.R;
 import com.lotview.app.databinding.SettingFragmentBinding;
 import com.lotview.app.interfaces.DialogClickListener;
@@ -52,7 +53,20 @@ public class SettingFragment extends BaseFragment implements CompoundButton.OnCh
             binding.notificationSwitch.setChecked(true);
         }
         binding.notificationSwitch.setOnCheckedChangeListener(SettingFragment.this);
+        binding.versionNumber.setOnClickListener(this);
+
+
+        try {
+            int versionCode = BuildConfig.VERSION_CODE;
+            String versionName = BuildConfig.VERSION_NAME;
+            binding.versionNumber.setText(versionName + " (" + versionCode + " )");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return binding.getRoot();
+
+
     }
 
 
@@ -105,7 +119,13 @@ public class SettingFragment extends BaseFragment implements CompoundButton.OnCh
 
     @Override
     public void onClick(View view) {
-
+        switch (view.getId()) {
+            case R.id.version_number:
+                if (BuildConfig.DEBUG) {
+                    Utils.exportDB();
+                }
+                break;
+        }
     }
 
 
