@@ -39,6 +39,7 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
     private ArrayList<NotificationsResponseBean.Result> resultArrayList;
     private NotificationsListAdapter notificationsListAdapter;
     HomeActivity activity;
+    boolean isLoadMore;
 
 
     @Override
@@ -81,7 +82,7 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
         viewModel.validator_clear_notification.observe(this, observer_clear_notification);
 
         Utils.hideSoftKeyboard(getActivity());
-        activity.setRightButtonEnable("Clear All", true, this);
+        activity.setRightButtonEnable("", true, null);
 
     }
 
@@ -130,10 +131,12 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
                     resultArrayList.add(notificationsResponseBean.getResult().get(i));
                 }
                 notificationsListAdapter.setNotificationList(context, resultArrayList);
+                activity.setRightButtonEnable("Clear All", true, NotificationFragment.this);
 
             } else {
                 if (resultArrayList.size() > 0) {
                     Utils.showSnackBar(binding, getString(R.string.no_more_data));
+                    activity.setRightButtonEnable("Clear All", true, NotificationFragment.this);
                 } else {
                     noDataView();
                     activity.setRightButtonEnable("", false, null);
@@ -177,6 +180,7 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
 
     @Override
     public void onLoadMore() {
+        isLoadMore = true;
         viewModel.getNotifications(Integer.valueOf(resultArrayList.get(resultArrayList.size() - 1).getNotificationId()));
         new Handler().postDelayed(new Runnable() {
             @Override

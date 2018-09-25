@@ -101,10 +101,7 @@ public class TestDriveAssetDetailFragment extends BaseActivity implements Dialog
             }
 
             if (bean.getCode().equals(AppUtils.STATUS_FAIL)) {
-                Utils.showAlert(context, "", bean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_click, TestDriveAssetDetailFragment.this);
-                if (IS_FROM_SCANNER) {
                     Utils.showAlert(context, "", bean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_to_finish, TestDriveAssetDetailFragment.this);
-                }
                 return;
             }
             if (bean.getCode().equals(AppUtils.STATUS_SUCCESS)) {
@@ -128,10 +125,7 @@ public class TestDriveAssetDetailFragment extends BaseActivity implements Dialog
             }
 
             if (bean.getCode().equals(AppUtils.STATUS_FAIL)) {
-                Utils.showAlert(context, "", bean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_click, TestDriveAssetDetailFragment.this);
-                if (IS_FROM_SCANNER) {
                     Utils.showAlert(context, "", bean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_to_finish, TestDriveAssetDetailFragment.this);
-                }
                 return;
             }
             if (bean.getCode().equals(AppUtils.STATUS_SUCCESS)) {
