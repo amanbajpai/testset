@@ -125,4 +125,17 @@
 
     </LinearLayout>
 
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:padding="@dimen/_3sdp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        android:text="@string/place_a_qr_code_or_bar_inside_the_rectangle_box_to_scan_it"
+        android:layout_alignParentBottom="true"
+        />
+
 </RelativeLayout>

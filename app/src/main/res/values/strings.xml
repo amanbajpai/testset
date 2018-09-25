@@ -134,6 +134,7 @@
     <string name="firebase_key">0b2a50fa30c096f0b61aae2622ab361081013c2f</string>
     <string name="stock_number">Stock Number</string>
     <string name="start_date">Start Date</string>
+    <string name="place_a_qr_code_or_bar_inside_the_rectangle_box_to_scan_it">Place a Qr code or bar inside the rectangle box to scan it</string>
 
 
 </resources>
