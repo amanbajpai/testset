@@ -2,10 +2,15 @@
 package com.lotview.app.views.activity.home;
 
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -13,16 +18,19 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.lotview.app.R;
 import com.lotview.app.application.KeyKeepApplication;
+import com.lotview.app.databinding.HomeLayoutBinding;
 import com.lotview.app.firebase.firebase.DeleteTokenService;
 import com.lotview.app.interfaces.DialogClickListener;
 import com.lotview.app.model.LeftMenuDrawerItems;
 import com.lotview.app.model.bean.BaseResponse;
+import com.lotview.app.model.bean.EmployeeOwnedAssetsListResponse;
 import com.lotview.app.model.notification.PushData;
 import com.lotview.app.netcom.Keys;
 import com.lotview.app.netcom.retrofit.RetrofitHolder;
@@ -32,6 +40,7 @@ import com.lotview.app.utils.Connectivity;
 import com.lotview.app.utils.Utils;
 import com.lotview.app.views.activity.AssetListActivity;
 import com.lotview.app.views.activity.chat.ChatActivity;
+import com.lotview.app.views.activity.keyMap.KeyOnMapViewModel;
 import com.lotview.app.views.activity.login.LoginActivity;
 import com.lotview.app.views.adapter.LeftDrawerListAdapter;
 import com.lotview.app.views.base.BaseActivity;
@@ -70,10 +79,20 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
     private TextView tvProfileUserName;
     private TextView icon_right;
 
+    HomeViewModel viewModel;
+    HomeLayoutBinding binding;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home_layout);
+
+        binding = DataBindingUtil.setContentView(this, R.layout.home_layout);
+        viewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+        binding.setViewModel(viewModel);
+        viewModel.validator.observe(this, observer);
+        viewModel.response_allassets_owned.observe(this, responseAssetsOwnedCurrently);
+
         initializeViews();
         setupDrawer();
         setView();
@@ -434,17 +453,24 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
     private void handlePushCall(PushData pushData) {
 
         switch (pushData.getPushType()) {
+            case Keys.NOTIFICATION_ASSET_REQUEST:
+                break;
             case Keys.NOTIFICATION_ASSET_REQUEST_APPROVE:
                 startActivity(new Intent(context, AssetListActivity.class));
+                break;
+            case Keys.NOTIFICATION_ASSET_REQUEST_DECLINE:
                 break;
             case Keys.NOTIFICATION_ASSET_TRANSFER_REQUEST:
                 onItemClick(1);
                 break;
             case Keys.NOTIFICATION_ASSET_TRANSFER_APPROVE:
+                viewModel.getCurrentAssetsOwned();
                 onItemClick(1);
                 break;
             case Keys.NOTIFICATION_ASSET_TRANSFER_DECLINE:
                 onItemClick(1);
+                break;
+            case Keys.NOTIFICATION_ASSET_SUBMIT_REQUEST:
                 break;
             case Keys.NOTIFICATION_ASSET_SUBMIT_APPROVE:
                 startActivity(new Intent(context, AssetListActivity.class));
@@ -534,6 +560,67 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
             ex.printStackTrace();
         }
 
+    }
+
+    Observer<Integer> observer = new Observer<Integer>() {
+
+        @Override
+        public void onChanged(@Nullable Integer value) {
+            switch (value) {
+
+                case AppUtils.NO_INTERNET:
+                    Utils.hideProgressDialog();
+                    Utils.showSnackBar(binding, getString(R.string.internet_connection));
+                    break;
+
+                case AppUtils.SERVER_ERROR:
+                    Utils.hideProgressDialog();
+                    Utils.showSnackBar(binding, getString(R.string.server_error));
+                    break;
+            }
+        }
+    };
+
+
+    Observer<EmployeeOwnedAssetsListResponse> responseAssetsOwnedCurrently = new Observer<EmployeeOwnedAssetsListResponse>() {
+
+        @Override
+        public void onChanged(@Nullable EmployeeOwnedAssetsListResponse employeeOwnedAssetsListResponse) {
+
+            Utils.hideProgressDialog();
+            if (employeeOwnedAssetsListResponse != null && employeeOwnedAssetsListResponse.getResults() != null && employeeOwnedAssetsListResponse.getResults().size() > 0) {
+                ArrayList<EmployeeOwnedAssetsListResponse.Result> resultArrayList = employeeOwnedAssetsListResponse.getResults();
+                if (resultArrayList.size() > 0) {
+                    storeOwnedKeyIdsPreferences(employeeOwnedAssetsListResponse);
+                    startLocationStorage();
+                }
+            }
+        }
+    };
+
+    private void storeOwnedKeyIdsPreferences(EmployeeOwnedAssetsListResponse employeeOwnedAssetsListResponse) {
+        String ownedKeys = null;
+        if (employeeOwnedAssetsListResponse != null && employeeOwnedAssetsListResponse.getResults().size() > 0) {
+            for (int i = 0; i < employeeOwnedAssetsListResponse.getResults().size(); i++) {
+                if (!TextUtils.isEmpty(employeeOwnedAssetsListResponse.getResults().get(i).getAsset_id())) {
+                    if (ownedKeys != null) {
+                        ownedKeys = ownedKeys + "," + employeeOwnedAssetsListResponse.getResults().get(i).getAsset_id();
+                    } else {
+                        ownedKeys = employeeOwnedAssetsListResponse.getResults().get(i).getAsset_id();
+                    }
+                }
+            }
+            AppSharedPrefs.getInstance(context).setOwnedKeyIds(ownedKeys);
+        }
+    }
+
+    private void startLocationStorage() {
+        Intent serviceIntent = new Intent(context, LocationListenerService.class);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(serviceIntent);
+        } else {
+            startService(serviceIntent);
+        }
     }
 
 }

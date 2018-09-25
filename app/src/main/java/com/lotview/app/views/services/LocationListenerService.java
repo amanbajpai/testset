@@ -229,7 +229,7 @@ public class LocationListenerService extends Service {
                 public void onResponse(Call<TrackLocationBaseResponse> call, Response<TrackLocationBaseResponse> response) {
                     TrackLocationBaseResponse trackLocationBaseResponse = response.body();
                     if (trackLocationBaseResponse.getSuccess()) {
-                        if (trackLocationBaseResponse.getResultArray().size() > 0) {
+                        if (trackLocationBaseResponse.getResultArray()!=null && trackLocationBaseResponse.getResultArray().size() > 0) {
                             trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
                         } else {
                             trackLocationFrequentlyHandler.removeCallbacks(trackLocationFrequentlyRunnable);
