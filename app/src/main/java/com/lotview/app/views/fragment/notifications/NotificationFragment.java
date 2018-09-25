@@ -39,6 +39,7 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
     private ArrayList<NotificationsResponseBean.Result> resultArrayList;
     private NotificationsListAdapter notificationsListAdapter;
     HomeActivity activity;
+    boolean isLoadMore;
 
 
     @Override
@@ -177,6 +178,7 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
 
     @Override
     public void onLoadMore() {
+        isLoadMore = true;
         viewModel.getNotifications(Integer.valueOf(resultArrayList.get(resultArrayList.size() - 1).getNotificationId()));
         new Handler().postDelayed(new Runnable() {
             @Override
