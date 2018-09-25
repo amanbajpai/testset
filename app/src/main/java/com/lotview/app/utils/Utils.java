@@ -51,7 +51,6 @@ import com.lotview.app.R;
 import com.lotview.app.application.KeyKeepApplication;
 import com.lotview.app.interfaces.DialogClickListener;
 import com.lotview.app.model.bean.LoginResponseBean;
-import com.lotview.app.model.location.LocationTrackBean;
 import com.lotview.app.netcom.Keys;
 import com.lotview.app.preferences.AppSharedPrefs;
 import com.lotview.app.views.activity.home.HomeActivity;
