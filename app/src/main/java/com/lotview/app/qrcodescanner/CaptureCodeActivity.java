@@ -37,7 +37,6 @@ public class CaptureCodeActivity extends AppCompatActivity implements View.OnCli
         capture = new CaptureManager(this, barcodeScannerView);
         capture.initializeFromIntent(getIntent(), savedInstanceState);
         capture.decode();
-
     }
 
     @Override
