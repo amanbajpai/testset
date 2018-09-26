@@ -65,8 +65,6 @@ public class SettingFragment extends BaseFragment implements CompoundButton.OnCh
         }
 
         return binding.getRoot();
-
-
     }
 
 

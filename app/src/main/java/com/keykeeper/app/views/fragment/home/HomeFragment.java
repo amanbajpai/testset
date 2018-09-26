@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.keykeeper.app.R;
+import com.keykeeper.app.databinding.HomeFragmentLayoutBinding;
 import com.keykeeper.app.interfaces.DialogClickListener;
 import com.keykeeper.app.model.bean.EmployeeOwnedAssetsListResponse;
 import com.keykeeper.app.preferences.AppSharedPrefs;
@@ -39,7 +40,7 @@ import java.util.ArrayList;
 public class HomeFragment extends BaseFragment implements DialogClickListener {
 
     private Context context;
-    private com.keykeeper.app.databinding.HomeFragmentLayoutBinding binding;
+    private HomeFragmentLayoutBinding binding;
     HomeFragmentViewModel viewModel;
 
     @Nullable
