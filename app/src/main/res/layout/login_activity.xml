@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.lotview.app.views.activity.login.LoginViewModel" />
+            type="com.keykeeper.app.views.activity.login.LoginViewModel" />
     </data>
 
     <RelativeLayout
@@ -33,7 +33,7 @@
                 android:orientation="vertical">
 
 
-                <com.lotview.app.views.custom_view.StyledTextViewLight
+                <com.keykeeper.app.views.custom_view.StyledTextViewLight
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -45,7 +45,7 @@
                     android:textColor="@color/login_text_color"
                     android:textSize="@dimen/_17sdp" />
 
-                <com.lotview.app.views.custom_view.CustomTextInputLayout
+                <com.keykeeper.app.views.custom_view.CustomTextInputLayout
                     style="@style/TextAppearence.App.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
                     android:textColorHint="@color/colorAccent"
                     android:textSize="@dimen/_13sdp">
 
-                    <com.lotview.app.views.custom_view.StyledEditTextViewMedium
+                    <com.keykeeper.app.views.custom_view.StyledEditTextViewMedium
                         android:id="@+id/et_mail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -67,10 +67,10 @@
                         android:textColor="@color/text_gray"
                         android:textSize="@dimen/_14sdp" />
 
-                </com.lotview.app.views.custom_view.CustomTextInputLayout>
+                </com.keykeeper.app.views.custom_view.CustomTextInputLayout>
 
 
-                <com.lotview.app.views.custom_view.CustomTextInputLayout
+                <com.keykeeper.app.views.custom_view.CustomTextInputLayout
                     style="@style/TextAppearence.App.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
                     android:hint="@string/password"
                     android:textColorHint="@color/colorAccent">
 
-                    <com.lotview.app.views.custom_view.StyledEditTextViewMedium
+                    <com.keykeeper.app.views.custom_view.StyledEditTextViewMedium
                         android:id="@+id/et_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
                         android:singleLine="true"
                         android:textColor="@color/text_gray"
                         android:textSize="@dimen/_15sdp" />
-                </com.lotview.app.views.custom_view.CustomTextInputLayout>
+                </com.keykeeper.app.views.custom_view.CustomTextInputLayout>
 
 
                 <RelativeLayout
@@ -100,7 +100,7 @@
                     android:layout_marginRight="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_15sdp">
 
-                    <com.lotview.app.views.custom_view.StyledTextViewRegular
+                    <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                         android:id="@+id/tv_forgot_password"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
                         android:textColor="@color/text_gray"
                         android:textSize="@dimen/_12sdp" />
 
-                    <com.lotview.app.views.custom_view.StyledTextViewSemiBold
+                    <com.keykeeper.app.views.custom_view.StyledTextViewSemiBold
                         android:id="@+id/tv_login"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
                         android:textSize="@dimen/_14sdp" />
                 </RelativeLayout>
 
-                <com.lotview.app.views.custom_view.CustomFontCheckBoxRegular
+                <com.keykeeper.app.views.custom_view.CustomFontCheckBoxRegular
                     android:id="@+id/remember_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

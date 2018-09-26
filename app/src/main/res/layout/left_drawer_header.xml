@@ -19,7 +19,7 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:src="@drawable/user_pic" />
 
-        <com.lotview.app.views.custom_view.StyledTextViewMedium
+        <com.keykeeper.app.views.custom_view.StyledTextViewMedium
             android:id="@+id/leftDrawer_profileName_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

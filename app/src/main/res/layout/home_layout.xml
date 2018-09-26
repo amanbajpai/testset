@@ -28,7 +28,7 @@
                 android:minHeight="?attr/actionBarSize"
                 app:navigationIcon="@drawable/menu">
 
-                <com.lotview.app.views.custom_view.StyledTextViewLight
+                <com.keykeeper.app.views.custom_view.StyledTextViewLight
                     android:id="@+id/title_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
                     android:textSize="@dimen/_15sdp"
                     android:visibility="gone" />
 
-                <com.lotview.app.views.custom_view.StyledTextViewLight
+                <com.keykeeper.app.views.custom_view.StyledTextViewLight
                     android:id="@+id/icon_right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

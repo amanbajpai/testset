@@ -28,7 +28,7 @@
             android:textSize="@dimen/_17sdp"
             android:visibility="invisible" />
 
-        <com.lotview.app.views.custom_view.StyledTextViewLight
+        <com.keykeeper.app.views.custom_view.StyledTextViewLight
             android:id="@+id/center_tv"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
