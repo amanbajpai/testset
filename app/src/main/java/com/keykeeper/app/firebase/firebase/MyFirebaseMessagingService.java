@@ -107,7 +107,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, channelId);
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mBuilder.setSmallIcon(R.mipmap.notification_icon);
+            mBuilder.setSmallIcon(R.drawable.ic_notification_icon);
             mBuilder.setColor(getResources().getColor(R.color.app_blue));
         } else {
             mBuilder.setSmallIcon(R.mipmap.ic_launcher);

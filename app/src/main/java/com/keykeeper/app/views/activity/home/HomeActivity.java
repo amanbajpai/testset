@@ -32,6 +32,7 @@ import com.keykeeper.app.interfaces.DialogClickListener;
 import com.keykeeper.app.model.LeftMenuDrawerItems;
 import com.keykeeper.app.model.bean.BaseResponse;
 import com.keykeeper.app.model.bean.EmployeeOwnedAssetsListResponse;
+import com.keykeeper.app.model.bean.LoginResponseBean;
 import com.keykeeper.app.model.notification.PushData;
 import com.keykeeper.app.netcom.Keys;
 import com.keykeeper.app.netcom.retrofit.RetrofitHolder;
