@@ -518,9 +518,6 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
         if (!Connectivity.isConnected()) {
             Utils.hideProgressDialog();
             doLogoutwork();
-            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-            startActivity(intent);
-            finish();
             return;
         }
 
@@ -554,10 +551,9 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
 
             AppSharedPrefs.getInstance(HomeActivity.this).clearPref();
 
-
-            Intent intent1 = new Intent(HomeActivity.this, LoginActivity.class);
-            startActivity(intent1);
-            finish();
+            Intent logOutIntent = new Intent(HomeActivity.this, LoginActivity.class);
+            logOutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(logOutIntent);
 
         } catch (Exception ex) {
             ex.printStackTrace();
