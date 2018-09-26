@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.lotview.app.views.activity.assetDetail.AssetDetailViewModel" />
+            type="com.keykeeper.app.views.activity.assetDetail.AssetDetailViewModel" />
     </data>
 
     <LinearLayout
@@ -27,7 +27,7 @@
                 <!--**********Asset detail*************-->
 
 
-                <com.lotview.app.views.custom_view.StyledTextViewBold
+                <com.keykeeper.app.views.custom_view.StyledTextViewBold
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="@dimen/_5sdp"
@@ -41,7 +41,7 @@
                     android:background="@color/black" />
 
 
-                <com.lotview.app.views.custom_view.StyledTextViewRegular
+                <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                     android:id="@+id/asset_name_header_tv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -51,7 +51,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
-                <com.lotview.app.views.custom_view.StyledTextViewRegular
+                <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                     android:id="@+id/asset_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -67,7 +67,7 @@
                     android:layout_height="0.5dp"
                     android:background="@color/gray" />
 
-                <com.lotview.app.views.custom_view.StyledTextViewRegular
+                <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingLeft="@dimen/_10sdp"
@@ -76,7 +76,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
-                <com.lotview.app.views.custom_view.StyledTextViewRegular
+                <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                     android:id="@+id/version_number"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -95,7 +95,7 @@
 
                 <!--Make-->
 
-                <com.lotview.app.views.custom_view.StyledTextViewRegular
+                <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingLeft="@dimen/_10sdp"
@@ -104,7 +104,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
-                <com.lotview.app.views.custom_view.StyledTextViewRegular
+                <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                     android:id="@+id/make"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -121,7 +121,7 @@
                     android:background="@color/gray" />
 
 
-                <com.lotview.app.views.custom_view.StyledTextViewRegular
+                <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingLeft="@dimen/_10sdp"
@@ -130,7 +130,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
-                <com.lotview.app.views.custom_view.StyledTextViewRegular
+                <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                     android:id="@+id/model_no"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -147,7 +147,7 @@
                     android:background="@color/gray" />
 
 
-                <com.lotview.app.views.custom_view.StyledTextViewRegular
+                <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                     android:id="@+id/code_number_header"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -157,7 +157,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
-                <com.lotview.app.views.custom_view.StyledTextViewRegular
+                <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                     android:id="@+id/code_number"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -173,7 +173,7 @@
                     android:layout_height="0.5dp"
                     android:background="@color/gray" />
 
-                <com.lotview.app.views.custom_view.StyledTextViewRegular
+                <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingLeft="@dimen/_10sdp"
@@ -182,7 +182,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
-                <com.lotview.app.views.custom_view.StyledTextViewRegular
+                <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                     android:id="@+id/color_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -198,7 +198,7 @@
                     android:background="@color/gray" />
 
 
-                <com.lotview.app.views.custom_view.StyledTextViewRegular
+                <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingLeft="@dimen/_10sdp"
@@ -207,7 +207,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
-                <com.lotview.app.views.custom_view.StyledTextViewRegular
+                <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                     android:id="@+id/asset_type"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -224,7 +224,7 @@
 
                 <!--Availibilty-->
 
-                <com.lotview.app.views.custom_view.StyledTextViewRegular
+                <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                     android:id="@+id/availability_header"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -234,7 +234,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
-                <com.lotview.app.views.custom_view.StyledTextViewRegular
+                <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                     android:id="@+id/availability"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -258,7 +258,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <com.lotview.app.views.custom_view.StyledTextViewBold
+                    <com.keykeeper.app.views.custom_view.StyledTextViewBold
                         android:id="@+id/customer_detail_header"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -273,7 +273,7 @@
                         android:background="@color/black" />
 
 
-                    <com.lotview.app.views.custom_view.StyledTextViewRegular
+                    <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                         android:id="@+id/customer_title"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -283,7 +283,7 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12sdp" />
 
-                    <com.lotview.app.views.custom_view.StyledTextViewRegular
+                    <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                         android:id="@+id/customer_name"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -299,7 +299,7 @@
                         android:background="@color/gray" />
 
 
-                    <com.lotview.app.views.custom_view.StyledTextViewRegular
+                    <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/_10sdp"
@@ -308,7 +308,7 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12sdp" />
 
-                    <com.lotview.app.views.custom_view.StyledTextViewRegular
+                    <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                         android:id="@+id/customer_number"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -324,7 +324,7 @@
                         android:background="@color/gray" />
 
 
-                    <com.lotview.app.views.custom_view.StyledTextViewRegular
+                    <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/_10sdp"
@@ -333,7 +333,7 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13sdp" />
 
-                    <com.lotview.app.views.custom_view.StyledTextViewRegular
+                    <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                         android:id="@+id/customer_address"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -357,7 +357,7 @@
                     android:visibility="gone"
                     android:orientation="vertical">
 
-                    <com.lotview.app.views.custom_view.StyledTextViewBold
+                    <com.keykeeper.app.views.custom_view.StyledTextViewBold
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="@dimen/_5sdp"
@@ -371,7 +371,7 @@
                         android:background="@color/black" />
 
 
-                    <com.lotview.app.views.custom_view.StyledTextViewRegular
+                    <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/_10sdp"
@@ -380,7 +380,7 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13sdp" />
 
-                    <com.lotview.app.views.custom_view.StyledTextViewRegular
+                    <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                         android:id="@+id/employee_name"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -407,7 +407,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <com.lotview.app.views.custom_view.StyledTextViewBold
+                    <com.keykeeper.app.views.custom_view.StyledTextViewBold
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="@dimen/_5sdp"
@@ -421,7 +421,7 @@
                         android:background="@color/black" />
 
 
-                    <com.lotview.app.views.custom_view.StyledTextViewRegular
+                    <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/_10sdp"
@@ -430,7 +430,7 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13sdp" />
 
-                    <com.lotview.app.views.custom_view.StyledTextViewRegular
+                    <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                         android:id="@+id/request_by_employee_name"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -453,7 +453,7 @@
         </ScrollView>
 
 
-        <com.lotview.app.views.custom_view.StyledTextViewBold
+        <com.keykeeper.app.views.custom_view.StyledTextViewBold
             android:id="@+id/scan_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -481,7 +481,7 @@
             android:visibility="gone">
 
 
-            <com.lotview.app.views.custom_view.StyledTextViewBold
+            <com.keykeeper.app.views.custom_view.StyledTextViewBold
                 android:id="@+id/cancel_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -499,7 +499,7 @@
                 android:textSize="@dimen/_13sdp" />
 
 
-            <com.lotview.app.views.custom_view.StyledTextViewBold
+            <com.keykeeper.app.views.custom_view.StyledTextViewBold
                 android:id="@+id/accept_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -527,7 +527,7 @@
             android:orientation="horizontal"
             android:visibility="gone">
 
-            <com.lotview.app.views.custom_view.StyledTextViewBold
+            <com.keykeeper.app.views.custom_view.StyledTextViewBold
                 android:id="@+id/request_cancel_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

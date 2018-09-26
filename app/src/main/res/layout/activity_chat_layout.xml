@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.lotview.app.views.activity.chat.ChatActivityViewModel" />
+            type="com.keykeeper.app.views.activity.chat.ChatActivityViewModel" />
     </data>
 
     <RelativeLayout
@@ -48,7 +48,7 @@
                 android:layout_marginRight="@dimen/_10sdp"
                 android:src="@drawable/no_data_error" />
 
-            <com.lotview.app.views.custom_view.StyledTextViewRegular
+            <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                 android:id="@+id/tv_no_records"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
