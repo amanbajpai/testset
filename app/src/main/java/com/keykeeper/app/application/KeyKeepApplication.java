@@ -1,15 +1,10 @@
 package com.keykeeper.app.application;
 
-import android.app.Activity;
-import android.app.Application;
-import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
-import com.facebook.stetho.Stetho;
 import com.keykeeper.app.model.bean.BaseRequestEntity;
 import com.keykeeper.app.model.location.DaoMaster;
 import com.keykeeper.app.model.location.DaoSession;
@@ -122,45 +117,6 @@ public class KeyKeepApplication extends MultiDexApplication {
         }
     }
 
-
-    class LifeCycle implements Application.ActivityLifecycleCallbacks {
-
-        @Override
-        public void onActivityCreated(Activity activity, Bundle bundle) {
-
-        }
-
-        @Override
-        public void onActivityStarted(Activity activity) {
-
-        }
-
-        @Override
-        public void onActivityResumed(Activity activity) {
-            Intent intent = activity.getIntent();
-        }
-
-        @Override
-        public void onActivityPaused(Activity activity) {
-
-        }
-
-        @Override
-        public void onActivityStopped(Activity activity) {
-
-        }
-
-        @Override
-        public void onActivitySaveInstanceState(Activity activity, Bundle bundle) {
-
-        }
-
-
-        @Override
-        public void onActivityDestroyed(Activity activity) {
-
-        }
-    }
 
     public static BaseRequestEntity getBaseEntity(boolean includeToken) {
         BaseRequestEntity baseRequestEntity = new BaseRequestEntity();
