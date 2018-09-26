@@ -63,13 +63,6 @@ public class LocationListenerService extends Service {
         }
     };
 
-    public LocationListenerService(boolean needToStartLocation) {
-        isToStartLocationUpdate = needToStartLocation;
-    }
-
-    public LocationListenerService() {
-    }
-
 
     @Override
     public void onCreate() {
@@ -155,20 +148,24 @@ public class LocationListenerService extends Service {
             @Override
             public void onLocationUpdated(Location location) {
 
-
                 if (location.getLatitude() != 0 && location.getLongitude() != 0) {
+
                     latitude = location.getLatitude();
                     longitude = location.getLongitude();
 
-                    String lat = location.getLatitude() + "";
-                    String lng = location.getLongitude() + "";
-                    Log.e(lat + "onLocationUpdated: ", lng + "<<");
-                    AppSharedPrefs.setLatitude(lat);
-                    AppSharedPrefs.setLongitude(lng);
-                    speed = location.getSpeed();
-                    AppSharedPrefs.setSpeed(location.getSpeed() + "");
 
-                    getLocationBean(LocationListenerService.this);
+                    if (latitude != Double.valueOf(Utils.validateStringToInt(AppSharedPrefs.getLatitude()))
+                            || longitude != Double.valueOf(Utils.validateStringToInt(AppSharedPrefs.getLongitude()))) {
+                        String lat = location.getLatitude() + "";
+                        String lng = location.getLongitude() + "";
+                        Log.e(lat + "onLocationUpdated: ", lng + "<<");
+                        AppSharedPrefs.setLatitude(lat);
+                        AppSharedPrefs.setLongitude(lng);
+                        speed = location.getSpeed();
+                        AppSharedPrefs.setSpeed(location.getSpeed() + "");
+
+                        getLocationBean(LocationListenerService.this);
+                    }
                 }
             }
         });
