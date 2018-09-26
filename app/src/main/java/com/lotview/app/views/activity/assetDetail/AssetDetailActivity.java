@@ -100,7 +100,6 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
 
     }
 
-
     private void validateAfterScan(String qr) {
 
         switch (ASSET_STATUS) {

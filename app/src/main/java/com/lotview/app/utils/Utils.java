@@ -1066,6 +1066,22 @@ public class Utils {
 
     }
 
+    public static Integer validateStringToInt(String value) {
+
+        int val = 0;
+        if (value == null || value.equals("") || value.equals("null"))
+            return val;
+
+        try {
+            val = Integer.parseInt(value);
+        } catch (Exception e) {
+
+        }
+        return val;
+
+    }
+
+
     public static String validateStringValue(String value) {
 
         String returntValue = "";

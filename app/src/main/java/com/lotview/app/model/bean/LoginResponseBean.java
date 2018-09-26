@@ -34,6 +34,7 @@ public class LoginResponseBean extends BaseResponse {
         @SerializedName("firstname")
         @Expose
         private String firstname;
+        
         @SerializedName("lastname")
         @Expose
         private String lastname;

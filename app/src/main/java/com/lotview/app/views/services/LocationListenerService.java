@@ -52,8 +52,8 @@ public class LocationListenerService extends Service {
     LocationParams.Builder builder = null;
 
 
-    Handler trackLocationFrequentlyHandler = new Handler();
-    Runnable trackLocationFrequentlyRunnable = new Runnable() {
+     Handler trackLocationFrequentlyHandler = new Handler();
+     Runnable trackLocationFrequentlyRunnable = new Runnable() {
         @Override
         public void run() {
 
@@ -195,8 +195,16 @@ public class LocationListenerService extends Service {
     }
 
 
-    private void TrackEmployeeAssets() {
+    private  void TrackEmployeeAssets() {
         ArrayList<LocationTrackBean> trackBeanArrayList = (ArrayList<LocationTrackBean>) KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().queryBuilder().where(LocationTrackBeanDao.Properties.EmployeeDataIsSync.eq(0)).list();
+
+        /**
+         * added for remove crash and manage handler
+         */
+          if (Utils.validateStringToInt(AppSharedPrefs.getInstance(this).getEmployeeID()) == 0){
+              return;
+          }
+
 
         if (Connectivity.isConnected() && trackBeanArrayList != null && trackBeanArrayList.size() > 0) {
 
@@ -208,8 +216,8 @@ public class LocationListenerService extends Service {
             locationTrackBeanList.setApi_key(Keys.API_KEY);
             locationTrackBeanList.setDevice_id(Utils.getDeviceID());
             locationTrackBeanList.setDevice_type(Keys.TYPE_ANDROID);
-            locationTrackBeanList.setEmployee_id(Integer.valueOf(AppSharedPrefs.getInstance(this).getEmployeeID()));
-            locationTrackBeanList.setCompany_id(Integer.valueOf(AppSharedPrefs.getInstance(this).getCompanyID()));
+            locationTrackBeanList.setEmployee_id(Utils.validateStringToInt(AppSharedPrefs.getInstance(this).getEmployeeID()));
+            locationTrackBeanList.setCompany_id(Utils.validateStringToInt(AppSharedPrefs.getInstance(this).getCompanyID()));
 
             if (AppSharedPrefs.getInstance(this).getPushDeviceToken() != null && AppSharedPrefs.getInstance(this).getPushDeviceToken().trim().length() > 0) {
                 locationTrackBeanList.setDevice_token(AppSharedPrefs.getInstance(this).getPushDeviceToken());
