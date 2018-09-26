@@ -125,7 +125,7 @@ public class LocationListenerService extends Service {
                     .setChannelId(Keys.CHANNEL_NAME_BACKGROUND)
                     .setSound(null)
                     .setContentIntent(pendingIntent)
-                    .setSmallIcon(R.mipmap.notification_icon)
+                    .setSmallIcon(R.drawable.ic_notification_icon)
                     .setColor(getResources().getColor(R.color.app_blue))
                     .setShowWhen(true)
                     .setOnlyAlertOnce(true)
