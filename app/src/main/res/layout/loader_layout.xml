@@ -16,7 +16,9 @@
         android:layout_height="wrap_content"
         android:visibility="visible"
         app:indicatorColor="@color/colorPrimaryDark"
-        app:indicatorName="BallClipRotateMultipleIndicator" />
+        app:indicatorName="BallClipRotatePulseIndicator" />
+    <!--BallClipRotatePulseIndicator-->
+    <!--BallClipRotateMultipleIndicator-->
 
     <com.keykeeper.app.views.custom_view.StyledTextViewLight
         android:id="@+id/loader_msg"
