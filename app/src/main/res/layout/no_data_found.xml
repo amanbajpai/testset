@@ -14,7 +14,7 @@
         android:layout_marginRight="@dimen/_10sdp"
         android:src="@drawable/no_data_error" />
 
-    <com.lotview.app.views.custom_view.StyledTextViewRegular
+    <com.keykeeper.app.views.custom_view.StyledTextViewRegular
         android:id="@+id/no_data_found_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

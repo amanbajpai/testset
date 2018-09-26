@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.lotview.app.views.fragment.home.HomeFragmentViewModel" />
+            type="com.keykeeper.app.views.fragment.home.HomeFragmentViewModel" />
     </data>
 
     <RelativeLayout
@@ -40,7 +40,7 @@
                         android:layout_gravity="center_horizontal"
                         android:src="@drawable/car_key" />
 
-                    <com.lotview.app.views.custom_view.StyledTextViewLight
+                    <com.keykeeper.app.views.custom_view.StyledTextViewLight
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -71,7 +71,7 @@
                         android:layout_gravity="center_horizontal"
                         android:src="@drawable/scan" />
 
-                    <com.lotview.app.views.custom_view.StyledTextViewLight
+                    <com.keykeeper.app.views.custom_view.StyledTextViewLight
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -103,7 +103,7 @@
                         android:layout_gravity="center_horizontal"
                         android:src="@drawable/history" />
 
-                    <com.lotview.app.views.custom_view.StyledTextViewLight
+                    <com.keykeeper.app.views.custom_view.StyledTextViewLight
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -136,7 +136,7 @@
                         android:layout_gravity="center_horizontal"
                         android:src="@drawable/handover" />
 
-                    <com.lotview.app.views.custom_view.StyledTextViewLight
+                    <com.keykeeper.app.views.custom_view.StyledTextViewLight
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -168,7 +168,7 @@
                         android:layout_gravity="center_horizontal"
                         android:src="@drawable/takeout" />
 
-                    <com.lotview.app.views.custom_view.StyledTextViewLight
+                    <com.keykeeper.app.views.custom_view.StyledTextViewLight
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -202,7 +202,7 @@
                         android:layout_gravity="center_horizontal"
                         android:src="@drawable/chat" />
 
-                    <com.lotview.app.views.custom_view.StyledTextViewLight
+                    <com.keykeeper.app.views.custom_view.StyledTextViewLight
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"

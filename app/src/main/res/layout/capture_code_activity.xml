@@ -70,7 +70,7 @@
             android:weightSum="1">
 
 
-            <com.lotview.app.views.custom_view.StyledEditTextViewRegular
+            <com.keykeeper.app.views.custom_view.StyledEditTextViewRegular
                 android:id="@+id/et_qr_code_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
                 android:textSize="@dimen/_18sdp" />
 
 
-            <com.lotview.app.views.custom_view.StyledTextViewSemiBold
+            <com.keykeeper.app.views.custom_view.StyledTextViewSemiBold
                 android:id="@+id/tv_qr_code_number_submit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -113,7 +113,7 @@
         </LinearLayout>
 
 
-        <com.lotview.app.views.custom_view.StyledTextViewRegular
+        <com.keykeeper.app.views.custom_view.StyledTextViewRegular
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"

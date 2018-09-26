@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <com.lotview.app.views.custom_view.StyledTextViewBold
+                <com.keykeeper.app.views.custom_view.StyledTextViewBold
                     android:id="@+id/tv_stock_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/_5sdp">
 
-                <com.lotview.app.views.custom_view.StyledTextViewRegular
+                <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                     android:id="@+id/tv_vin_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
                     android:textColor="@color/dark_gray_color"
                     android:textSize="@dimen/_12sdp" />
 
-                <com.lotview.app.views.custom_view.StyledTextViewRegular
+                <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                     android:id="@+id/date_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/_5sdp">
 
-                <com.lotview.app.views.custom_view.StyledTextViewMedium
+                <com.keykeeper.app.views.custom_view.StyledTextViewMedium
                     android:id="@+id/assigned_at_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
                     android:textSize="@dimen/_13sdp" />
 
 
-                <com.lotview.app.views.custom_view.StyledTextViewMedium
+                <com.keykeeper.app.views.custom_view.StyledTextViewMedium
                     android:id="@+id/availability_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/_5sdp">
 
-                <com.lotview.app.views.custom_view.StyledTextViewMedium
+                <com.keykeeper.app.views.custom_view.StyledTextViewMedium
                     android:id="@+id/remaining_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
                     android:textSize="@dimen/_13sdp" />
 
 
-                <com.lotview.app.views.custom_view.StyledTextViewMedium
+                <com.keykeeper.app.views.custom_view.StyledTextViewMedium
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_5sdp"

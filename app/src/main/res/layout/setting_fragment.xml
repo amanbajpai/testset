@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.lotview.app.views.fragment.setting.SettingViewModel" />
+            type="com.keykeeper.app.views.fragment.setting.SettingViewModel" />
     </data>
 
     <RelativeLayout
@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_3sdp">
 
-                <com.lotview.app.views.custom_view.StyledTextViewRegular
+                <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                     android:id="@+id/guide_view_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

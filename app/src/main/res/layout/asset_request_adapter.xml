@@ -17,7 +17,7 @@
             android:layout_marginLeft="@dimen/_5sdp"
             android:orientation="horizontal">
 
-            <com.lotview.app.views.custom_view.StyledTextViewBold
+            <com.keykeeper.app.views.custom_view.StyledTextViewBold
                 android:id="@+id/tv_asset_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
             android:orientation="horizontal"
             android:padding="@dimen/_1sdp">
 
-            <com.lotview.app.views.custom_view.StyledTextViewRegular
+            <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                 android:id="@+id/tv_model_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

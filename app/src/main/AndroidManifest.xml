@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lotview.app">
+    package="com.keykeeper.app">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -21,14 +21,14 @@
         android:required="true" />
 
     <application
-        android:name="com.lotview.app.application.KeyKeepApplication"
+        android:name="com.keykeeper.app.application.KeyKeepApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_app_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".views.activity.SplashActivity"
+            android:name="com.keykeeper.app.views.activity.SplashActivity"
             android:noHistory="true"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbarTheme">
@@ -39,74 +39,74 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".views.activity.login.LoginActivity"
+            android:name="com.keykeeper.app.views.activity.login.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbarTheme" />
         <activity
-            android:name=".views.activity.forgot_password.ForgotPasswordActivity"
+            android:name="com.keykeeper.app.views.activity.forgot_password.ForgotPasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbarTheme" />
         <activity
-            android:name=".views.activity.home.HomeActivity"
+            android:name="com.keykeeper.app.views.activity.home.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionbarTheme" />
         <activity
-            android:name=".views.activity.changepassword.ChangePasswordActivity"
+            android:name="com.keykeeper.app.views.activity.changepassword.ChangePasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".views.activity.transfer.TransferActivity"
+            android:name="com.keykeeper.app.views.activity.transfer.TransferActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".views.activity.AssetListActivity"
+            android:name="com.keykeeper.app.views.activity.AssetListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".qrcodescanner.QrCodeActivity"
-            android:screenOrientation="portrait" />
-
-
-
-        <activity
-            android:name=".qrcodescanner.CaptureCodeActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".qrcodescanner.ScannerActivity"
+            android:name="com.keykeeper.app.qrcodescanner.QrCodeActivity"
             android:screenOrientation="portrait" />
 
 
 
         <activity
-            android:name=".views.activity.assetDetail.AssetDetailActivity"
+            android:name="com.keykeeper.app.qrcodescanner.CaptureCodeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".views.fragment.testDrive.TestDriveAssetDetailFragment"
+            android:name="com.keykeeper.app.qrcodescanner.ScannerActivity"
+            android:screenOrientation="portrait" />
+
+
+
+        <activity
+            android:name="com.keykeeper.app.views.activity.assetDetail.AssetDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".views.activity.chat.ChatActivity"
+            android:name="com.keykeeper.app.views.fragment.testDrive.TestDriveAssetDetailFragment"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".views.activity.keyMap.KeyOnMapActivity"
+            android:name="com.keykeeper.app.views.activity.chat.ChatActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.keykeeper.app.views.activity.keyMap.KeyOnMapActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".views.activity.testdrive.TestDriveStuckActivity"
+            android:name="com.keykeeper.app.views.activity.testdrive.TestDriveStuckActivity"
             android:screenOrientation="portrait" />
 
 
         <!-- Firebase configuration -->
-        <service android:name=".firebase.firebase.DeleteTokenService" />
+        <service android:name="com.keykeeper.app.firebase.firebase.DeleteTokenService" />
 
-        <service android:name=".firebase.firebase.MyFirebaseMessagingService">
+        <service android:name="com.keykeeper.app.firebase.firebase.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <service android:name=".firebase.firebase.MyFirebaseInstanceIDService">
+        <service android:name="com.keykeeper.app.firebase.firebase.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".views.services.LocationListenerService" />
+        <service android:name="com.keykeeper.app.views.services.LocationListenerService" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
@@ -115,7 +115,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".views.activity.history.HistoryActivity"></activity>
+        <activity android:name="com.keykeeper.app.views.activity.history.HistoryActivity"></activity>
     </application>
 
 </manifest>
