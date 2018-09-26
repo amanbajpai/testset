@@ -31,7 +31,7 @@ android {
 
         flavorDimensions "default"
         multiDexEnabled true
-        applicationId "com.lotview.app"
+        applicationId "com.keykeeper.app"
         minSdkVersion androidMinSdkVersion
         targetSdkVersion androidTargetSdkVersion
         versionCode 1

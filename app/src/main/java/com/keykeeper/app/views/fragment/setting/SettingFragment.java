@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
+import com.keykeeper.app.BuildConfig;
 import com.keykeeper.app.R;
 import com.keykeeper.app.databinding.SettingFragmentBinding;
 import com.keykeeper.app.interfaces.DialogClickListener;
