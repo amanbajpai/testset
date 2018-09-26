@@ -61,16 +61,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             pushDatabean.setBody(jsonObject.optString("body"));
             pushDatabean.setPushType(Integer.valueOf(jsonObject.optString("push_type")));
 
-            PushAdditionalDataJson = jsonObject.optString("additional_data");
-            JSONObject object = new JSONObject(PushAdditionalDataJson);
-            int pushAssetId = object.optInt("asset_id");
-            int pushEmployeeId = object.optInt("employee_id");
-            int pushCompanyId = object.optInt("company_id");
+//            PushAdditionalDataJson = jsonObject.optString("additional_data");
+//            JSONObject object = new JSONObject(PushAdditionalDataJson);
+//            int pushAssetId = object.optInt("asset_id");
+//            int pushEmployeeId = object.optInt("employee_id");
+//            int pushCompanyId = object.optInt("company_id");
 
             PushAdditionalData pushAdditionalDataBean = new PushAdditionalData();
-            pushAdditionalDataBean.setAssetId(pushAssetId);
-            pushAdditionalDataBean.setEmployeeId(pushEmployeeId);
-            pushAdditionalDataBean.setCompanyId(pushCompanyId);
+//            pushAdditionalDataBean.setAssetId(pushAssetId);
+//            pushAdditionalDataBean.setEmployeeId(pushEmployeeId);
+//            pushAdditionalDataBean.setCompanyId(pushCompanyId);
 
             pushDatabean.setAdditionalData(pushAdditionalDataBean);
 
