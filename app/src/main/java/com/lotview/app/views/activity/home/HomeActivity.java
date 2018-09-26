@@ -20,6 +20,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -40,7 +41,6 @@ import com.lotview.app.utils.Connectivity;
 import com.lotview.app.utils.Utils;
 import com.lotview.app.views.activity.AssetListActivity;
 import com.lotview.app.views.activity.chat.ChatActivity;
-import com.lotview.app.views.activity.keyMap.KeyOnMapViewModel;
 import com.lotview.app.views.activity.login.LoginActivity;
 import com.lotview.app.views.adapter.LeftDrawerListAdapter;
 import com.lotview.app.views.base.BaseActivity;
@@ -93,15 +93,15 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
         viewModel.validator.observe(this, observer);
         viewModel.response_allassets_owned.observe(this, responseAssetsOwnedCurrently);
 
+        final ViewGroup viewGroup = (ViewGroup) ((ViewGroup) this
+                .findViewById(android.R.id.content)).getChildAt(0);
+
         initializeViews();
         setupDrawer();
         setView();
         Utils.replaceFragment(HomeActivity.this, new HomeFragment());
         onNewIntent(getIntent());
     }
-
-
-
 
 
     private void setView() {

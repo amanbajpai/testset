@@ -54,8 +54,8 @@ public class LocationListenerService extends Service {
     LocationParams.Builder builder = null;
 
 
-     Handler trackLocationFrequentlyHandler = new Handler();
-     Runnable trackLocationFrequentlyRunnable = new Runnable() {
+    Handler trackLocationFrequentlyHandler = new Handler();
+    Runnable trackLocationFrequentlyRunnable = new Runnable() {
         @Override
         public void run() {
 
@@ -120,7 +120,7 @@ public class LocationListenerService extends Service {
             KeyKeepApplication.getInstance().getSystemService(NotificationManager.class).createNotificationChannel(channel);
             Notification notification = new NotificationCompat.Builder(KeyKeepApplication.getInstance(), Keys.CHANNEL_NAME_BACKGROUND)
 //                    .setContentTitle(KeyKeepApplication.getInstance().getString(R.string.app_name))
-                    .setContentText("Lotview is syncing in background.")
+                    .setContentText("Keykeeper is syncing.")
                     .setAutoCancel(true)
                     .setChannelId(Keys.CHANNEL_NAME_BACKGROUND)
                     .setSound(null)
@@ -142,7 +142,7 @@ public class LocationListenerService extends Service {
         builder = new LocationParams.Builder();
         builder.setAccuracy(LocationAccuracy.HIGH);
         builder.setDistance(5); // in Meteres
-        builder.setInterval(120000); // 2 min
+        builder.setInterval(10000L); // 10 seconds
 
 //        builder.setDistance(0); // in Meteres
 //        builder.setInterval(100); // 2 min
@@ -207,15 +207,15 @@ public class LocationListenerService extends Service {
     }
 
 
-    private  void TrackEmployeeAssets() {
+    private void TrackEmployeeAssets() {
         ArrayList<LocationTrackBean> trackBeanArrayList = (ArrayList<LocationTrackBean>) KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().queryBuilder().where(LocationTrackBeanDao.Properties.EmployeeDataIsSync.eq(0)).list();
 
         /**
          * added for remove crash and manage handler
          */
-          if (Utils.validateStringToInt(AppSharedPrefs.getInstance(this).getEmployeeID()) == 0){
-              return;
-          }
+        if (Utils.validateStringToInt(AppSharedPrefs.getInstance(this).getEmployeeID()) == 0) {
+            return;
+        }
 
 
         if (Connectivity.isConnected() && trackBeanArrayList != null && trackBeanArrayList.size() > 0) {

@@ -9,8 +9,6 @@ import android.os.StrictMode;
 import android.support.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
-import com.facebook.stetho.Stetho;
-import com.lotview.app.BuildConfig;
 import com.lotview.app.model.bean.BaseRequestEntity;
 import com.lotview.app.model.location.DaoMaster;
 import com.lotview.app.model.location.DaoSession;
@@ -84,7 +82,11 @@ public class KeyKeepApplication extends MultiDexApplication {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        Stetho.initializeWithDefaults(this);
+
+//        if (BuildConfig.DEBUG) {
+//            Stetho.initializeWithDefaults(this);
+//        }
+
     }
 
     public DaoSession getDaoSession() {
@@ -93,9 +95,9 @@ public class KeyKeepApplication extends MultiDexApplication {
 
     private void instantiateFabric() {
         try {
-          //  if (!BuildConfig.DEBUG) {
-                Fabric.with(this, new Crashlytics());
-          //  }
+            //  if (!BuildConfig.DEBUG) {
+            Fabric.with(this, new Crashlytics());
+            //  }
 
         } catch (Exception ex) {
             ex.printStackTrace();
