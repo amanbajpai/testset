@@ -149,11 +149,12 @@ public class LocationListenerService extends Service {
 
                     latitude = location.getLatitude();
                     longitude = location.getLongitude();
-                    Double mLat = Double.valueOf(Utils.validateStringToInt(AppSharedPrefs.getLatitude()));
-                    Double mLng = Double.valueOf(Utils.validateStringToInt(AppSharedPrefs.getLongitude()));
-                    Log.e(" latitude: "+mLat +  " :: " + latitude, " longitude: "+mLng + " ::  " + longitude);
-                    if (latitude != Double.valueOf(Utils.validateStringToInt(AppSharedPrefs.getLatitude()))
-                            || longitude != Double.valueOf(Utils.validateStringToInt(AppSharedPrefs.getLongitude()))) {
+                    Double mLat = Utils.validateStringToDouble(AppSharedPrefs.getLatitude());
+                    Double mLng = Utils.validateStringToDouble(AppSharedPrefs.getLongitude());
+
+                    Log.e(" latitude: " + mLat + " :: " + latitude, " longitude: " + mLng + " ::  " + longitude);
+                    if (latitude != Utils.validateStringToDouble(AppSharedPrefs.getLatitude())
+                            || longitude != Utils.validateStringToDouble(AppSharedPrefs.getLongitude())) {
                         String lat = location.getLatitude() + "";
                         String lng = location.getLongitude() + "";
                         Log.e(lat + "onLocationUpdated: ", lng + "<<");
