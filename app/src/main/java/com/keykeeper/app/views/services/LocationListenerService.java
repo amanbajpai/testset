@@ -50,8 +50,7 @@ public class LocationListenerService extends Service {
     private double latitude;
     private double longitude;
     private float speed;
-    int trackLocationGap = 120000;
-    LocationParams.Builder builder = null;
+    int trackLocationGap = 30000;
 
 
     Handler trackLocationFrequentlyHandler = new Handler();
@@ -128,16 +127,18 @@ public class LocationListenerService extends Service {
 
 
     private void getLocation() {
-
+        LocationParams.Builder builder = null;
         builder = new LocationParams.Builder();
         builder.setAccuracy(LocationAccuracy.HIGH);
-        builder.setDistance(5); // in Meteres
-        builder.setInterval(10000L); // 10 seconds
+        builder.setDistance(10); // in Meteres
+        builder.setInterval(5000L); // 5 seconds
 
+//        For Testing use
 //        builder.setDistance(0); // in Meteres
 //        builder.setInterval(100); // 2 min
 
         LocationParams params = builder.build();
+//        LocationParams params = LocationParams.NAVIGATION;
 
         location_control = SmartLocation.with(this).location().config(params);
 
@@ -147,24 +148,27 @@ public class LocationListenerService extends Service {
 
                 if (location.getLatitude() != 0 && location.getLongitude() != 0) {
 
-                    latitude = location.getLatitude();
-                    longitude = location.getLongitude();
-                    Double mLat = Utils.validateStringToDouble(AppSharedPrefs.getLatitude());
-                    Double mLng = Utils.validateStringToDouble(AppSharedPrefs.getLongitude());
+                    String lat = location.getLatitude() + "";
+                    String lng = location.getLongitude() + "";
+                    AppSharedPrefs.setLatitude(lat);
+                    AppSharedPrefs.setLongitude(lng);
+                    speed = location.getSpeed();
+                    AppSharedPrefs.setSpeed(location.getSpeed() + "");
 
-                    Log.e(" latitude: " + mLat + " :: " + latitude, " longitude: " + mLng + " ::  " + longitude);
-                    if (latitude != Utils.validateStringToDouble(AppSharedPrefs.getLatitude())
-                            || longitude != Utils.validateStringToDouble(AppSharedPrefs.getLongitude())) {
-                        String lat = location.getLatitude() + "";
-                        String lng = location.getLongitude() + "";
+                    Log.e("Accuracy: ", "" + location.getAccuracy());
+
+                    if (location.getAccuracy() > 0 && location.getAccuracy() < 20) {
+                        latitude = location.getLatitude();
+                        longitude = location.getLongitude();
+
+                        if (latitude != Utils.validateStringToDouble(AppSharedPrefs.getLatitude())
+                                || longitude != Utils.validateStringToDouble(AppSharedPrefs.getLongitude())) {
                         Log.e(lat + "onLocationUpdated: ", lng + "<<");
-                        AppSharedPrefs.setLatitude(lat);
-                        AppSharedPrefs.setLongitude(lng);
-                        speed = location.getSpeed();
-                        AppSharedPrefs.setSpeed(location.getSpeed() + "");
 
-                        getLocationBean(LocationListenerService.this);
+                            getLocationBean(LocationListenerService.this);
+                        }
                     }
+
                 }
             }
         });
@@ -204,7 +208,7 @@ public class LocationListenerService extends Service {
 
 
     private void TrackEmployeeAssets() {
-        ArrayList<LocationTrackBean> trackBeanArrayList = (ArrayList<LocationTrackBean>) KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().queryBuilder().where(LocationTrackBeanDao.Properties.EmployeeDataIsSync.eq(0)).orderAsc().list();
+        ArrayList<LocationTrackBean> trackBeanArrayList = (ArrayList<LocationTrackBean>) KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().queryBuilder().where(LocationTrackBeanDao.Properties.EmployeeDataIsSync.eq(0)).list();
 
         /**
          * added for remove crash and manage handler
