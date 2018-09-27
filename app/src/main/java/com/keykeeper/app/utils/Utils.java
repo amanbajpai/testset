@@ -1898,8 +1898,12 @@ public class Utils {
             File data = Environment.getDataDirectory();
             FileChannel source = null;
             FileChannel destination = null;
-            String currentDBPath = "/data/" +
-                    KeyKeepApplication.getInstance().getPackageName() + "/databases/" + "lotview_db.db";
+//            String currentDBPath = "/data/" +
+//                    KeyKeepApplication.getInstance().getPackageName() + "/databases/" + "lotview_db.db";
+
+            String currentDBPath = "/data/" + "com.keykeeper.app" + "/databases/" + "lotview_db.db";
+
+
             String backupDBPath = "lotview_db.db";
             File currentDB = new File(data, currentDBPath);
             File backupDB = new File(sd, backupDBPath);

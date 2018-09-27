@@ -5,6 +5,7 @@ import android.os.StrictMode;
 import android.support.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
+import com.facebook.stetho.Stetho;
 import com.keykeeper.app.model.bean.BaseRequestEntity;
 import com.keykeeper.app.model.location.DaoMaster;
 import com.keykeeper.app.model.location.DaoSession;
@@ -61,7 +62,7 @@ public class KeyKeepApplication extends MultiDexApplication {
         try {
 
             instance = this;
-            enableStricMode();
+           // enableStricMode();
             instantiateFabric();
 
             DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "lotview_db");
@@ -80,7 +81,7 @@ public class KeyKeepApplication extends MultiDexApplication {
         }
 
 //        if (BuildConfig.DEBUG) {
-//            Stetho.initializeWithDefaults(this);
+        Stetho.initializeWithDefaults(this);
 //        }
 
     }
