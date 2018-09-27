@@ -1067,15 +1067,12 @@ public class Utils {
 
 
     public static double validateStringToDouble(String value) {
-
         double val = 0.0;
         if (value == null || value.equals("") || value.equals("null"))
             return val;
-
         try {
             val = Double.parseDouble(value);
         } catch (Exception e) {
-
         }
         return val;
     }
