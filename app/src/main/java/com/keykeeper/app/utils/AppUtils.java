@@ -36,6 +36,7 @@ public interface AppUtils {
      */
     int REQUEST_CODE_QR_SCAN = 201;
     int REQUEST_CODE_CAMERA = 202;
+    int REQUEST_CODE_EXTERNAL_STORAGE = 215;
     int SERVER_ERROR = 203;
     int NO_INTERNET = 204;
     int STATUS_SCANED_CODE = 205;
@@ -51,7 +52,6 @@ public interface AppUtils {
     int REQUEST_CODE_QR_SCAN_FOR_DRIVE = 212;
     int REQUEST_CODE_CAMERA_FOR_DRIVE = 213;
     int REQUEST_QR_SCAN_FOR_BOX_VERIFY = 214;
-
 
 
     /**

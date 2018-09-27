@@ -50,8 +50,7 @@ public class LocationListenerService extends Service {
     private double latitude;
     private double longitude;
     private float speed;
-    int trackLocationGap = 120000;
-    LocationParams.Builder builder = null;
+    int trackLocationGap = 30000;
 
 
     Handler trackLocationFrequentlyHandler = new Handler();
@@ -131,16 +130,18 @@ public class LocationListenerService extends Service {
 
 
     private void getLocation() {
-
+        LocationParams.Builder builder = null;
         builder = new LocationParams.Builder();
         builder.setAccuracy(LocationAccuracy.HIGH);
-        builder.setDistance(5); // in Meteres
-        builder.setInterval(10000L); // 10 seconds
+        builder.setDistance(10); // in Meteres
+        builder.setInterval(5000L); // 10 seconds
 
+//        For Testing use
 //        builder.setDistance(0); // in Meteres
 //        builder.setInterval(100); // 2 min
 
         LocationParams params = builder.build();
+//        LocationParams params = LocationParams.NAVIGATION;
 
         location_control = SmartLocation.with(this).location().config(params);
 
@@ -150,22 +151,28 @@ public class LocationListenerService extends Service {
 
                 if (location.getLatitude() != 0 && location.getLongitude() != 0) {
 
-                    latitude = location.getLatitude();
-                    longitude = location.getLongitude();
+                    String lat = location.getLatitude() + "";
+                    String lng = location.getLongitude() + "";
+                    AppSharedPrefs.setLatitude(lat);
+                    AppSharedPrefs.setLongitude(lng);
+                    Log.e("Accuracy: ", "" + location.getAccuracy());
 
+                    if (location.getAccuracy() > 0 && location.getAccuracy() < 10) {
+                        latitude = location.getLatitude();
+                        longitude = location.getLongitude();
 
-                    if (latitude != Double.valueOf(Utils.validateStringToInt(AppSharedPrefs.getLatitude()))
-                            || longitude != Double.valueOf(Utils.validateStringToInt(AppSharedPrefs.getLongitude()))) {
-                        String lat = location.getLatitude() + "";
-                        String lng = location.getLongitude() + "";
-                        Log.e(lat + "onLocationUpdated: ", lng + "<<");
-                        AppSharedPrefs.setLatitude(lat);
-                        AppSharedPrefs.setLongitude(lng);
-                        speed = location.getSpeed();
-                        AppSharedPrefs.setSpeed(location.getSpeed() + "");
+                        if (latitude != Double.valueOf(Utils.validateStringToInt(AppSharedPrefs.getLatitude()))
+                                || longitude != Double.valueOf(Utils.validateStringToInt(AppSharedPrefs.getLongitude()))) {
 
-                        getLocationBean(LocationListenerService.this);
+                            Log.e(lat + " onLocationUpdated: ", lng + " <<");
+
+                            speed = location.getSpeed();
+                            AppSharedPrefs.setSpeed(location.getSpeed() + "");
+
+                            getLocationBean(LocationListenerService.this);
+                        }
                     }
+
                 }
             }
         });
@@ -205,7 +212,7 @@ public class LocationListenerService extends Service {
 
 
     private void TrackEmployeeAssets() {
-        ArrayList<LocationTrackBean> trackBeanArrayList = (ArrayList<LocationTrackBean>) KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().queryBuilder().where(LocationTrackBeanDao.Properties.EmployeeDataIsSync.eq(0)).orderAsc().list();
+        ArrayList<LocationTrackBean> trackBeanArrayList = (ArrayList<LocationTrackBean>) KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().queryBuilder().where(LocationTrackBeanDao.Properties.EmployeeDataIsSync.eq(0)).list();
 
         /**
          * added for remove crash and manage handler

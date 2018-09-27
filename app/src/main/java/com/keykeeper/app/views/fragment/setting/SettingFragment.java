@@ -120,9 +120,25 @@ public class SettingFragment extends BaseFragment implements CompoundButton.OnCh
         switch (view.getId()) {
             case R.id.version_number:
                 if (BuildConfig.DEBUG) {
-                    Utils.exportDB();
+                    if (Utils.checkPermissions(getActivity(), AppUtils.STORAGE_PERMISSIONS)) {
+                        Utils.exportDB();
+                    } else {
+                        requestPermissions(AppUtils.STORAGE_PERMISSIONS, AppUtils.REQUEST_CODE_EXTERNAL_STORAGE);
+                    }
                 }
                 break;
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == AppUtils.REQUEST_CODE_EXTERNAL_STORAGE || Utils.onRequestPermissionsResult(permissions, grantResults)) {
+            Utils.exportDB();
+        } else {
+            Utils.showSnackBar(binding, getString(R.string.allow_storage_permission));
         }
     }
 
