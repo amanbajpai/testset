@@ -5,7 +5,6 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
@@ -150,25 +149,24 @@ public class LocationListenerService extends Service {
 
                     String lat = location.getLatitude() + "";
                     String lng = location.getLongitude() + "";
-                    AppSharedPrefs.setLatitude(lat);
-                    AppSharedPrefs.setLongitude(lng);
+
                     speed = location.getSpeed();
-                    AppSharedPrefs.setSpeed(location.getSpeed() + "");
 
                     Log.e("Accuracy: ", "" + location.getAccuracy());
 
-                    if (location.getAccuracy() > 0 && location.getAccuracy() < 20) {
-                        latitude = location.getLatitude();
-                        longitude = location.getLongitude();
+                    if (location.getAccuracy() > 0 && location.getAccuracy() < 50) {
 
-                        if (latitude != Utils.validateStringToDouble(AppSharedPrefs.getLatitude())
-                                || longitude != Utils.validateStringToDouble(AppSharedPrefs.getLongitude())) {
-                        Log.e(lat + "onLocationUpdated: ", lng + "<<");
+                        if (location.getLatitude() != Utils.validateStringToDouble(AppSharedPrefs.getLatitude())
+                                || location.getLongitude() != Utils.validateStringToDouble(AppSharedPrefs.getLongitude())) {
 
-                            getLocationBean(LocationListenerService.this);
+                            Log.e(lat + "onLocationUpdated: ", lng + "<<");
+
+                            getLocationBean(location);
                         }
                     }
-
+                    AppSharedPrefs.setLatitude(lat);
+                    AppSharedPrefs.setLongitude(lng);
+                    AppSharedPrefs.setSpeed(location.getSpeed() + "");
                 }
             }
         });
@@ -180,11 +178,11 @@ public class LocationListenerService extends Service {
         }
     }
 
-    public LocationTrackBean getLocationBean(Context context) {
+    public LocationTrackBean getLocationBean(Location location) {
 
         LocationTrackBean locationTrackBean = new LocationTrackBean();
-        locationTrackBean.setEmployeeLatitue(latitude);
-        locationTrackBean.setEmployeeLongitude(longitude);
+        locationTrackBean.setEmployeeLatitue(location.getLatitude());
+        locationTrackBean.setEmployeeLongitude(location.getLongitude());
         locationTrackBean.setEmployeeSpeed(speed);
         locationTrackBean.setEmployeeTimeStampLocal(Utils.getCurrentTimeStampDate());
         locationTrackBean.setEmployeeTimeStampLocalUTC(Utils.getCurrentUTC());
