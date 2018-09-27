@@ -117,6 +117,8 @@ public class AllAssetsAdapter extends RecyclerView.Adapter<AllAssetsAdapter.Hold
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ChatActivity.class);
+                String emp_chat_url  = bean.getEmployeeChatUrl();
+                intent.putExtra(AppUtils.CHAT_EMP_URL,emp_chat_url);
                 context.startActivity(intent);
             }
         });

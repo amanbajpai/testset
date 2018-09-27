@@ -16,6 +16,7 @@ import android.webkit.WebViewClient;
 import com.keykeeper.app.R;
 import com.keykeeper.app.databinding.ActivityChatLayoutBinding;
 import com.keykeeper.app.preferences.AppSharedPrefs;
+import com.keykeeper.app.utils.AppUtils;
 import com.keykeeper.app.utils.Utils;
 import com.keykeeper.app.views.base.BaseActivity;
 import com.keykeeper.app.views.custom_view.CustomActionBar;
@@ -63,16 +64,21 @@ public class ChatActivity extends BaseActivity {
     @Override
     public void setCustomActionBar() {
         CustomActionBar customActionBar = new CustomActionBar(this);
-        customActionBar.setActionbar(getString(R.string.chat_header), false, true,false,false, this);
+        customActionBar.setActionbar(getString(R.string.chat_header), false, true, false, false, this);
     }
 
 
     private void loadChatUrl() {
 
+        String chat_url = getIntent().getStringExtra(AppUtils.CHAT_EMP_URL);
+        if (chat_url == null || chat_url.equals("")) {
+            chat_url = AppSharedPrefs.getChatUrl();
+        }
+
         binding.chatWvProgressBar.setVisibility(View.VISIBLE);
         binding.chatWv.setVisibility(View.VISIBLE);
 
-        binding.chatWv.loadUrl(AppSharedPrefs.getChatUrl());
+        binding.chatWv.loadUrl(chat_url);
         binding.chatWv.setWebViewClient(new WebViewClient() {
 //            @Override
 //            public void onPageFinished(WebView view, String url) {

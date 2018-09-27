@@ -88,12 +88,9 @@ public class LocationListenerService extends Service {
         if (intent != null) {
             //  if (isToStartLocationUpdate) {
             getLocation();
-
             trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
             //  }
-
         }
-
         return START_STICKY;
     }
 
@@ -152,8 +149,9 @@ public class LocationListenerService extends Service {
 
                     latitude = location.getLatitude();
                     longitude = location.getLongitude();
-
-
+                    Double mLat = Double.valueOf(Utils.validateStringToInt(AppSharedPrefs.getLatitude()));
+                    Double mLng = Double.valueOf(Utils.validateStringToInt(AppSharedPrefs.getLongitude()));
+                    Log.e(" latitude: "+mLat +  " :: " + latitude, " longitude: "+mLng + " ::  " + longitude);
                     if (latitude != Double.valueOf(Utils.validateStringToInt(AppSharedPrefs.getLatitude()))
                             || longitude != Double.valueOf(Utils.validateStringToInt(AppSharedPrefs.getLongitude()))) {
                         String lat = location.getLatitude() + "";
@@ -214,7 +212,6 @@ public class LocationListenerService extends Service {
             return;
         }
 
-
         if (Connectivity.isConnected() && trackBeanArrayList != null && trackBeanArrayList.size() > 0) {
 
             setForegroundNotification();
@@ -242,6 +239,7 @@ public class LocationListenerService extends Service {
 
 
             call.enqueue(new Callback<TrackLocationBaseResponse>() {
+
                 @Override
                 public void onResponse(Call<TrackLocationBaseResponse> call, Response<TrackLocationBaseResponse> response) {
                     TrackLocationBaseResponse trackLocationBaseResponse = response.body();

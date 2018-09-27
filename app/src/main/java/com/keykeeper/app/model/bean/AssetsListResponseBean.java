@@ -73,6 +73,19 @@ public class AssetsListResponseBean extends BaseResponse {
         @Expose
         private String employeeId;
 
+        @SerializedName("employee_chat_url")
+        @Expose
+        private String employeeChatUrl;
+
+
+        public String getEmployeeChatUrl() {
+            return employeeChatUrl;
+        }
+
+        public void setEmployeeChatUrl(String employeeChatUrl) {
+            this.employeeChatUrl = employeeChatUrl;
+        }
+
         @SerializedName("assigned_approved_or_decline_at")
         @Expose
         private String assigned_approved_or_decline_at;
