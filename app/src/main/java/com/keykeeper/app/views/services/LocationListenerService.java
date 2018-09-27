@@ -131,7 +131,7 @@ public class LocationListenerService extends Service {
         builder = new LocationParams.Builder();
         builder.setAccuracy(LocationAccuracy.HIGH);
         builder.setDistance(10); // in Meteres
-        builder.setInterval(5000L); // 10 seconds
+        builder.setInterval(5000L); // 5 seconds
 
 //        For Testing use
 //        builder.setDistance(0); // in Meteres
@@ -157,7 +157,7 @@ public class LocationListenerService extends Service {
 
                     Log.e("Accuracy: ", "" + location.getAccuracy());
 
-                    if (location.getAccuracy() > 0 && location.getAccuracy() < 10) {
+                    if (location.getAccuracy() > 0 && location.getAccuracy() < 20) {
                         latitude = location.getLatitude();
                         longitude = location.getLongitude();
 
