@@ -21,6 +21,10 @@ public interface AppUtils {
     String ASSET_ID = "asset_id";
 
     String ASSET_REQUESTED_BY_EMP_NAME = "asset_requested_by_emp_name";
+
+
+    String IS_MANUAL_QR = "is_manual_qr";
+    String CHAT_EMP_URL = "chat_url_employee";
     /**
      * login keys
      */
@@ -80,5 +84,5 @@ public interface AppUtils {
     int ASSET_NEW = 1;
     String ASSET_USED = "2";
     String ASSET_CUSTOMER = "3";
-    String IS_MANUAL_QR = "is_manual_qr";
+
 }
