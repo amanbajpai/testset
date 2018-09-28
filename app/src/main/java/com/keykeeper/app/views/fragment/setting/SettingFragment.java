@@ -119,13 +119,13 @@ public class SettingFragment extends BaseFragment implements CompoundButton.OnCh
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.version_number:
-                if (BuildConfig.DEBUG) {
+                //if (BuildConfig.DEBUG) {
                     if (Utils.checkPermissions(getActivity(), AppUtils.STORAGE_PERMISSIONS)) {
                         Utils.exportDB();
                     } else {
                         requestPermissions(AppUtils.STORAGE_PERMISSIONS, AppUtils.REQUEST_CODE_EXTERNAL_STORAGE);
                     }
-                }
+               // }
                 break;
 
         }

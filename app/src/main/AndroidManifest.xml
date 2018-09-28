@@ -102,7 +102,10 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service android:name="com.keykeeper.app.views.services.LocationListenerService" />
+        <service
+            android:name="com.keykeeper.app.views.services.LocationListenerService"
+            android:enabled="true"
+             />
 
         <meta-data
             android:name="io.fabric.ApiKey"
