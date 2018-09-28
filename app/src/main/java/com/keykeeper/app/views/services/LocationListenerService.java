@@ -5,6 +5,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
@@ -42,7 +43,7 @@ import retrofit2.Response;
  * Created by ankurrawal on 13/9/18.
  */
 
-public class LocationListenerService extends Service implements OnLocationUpdatedListener {
+public class LocationListenerService extends Service {
     private static final String TAG = "TimerService";
     public static final int SERVICE_NOTIFICATION_ID = 101;
     private static SmartLocation.LocationControl location_control;
@@ -59,11 +60,13 @@ public class LocationListenerService extends Service implements OnLocationUpdate
             TrackEmployeeAssets();
         }
     };
+    private Context context;
 
 
     @Override
     public void onCreate() {
         super.onCreate();
+        context = this;
         // if (isToStartLocationUpdate) {
         setForegroundNotification();
         // }
@@ -99,28 +102,28 @@ public class LocationListenerService extends Service implements OnLocationUpdate
 
     public void setForegroundNotification() {
 
+        PendingIntent pendingIntent = PendingIntent.getActivity(KeyKeepApplication.getInstance(), 101, new Intent(KeyKeepApplication.getInstance(), HomeActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            PendingIntent pendingIntent = PendingIntent.getActivity(KeyKeepApplication.getInstance(), 101, new Intent(KeyKeepApplication.getInstance(), HomeActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
-
             NotificationChannel channel = new NotificationChannel(Keys.CHANNEL_NAME_BACKGROUND, "Fetching", NotificationManager.IMPORTANCE_HIGH);
             channel.setSound(null, null);
             KeyKeepApplication.getInstance().getSystemService(NotificationManager.class).createNotificationChannel(channel);
-            Notification notification = new NotificationCompat.Builder(KeyKeepApplication.getInstance(), Keys.CHANNEL_NAME_BACKGROUND)
-//                    .setContentTitle(KeyKeepApplication.getInstance().getString(R.string.app_name))
-                    .setContentText("Keykeeper is syncing.")
-                    .setAutoCancel(true)
-                    .setChannelId(Keys.CHANNEL_NAME_BACKGROUND)
-                    .setSound(null)
-                    .setContentIntent(pendingIntent)
-                    .setSmallIcon(R.drawable.ic_notification_icon)
-                    .setColor(getResources().getColor(R.color.app_blue))
-                    .setShowWhen(true)
-                    .setOnlyAlertOnce(true)
-                    .setColor(Color.BLUE)
-                    .setLocalOnly(true)
-                    .build();
-            startForeground(SERVICE_NOTIFICATION_ID, notification);
         }
+        Notification notification = new NotificationCompat.Builder(KeyKeepApplication.getInstance(), Keys.CHANNEL_NAME_BACKGROUND)
+                .setContentText("Keykeeper is syncing.")
+                .setAutoCancel(true)
+                .setChannelId(Keys.CHANNEL_NAME_BACKGROUND)
+                .setSound(null)
+                .setContentIntent(pendingIntent)
+                .setSmallIcon(R.drawable.ic_notification_icon)
+                .setColor(getResources().getColor(R.color.app_blue))
+                .setShowWhen(true)
+                .setOnlyAlertOnce(true)
+                .setColor(Color.BLUE)
+                .setLocalOnly(true)
+                .build();
+        startForeground(SERVICE_NOTIFICATION_ID, notification);
+
+
     }
 
 
@@ -141,10 +144,35 @@ public class LocationListenerService extends Service implements OnLocationUpdate
 //        builder.setInterval(100); // 2 min
 
         LocationParams params = builder.build();
-//        LocationParams params = LocationParams.NAVIGATION;
 
         location_control = SmartLocation.with(this).location(provider).config(params).continuous();
-        location_control.start(this);
+//        location_control.start(this);
+        location_control.start(new OnLocationUpdatedListener() {
+            @Override
+            public void onLocationUpdated(Location location) {
+                if (location.getLatitude() != 0 && location.getLongitude() != 0) {
+                    String lat = location.getLatitude() + "";
+                    String lng = location.getLongitude() + "";
+                    speed = location.getSpeed();
+
+                    Log.e("Accuracy: ", "" + location.getAccuracy());
+
+                    if (location.getAccuracy() > 0 && location.getAccuracy() < 20) {
+
+                        if (location.getLatitude() != Utils.validateStringToDouble(AppSharedPrefs.getInstance(context).getLatitude())
+                                || location.getLongitude() != Utils.validateStringToDouble(AppSharedPrefs.getInstance(context).getLongitude())) {
+
+                            Log.e(lat + "onLocationUpdated: ", lng + "<<");
+
+                            getLocationBean(location);
+                        }
+                    }
+                    AppSharedPrefs.setLatitude(lat);
+                    AppSharedPrefs.setLongitude(lng);
+                    AppSharedPrefs.setSpeed(location.getSpeed() + "");
+                }
+            }
+        });
 
     }
 
@@ -258,28 +286,4 @@ public class LocationListenerService extends Service implements OnLocationUpdate
 
     }
 
-    @Override
-    public void onLocationUpdated(Location location) {
-        if (location.getLatitude() != 0 && location.getLongitude() != 0) {
-            String lat = location.getLatitude() + "";
-            String lng = location.getLongitude() + "";
-            speed = location.getSpeed();
-
-            Log.e("Accuracy: ", "" + location.getAccuracy());
-
-            if (location.getAccuracy() > 0 && location.getAccuracy() < 100) {
-
-                if (location.getLatitude() != Utils.validateStringToDouble(AppSharedPrefs.getLatitude())
-                        || location.getLongitude() != Utils.validateStringToDouble(AppSharedPrefs.getLongitude())) {
-
-                    Log.e(lat + "onLocationUpdated: ", lng + "<<");
-
-                    getLocationBean(location);
-                }
-            }
-            AppSharedPrefs.setLatitude(lat);
-            AppSharedPrefs.setLongitude(lng);
-            AppSharedPrefs.setSpeed(location.getSpeed() + "");
-        }
-    }
 }

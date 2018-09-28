@@ -32,7 +32,6 @@ import com.keykeeper.app.interfaces.DialogClickListener;
 import com.keykeeper.app.model.LeftMenuDrawerItems;
 import com.keykeeper.app.model.bean.BaseResponse;
 import com.keykeeper.app.model.bean.EmployeeOwnedAssetsListResponse;
-import com.keykeeper.app.model.bean.LoginResponseBean;
 import com.keykeeper.app.model.notification.PushData;
 import com.keykeeper.app.netcom.Keys;
 import com.keykeeper.app.netcom.retrofit.RetrofitHolder;
@@ -553,7 +552,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
             AppSharedPrefs.getInstance(HomeActivity.this).clearPref();
 
             Intent logOutIntent = new Intent(HomeActivity.this, LoginActivity.class);
-            logOutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            logOutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(logOutIntent);
 
         } catch (Exception ex) {
