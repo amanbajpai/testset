@@ -15,7 +15,6 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.google.gson.Gson;
 import com.keykeeper.app.R;
 import com.keykeeper.app.application.KeyKeepApplication;
 import com.keykeeper.app.model.bean.LocationTrackBeanList;
@@ -211,7 +210,7 @@ public class LocationListenerService extends Service {
 
 
     private void TrackEmployeeAssets() {
-        ArrayList<LocationTrackBean> trackBeanArrayList = (ArrayList<LocationTrackBean>) KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().queryBuilder().where(LocationTrackBeanDao.Properties.EmployeeDataIsSync.eq(0)).list();
+        ArrayList<LocationTrackBean> trackBeanArrayList = (ArrayList<LocationTrackBean>) KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().queryBuilder().where(LocationTrackBeanDao.Properties.EmployeeDataIsSync.eq(0)).limit(50).list();
 
         /**
          * added for remove crash and manage handler
@@ -252,12 +251,6 @@ public class LocationListenerService extends Service {
                 public void onResponse(Call<TrackLocationBaseResponse> call, Response<TrackLocationBaseResponse> response) {
                     TrackLocationBaseResponse trackLocationBaseResponse = response.body();
                     if (trackLocationBaseResponse.getSuccess()) {
-                        if (trackLocationBaseResponse.getResultArray() != null && trackLocationBaseResponse.getResultArray().size() > 0) {
-                            trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
-                        } else {
-                            trackLocationFrequentlyHandler.removeCallbacks(trackLocationFrequentlyRunnable);
-                            stopSelf();
-                        }
 
                         for (int i = 0; i < trackBeanArrayList.size(); i++) {
                             LocationTrackBean locationTrackBean = trackBeanArrayList.get(i);
@@ -265,6 +258,15 @@ public class LocationListenerService extends Service {
                             KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao()
                                     .update(locationTrackBean);
                         }
+
+                        if (trackLocationBaseResponse.getResultArray() != null && trackLocationBaseResponse.getResultArray().size() > 0) {
+                            trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
+                        } else {
+                            trackLocationFrequentlyHandler.removeCallbacks(trackLocationFrequentlyRunnable);
+                            stopSelf();
+                        }
+
+
                     } else {
                         trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
                     }
