@@ -227,7 +227,7 @@ public class LocationListenerService extends Service {
 
 //            setForegroundNotification();
 
-            HashMap<Long, LocationTrackBean> trackBeanHashMap = getMapFromList(trackBeanArrayList);
+//            HashMap<Long, LocationTrackBean> trackBeanHashMap = getMapFromList(trackBeanArrayList);
 
             LocationTrackBeanList locationTrackBeanList = new LocationTrackBeanList();
             locationTrackBeanList.setLocationTrackBeanArrayList(trackBeanArrayList);
@@ -258,29 +258,29 @@ public class LocationListenerService extends Service {
                     TrackLocationBaseResponse trackLocationBaseResponse = response.body();
                     if (trackLocationBaseResponse.getSuccess()) {
 
-//                        for (int i = 0; i < trackBeanArrayList.size(); i++) {
-//                            LocationTrackBean locationTrackBean = trackBeanArrayList.get(i);
-//                            locationTrackBean.setEmployeeDataIsSync(true);
-//                            KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao()
-//                                    .update(locationTrackBean);
-//                        }
-
-
-                        // Create a Iterator to EntrySet of HashMap
-                        Iterator<Map.Entry<Long, LocationTrackBean>> entryIt = trackBeanHashMap.entrySet().iterator();
-
-                        // Iterate over all the elements
-                        while (entryIt.hasNext()) {
-                            Map.Entry<Long, LocationTrackBean> entry = entryIt.next();
-                            // Check if Value associated with Key is 10
-                            if (trackBeanArrayList.contains(entry.getValue())) {
-                                // Update the element
-                                LocationTrackBean locationTrackBean = entry.getValue();
-                                locationTrackBean.setEmployeeDataIsSync(true);
-                                KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao()
-                                        .update(locationTrackBean);
-                            }
+                        for (int i = 0; i < trackBeanArrayList.size(); i++) {
+                            LocationTrackBean locationTrackBean = trackBeanArrayList.get(i);
+                            locationTrackBean.setEmployeeDataIsSync(true);
+                            KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao()
+                                    .update(locationTrackBean);
                         }
+
+
+//                        // Create a Iterator to EntrySet of HashMap
+//                        Iterator<Map.Entry<Long, LocationTrackBean>> entryIt = trackBeanHashMap.entrySet().iterator();
+//
+//                        // Iterate over all the elements
+//                        while (entryIt.hasNext()) {
+//                            Map.Entry<Long, LocationTrackBean> entry = entryIt.next();
+//                            // Check if Value associated with Key is 10
+//                            if (trackBeanArrayList.contains(entry.getValue())) {
+//                                // Update the element
+//                                LocationTrackBean locationTrackBean = entry.getValue();
+//                                locationTrackBean.setEmployeeDataIsSync(true);
+//                                KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao()
+//                                        .update(locationTrackBean);
+//                            }
+//                        }
 
 
                         if (trackLocationBaseResponse.getResultArray() != null && trackLocationBaseResponse.getResultArray().size() > 0) {
