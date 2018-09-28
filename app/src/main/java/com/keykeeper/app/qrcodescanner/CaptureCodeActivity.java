@@ -1,9 +1,11 @@
 package com.keykeeper.app.qrcodescanner;
 
+import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
@@ -13,11 +15,13 @@ import com.keykeeper.app.views.custom_view.CustomActionBar;
 /**
  * Sample Activity extending from ActionBarActivity to display a Toolbar.
  */
-public class CaptureCodeActivity extends AppCompatActivity implements View.OnClickListener{
+public class CaptureCodeActivity extends AppCompatActivity implements View.OnClickListener {
     private CaptureManager capture;
     private DecoratedBarcodeView barcodeScannerView;
-    private final int CUSTOMIZED_REQUEST_CODE=113;
-    public static String title="";
+    private final int CUSTOMIZED_REQUEST_CODE = 113;
+    public static String title = "";
+    boolean isFlashOn;
+    private CustomActionBar customActionBar;
 
     public static void setTitle(String title) {
         CaptureCodeActivity.title = title;
@@ -28,14 +32,15 @@ public class CaptureCodeActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.capture_code_activity);
-        CustomActionBar customActionBar = new CustomActionBar(this);
-        customActionBar.setActionbar(title, true, false,false,false, this);
-
-        barcodeScannerView = (DecoratedBarcodeView)findViewById(R.id.zxing_barcode_scanner);
+        customActionBar = new CustomActionBar(this);
+        customActionBar.setActionbar(title, true, true, false, false, this);
+        customActionBar.setRightIcon(R.drawable.flashlight);
+        barcodeScannerView = (DecoratedBarcodeView) findViewById(R.id.zxing_barcode_scanner);
 
         capture = new CaptureManager(this, barcodeScannerView);
         capture.initializeFromIntent(getIntent(), savedInstanceState);
         capture.decode();
+
     }
 
     @Override
@@ -79,5 +84,17 @@ public class CaptureCodeActivity extends AppCompatActivity implements View.OnCli
         if (view.getId() == R.id.left_iv) {
             finish();
         }
+        if (view.getId() == R.id.right_iv){
+            if (!isFlashOn) {
+                barcodeScannerView.setTorchOn();
+                isFlashOn = true;
+                customActionBar.setRightIcon(R.drawable.flashlight);
+            } else {
+                barcodeScannerView.setTorchOff();
+                isFlashOn = false;
+                customActionBar.setRightIcon(R.drawable.flashlight);
+            }
+        }
     }
+
 }

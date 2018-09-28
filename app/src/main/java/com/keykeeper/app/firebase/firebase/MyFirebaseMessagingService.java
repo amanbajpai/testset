@@ -90,7 +90,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.putExtra(Keys.NOTIFICATION_DATA, pushData);
 
-
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         int notificationId = 1;
@@ -114,6 +113,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
         mBuilder.setContentTitle(pushData.getTitle());
         mBuilder.setContentText(pushData.getBody());
+        mBuilder.setStyle(new NotificationCompat.BigTextStyle()
+                .bigText(pushData.getBody()));
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addNextIntent(intent);

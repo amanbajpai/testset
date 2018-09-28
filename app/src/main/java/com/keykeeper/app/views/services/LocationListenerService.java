@@ -131,7 +131,7 @@ public class LocationListenerService extends Service {
         builder = new LocationParams.Builder();
         builder.setAccuracy(LocationAccuracy.HIGH);
         builder.setDistance(10); // in Meteres
-        builder.setInterval(5000L); // 5 seconds
+        builder.setInterval(1000L); // 5 seconds
 
 //        For Testing use
 //        builder.setDistance(0); // in Meteres
@@ -143,6 +143,7 @@ public class LocationListenerService extends Service {
         location_control = SmartLocation.with(this).location().config(params);
 
         location_control.start(new OnLocationUpdatedListener() {
+
             @Override
             public void onLocationUpdated(Location location) {
 
@@ -150,13 +151,7 @@ public class LocationListenerService extends Service {
 
                     String lat = location.getLatitude() + "";
                     String lng = location.getLongitude() + "";
-                    AppSharedPrefs.setLatitude(lat);
-                    AppSharedPrefs.setLongitude(lng);
-                    speed = location.getSpeed();
-                    AppSharedPrefs.setSpeed(location.getSpeed() + "");
-
                     Log.e("Accuracy: ", "" + location.getAccuracy());
-
                     if (location.getAccuracy() > 0 && location.getAccuracy() < 20) {
                         latitude = location.getLatitude();
                         longitude = location.getLongitude();
@@ -168,7 +163,10 @@ public class LocationListenerService extends Service {
                             getLocationBean(LocationListenerService.this);
                         }
                     }
-
+                    AppSharedPrefs.setLatitude(lat);
+                    AppSharedPrefs.setLongitude(lng);
+                    speed = location.getSpeed();
+                    AppSharedPrefs.setSpeed(location.getSpeed() + "");
                 }
             }
         });
