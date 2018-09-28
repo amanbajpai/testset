@@ -123,9 +123,6 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
         public void onChanged(@Nullable NotificationsResponseBean notificationsResponseBean) {
 
             if (notificationsResponseBean != null && notificationsResponseBean.getResult() != null && notificationsResponseBean.getResult().size() > 0) {
-                /*resultArrayList = notificationsResponseBean.getResult();
-                notificationsListAdapter = new NotificationsListAdapter(context, resultArrayList);
-                binding.recycleNotification.setAdapter(notificationsListAdapter);*/
 
                 for (int i = 0; i < notificationsResponseBean.getResult().size(); i++) {
                     resultArrayList.add(notificationsResponseBean.getResult().get(i));
@@ -158,6 +155,7 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
                 Utils.showAlert(context, "", bean.getMessage(), "ok", "", AppUtils.dialog_request_succes, NotificationFragment.this);
                 noDataView();
                 activity.setRightButtonEnable("", false, null);
+
 
             } else {
                 Utils.showSnackBar(binding, bean.getMessage());

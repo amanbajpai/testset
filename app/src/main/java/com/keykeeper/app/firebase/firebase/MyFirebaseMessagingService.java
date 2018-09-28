@@ -24,6 +24,7 @@ import com.keykeeper.app.views.activity.home.HomeActivity;
 import org.json.JSONObject;
 
 import java.util.Map;
+import java.util.Random;
 
 /*
  * Created by ankurrawal
@@ -38,7 +39,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-
 
         try {
             if (remoteMessage.getData().size() > 0) {
@@ -90,10 +90,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.putExtra(Keys.NOTIFICATION_DATA, pushData);
 
-
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        int notificationId = 1;
+//        int notificationId = 1;
         String channelId = "channel-01";
         String channelName = "Channel Name";
         int importance = NotificationManager.IMPORTANCE_HIGH;
@@ -114,6 +113,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
         mBuilder.setContentTitle(pushData.getTitle());
         mBuilder.setContentText(pushData.getBody());
+        mBuilder.setStyle(new NotificationCompat.BigTextStyle()
+                .bigText(pushData.getBody()));
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addNextIntent(intent);
@@ -122,7 +123,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 PendingIntent.FLAG_UPDATE_CURRENT
         );
         mBuilder.setContentIntent(resultPendingIntent);
-
+        Random random = new Random();
+        int notificationId = random.nextInt(9999 - 1000) + 1000;
         notificationManager.notify(notificationId, mBuilder.build());
     }
 

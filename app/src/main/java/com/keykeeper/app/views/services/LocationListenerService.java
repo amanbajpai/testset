@@ -15,6 +15,7 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.keykeeper.app.R;
 import com.keykeeper.app.application.KeyKeepApplication;
 import com.keykeeper.app.model.bean.LocationTrackBeanList;
