@@ -274,6 +274,7 @@ public class LocationListenerService extends Service {
                             KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao()
                                     .update(locationTrackBean);
                         }
+
                     } else {
                         trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
                     }
