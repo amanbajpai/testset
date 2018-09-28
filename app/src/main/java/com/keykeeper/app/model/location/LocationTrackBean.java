@@ -64,6 +64,7 @@ public class LocationTrackBean implements Serializable {
     private int testDriveAssetId;
 
 
+
     public LocationTrackBean() {
 
     }
