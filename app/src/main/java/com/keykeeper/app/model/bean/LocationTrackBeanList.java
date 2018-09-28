@@ -23,4 +23,5 @@ public class LocationTrackBeanList extends TrackLocationRequestEntity {
     public void setLocationTrackBeanArrayList(ArrayList<LocationTrackBean> locationTrackBeanArrayList) {
         this.locationTrackBeanArrayList = locationTrackBeanArrayList;
     }
+
 }

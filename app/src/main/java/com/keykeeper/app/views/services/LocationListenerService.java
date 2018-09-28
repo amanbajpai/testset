@@ -5,6 +5,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
@@ -14,6 +15,7 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.keykeeper.app.R;
 import com.keykeeper.app.application.KeyKeepApplication;
 import com.keykeeper.app.model.bean.LocationTrackBeanList;
@@ -33,7 +35,6 @@ import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
 import io.nlopez.smartlocation.location.config.LocationAccuracy;
 import io.nlopez.smartlocation.location.config.LocationParams;
-import io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,11 +43,13 @@ import retrofit2.Response;
  * Created by ankurrawal on 13/9/18.
  */
 
-public class LocationListenerService extends Service implements OnLocationUpdatedListener {
+public class LocationListenerService extends Service {
     private static final String TAG = "TimerService";
     public static final int SERVICE_NOTIFICATION_ID = 101;
     private static SmartLocation.LocationControl location_control;
     private boolean isToStartLocationUpdate = false;
+    private double latitude;
+    private double longitude;
     private float speed;
     int trackLocationGap = 30000;
 
@@ -125,16 +128,11 @@ public class LocationListenerService extends Service implements OnLocationUpdate
 
 
     private void getLocation() {
-
-        LocationGooglePlayServicesProvider provider = new LocationGooglePlayServicesProvider();
-        provider.setCheckLocationSettings(true);
-
         LocationParams.Builder builder = null;
         builder = new LocationParams.Builder();
-
         builder.setAccuracy(LocationAccuracy.HIGH);
         builder.setDistance(10); // in Meteres
-        builder.setInterval(5000L); // 5 seconds
+        builder.setInterval(1000L); // 5 seconds
 
 //        For Testing use
 //        builder.setDistance(0); // in Meteres
@@ -143,9 +141,36 @@ public class LocationListenerService extends Service implements OnLocationUpdate
         LocationParams params = builder.build();
 //        LocationParams params = LocationParams.NAVIGATION;
 
-        location_control = SmartLocation.with(this).location(provider).config(params).continuous();
-        location_control.start(this);
+        location_control = SmartLocation.with(this).location().config(params);
 
+        location_control.start(new OnLocationUpdatedListener() {
+
+            @Override
+            public void onLocationUpdated(Location location) {
+
+                if (location.getLatitude() != 0 && location.getLongitude() != 0) {
+
+                    String lat = location.getLatitude() + "";
+                    String lng = location.getLongitude() + "";
+                    Log.e("Accuracy: ", "" + location.getAccuracy());
+                    if (location.getAccuracy() > 0 && location.getAccuracy() < 20) {
+                        latitude = location.getLatitude();
+                        longitude = location.getLongitude();
+
+                        if (latitude != Utils.validateStringToDouble(AppSharedPrefs.getLatitude())
+                                || longitude != Utils.validateStringToDouble(AppSharedPrefs.getLongitude())) {
+                            Log.e(lat + "onLocationUpdated: ", lng + "<<");
+
+                            getLocationBean(LocationListenerService.this);
+                        }
+                    }
+                    AppSharedPrefs.setLatitude(lat);
+                    AppSharedPrefs.setLongitude(lng);
+                    speed = location.getSpeed();
+                    AppSharedPrefs.setSpeed(location.getSpeed() + "");
+                }
+            }
+        });
     }
 
     public static void stopLocationUpdate() {
@@ -154,11 +179,11 @@ public class LocationListenerService extends Service implements OnLocationUpdate
         }
     }
 
-    public LocationTrackBean getLocationBean(Location location) {
+    public LocationTrackBean getLocationBean(Context context) {
 
         LocationTrackBean locationTrackBean = new LocationTrackBean();
-        locationTrackBean.setEmployeeLatitue(location.getLatitude());
-        locationTrackBean.setEmployeeLongitude(location.getLongitude());
+        locationTrackBean.setEmployeeLatitue(latitude);
+        locationTrackBean.setEmployeeLongitude(longitude);
         locationTrackBean.setEmployeeSpeed(speed);
         locationTrackBean.setEmployeeTimeStampLocal(Utils.getCurrentTimeStampDate());
         locationTrackBean.setEmployeeTimeStampLocalUTC(Utils.getCurrentUTC());
@@ -193,8 +218,20 @@ public class LocationListenerService extends Service implements OnLocationUpdate
 
         if (Connectivity.isConnected() && trackBeanArrayList != null && trackBeanArrayList.size() > 0) {
 
-            setForegroundNotification();
+//            for (int responseStatusCode = 0; responseStatusCode < trackBeanArrayList.size(); responseStatusCode++) {
+//                LocationTrackBean bean = trackBeanArrayList.get(responseStatusCode);
+//                String time_stamp = "local : "+bean.getEmployeeTimeStampLocal()+" utc: "+bean.getEmployeeTimeStampLocalUTC();
+//                Utils.appendLog(this, "Latitude:  " + bean.getEmployeeLatitue() + "  Longitude:  " + bean.employeeLongitude + "\n", time_stamp);
+//            }
+//            Utils.appendLog(this,  "******end data send******\n", "");
+//            for (int i = 0; i < trackBeanArrayList.size(); i++) {
+//                LocationTrackBean locationTrackBean = trackBeanArrayList.get(i);
+//                locationTrackBean.setEmployeeDataIsSync(true);
+//                KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao()
+//                        .update(locationTrackBean);
+//            }
 
+            setForegroundNotification();
             LocationTrackBeanList locationTrackBeanList = new LocationTrackBeanList();
             locationTrackBeanList.setLocationTrackBeanArrayList(trackBeanArrayList);
 
@@ -213,6 +250,7 @@ public class LocationListenerService extends Service implements OnLocationUpdate
             locationTrackBeanList.setAccess_token(AppSharedPrefs.getInstance(this).getAccessToken());
             locationTrackBeanList.setEmp_current_lat(AppSharedPrefs.getLatitude());
             locationTrackBeanList.setEmp_current_long(AppSharedPrefs.getLongitude());
+
 
             Call<TrackLocationBaseResponse> call = RetrofitHolder.getService().trackEmployee(locationTrackBeanList);
 
@@ -246,6 +284,7 @@ public class LocationListenerService extends Service implements OnLocationUpdate
 
                 }
             });
+
         } else {
             // Hide notification here
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -258,28 +297,4 @@ public class LocationListenerService extends Service implements OnLocationUpdate
 
     }
 
-    @Override
-    public void onLocationUpdated(Location location) {
-        if (location.getLatitude() != 0 && location.getLongitude() != 0) {
-            String lat = location.getLatitude() + "";
-            String lng = location.getLongitude() + "";
-            speed = location.getSpeed();
-
-            Log.e("Accuracy: ", "" + location.getAccuracy());
-
-            if (location.getAccuracy() > 0 && location.getAccuracy() < 100) {
-
-                if (location.getLatitude() != Utils.validateStringToDouble(AppSharedPrefs.getLatitude())
-                        || location.getLongitude() != Utils.validateStringToDouble(AppSharedPrefs.getLongitude())) {
-
-                    Log.e(lat + "onLocationUpdated: ", lng + "<<");
-
-                    getLocationBean(location);
-                }
-            }
-            AppSharedPrefs.setLatitude(lat);
-            AppSharedPrefs.setLongitude(lng);
-            AppSharedPrefs.setSpeed(location.getSpeed() + "");
-        }
-    }
 }

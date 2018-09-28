@@ -24,6 +24,7 @@ import com.keykeeper.app.views.activity.home.HomeActivity;
 import org.json.JSONObject;
 
 import java.util.Map;
+import java.util.Random;
 
 /*
  * Created by ankurrawal
@@ -91,7 +92,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        int notificationId = 1;
+//        int notificationId = 1;
         String channelId = "channel-01";
         String channelName = "Channel Name";
         int importance = NotificationManager.IMPORTANCE_HIGH;
@@ -122,7 +123,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 PendingIntent.FLAG_UPDATE_CURRENT
         );
         mBuilder.setContentIntent(resultPendingIntent);
-
+        Random random = new Random();
+        int notificationId = random.nextInt(9999 - 1000) + 1000;
         notificationManager.notify(notificationId, mBuilder.build());
     }
 
