@@ -5,7 +5,6 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
@@ -34,6 +33,7 @@ import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
 import io.nlopez.smartlocation.location.config.LocationAccuracy;
 import io.nlopez.smartlocation.location.config.LocationParams;
+import io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,13 +42,11 @@ import retrofit2.Response;
  * Created by ankurrawal on 13/9/18.
  */
 
-public class LocationListenerService extends Service {
+public class LocationListenerService extends Service implements OnLocationUpdatedListener {
     private static final String TAG = "TimerService";
     public static final int SERVICE_NOTIFICATION_ID = 101;
     private static SmartLocation.LocationControl location_control;
     private boolean isToStartLocationUpdate = false;
-    private double latitude;
-    private double longitude;
     private float speed;
     int trackLocationGap = 30000;
 
@@ -127,11 +125,16 @@ public class LocationListenerService extends Service {
 
 
     private void getLocation() {
+
+        LocationGooglePlayServicesProvider provider = new LocationGooglePlayServicesProvider();
+        provider.setCheckLocationSettings(true);
+
         LocationParams.Builder builder = null;
         builder = new LocationParams.Builder();
+
         builder.setAccuracy(LocationAccuracy.HIGH);
         builder.setDistance(10); // in Meteres
-        builder.setInterval(1000L); // 5 seconds
+        builder.setInterval(5000L); // 5 seconds
 
 //        For Testing use
 //        builder.setDistance(0); // in Meteres
@@ -140,36 +143,9 @@ public class LocationListenerService extends Service {
         LocationParams params = builder.build();
 //        LocationParams params = LocationParams.NAVIGATION;
 
-        location_control = SmartLocation.with(this).location().config(params);
+        location_control = SmartLocation.with(this).location(provider).config(params).continuous();
+        location_control.start(this);
 
-        location_control.start(new OnLocationUpdatedListener() {
-
-            @Override
-            public void onLocationUpdated(Location location) {
-
-                if (location.getLatitude() != 0 && location.getLongitude() != 0) {
-
-                    String lat = location.getLatitude() + "";
-                    String lng = location.getLongitude() + "";
-                    Log.e("Accuracy: ", "" + location.getAccuracy());
-                    if (location.getAccuracy() > 0 && location.getAccuracy() < 20) {
-                        latitude = location.getLatitude();
-                        longitude = location.getLongitude();
-
-                        if (latitude != Utils.validateStringToDouble(AppSharedPrefs.getLatitude())
-                                || longitude != Utils.validateStringToDouble(AppSharedPrefs.getLongitude())) {
-                        Log.e(lat + "onLocationUpdated: ", lng + "<<");
-
-                            getLocationBean(LocationListenerService.this);
-                        }
-                    }
-                    AppSharedPrefs.setLatitude(lat);
-                    AppSharedPrefs.setLongitude(lng);
-                    speed = location.getSpeed();
-                    AppSharedPrefs.setSpeed(location.getSpeed() + "");
-                }
-            }
-        });
     }
 
     public static void stopLocationUpdate() {
@@ -178,11 +154,11 @@ public class LocationListenerService extends Service {
         }
     }
 
-    public LocationTrackBean getLocationBean(Context context) {
+    public LocationTrackBean getLocationBean(Location location) {
 
         LocationTrackBean locationTrackBean = new LocationTrackBean();
-        locationTrackBean.setEmployeeLatitue(latitude);
-        locationTrackBean.setEmployeeLongitude(longitude);
+        locationTrackBean.setEmployeeLatitue(location.getLatitude());
+        locationTrackBean.setEmployeeLongitude(location.getLongitude());
         locationTrackBean.setEmployeeSpeed(speed);
         locationTrackBean.setEmployeeTimeStampLocal(Utils.getCurrentTimeStampDate());
         locationTrackBean.setEmployeeTimeStampLocalUTC(Utils.getCurrentUTC());
@@ -282,4 +258,28 @@ public class LocationListenerService extends Service {
 
     }
 
+    @Override
+    public void onLocationUpdated(Location location) {
+        if (location.getLatitude() != 0 && location.getLongitude() != 0) {
+            String lat = location.getLatitude() + "";
+            String lng = location.getLongitude() + "";
+            speed = location.getSpeed();
+
+            Log.e("Accuracy: ", "" + location.getAccuracy());
+
+            if (location.getAccuracy() > 0 && location.getAccuracy() < 100) {
+
+                if (location.getLatitude() != Utils.validateStringToDouble(AppSharedPrefs.getLatitude())
+                        || location.getLongitude() != Utils.validateStringToDouble(AppSharedPrefs.getLongitude())) {
+
+                    Log.e(lat + "onLocationUpdated: ", lng + "<<");
+
+                    getLocationBean(location);
+                }
+            }
+            AppSharedPrefs.setLatitude(lat);
+            AppSharedPrefs.setLongitude(lng);
+            AppSharedPrefs.setSpeed(location.getSpeed() + "");
+        }
+    }
 }

@@ -6,7 +6,6 @@ import android.arch.lifecycle.ViewModel;
 import com.keykeeper.app.application.KeyKeepApplication;
 import com.keykeeper.app.model.bean.EmployeeOwnedAssetsListResponse;
 import com.keykeeper.app.netcom.retrofit.RetrofitHolder;
-import com.keykeeper.app.preferences.AppSharedPrefs;
 import com.keykeeper.app.utils.AppUtils;
 import com.keykeeper.app.utils.Connectivity;
 
@@ -32,8 +31,6 @@ public class HomeFragmentViewModel extends ViewModel {
             validator.setValue(AppUtils.NO_INTERNET);
             return;
         }
-
-        String employeeId = AppSharedPrefs.getInstance(KeyKeepApplication.getInstance()).getEmployeeID();
 
         Call<EmployeeOwnedAssetsListResponse> call = RetrofitHolder.getService().getAssetOwnedByEmployee(KeyKeepApplication.getInstance().getBaseEntity(false));
 
