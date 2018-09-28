@@ -28,6 +28,9 @@ import com.keykeeper.app.utils.Connectivity;
 import com.keykeeper.app.utils.Utils;
 import com.keykeeper.app.views.activity.home.HomeActivity;
 
+import org.greenrobot.greendao.query.Query;
+import org.greenrobot.greendao.query.WhereCondition;
+
 import java.util.ArrayList;
 
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
@@ -210,6 +213,7 @@ public class LocationListenerService extends Service {
 
 
     private void TrackEmployeeAssets() {
+
         ArrayList<LocationTrackBean> trackBeanArrayList = (ArrayList<LocationTrackBean>) KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().queryBuilder().where(LocationTrackBeanDao.Properties.EmployeeDataIsSync.eq(0)).limit(50).list();
 
         /**

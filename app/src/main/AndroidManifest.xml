@@ -43,7 +43,6 @@
         <activity
             android:name="com.keykeeper.app.views.activity.login.LoginActivity"
             android:screenOrientation="portrait"
-            android:noHistory="true"
             android:theme="@style/NoActionbarTheme" />
         <activity
             android:name="com.keykeeper.app.views.activity.forgot_password.ForgotPasswordActivity"
