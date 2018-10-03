@@ -44,7 +44,7 @@ import retrofit2.Response;
  * Created by ankurrawal on 13/9/18.
  */
 
-public class LocationListenerService extends Service {
+public class DummyLocationListenerService extends Service {
     private static final String TAG = "TimerService";
     public static final int SERVICE_NOTIFICATION_ID = 101;
     private static SmartLocation.LocationControl location_control;
@@ -213,6 +213,8 @@ public class LocationListenerService extends Service {
 
         ArrayList<LocationTrackBean> trackBeanArrayList = (ArrayList<LocationTrackBean>) KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().queryBuilder().where(LocationTrackBeanDao.Properties.EmployeeDataIsSync.eq(0)).limit(50).list();
 
+        String startPoint = String.valueOf(trackBeanArrayList.get(0).getEmpTrackId());
+        String endPoint = String.valueOf(trackBeanArrayList.get(trackBeanArrayList.size()).getEmpTrackId());
 
         /**
          * added for remove crash and manage handler
@@ -220,19 +222,11 @@ public class LocationListenerService extends Service {
         if (Utils.validateStringToInt(AppSharedPrefs.getInstance(this).getEmployeeID()) == 0) {
             return;
         }
-        if (trackBeanArrayList.size() == 0) {
-            return;
-        }
-
-
-
-        long startPoint = trackBeanArrayList.get(0).getEmpTrackId();
-        long endPoint = trackBeanArrayList.get(trackBeanArrayList.size() - 1).getEmpTrackId();
-
 
         if (Connectivity.isConnected() && trackBeanArrayList != null && trackBeanArrayList.size() > 0) {
 
 //            setForegroundNotification();
+
 //            HashMap<Long, LocationTrackBean> trackBeanHashMap = getMapFromList(trackBeanArrayList);
 
             LocationTrackBeanList locationTrackBeanList = new LocationTrackBeanList();
@@ -264,17 +258,12 @@ public class LocationListenerService extends Service {
                     TrackLocationBaseResponse trackLocationBaseResponse = response.body();
                     if (trackLocationBaseResponse.getSuccess()) {
 
-                        for (int i = 0; i < trackBeanArrayList.size(); i++) {
-                            LocationTrackBean locationTrackBean = trackBeanArrayList.get(i);
-                            if (locationTrackBean.getEmpTrackId() >= startPoint &&
-                                    locationTrackBean.getEmpTrackId() <= endPoint) {
-
-                                locationTrackBean.setEmployeeDataIsSync(true);
-                                KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao()
-                                        .update(locationTrackBean);
-                            }
-
-                        }
+//                        for (int i = 0; i < trackBeanArrayList.size(); i++) {
+//                            LocationTrackBean locationTrackBean = trackBeanArrayList.get(i);
+//                            locationTrackBean.setEmployeeDataIsSync(true);
+//                            KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().queryRaw("WHERE id BETWEEN" + startPoint + "AND" + endPoint);
+//                                    .update(locationTrackBean);
+//                        }
 
 
                         // Create a Iterator to EntrySet of HashMap
