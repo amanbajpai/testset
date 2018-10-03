@@ -93,7 +93,9 @@ public class LocationListenerService extends Service {
         if (intent != null) {
             //  if (isToStartLocationUpdate) {
             getLocation();
-            //trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
+
+//            trackLocationFrequentlyHandler.removeCallbacks(trackLocationFrequentlyRunnable);
+//            trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
             testPeriodic();
             //  }
         }
@@ -279,6 +281,7 @@ public class LocationListenerService extends Service {
                         }
 
                         if (trackLocationBaseResponse.getResultArray() != null && trackLocationBaseResponse.getResultArray().size() > 0) {
+                            trackLocationFrequentlyHandler.removeCallbacks(trackLocationFrequentlyRunnable);
                             trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
                         } else {
                             trackLocationFrequentlyHandler.removeCallbacks(trackLocationFrequentlyRunnable);
@@ -287,6 +290,7 @@ public class LocationListenerService extends Service {
 
 
                     } else {
+                        trackLocationFrequentlyHandler.removeCallbacks(trackLocationFrequentlyRunnable);
                         trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
                     }
                 }
@@ -303,6 +307,7 @@ public class LocationListenerService extends Service {
                 manager.deleteNotificationChannel(Keys.CHANNEL_NAME_BACKGROUND);
                 manager.cancel(SERVICE_NOTIFICATION_ID);
             }
+            trackLocationFrequentlyHandler.removeCallbacks(trackLocationFrequentlyRunnable);
             trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
         }
 

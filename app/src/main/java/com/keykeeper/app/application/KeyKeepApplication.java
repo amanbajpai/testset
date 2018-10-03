@@ -78,7 +78,7 @@ public class KeyKeepApplication extends MultiDexApplication {
 
             daoSession = new DaoMaster(db).newSession();
 
-            JobManager.create(this).addJobCreator(new LocationUploadJobCreator());
+          //  JobManager.create(this).addJobCreator(new LocationUploadJobCreator());
 
 
             /**

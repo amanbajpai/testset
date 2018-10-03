@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
-import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 
@@ -139,7 +138,7 @@ public class LocationSubmitService extends Service {
             locationTrackBeanList.setEmp_current_long(AppSharedPrefs.getLongitude());
 
             Call<TrackLocationBaseResponse> call = RetrofitHolder.getService().trackEmployee(locationTrackBeanList);
-
+            Utils.showLog("TAG", "API called" + " Start POint: " + startPoint + "  " + "End Point: " + endPoint);
 
             call.enqueue(new Callback<TrackLocationBaseResponse>() {
 
