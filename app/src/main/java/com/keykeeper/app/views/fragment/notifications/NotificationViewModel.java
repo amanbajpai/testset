@@ -29,7 +29,6 @@ public class NotificationViewModel extends BaseViewModel {
 
     public void getNotifications(int last_notif_id) {
 
-
         if (!Connectivity.isConnected()) {
             validator.setValue(AppUtils.NO_INTERNET);
             Utils.hideProgressDialog();

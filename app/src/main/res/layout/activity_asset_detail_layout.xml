@@ -329,6 +329,7 @@
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/_10sdp"
                         android:paddingTop="@dimen/_8sdp"
+                        android:visibility="gone"
                         android:text="@string/customer_address"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13sdp" />
@@ -340,12 +341,14 @@
                         android:paddingBottom="@dimen/_8sdp"
                         android:paddingLeft="@dimen/_10sdp"
                         android:text=""
+                        android:visibility="gone"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/_13sdp" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
+                        android:visibility="gone"
                         android:background="@color/gray" />
                 </LinearLayout>
                 <!--***************Employee Detail*************-->

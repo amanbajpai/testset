@@ -26,6 +26,7 @@ public class MyAssetsFragmentViewModel extends BaseViewModel {
 
         if (!Connectivity.isConnected()) {
             validator.setValue(AppUtils.NO_INTERNET);
+            Utils.hideProgressDialog();
             return;
         }
         Call<AssetsListResponseBean> call = RetrofitHolder.getService().getAssetsList(KeyKeepApplication.getInstance().getBaseEntity(false), "1", text_to_search);

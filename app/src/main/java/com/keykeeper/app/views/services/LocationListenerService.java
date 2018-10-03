@@ -314,7 +314,7 @@ public class LocationListenerService extends Service {
     }
 
     private HashMap<Long, LocationTrackBean> getMapFromList(ArrayList<LocationTrackBean> locationTrackBeanList) {
-        HashMap<Long, LocationTrackBean> hashMap = null;
+        HashMap<Long, LocationTrackBean> hashMap = new HashMap<>();
 
         for (int i = 0; i < locationTrackBeanList.size(); i++) {
             LocationTrackBean locationTrackBean = locationTrackBeanList.get(i);
