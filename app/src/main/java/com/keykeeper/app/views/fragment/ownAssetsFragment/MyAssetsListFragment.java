@@ -27,6 +27,7 @@ import com.keykeeper.app.databinding.MyAssetListFragmentBinding;
 import com.keykeeper.app.model.bean.AssetsListResponseBean;
 import com.keykeeper.app.preferences.AppSharedPrefs;
 import com.keykeeper.app.utils.AppUtils;
+import com.keykeeper.app.utils.Connectivity;
 import com.keykeeper.app.utils.Utils;
 import com.keykeeper.app.views.adapter.MyAssetsAdapter;
 import com.keykeeper.app.views.base.BaseFragment;
@@ -189,15 +190,20 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
     @Override
     public void onRefresh() {
 
-        Utils.showProgressDialog(context, getString(R.string.loading));
-        resultArrayList.clear();
-        viewModel.getMyAssets(binding, AppSharedPrefs.getInstance(context).getEmployeeID(), "");
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                binding.recyclerView.refreshComplete();
-            }
-        }, 2000);
+        if (Connectivity.isConnected()) {
+            Utils.showProgressDialog(context, getString(R.string.loading));
+            resultArrayList.clear();
+            viewModel.getMyAssets(binding, AppSharedPrefs.getInstance(context).getEmployeeID(), "");
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    binding.recyclerView.refreshComplete();
+                }
+            }, 2000);
+        }else {
+            Utils.showSnackBar(binding, getString(R.string.internet_connection));
+        }
+
     }
 
 

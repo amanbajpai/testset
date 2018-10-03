@@ -20,6 +20,7 @@ import com.keykeeper.app.interfaces.DialogClickListener;
 import com.keykeeper.app.model.bean.BaseResponse;
 import com.keykeeper.app.model.bean.NotificationsResponseBean;
 import com.keykeeper.app.utils.AppUtils;
+import com.keykeeper.app.utils.Connectivity;
 import com.keykeeper.app.utils.Utils;
 import com.keykeeper.app.views.activity.home.HomeActivity;
 import com.keykeeper.app.views.adapter.NotificationsListAdapter;
@@ -165,15 +166,21 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
 
     @Override
     public void onRefresh() {
-        resultArrayList.clear();
-        viewModel.getNotifications(0);
-        //clear all data
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                binding.recycleNotification.refreshComplete();
-            }
-        }, 1000);
+        if (Connectivity.isConnected()) {
+            resultArrayList.clear();
+            viewModel.getNotifications(0);
+            //clear all data
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    binding.recycleNotification.refreshComplete();
+                }
+            }, 1000);
+        } else {
+
+            Utils.showSnackBar(binding, getString(R.string.internet_connection));
+
+        }
     }
 
     @Override
@@ -211,7 +218,6 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
                         break;
                 }
                 break;
-
         }
     }
 }
