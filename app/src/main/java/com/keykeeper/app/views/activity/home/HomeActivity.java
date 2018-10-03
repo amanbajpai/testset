@@ -115,15 +115,15 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
         setView();
         Utils.replaceFragment(HomeActivity.this, new HomeFragment());
         onNewIntent(getIntent());
-            if (Utils.checkPermissions(this, AppUtils.LOCATION_PERMISSIONS)) {
-                if (!Utils.isGpsEnable(context)){
-                    displayLocationSettingsRequest();
-                }
-            } else {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    requestPermissions(AppUtils.LOCATION_PERMISSIONS, AppUtils.REQUEST_CODE_LOCATION);
-                }
+        if (Utils.checkPermissions(this, AppUtils.LOCATION_PERMISSIONS)) {
+            if (!Utils.isGpsEnable(context)) {
+                displayLocationSettingsRequest();
             }
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(AppUtils.LOCATION_PERMISSIONS, AppUtils.REQUEST_CODE_LOCATION);
+            }
+        }
 
     }
 
@@ -182,7 +182,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == AppUtils.REQUEST_CODE_LOCATION && Utils.onRequestPermissionsResult(permissions, grantResults)) {
-            if (!Utils.isGpsEnable(context)){
+            if (!Utils.isGpsEnable(context)) {
                 displayLocationSettingsRequest();
             }
         } else {
@@ -581,6 +581,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
             Intent serviceIntent = new Intent(context, LocationListenerService.class);
             stopService(serviceIntent);
 
+
             AppSharedPrefs.getInstance(HomeActivity.this).clearPref();
 
             Intent logOutIntent = new Intent(HomeActivity.this, LoginActivity.class);
@@ -652,6 +653,8 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
         } else {
             startService(serviceIntent);
         }
+
+        //LocationSyncUploadJob.schedulePeriodic();
     }
 
     private void displayLocationSettingsRequest() {

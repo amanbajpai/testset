@@ -8,17 +8,13 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.location.Location;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
-import com.evernote.android.job.JobRequest;
 import com.keykeeper.app.R;
 import com.keykeeper.app.application.KeyKeepApplication;
-import com.keykeeper.app.job.LocationSyncUploadJob;
 import com.keykeeper.app.model.bean.LocationTrackBeanList;
 import com.keykeeper.app.model.bean.TrackLocationBaseResponse;
 import com.keykeeper.app.model.location.LocationTrackBean;
@@ -32,49 +28,24 @@ import com.keykeeper.app.views.activity.home.HomeActivity;
 
 import java.util.ArrayList;
 
-import io.nlopez.smartlocation.OnLocationUpdatedListener;
-import io.nlopez.smartlocation.SmartLocation;
-import io.nlopez.smartlocation.location.config.LocationAccuracy;
-import io.nlopez.smartlocation.location.config.LocationParams;
-import io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static java.util.concurrent.TimeUnit.MINUTES;
 
 /**
  * Created by ankurrawal on 13/9/18.
  */
 
-public class LocationListenerService extends Service {
+public class LocationSubmitService extends Service {
     private static final String TAG = "TimerService";
     public static final int SERVICE_NOTIFICATION_ID = 101;
-    private static SmartLocation.LocationControl location_control;
-    private boolean isToStartLocationUpdate = false;
-    private float speed;
-    int trackLocationGap = 30000;
-    private static final String LAST_JOB_ID = "LAST_JOB_ID";
-    private int mLastJobId;
-
-    private static Handler trackLocationFrequentlyHandler = new Handler();
-    Runnable trackLocationFrequentlyRunnable = new Runnable() {
-        @Override
-        public void run() {
-
-            TrackEmployeeAssets();
-        }
-    };
     private Context context;
-
 
     @Override
     public void onCreate() {
         super.onCreate();
         context = this;
-        // if (isToStartLocationUpdate) {
         setForegroundNotification();
-        // }
     }
 
     @Override
@@ -82,7 +53,6 @@ public class LocationListenerService extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             stopForeground(true);
         }
-
         super.onDestroy();
     }
 
@@ -91,11 +61,7 @@ public class LocationListenerService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
         if (intent != null) {
-            //  if (isToStartLocationUpdate) {
-            getLocation();
-            //trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
-            testPeriodic();
-            //  }
+            TrackEmployeeAssets();
         }
         return START_STICKY;
     }
@@ -132,88 +98,6 @@ public class LocationListenerService extends Service {
     }
 
 
-    private void getLocation() {
-
-        LocationGooglePlayServicesProvider provider = new LocationGooglePlayServicesProvider();
-        provider.setCheckLocationSettings(true);
-
-        LocationParams.Builder builder = null;
-        builder = new LocationParams.Builder();
-
-        builder.setAccuracy(LocationAccuracy.HIGH);
-        builder.setDistance(10); // in Meteres
-        builder.setInterval(5000L); // 5 seconds
-
-//        For Testing use
-//        builder.setDistance(0); // in Meteres
-//        builder.setInterval(100); // 2 min
-
-        LocationParams params = builder.build();
-
-        location_control = SmartLocation.with(this).location(provider).config(params).continuous();
-//        location_control.start(this);
-        location_control.start(new OnLocationUpdatedListener() {
-            @Override
-            public void onLocationUpdated(Location location) {
-                if (location.getLatitude() != 0 && location.getLongitude() != 0) {
-                    String lat = location.getLatitude() + "";
-                    String lng = location.getLongitude() + "";
-                    speed = location.getSpeed();
-
-                    Log.e("Accuracy: ", "" + location.getAccuracy());
-
-                    if (location.getAccuracy() > 0 && location.getAccuracy() < 20) {
-
-                        if (location.getLatitude() != Utils.validateStringToDouble(AppSharedPrefs.getInstance(context).getLatitude())
-                                || location.getLongitude() != Utils.validateStringToDouble(AppSharedPrefs.getInstance(context).getLongitude())) {
-
-                            Log.e(lat + " onLocationUpdated: ", lng + " <<");
-
-                            getLocationBean(location);
-                        }
-                    }
-                    AppSharedPrefs.setLatitude(lat);
-                    AppSharedPrefs.setLongitude(lng);
-                    AppSharedPrefs.setSpeed(location.getSpeed() + "");
-                }
-            }
-        });
-
-    }
-
-    public static void stopLocationUpdate() {
-        if (location_control != null) {
-            location_control.stop();
-        }
-    }
-
-    public LocationTrackBean getLocationBean(Location location) {
-
-        LocationTrackBean locationTrackBean = new LocationTrackBean();
-        locationTrackBean.setEmployeeLatitue(location.getLatitude());
-        locationTrackBean.setEmployeeLongitude(location.getLongitude());
-        locationTrackBean.setEmployeeSpeed(speed);
-        locationTrackBean.setEmployeeTimeStampLocal(Utils.getCurrentTimeStampDate());
-        locationTrackBean.setEmployeeTimeStampLocalUTC(Utils.getCurrentUTC());
-        locationTrackBean.setEmployee_key_ids(AppSharedPrefs.getInstance(this).getOwnedKeyIds());
-
-
-        if (AppSharedPrefs.isTestDriveRunning()) {
-             /*Put Test Drive ID if testdrive is ON otherwise 0 for tracking*/
-            locationTrackBean.setAsset_employee_test_drive_id(Integer.valueOf(AppSharedPrefs.getTestDriveId()));
-             /*0 for tracking and if tesdrive is on Id of asset for which testdrive is on*/
-            locationTrackBean.setTestDriveAssetId(Integer.valueOf(AppSharedPrefs.getTestDriveAssetId()));
-        } else {
-            locationTrackBean.setAsset_employee_test_drive_id(0);
-            locationTrackBean.setTestDriveAssetId(0);
-        }
-
-        KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().insert(locationTrackBean);
-
-        return locationTrackBean;
-    }
-
-
     private void TrackEmployeeAssets() {
 
         ArrayList<LocationTrackBean> trackBeanArrayList = (ArrayList<LocationTrackBean>) KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().queryBuilder().where(LocationTrackBeanDao.Properties.EmployeeDataIsSync.eq(0)).limit(50).list();
@@ -234,9 +118,6 @@ public class LocationListenerService extends Service {
 
 
         if (Connectivity.isConnected() && trackBeanArrayList != null && trackBeanArrayList.size() > 0) {
-
-//            setForegroundNotification();
-//            HashMap<Long, LocationTrackBean> trackBeanHashMap = getMapFromList(trackBeanArrayList);
 
             LocationTrackBeanList locationTrackBeanList = new LocationTrackBeanList();
             locationTrackBeanList.setLocationTrackBeanArrayList(trackBeanArrayList);
@@ -279,21 +160,17 @@ public class LocationListenerService extends Service {
                         }
 
                         if (trackLocationBaseResponse.getResultArray() != null && trackLocationBaseResponse.getResultArray().size() > 0) {
-                            trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
+                            // Continue Job scheduler
                         } else {
-                            trackLocationFrequentlyHandler.removeCallbacks(trackLocationFrequentlyRunnable);
-                            stopSelf();
+                            // and close the job scheduler
+                            // stopSelf();
                         }
-
-
-                    } else {
-                        trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
                     }
                 }
 
                 @Override
                 public void onFailure(Call<TrackLocationBaseResponse> call, Throwable t) {
-
+                    // Continue Job scheduler
                 }
             });
         } else {
@@ -303,26 +180,7 @@ public class LocationListenerService extends Service {
                 manager.deleteNotificationChannel(Keys.CHANNEL_NAME_BACKGROUND);
                 manager.cancel(SERVICE_NOTIFICATION_ID);
             }
-            trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
         }
 
     }
-
-
-    private void testPeriodic() {
-
-        long interval = MINUTES.toMillis(10); // every 1 min
-        long flex = MINUTES.toMillis(5); // wait 30 sec before job runs again
-
-        mLastJobId = new JobRequest.Builder(LocationSyncUploadJob.TAG)
-                .setPeriodic(JobRequest.MIN_INTERVAL, JobRequest.MIN_FLEX)
-//                .setPeriodic(interval, flex)
-                .setRequiresCharging(false)
-                .setRequiresDeviceIdle(false)
-                .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
-                .build()
-                .schedule();
-    }
-
-
 }

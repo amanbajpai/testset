@@ -5,7 +5,12 @@ import android.os.StrictMode;
 import android.support.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
+import com.evernote.android.job.Job;
+import com.evernote.android.job.JobManager;
 import com.facebook.stetho.Stetho;
+import com.keykeeper.app.BuildConfig;
+import com.keykeeper.app.job.LocationSyncUploadJob;
+import com.keykeeper.app.job.LocationUploadJobCreator;
 import com.keykeeper.app.model.bean.BaseRequestEntity;
 import com.keykeeper.app.model.location.DaoMaster;
 import com.keykeeper.app.model.location.DaoSession;
@@ -17,6 +22,7 @@ import com.keykeeper.app.utils.Utils;
 import org.greenrobot.greendao.database.Database;
 
 import java.lang.reflect.Method;
+import java.util.Set;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -29,6 +35,8 @@ public class KeyKeepApplication extends MultiDexApplication {
     private static boolean activityVisible;
 
     static KeyKeepApplication instance;
+    public static int mLastJobId;
+    public static JobManager mJobManager;
 
     private DaoSession daoSession;
 
@@ -62,13 +70,16 @@ public class KeyKeepApplication extends MultiDexApplication {
         try {
 
             instance = this;
-           // enableStricMode();
+            // enableStricMode();
             instantiateFabric();
 
             DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "lotview_db");
             Database db = helper.getWritableDb();
 
             daoSession = new DaoMaster(db).newSession();
+
+            JobManager.create(this).addJobCreator(new LocationUploadJobCreator());
+
 
             /**
              * init retrofit client to call network services
@@ -101,6 +112,13 @@ public class KeyKeepApplication extends MultiDexApplication {
         }
     }
 
+    public void stopBatchService() {
+        // Stop Job here
+        if (KeyKeepApplication.mJobManager != null)
+            KeyKeepApplication.mJobManager.cancel(KeyKeepApplication.mLastJobId);
+        // stopService(new Intent(this, BatchTaskService.class));
+    }
+
 
     private void enableStricMode() {
         try {
@@ -113,6 +131,23 @@ public class KeyKeepApplication extends MultiDexApplication {
                     e.printStackTrace();
                 }
             }
+
+            if (BuildConfig.DEBUG) {
+                StrictMode.setThreadPolicy(
+                        new StrictMode.ThreadPolicy.Builder()
+                                .detectAll()
+                                .penaltyLog()
+                                .penaltyDeath()
+                                .build());
+
+                StrictMode.setVmPolicy(
+                        new StrictMode.VmPolicy.Builder()
+                                .detectAll()
+                                .penaltyLog()
+                                .penaltyDeath()
+                                .build());
+            }
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -150,6 +185,21 @@ public class KeyKeepApplication extends MultiDexApplication {
         }
         return baseRequestEntity;
     }
+
+//    public boolean checkJobFinished() {
+//        boolean isFinished = false;
+//        Set<Job> allJobsForTag = JobManager.instance().getAllJobsForTag(LocationSyncUploadJob.TAG);
+//        for (Job job : allJobsForTag) {
+//            if (!job.isFinished()) {
+//                isFinished = false;
+//                Utils.showLog(TAG, "checkJobFinished: " + false);
+//                return false;
+//
+//            }
+//        }
+//        Utils.showLog(TAG, "checkJobFinished: " + true);
+//        return true;
+//    }
 
 
 }
