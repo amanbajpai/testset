@@ -49,6 +49,13 @@ ext {
     qrCodeVersion = '3.3.0'
     searchBarVersion = '0.7.6'
 
+    retrofitVersion = '2.3.0'
+    gsonVersion = '2.8.2'
+    retroInterceptorVersion = '3.10.0'
+    greenDaoVersion = '3.2.2'
+    multiDexVersion  ='1.0.2'
+    googlePlayVersion ='11.0.4'
+
     dataDependency = [
             sdpLibrary         : "com.intuit.sdp:sdp-android:${sdpVersion}",
             xrecyclerview      : "com.jcodecraeer:xrecyclerview:${xRecyclerViewVersion}",
@@ -60,7 +67,19 @@ ext {
             lifeCycle          : "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion",
             lifeCycleCompiler  : "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion",
             qrCodeScanner      : "com.google.zxing:core:$rootProject.qrCodeVersion",
-            searchBar          : "com.github.mancj:MaterialSearchBar:$rootProject.searchBarVersion"
+            searchBar          : "com.github.mancj:MaterialSearchBar:$rootProject.searchBarVersion",
+            retrofit           : "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion",
+            retrofitConverter  : "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion",
+            gson               : "com.google.code.gson:gson:$rootProject.gsonVersion",
+            retroInterceptor   : "com.squareup.okhttp3:logging-interceptor:$rootProject.retroInterceptorVersion",
+            greenDaoDataBase   : "org.greenrobot:greendao:$rootProject.greenDaoVersion",
+            multiDex           :  "com.android.support:multidex:$rootProject.multiDexVersion",
+
+            location           : "com.google.android.gms:play-services-location:$rootProject.googlePlayVersion",
+            map                : "com.google.android.gms:play-services-maps:$rootProject.googlePlayVersion",
+            fireBaseMessage    : "com.google.firebase:firebase-messaging:$rootProject.googlePlayVersion",
+            fireBaseCore       : "com.google.firebase:firebase-core:$rootProject.googlePlayVersion"
+
     ]
 
     androidSupport = [
