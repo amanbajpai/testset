@@ -224,10 +224,10 @@ public class LoginActivity extends BaseActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == AppUtils.REQUEST_CODE_CAMERA || Utils.onRequestPermissionsResult(permissions, grantResults)) {
+        if (requestCode == AppUtils.REQUEST_CODE_LOCATION && Utils.onRequestPermissionsResult(permissions, grantResults)) {
             getLocation();
         } else {
-            Utils.showSnackBar(binding, getString(R.string.allow_camera_permission));
+            Utils.showSnackBar(binding, getString(R.string.allow_location_permission));
         }
     }
 

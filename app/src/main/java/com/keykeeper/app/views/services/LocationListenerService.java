@@ -262,12 +262,12 @@ public class LocationListenerService extends Service {
                                     .update(locationTrackBean);
                         }
 
-                        String ids="";
-                        Query<LocationTrackBean> query = KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().queryRawCreate(
-                                ", update LOCATION_TRACK_BEAN set EMPLOYEE_DATA_IS_SYNC =1 where _id in ( "+ids+" ) ", "admin"
-                        );
-
-                        query.list();
+//                        String ids="";
+//                        Query<LocationTrackBean> query = KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().queryRawCreate(
+//                                ", update LOCATION_TRACK_BEAN set EMPLOYEE_DATA_IS_SYNC =1 where _id in ( "+ids+" ) ", ""
+//                        );
+//
+//                        query.list();
 
                         if (trackLocationBaseResponse.getResultArray() != null && trackLocationBaseResponse.getResultArray().size() > 0) {
                             trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
