@@ -97,7 +97,7 @@ public class Utils {
 
     private static final String TAG = "Utils";
     public static final String INPUT_DATE_TIME_FORMATE = "yyyy-MM-dd HH:mm:ss";
-    public static final String OUTPUT_DATE_TIME_FORMATE = "dd-MM-yyyy HH:mm a";
+    public static final String OUTPUT_DATE_TIME_FORMATE = "dd-MM-yyyy hh:mm a";
     public static final String OUTPUT_TIME_FORMATE = "HH:mm:a";
     public static final String INPUT_TIME_FORMATE = "HH:mm:ss";
     public static final String OUTPUT_HOUR_TIME_FORMATE = "HH:mm:ss";
@@ -963,9 +963,9 @@ public class Utils {
         try {
 
             SimpleDateFormat df_input = new SimpleDateFormat(inputFormat);
-//            df_input.setTimeZone(TimeZone.getTimeZone("utc"));
+            df_input.setTimeZone(TimeZone.getTimeZone("utc"));
             SimpleDateFormat df_output = new SimpleDateFormat(outputFormat);
-//            df_output.setTimeZone(TimeZone.getDefault());
+            df_output.setTimeZone(TimeZone.getDefault());
             parsed = df_input.parse(inputDate);
             outputDate = df_output.format(parsed);
         } catch (Exception e) {

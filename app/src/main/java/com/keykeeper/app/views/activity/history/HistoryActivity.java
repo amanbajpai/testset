@@ -16,6 +16,7 @@ import com.keykeeper.app.R;
 import com.keykeeper.app.databinding.ActivityHistoryBinding;
 import com.keykeeper.app.model.bean.HistoryResponseBean;
 import com.keykeeper.app.utils.AppUtils;
+import com.keykeeper.app.utils.Connectivity;
 import com.keykeeper.app.utils.Utils;
 import com.keykeeper.app.views.adapter.HistoryAdapter;
 import com.keykeeper.app.views.base.BaseActivity;
@@ -39,16 +40,16 @@ public class HistoryActivity extends BaseActivity implements XRecyclerView.Loadi
             Utils.hideProgressDialog();
             if (historyResponseBean != null && historyResponseBean.getResultArray() != null
                     && historyResponseBean.getResultArray().size() > 0) {
-               // resultArrayList = historyResponseBean.getResultArray();
-                for (int i=0;i<historyResponseBean.getResultArray().size();i++) {
+                // resultArrayList = historyResponseBean.getResultArray();
+                for (int i = 0; i < historyResponseBean.getResultArray().size(); i++) {
                     resultArrayList.add(historyResponseBean.getResultArray().get(i));
                 }
                 historyAdapter.setHistoryList(context, resultArrayList);
 
             } else {
-                if(resultArrayList.size()>0){
+                if (resultArrayList.size() > 0) {
                     Utils.showSnackBar(binding, getString(R.string.no_more_data));
-                }else{
+                } else {
                     noDataView();
                 }
 
@@ -76,7 +77,6 @@ public class HistoryActivity extends BaseActivity implements XRecyclerView.Loadi
     };
 
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,10 +84,11 @@ public class HistoryActivity extends BaseActivity implements XRecyclerView.Loadi
         setCustomActionBar();
         initializeViews();
     }
+
     @Override
     public void setCustomActionBar() {
         CustomActionBar customActionBar = new CustomActionBar(this);
-        customActionBar.setActionbar(getString(R.string.history), true, false,false,false, this);
+        customActionBar.setActionbar(getString(R.string.history), true, false, false, false, this);
     }
 
     public void initializeViews() {
@@ -114,7 +115,7 @@ public class HistoryActivity extends BaseActivity implements XRecyclerView.Loadi
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.left_iv:
                 finish();
                 break;
@@ -123,22 +124,27 @@ public class HistoryActivity extends BaseActivity implements XRecyclerView.Loadi
 
     @Override
     public void onRefresh() {
-        resultArrayList.clear();
-        viewModel.getHistoryList(0);
+        if (Connectivity.isConnected()) {
+            resultArrayList.clear();
+            viewModel.getHistoryList(0);
+        } else {
+            Utils.showSnackBar(binding, getString(R.string.internet_connection));
+        }
         //clear all data
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 binding.recyclerView.refreshComplete();
             }
-        }, 2000);
+        }, 1000);
+
     }
 
     @Override
     public void onLoadMore() {
         Log.e("onLoadMore: ", "call load more");
         //pagination
-        viewModel.getHistoryList(resultArrayList.get(resultArrayList.size()-1).getAsset_transaction_log_id());
+        viewModel.getHistoryList(resultArrayList.get(resultArrayList.size() - 1).getAsset_transaction_log_id());
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -148,7 +154,7 @@ public class HistoryActivity extends BaseActivity implements XRecyclerView.Loadi
 
     }
 
-        private void noDataView() {
+    private void noDataView() {
         binding.recyclerView.setVisibility(View.GONE);
         binding.noDataFountLayout.setVisibility(View.VISIBLE);
         binding.tvNoRecords.setText(getString(R.string.txt_no_records_avialable));

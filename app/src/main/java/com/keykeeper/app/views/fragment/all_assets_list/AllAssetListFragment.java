@@ -24,6 +24,7 @@ import com.keykeeper.app.R;
 import com.keykeeper.app.databinding.AllAssetListFragmentBinding;
 import com.keykeeper.app.model.bean.AssetsListResponseBean;
 import com.keykeeper.app.utils.AppUtils;
+import com.keykeeper.app.utils.Connectivity;
 import com.keykeeper.app.utils.Utils;
 import com.keykeeper.app.views.adapter.AllAssetsAdapter;
 import com.keykeeper.app.views.base.BaseFragment;
@@ -33,7 +34,7 @@ import java.util.ArrayList;
 /**
  * Created by akshaydashore on 23/8/18
  */
-public class AllAssetListFragment extends BaseFragment implements XRecyclerView.LoadingListener ,AllAssetsAdapter.OnActivityResult {
+public class AllAssetListFragment extends BaseFragment implements XRecyclerView.LoadingListener, AllAssetsAdapter.OnActivityResult {
 
     AllAssetListFragmentViewModel viewModel;
     private Context context;
@@ -100,13 +101,13 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
         resultArrayList = new ArrayList<>();
         LinearLayoutManager manager = new LinearLayoutManager(context);
         binding.recyclerView.setLayoutManager(manager);
-        allAssetAdapter = new AllAssetsAdapter(context, resultArrayList, AppUtils.STATUS_ALL_ASSET_LIST,this);
+        allAssetAdapter = new AllAssetsAdapter(context, resultArrayList, AppUtils.STATUS_ALL_ASSET_LIST, this);
         binding.recyclerView.setAdapter(allAssetAdapter);
         binding.recyclerView.setLoadingListener(this);
         binding.recyclerView.setLoadingMoreEnabled(false);
         binding.recyclerView.setPullRefreshEnabled(true);
 
-        viewModel.validator.observe(this,observer );
+        viewModel.validator.observe(this, observer);
         viewModel.response_validator.observe(this, response_observer);
 
         Utils.hideSoftKeyboard(getActivity());
@@ -165,15 +166,22 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
 
     @Override
     public void onRefresh() {
-        Utils.showProgressDialog(context, getString(R.string.loading));
-        resultArrayList.clear();
-        viewModel.getAllAssets(binding, "");
+
+        if (Connectivity.isConnected()) {
+            Utils.showProgressDialog(context, getString(R.string.loading));
+            resultArrayList.clear();
+            viewModel.getAllAssets(binding, "");
+        } else {
+            Utils.showSnackBar(binding, getString(R.string.internet_connection));
+        }
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 binding.recyclerView.refreshComplete();
             }
         }, 2000);
+
     }
 
     @Override
@@ -204,7 +212,7 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
 
     @Override
     public void CallOnActivityResult(Intent intent) {
-        startActivityForResult(intent,AppUtils.REQ_REFRESH_VIEW);
+        startActivityForResult(intent, AppUtils.REQ_REFRESH_VIEW);
     }
 
 

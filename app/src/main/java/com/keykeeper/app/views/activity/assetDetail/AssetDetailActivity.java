@@ -63,12 +63,14 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
 
     private String box_number;
     private String asset_name;
+    String  asset_id ="0";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
         setCustomActionBar();
+        asset_id = getIntent().getStringExtra(AppUtils.ASSET_ID);
         initializeViews();
     }
 
@@ -362,6 +364,16 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
             binding.customerDetailLayout.setVisibility(View.GONE);
         }
 
+        if (Utils.validateStringValue(resultBean.getEmployeeName()).equals("") ||
+                Utils.validateInteger(resultBean.getEmployeeId()).equals(mEmp_id)) {
+            binding.assigneeContainer.setVisibility(View.GONE);
+        }else {
+            binding.assigneeContainer.setVisibility(View.VISIBLE);
+            binding.assigneeTv.setText(bean.getResult().getEmployeeName());
+        }
+
+        asset_id = bean.getResult().getAssetId()+"";
+
     }
 
 
@@ -380,7 +392,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
 
             case R.id.map_iv:
                 Intent i = new Intent(this, KeyOnMapActivity.class);
-                i.putExtra(AppUtils.ASSET_ID, getIntent().getStringExtra(AppUtils.ASSET_ID));
+                i.putExtra(AppUtils.ASSET_ID, asset_id);
                 startActivity(i);
                 break;
 

@@ -7,6 +7,7 @@ import com.keykeeper.app.model.bean.HistoryResponseBean;
 import com.keykeeper.app.netcom.retrofit.RetrofitHolder;
 import com.keykeeper.app.utils.AppUtils;
 import com.keykeeper.app.utils.Connectivity;
+import com.keykeeper.app.utils.Utils;
 import com.keykeeper.app.views.base.BaseViewModel;
 
 import retrofit2.Call;
@@ -25,6 +26,7 @@ public class HistoryViewModel extends BaseViewModel {
 
         if (!Connectivity.isConnected()) {
             validator.setValue(AppUtils.NO_INTERNET);
+            Utils.hideProgressDialog();
             return;
         }
         Call<HistoryResponseBean> call = RetrofitHolder.getService().getHistoryList(KeyKeepApplication.getInstance().getBaseEntity(false), last_asset_transaction_log_id);

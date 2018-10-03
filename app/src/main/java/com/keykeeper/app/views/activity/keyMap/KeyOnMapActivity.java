@@ -48,7 +48,7 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
     @Override
     public void setCustomActionBar() {
         CustomActionBar customActionBar = new CustomActionBar(this);
-        customActionBar.setActionbar(getString(R.string.asset_detail), true, false, false, true, this);
+        customActionBar.setActionbar(getString(R.string.asset_map), true, false, false, true, this);
     }
 
 
@@ -64,7 +64,7 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
 
-        assetId = Integer.parseInt(getIntent().getStringExtra(AppUtils.ASSET_ID));
+        assetId = Utils.validateStringToInt(getIntent().getStringExtra(AppUtils.ASSET_ID));
 
         getLatLon();
 

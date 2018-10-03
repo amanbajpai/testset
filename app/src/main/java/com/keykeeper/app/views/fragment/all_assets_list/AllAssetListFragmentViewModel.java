@@ -9,6 +9,7 @@ import com.keykeeper.app.netcom.retrofit.RetrofitHolder;
 import com.keykeeper.app.preferences.AppSharedPrefs;
 import com.keykeeper.app.utils.AppUtils;
 import com.keykeeper.app.utils.Connectivity;
+import com.keykeeper.app.utils.Utils;
 import com.keykeeper.app.views.base.BaseViewModel;
 
 import retrofit2.Call;
@@ -27,6 +28,7 @@ public class AllAssetListFragmentViewModel extends BaseViewModel {
 
         if (!Connectivity.isConnected()) {
             validator.setValue(AppUtils.NO_INTERNET);
+            Utils.hideProgressDialog();
             return;
         }
 
