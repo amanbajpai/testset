@@ -126,7 +126,6 @@ public class LocationListenerService extends Service {
                 .build();
         startForeground(SERVICE_NOTIFICATION_ID, notification);
 
-
     }
 
 
@@ -262,6 +261,13 @@ public class LocationListenerService extends Service {
                             KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao()
                                     .update(locationTrackBean);
                         }
+
+                        String ids="";
+                        Query<LocationTrackBean> query = KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().queryRawCreate(
+                                ", update LOCATION_TRACK_BEAN set EMPLOYEE_DATA_IS_SYNC =1 where _id in ( "+ids+" ) ", "admin"
+                        );
+
+                        query.list();
 
                         if (trackLocationBaseResponse.getResultArray() != null && trackLocationBaseResponse.getResultArray().size() > 0) {
                             trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);

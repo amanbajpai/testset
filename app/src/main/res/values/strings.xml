@@ -1,6 +1,6 @@
 <resources>
-    <!--<string name="app_name">LotView</string>-->
-    <string name="app_name">KeyKeeper</string>
+    <string name="app_name">LotView</string>
+    <!--<string name="app_name">KeyKeeper</string>-->
 
 
     <array name="drawer_menu_titles">
@@ -107,13 +107,13 @@
     <string name="confirm_transfer">Confirm Transfer</string>
     <string name="sorry_qr_code_does_not_match">Sorry this qr code does not match this asset</string>
 
-    <string name="quit_app_msg">Are you sure, want to close KeepKeeper !</string>
+    <string name="quit_app_msg">Are you sure, want to close LotView !</string>
     <string name="logout_message">Are you sure want to logout?</string>
     <string name="dialog_yes">Yes</string>
     <string name="dialog_no">No</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_ok">OK</string>
-    <string name="welcome_to_link">KeepKeeper</string>
+    <string name="welcome_to_link">LotView</string>
     <string name="tittle_notifications">Notifications</string>
     <string name="tag_number">Tag Number</string>
     <string name="owner_you">Key Owner: You</string>
@@ -137,6 +137,8 @@
     <string name="stock_number">Stock Number</string>
     <string name="start_date">Start Date</string>
     <string name="place_a_qr_code_or_bar_inside_the_rectangle_box_to_scan_it">Place a Qr code/Bar code inside the viewfinder rectangle box to scan it</string>
+    <string name="_forgot_password">Forgot password</string>
+    <string name="back_to_login">Back to login</string>
 
 
 </resources>

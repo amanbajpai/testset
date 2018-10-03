@@ -99,18 +99,18 @@ dependencies {
     implementation rootProject.ext.dataDependency.searchBar
 
     //retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    implementation 'com.google.code.gson:gson:2.8.2'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
-    implementation 'org.greenrobot:greendao:3.2.2'
-    implementation 'com.android.support:multidex:1.0.2'
-    implementation 'com.google.android.gms:play-services-location:11.0.4'
-    implementation 'com.google.android.gms:play-services-maps:11.0.4'
+    implementation rootProject.ext.dataDependency.retrofit
+    implementation rootProject.ext.dataDependency.retrofitConverter
+    implementation rootProject.ext.dataDependency.gson
+    implementation rootProject.ext.dataDependency.retroInterceptor
+    implementation rootProject.ext.dataDependency.greenDaoDataBase
+    implementation rootProject.ext.dataDependency.multiDex
+    implementation rootProject.ext.dataDependency.location
+    implementation rootProject.ext.dataDependency.map
     /*Firebase Push*/
-    implementation 'com.google.firebase:firebase-messaging:11.0.4'
-    implementation 'com.google.firebase:firebase-core:11.0.4'
-    implementation 'com.edwardvanraak:MaterialBarcodeScanner:0.0.6-ALPHA'
+    implementation rootProject.ext.dataDependency.fireBaseMessage
+    implementation rootProject.ext.dataDependency.fireBaseCore
+//    implementation 'com.edwardvanraak:MaterialBarcodeScanner:0.0.6-ALPHA'
     apply plugin: 'com.google.gms.google-services'
 
     compile('io.nlopez.smartlocation:library:3.3.3') {

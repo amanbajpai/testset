@@ -15,6 +15,7 @@ import com.keykeeper.app.model.bean.ForgotPasswordResponseBean;
 import com.keykeeper.app.utils.AppUtils;
 import com.keykeeper.app.utils.Utils;
 import com.keykeeper.app.views.base.BaseActivity;
+import com.keykeeper.app.views.custom_view.CustomActionBar;
 
 /**
  * Created by akshaydashore on 27/8/18
@@ -32,11 +33,13 @@ public class ForgotPasswordActivity extends BaseActivity implements DialogClickL
         context = this;
     }
 
+
     @Override
     public void initializeViews() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_forgot_password);
         binding.tvSubmit.setOnClickListener(this);
+        binding.backTv.setOnClickListener(this);
         viewModel = ViewModelProviders.of(this).get(ForgotViewModel.class);
         binding.setViewModel(viewModel);
         viewModel.validator.observe(this, observer);
@@ -95,6 +98,9 @@ public class ForgotPasswordActivity extends BaseActivity implements DialogClickL
                     Utils.showProgressDialog(context, getString(R.string.loading));
                     viewModel.forgotPassword(binding);
                 }
+                break;
+            case R.id.back_tv:
+                finish();
                 break;
         }
     }
