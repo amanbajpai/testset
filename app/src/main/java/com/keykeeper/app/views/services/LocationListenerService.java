@@ -28,9 +28,6 @@ import com.keykeeper.app.utils.Connectivity;
 import com.keykeeper.app.utils.Utils;
 import com.keykeeper.app.views.activity.home.HomeActivity;
 
-import org.greenrobot.greendao.query.Query;
-import org.greenrobot.greendao.query.WhereCondition;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -167,7 +164,7 @@ public class LocationListenerService extends Service {
                         if (location.getLatitude() != Utils.validateStringToDouble(AppSharedPrefs.getInstance(context).getLatitude())
                                 || location.getLongitude() != Utils.validateStringToDouble(AppSharedPrefs.getInstance(context).getLongitude())) {
 
-                            Log.e(lat + "onLocationUpdated: ", lng + "<<");
+                            Log.e(lat + " onLocationUpdated: ", lng + " <<");
 
                             getLocationBean(location);
                         }
@@ -228,7 +225,9 @@ public class LocationListenerService extends Service {
 
         if (Connectivity.isConnected() && trackBeanArrayList != null && trackBeanArrayList.size() > 0) {
 
-            setForegroundNotification();
+//            setForegroundNotification();
+
+            HashMap<Long, LocationTrackBean> trackBeanHashMap = getMapFromList(trackBeanArrayList);
 
             LocationTrackBeanList locationTrackBeanList = new LocationTrackBeanList();
             locationTrackBeanList.setLocationTrackBeanArrayList(trackBeanArrayList);
@@ -266,12 +265,23 @@ public class LocationListenerService extends Service {
                                     .update(locationTrackBean);
                         }
 
-                        String ids="";
-                        Query<LocationTrackBean> query = KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao().queryRawCreate(
-                                ", update LOCATION_TRACK_BEAN set EMPLOYEE_DATA_IS_SYNC =1 where _id in ( "+ids+" ) ", "admin"
-                        );
 
-                        query.list();
+                        // Create a Iterator to EntrySet of HashMap
+                        Iterator<Map.Entry<Long, LocationTrackBean>> entryIt = trackBeanHashMap.entrySet().iterator();
+
+                        // Iterate over all the elements
+                        while (entryIt.hasNext()) {
+                            Map.Entry<Long, LocationTrackBean> entry = entryIt.next();
+                            // Check if Value associated with Key is 10
+                            if (trackBeanArrayList.contains(entry.getValue())) {
+                                // Update the element
+                                LocationTrackBean locationTrackBean = entry.getValue();
+                                locationTrackBean.setEmployeeDataIsSync(true);
+                                KeyKeepApplication.getInstance().getDaoSession().getLocationTrackBeanDao()
+                                        .update(locationTrackBean);
+                            }
+                        }
+
 
                         if (trackLocationBaseResponse.getResultArray() != null && trackLocationBaseResponse.getResultArray().size() > 0) {
                             trackLocationFrequentlyHandler.postDelayed(trackLocationFrequentlyRunnable, trackLocationGap);
