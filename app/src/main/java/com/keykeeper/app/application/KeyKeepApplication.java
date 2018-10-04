@@ -5,12 +5,11 @@ import android.os.StrictMode;
 import android.support.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
-import com.evernote.android.job.Job;
 import com.evernote.android.job.JobManager;
+import com.evernote.android.job.JobRequest;
 import com.facebook.stetho.Stetho;
 import com.keykeeper.app.BuildConfig;
 import com.keykeeper.app.job.LocationSyncUploadJob;
-import com.keykeeper.app.job.LocationUploadJobCreator;
 import com.keykeeper.app.model.bean.BaseRequestEntity;
 import com.keykeeper.app.model.location.DaoMaster;
 import com.keykeeper.app.model.location.DaoSession;
@@ -22,9 +21,10 @@ import com.keykeeper.app.utils.Utils;
 import org.greenrobot.greendao.database.Database;
 
 import java.lang.reflect.Method;
-import java.util.Set;
 
 import io.fabric.sdk.android.Fabric;
+
+import static java.util.concurrent.TimeUnit.MINUTES;
 
 
 /**
@@ -35,10 +35,10 @@ public class KeyKeepApplication extends MultiDexApplication {
     private static boolean activityVisible;
 
     static KeyKeepApplication instance;
-    public static int mLastJobId;
     public static JobManager mJobManager;
 
     private DaoSession daoSession;
+    public static int mLastJobId;
 
 
     private final String TAG = "KeyKeepApplication";
@@ -78,7 +78,7 @@ public class KeyKeepApplication extends MultiDexApplication {
 
             daoSession = new DaoMaster(db).newSession();
 
-          //  JobManager.create(this).addJobCreator(new LocationUploadJobCreator());
+            //  JobManager.create(this).addJobCreator(new LocationUploadJobCreator());
 
 
             /**
@@ -185,6 +185,23 @@ public class KeyKeepApplication extends MultiDexApplication {
         }
         return baseRequestEntity;
     }
+
+
+    public static void startLocationUploadPeriodicJob() {
+
+        long interval = MINUTES.toMillis(10); // every 1 min
+        long flex = MINUTES.toMillis(5); // wait 30 sec before job runs again
+
+        mLastJobId = new JobRequest.Builder(LocationSyncUploadJob.TAG)
+                .setPeriodic(JobRequest.MIN_INTERVAL, JobRequest.MIN_FLEX)
+//                .setPeriodic(interval, flex)
+                .setRequiresCharging(false)
+                .setRequiresDeviceIdle(false)
+                .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
+                .build()
+                .schedule();
+    }
+
 
 //    public boolean checkJobFinished() {
 //        boolean isFinished = false;

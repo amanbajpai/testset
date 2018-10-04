@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -24,7 +23,6 @@ import com.keykeeper.app.utils.Utils;
 import com.keykeeper.app.views.activity.home.HomeActivity;
 import com.keykeeper.app.views.base.BaseActivity;
 import com.keykeeper.app.views.custom_view.CustomActionBar;
-import com.keykeeper.app.views.services.LocationListenerService;
 
 import java.util.ArrayList;
 
@@ -113,8 +111,9 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
                 AppSharedPrefs.setTestDriveAssetId(checkIfAnyTestDriveResponseBean.getAsset_id());
                 setViewForRunningTestDrive();
                 AppSharedPrefs.setTestDriveRunning(true);
-                startLocationStorage();
+                Utils.startLocationStorage(context);
             } else {
+                Utils.stopLocationStorage(context);
                 AppSharedPrefs.setTestDriveRunning(false);
                 AppSharedPrefs.getInstance(context).setTestDriveID("");
                 startActivity(new Intent(context, HomeActivity.class));
@@ -200,15 +199,6 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
     }
 
 
-    private void startLocationStorage() {
-        Intent serviceIntent = new Intent(context, LocationListenerService.class);
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(serviceIntent);
-        } else {
-            startService(serviceIntent);
-        }
-    }
-
     Observer<EmployeeOwnedAssetsListResponse> responseAssetsOwnedCurrently = new Observer<EmployeeOwnedAssetsListResponse>() {
 
         @Override
@@ -219,7 +209,9 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
                 ArrayList<EmployeeOwnedAssetsListResponse.Result> resultArrayList = employeeOwnedAssetsListResponse.getResults();
                 if (resultArrayList.size() > 0) {
                     storeOwnedKeyIdsPreferences(employeeOwnedAssetsListResponse);
-                    startLocationStorage();
+                    Utils.startLocationStorage(context);
+                } else {
+                    Utils.stopLocationStorage(context);
                 }
             }
         }

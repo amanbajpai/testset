@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <uses-feature
         android:name="android.hardware.location"
@@ -88,6 +89,12 @@
             android:screenOrientation="portrait" />
 
 
+        <receiver android:name=".receiver.BootCompletedIntentReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
         <!-- Firebase configuration -->
         <service android:name="com.keykeeper.app.firebase.firebase.DeleteTokenService" />
 
@@ -106,7 +113,7 @@
             android:name="com.keykeeper.app.views.services.LocationListenerService"
             android:enabled="true"
             android:stopWithTask="false" />
-      <!--  <service android:name=".views.services.LocationSubmitService" />-->
+        <service android:name=".views.services.LocationSubmitService" />
 
         <meta-data
             android:name="io.fabric.ApiKey"

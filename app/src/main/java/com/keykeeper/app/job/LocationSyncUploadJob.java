@@ -1,23 +1,13 @@
 package com.keykeeper.app.job;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 
 import com.evernote.android.job.Job;
-import com.keykeeper.app.R;
 import com.keykeeper.app.application.KeyKeepApplication;
-import com.keykeeper.app.views.activity.home.HomeActivity;
+import com.keykeeper.app.utils.Utils;
 import com.keykeeper.app.views.services.LocationSubmitService;
-
-import java.util.Random;
 
 /**
  * Created by ankurrawal on 3/10/18.
@@ -25,7 +15,7 @@ import java.util.Random;
 
 public class LocationSyncUploadJob extends Job {
 
-    public static final String TAG = "job_demo_tag";
+    public static final String TAG = "LocationSyncUploadJob";
 
     @Override
     @NonNull
@@ -54,7 +44,7 @@ public class LocationSyncUploadJob extends Job {
 //                    .build();
 //
 //            NotificationManagerCompat.from(getContext()).notify(new Random().nextInt(), notification);
-
+            Utils.showLog(TAG, "onRunJob");
             Intent autoUpload = new Intent(KeyKeepApplication.getInstance(), LocationSubmitService.class);
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 KeyKeepApplication.getInstance().startForegroundService(autoUpload);

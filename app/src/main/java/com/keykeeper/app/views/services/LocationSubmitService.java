@@ -44,7 +44,7 @@ public class LocationSubmitService extends Service {
     public void onCreate() {
         super.onCreate();
         context = this;
-        setForegroundNotification();
+
     }
 
     @Override
@@ -60,6 +60,7 @@ public class LocationSubmitService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
         if (intent != null) {
+            setForegroundNotification();
             TrackEmployeeAssets();
         }
         return START_STICKY;

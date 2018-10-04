@@ -60,7 +60,6 @@ import com.keykeeper.app.views.fragment.asset_request_fragment.AssetRequestFragm
 import com.keykeeper.app.views.fragment.home.HomeFragment;
 import com.keykeeper.app.views.fragment.notifications.NotificationFragment;
 import com.keykeeper.app.views.fragment.setting.SettingFragment;
-import com.keykeeper.app.views.services.LocationListenerService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -578,8 +577,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
             Intent intent = new Intent(context, DeleteTokenService.class);
             startService(intent);
 
-            Intent serviceIntent = new Intent(context, LocationListenerService.class);
-            stopService(serviceIntent);
+            Utils.stopLocationStorage(context);
 
 
             AppSharedPrefs.getInstance(HomeActivity.this).clearPref();
@@ -624,7 +622,9 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
                 ArrayList<EmployeeOwnedAssetsListResponse.Result> resultArrayList = employeeOwnedAssetsListResponse.getResults();
                 if (resultArrayList.size() > 0) {
                     storeOwnedKeyIdsPreferences(employeeOwnedAssetsListResponse);
-                    startLocationStorage();
+                    Utils.startLocationStorage(context);
+                } else {
+                    Utils.stopLocationStorage(context);
                 }
             }
         }
@@ -644,17 +644,6 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
             }
             AppSharedPrefs.getInstance(context).setOwnedKeyIds(ownedKeys);
         }
-    }
-
-    private void startLocationStorage() {
-        Intent serviceIntent = new Intent(context, LocationListenerService.class);
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(serviceIntent);
-        } else {
-            startService(serviceIntent);
-        }
-
-        //LocationSyncUploadJob.schedulePeriodic();
     }
 
     private void displayLocationSettingsRequest() {

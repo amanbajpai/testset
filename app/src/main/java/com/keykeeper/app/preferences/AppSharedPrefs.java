@@ -21,6 +21,7 @@ public class AppSharedPrefs {
 
     public static final String REMEMBER_ME = "remember_me";
     public static final String IS_LOGIN = "is_login";
+    public static final String IS_TO_TRACK_LOCATION = "is_to_track_location";
     public static final String LATITUDE = "latitude";
     public static final String LONGITUDE = "longitude";
     public static final String SPEED = "speed";
@@ -276,5 +277,13 @@ public class AppSharedPrefs {
         return sp.getString(TEST_DRIVE_ASSET_ID, "");
     }
 
+    public static void setIsToTrackLocation(boolean isToTrackLocation) {
+        prefEditor.putBoolean(IS_TO_TRACK_LOCATION, isToTrackLocation);
+        prefEditor.commit();
+    }
+
+    public static boolean isToTrackLocation() {
+        return sp.getBoolean(IS_TO_TRACK_LOCATION, false);
+    }
 
 }

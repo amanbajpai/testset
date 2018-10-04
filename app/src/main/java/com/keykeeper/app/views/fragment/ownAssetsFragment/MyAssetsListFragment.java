@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -31,7 +30,6 @@ import com.keykeeper.app.utils.Connectivity;
 import com.keykeeper.app.utils.Utils;
 import com.keykeeper.app.views.adapter.MyAssetsAdapter;
 import com.keykeeper.app.views.base.BaseFragment;
-import com.keykeeper.app.views.services.LocationListenerService;
 
 import java.util.ArrayList;
 
@@ -39,7 +37,7 @@ import java.util.ArrayList;
  * Created by akshaydashore on 23/8/18
  */
 
-public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.LoadingListener,MyAssetsAdapter.OnActivityResult {
+public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.LoadingListener, MyAssetsAdapter.OnActivityResult {
 
     private Context context;
     private MyAssetListFragmentBinding binding;
@@ -76,7 +74,7 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
         binding.recyclerView.setLoadingListener(this);
         binding.recyclerView.setLoadingMoreEnabled(false);
         binding.recyclerView.setPullRefreshEnabled(true);
-        myAssetAdapter = new MyAssetsAdapter(context, resultArrayList, AppUtils.STATUS_TRANSFER_ASSET_LIST,this);
+        myAssetAdapter = new MyAssetsAdapter(context, resultArrayList, AppUtils.STATUS_TRANSFER_ASSET_LIST, this);
         binding.recyclerView.setAdapter(myAssetAdapter);
         viewModel.validator.observe(this, observer);
         viewModel.response_validator.observe(this, response_observer);
@@ -130,9 +128,10 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
                 resultArrayList = assetsListResponseBean.getResult();
                 myAssetAdapter.setAssetList(getActivity(), resultArrayList);
                 storeOwnedKeyIdsPreferences(assetsListResponseBean);
-                  startLocationStorage();             // Enable this line to start location  Storage to databse need to test with API submission
+                Utils.startLocationStorage(context);
 
             } else {
+                Utils.stopLocationStorage(context);
                 noDataView();
             }
         }
@@ -181,7 +180,7 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
                 binding.recyclerView.setVisibility(View.VISIBLE);
                 binding.noDataFountLayout.setVisibility(View.GONE);
             } else {
-                stopLocationStorage();
+                Utils.stopLocationStorage(context);
                 noDataView();
             }
         }
@@ -200,7 +199,7 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
                     binding.recyclerView.refreshComplete();
                 }
             }, 2000);
-        }else {
+        } else {
             Utils.showSnackBar(binding, getString(R.string.internet_connection));
         }
 
@@ -218,18 +217,6 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
         binding.tvNoRecords.setText(getString(R.string.txt_no_records_avialable));
     }
 
-    private void startLocationStorage() {
-        Intent serviceIntent = new Intent(context, LocationListenerService.class);
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            getActivity().startForegroundService(serviceIntent);
-        } else {
-            getActivity().startService(serviceIntent);
-        }
-    }
-
-    private void stopLocationStorage() {
-        LocationListenerService.stopLocationUpdate();
-    }
 
     private void storeOwnedKeyIdsPreferences(AssetsListResponseBean assetsListResponseBean) {
         String ownedKeys = null;
@@ -250,7 +237,7 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
 
     @Override
     public void CallOnActivityResult(Intent intent) {
-        startActivityForResult(intent,AppUtils.REQ_REFRESH_VIEW);
+        startActivityForResult(intent, AppUtils.REQ_REFRESH_VIEW);
     }
 
 
