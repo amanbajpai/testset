@@ -41,6 +41,7 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
         binding = DataBindingUtil.inflate(inflater, R.layout.asset_request_send_recieve_fragment, container, false);
         viewModel = ViewModelProviders.of(this).get(AssetRequestViewModel.class);
         binding.setViewModel(viewModel);
+        isSentRequestSelected = true;
         initializeViews(binding.getRoot());
         getListForWebservice();
         return binding.getRoot();

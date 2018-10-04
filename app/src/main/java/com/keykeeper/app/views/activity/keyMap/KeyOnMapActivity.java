@@ -176,12 +176,12 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
 
             String marker_data = "";
             if (assetBean.getAssetType() == Integer.valueOf(AppUtils.ASSET_CUSTOMER)) {
-                marker_data += "Tag number: " + assetBean.getAssetName() + "\n";
+                marker_data += "Tag number: " + Utils.validateValue(assetBean.getAssetName()) + "\n";
             } else {
-                marker_data += "Stock number: " + assetBean.getAssetName() + "\n";
+                marker_data += "Stock number: " + Utils.validateValue(assetBean.getAssetName()) + "\n";
             }
 
-            marker_data += "Location: " + bean.getResult().getLocation();
+            marker_data += "Location: " + Utils.validateValue(bean.getResult().getLocation());
 
 
             if (Utils.validateInteger(assetBean.getAssetAssginedStatus()).equals("1")) {
@@ -193,15 +193,13 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
                     marker_data += "Assignee: You";
 
                 } else {
-
-                    marker_data += "Assignee: " + assetBean.getEmployeeName();
-
+                    marker_data += "Assignee: " + Utils.validateValue(assetBean.getEmployeeName());
                 }
 
             } else {
                 marker_data += "Availability: Available";
             }
-            marker_data = marker_data.replace("null","");
+            marker_data = marker_data.replace("null", "");
 
             if (bean.getCode().equals(AppUtils.STATUS_SUCCESS)) {
                 showMarker(bean.getResult().getEmp_lat(), bean.getResult().getEmp_long(), marker_data);
