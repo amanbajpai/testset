@@ -3,6 +3,8 @@ package com.keykeeper.app.model.bean;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by akshaydashore on 29/8/18
  */
@@ -22,7 +24,7 @@ public class AssetDetailBean extends BaseResponse {
         this.result = result;
     }
 
-    public class Result {
+    public class Result implements Serializable{
 
         @SerializedName("asset_id")
         @Expose
