@@ -51,8 +51,7 @@ public class LocationListenerService extends Service {
     private float speed;
     int trackLocationInterval = 30000;
 
-
-    Handler handler = new Handler();
+    static Handler handler = new Handler();
     private Runnable periodicUpdate = new Runnable() {
         @Override
         public void run() {
