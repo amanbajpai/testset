@@ -108,6 +108,8 @@
     <string name="confirm_transfer">Confirm Transfer</string>
     <string name="sorry_qr_code_does_not_match">Sorry this qr code does not match this asset</string>
 
+    <string name="turn_of_mock_location_dialog_text">To use Keykeeper, you must TURN OFF GPS mock location in your
+        smartphone settings.</string>
     <string name="quit_app_msg">Are you sure, want to close LotView !</string>
     <string name="logout_message">Are you sure want to logout?</string>
     <string name="dialog_yes">Yes</string>

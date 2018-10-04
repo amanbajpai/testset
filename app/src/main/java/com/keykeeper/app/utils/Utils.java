@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.app.AppOpsManager;
 import android.app.DatePickerDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentUris;
@@ -18,6 +19,7 @@ import android.content.pm.Signature;
 import android.database.Cursor;
 import android.databinding.ViewDataBinding;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
@@ -36,6 +38,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.text.method.TransformationMethod;
 import android.util.Base64;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.MotionEvent;
 import android.view.View;
@@ -2016,6 +2019,32 @@ public class Utils {
         String DATE_TIME_STAMP_HIRES_FORMAT = "dd-MM-yyyy HH:mm:ss.SSS";
         return calToStr(adatetime, DATE_TIME_STAMP_HIRES_FORMAT);
     }
+
+    public static boolean isMockLocationEnabled(Context context, Location location) {
+        boolean isMockLocation = false;
+        boolean isMockLocationNew = false;
+        if (BuildConfig.CHECK_MOCK_LOCATION) {
+            if (Build.VERSION.SDK_INT > 18) {
+                if (location != null) {
+                    isMockLocationNew = location.isFromMockProvider();
+                }
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                try {
+                    AppOpsManager opsManager = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
+                    isMockLocationNew = isMockLocation || (opsManager.checkOp(AppOpsManager.OPSTR_MOCK_LOCATION, android.os.Process.myUid(), BuildConfig.APPLICATION_ID) == AppOpsManager.MODE_ALLOWED);
+                } catch (Exception e) {
+                    Log.e("Mock location enabled", "Exception", e);
+                }
+            } else {
+                isMockLocation = !android.provider.Settings.Secure.getString(context.getContentResolver(), android.provider.Settings
+                        .Secure.ALLOW_MOCK_LOCATION).equals("0");
+            }
+        }
+        return isMockLocation || isMockLocationNew;
+
+    }
+
 
     public static void startLocationStorage(Context context) {
         try {

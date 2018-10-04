@@ -28,7 +28,7 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
     /**
      * init custom action bar override it on need
      */
-    public void setCustomActionBar(){
+    public void setCustomActionBar() {
 
     }
 
@@ -57,11 +57,21 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
         //Scroll Fragment
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
         KeyKeepApplication.activityResumed();
+
+//        if (Utils.isMockLocationEnabled(this, mlocation)) {
+//            isMockLocationEnabled = true;
+//            Utils.showAlert(context, "", getString(R.string.turn_of_mock_location_dialog_text), "OK", "", AppUtils.dialog_ok_mock_location, this);
+//        } else {
+//            isMockLocationEnabled = false;
+//        }
+
     }
+
 
     @Override
     protected void onPause() {

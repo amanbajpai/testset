@@ -163,7 +163,10 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
                 AppSharedPrefs.getInstance(context).setTestDriveRunning(false);
                 isDriveStart = false;
                 AppSharedPrefs.getInstance(context).setTestDriveID("");
-                startActivity(new Intent(context, HomeActivity.class));
+                Intent intent = new Intent(context, HomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                viewModel.getCurrentAssetsOwned();
             }
         }
     };
@@ -174,7 +177,9 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
         if (isDriveStart) {
             return;
         } else {
-            startActivity(new Intent(context, HomeActivity.class));
+            Intent intent = new Intent(context, HomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         }
     }
 

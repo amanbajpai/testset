@@ -66,6 +66,7 @@ public interface AppUtils {
     int dialog_yes_no_to_finish_app = 303;
     int dialog_logout_app = 304;
     int dialog_request_succes = 305;
+    int dialog_ok_mock_location = 306;
 
 
     /**

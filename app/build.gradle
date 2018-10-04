@@ -39,7 +39,13 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField "boolean", "CHECK_MOCK_LOCATION", "true"
+            buildConfigField "boolean", "RUN_CRASHLYTICS", 'false'
+        }
         release {
+            buildConfigField "boolean", "CHECK_MOCK_LOCATION", "true"
+            buildConfigField "boolean", "RUN_CRASHLYTICS", 'true'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -57,9 +63,11 @@ android {
 
         flavorCDN {
             buildConfigField "String", "BASE_URL", '"https://www.cdnsolutionsgroup.com/KeyKeep/assetapi/public/v1/"'
+            buildConfigField "boolean", "CHINESE", "false"
         }
         flavorAWS {
             buildConfigField "String", "BASE_URL", '"http://18.224.46.253/assetapi/public/v1/"'
+            buildConfigField "boolean", "CHINESE", "false"
         }
 
 

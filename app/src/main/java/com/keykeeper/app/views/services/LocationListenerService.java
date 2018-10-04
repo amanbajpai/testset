@@ -181,6 +181,11 @@ public class LocationListenerService extends Service {
                     AppSharedPrefs.setLatitude(lat);
                     AppSharedPrefs.setLongitude(lng);
                     AppSharedPrefs.setSpeed(location.getSpeed() + "");
+                    try {
+                        AppSharedPrefs.setIsLocationFromMock(location.isFromMockProvider());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });

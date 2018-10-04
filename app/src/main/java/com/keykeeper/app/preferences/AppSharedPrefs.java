@@ -23,6 +23,7 @@ public class AppSharedPrefs {
     public static final String IS_LOGIN = "is_login";
     public static final String IS_TO_TRACK_LOCATION = "is_to_track_location";
     public static final String LATITUDE = "latitude";
+    public static final String LOCATION_IF_MOCK = "location_if_mock";
     public static final String LONGITUDE = "longitude";
     public static final String SPEED = "speed";
     public static final String CHAT_URL = "chat_url";
@@ -188,6 +189,15 @@ public class AppSharedPrefs {
 
     public static String getLatitude() {
         return sp.getString(LATITUDE, "0");
+    }
+
+    public static void setIsLocationFromMock(boolean isLocationFromMock) {
+        prefEditor.putBoolean(LOCATION_IF_MOCK, isLocationFromMock);
+        prefEditor.commit();
+    }
+
+    public static boolean getIsLocationFromMock() {
+        return sp.getBoolean(LOCATION_IF_MOCK, false);
     }
 
 

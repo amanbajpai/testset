@@ -3,6 +3,7 @@ package com.keykeeper.app.views.activity.login;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.databinding.DataBindingUtil;
@@ -26,6 +27,7 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.gson.Gson;
 import com.keykeeper.app.R;
 import com.keykeeper.app.databinding.LoginActivityBinding;
+import com.keykeeper.app.interfaces.DialogClickListener;
 import com.keykeeper.app.model.bean.LoginResponseBean;
 import com.keykeeper.app.preferences.AppSharedPrefs;
 import com.keykeeper.app.utils.AppUtils;
@@ -45,10 +47,11 @@ import static io.nlopez.smartlocation.location.providers.LocationGooglePlayServi
 /**
  * Created by akshaydashore on 22/8/18
  */
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements DialogClickListener {
 
     LoginViewModel viewModel;
     private Context context;
+    private Location mlocation = null;
     private LoginActivityBinding binding;
     Observer validatorObserver = new Observer<Integer>() {
 
@@ -107,7 +110,7 @@ public class LoginActivity extends BaseActivity {
             AppSharedPrefs.getInstance(context).setUserDetail(user_detail);
             AppSharedPrefs.getInstance(context).setEmployeeID(empId);
             AppSharedPrefs.getInstance(context).setCompanyID(comId);
-            AppSharedPrefs.getInstance(context).setEmployeeName(empFirstName+" "+empLastName);
+            AppSharedPrefs.getInstance(context).setEmployeeName(empFirstName + " " + empLastName);
             AppSharedPrefs.getInstance(context).setAccessToken(loginBean.getAccessToken());
             AppSharedPrefs.getInstance(context).setRememberMe(isRemember);
             AppSharedPrefs.getInstance(context).setLogin(true);
@@ -189,8 +192,7 @@ public class LoginActivity extends BaseActivity {
         location_control.start(new OnLocationUpdatedListener() {
             @Override
             public void onLocationUpdated(Location location) {
-
-
+                mlocation = location;
                 if (location.getLatitude() != 0 && location.getLongitude() != 0) {
                     String lat = location.getLatitude() + "";
                     String lng = location.getLongitude() + "";
@@ -203,6 +205,11 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -290,4 +297,16 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
+    @Override
+    public void onDialogClick(int which, int requestCode) {
+
+        switch (requestCode) {
+            case AppUtils.dialog_ok_mock_location:
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        finishAffinity();
+                }
+                break;
+        }
+    }
 }

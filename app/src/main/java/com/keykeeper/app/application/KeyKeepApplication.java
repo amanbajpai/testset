@@ -202,7 +202,6 @@ public class KeyKeepApplication extends MultiDexApplication {
                 .schedule();
     }
 
-
 //    public boolean checkJobFinished() {
 //        boolean isFinished = false;
 //        Set<Job> allJobsForTag = JobManager.instance().getAllJobsForTag(LocationSyncUploadJob.TAG);
