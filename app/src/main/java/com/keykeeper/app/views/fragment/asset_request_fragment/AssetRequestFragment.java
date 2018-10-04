@@ -32,7 +32,7 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
     AssetRequestViewModel viewModel;
     private AssetRequestAdapter assetRequestAdapter;
     private int typeRequest;
-    private boolean isSentRequestSelected = true;
+    private static boolean isSentRequestSelected = true;
 
 
     @Nullable
@@ -48,8 +48,13 @@ public class AssetRequestFragment extends BaseFragment implements XRecyclerView.
 
 
     public void getListForWebservice() {
+
         Utils.showProgressDialog(getActivity(), getString(R.string.loading));
-        viewModel.getAssetsPendingSendRequest(binding);
+        if (isSentRequestSelected) {
+            viewModel.getAssetsPendingSendRequest(binding);
+        } else {
+            viewModel.getAssetsPendingRecieveRequest(binding);
+        }
     }
 
     @Override

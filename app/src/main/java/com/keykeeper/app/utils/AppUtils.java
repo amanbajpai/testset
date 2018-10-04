@@ -85,4 +85,5 @@ public interface AppUtils {
     String ASSET_USED = "2";
     String ASSET_CUSTOMER = "3";
 
+    String ASSET_BEAN = "asset_bean";
 }

@@ -193,15 +193,16 @@ public class MyAssetsListFragment extends BaseFragment implements XRecyclerView.
             Utils.showProgressDialog(context, getString(R.string.loading));
             resultArrayList.clear();
             viewModel.getMyAssets(binding, AppSharedPrefs.getInstance(context).getEmployeeID(), "");
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    binding.recyclerView.refreshComplete();
-                }
-            }, 2000);
-        } else {
+        }else {
             Utils.showSnackBar(binding, getString(R.string.internet_connection));
         }
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                binding.recyclerView.refreshComplete();
+            }
+        }, 2000);
 
     }
 

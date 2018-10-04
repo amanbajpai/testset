@@ -12,6 +12,7 @@ import com.keykeeper.app.model.bean.TrackLocationRequestEntity;
 import com.keykeeper.app.netcom.retrofit.RetrofitHolder;
 import com.keykeeper.app.utils.AppUtils;
 import com.keykeeper.app.utils.Connectivity;
+import com.keykeeper.app.utils.Utils;
 
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class KeyOnMapViewModel extends ViewModel {
 
         if (!Connectivity.isConnected()) {
             validator.setValue(AppUtils.NO_INTERNET);
+            Utils.hideProgressDialog();
             return;
         }
 
@@ -54,6 +56,7 @@ public class KeyOnMapViewModel extends ViewModel {
                         public void run() {
                             bean.getResult().setLocation(address);
                             response_validator.setValue(bean);
+                            KeyOnMapActivity.isDataLoading = false;
                         }
                     }, 2000);
 
@@ -66,8 +69,11 @@ public class KeyOnMapViewModel extends ViewModel {
 
             @Override
             public void onFailure(Call<AssetLocationResponseBean> call, Throwable t) {
+                Utils.hideProgressDialog();
                 validator.setValue(AppUtils.SERVER_ERROR);
+                KeyOnMapActivity.isDataLoading = false;
             }
+
         });
 
     }

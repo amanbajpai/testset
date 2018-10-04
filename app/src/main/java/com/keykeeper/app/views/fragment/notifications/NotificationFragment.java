@@ -169,18 +169,17 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
         if (Connectivity.isConnected()) {
             resultArrayList.clear();
             viewModel.getNotifications(0);
-            //clear all data
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    binding.recycleNotification.refreshComplete();
-                }
-            }, 1000);
         } else {
-
             Utils.showSnackBar(binding, getString(R.string.internet_connection));
-
         }
+
+        //clear all data
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                binding.recycleNotification.refreshComplete();
+            }
+        }, 1000);
     }
 
     @Override

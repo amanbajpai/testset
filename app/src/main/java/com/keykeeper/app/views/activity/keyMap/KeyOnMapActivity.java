@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.view.View;
 
@@ -18,6 +19,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.keykeeper.app.R;
 import com.keykeeper.app.databinding.ActivityKeyOnMapBinding;
 import com.keykeeper.app.interfaces.DialogClickListener;
+import com.keykeeper.app.model.bean.AssetDetailBean;
 import com.keykeeper.app.model.bean.AssetLocationResponseBean;
 import com.keykeeper.app.model.bean.TrackLocationRequestEntity;
 import com.keykeeper.app.netcom.Keys;
@@ -29,11 +31,16 @@ import com.keykeeper.app.views.custom_view.CustomActionBar;
 
 public class KeyOnMapActivity extends BaseActivity implements DialogClickListener {
 
+    private static final long NODE_CONNECTION_CHECK = 15000;
     SupportMapFragment mapFragment;
     ActivityKeyOnMapBinding keyOnMapBinding;
     KeyOnMapViewModel keyOnMapViewModel;
     int assetId = 0;
     private Context context;
+    private CountDownTimer countDownTimer;
+    public static boolean isDataLoading;
+
+    AssetDetailBean.Result assetBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +55,7 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
     @Override
     public void setCustomActionBar() {
         CustomActionBar customActionBar = new CustomActionBar(this);
-        customActionBar.setActionbar(getString(R.string.asset_detail), true, false, false, true, this);
+        customActionBar.setActionbar(getString(R.string.asset_map), true, false, false, true, this);
     }
 
 
@@ -64,13 +71,18 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
 
-        assetId = Integer.parseInt(getIntent().getStringExtra(AppUtils.ASSET_ID));
+        assetId = Utils.validateStringToInt(getIntent().getStringExtra(AppUtils.ASSET_ID));
 
         getLatLon();
+        countdownForConnection();
+        assetBean = (AssetDetailBean.Result) getIntent().getSerializableExtra(AppUtils.ASSET_BEAN);
 
     }
 
     private void getLatLon() {
+
+        isDataLoading = true;
+
         Utils.showProgressDialog(context, getString(R.string.loading));
 
         TrackLocationRequestEntity trackLocationRequestEntity = new TrackLocationRequestEntity();
@@ -106,6 +118,9 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
                         .title(location)
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
 
+                CustomInfoWindowGoogleMap adapter = new CustomInfoWindowGoogleMap(context, location);
+                googleMap.setInfoWindowAdapter(adapter);
+
                 googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(emp_lat, emp_long), 14));
             }
         });
@@ -117,9 +132,11 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
             case R.id.left_iv:
                 finish();
                 break;
-            case R.id.refresh_iv:
 
-                getLatLon();
+            case R.id.refresh_iv:
+                if (!isDataLoading) {
+                    getLatLon();
+                }
                 break;
         }
     }
@@ -156,8 +173,38 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
                 Utils.showAlert(context, "", bean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_click, KeyOnMapActivity.this);
                 return;
             }
+
+            String marker_data = "";
+            if (assetBean.getAssetType() == Integer.valueOf(AppUtils.ASSET_CUSTOMER)) {
+                marker_data += "Tag number: " + assetBean.getAssetName() + "\n";
+            } else {
+                marker_data += "Stock number: " + assetBean.getAssetName() + "\n";
+            }
+
+            marker_data += "Location: " + bean.getResult().getLocation();
+
+
+            if (Utils.validateInteger(assetBean.getAssetAssginedStatus()).equals("1")) {
+
+                String mEmp_id = AppSharedPrefs.getEmployeeID();
+                if (Utils.validateStringValue(assetBean.getEmployeeName()).equals("") ||
+                        Utils.validateInteger(assetBean.getEmployeeId()).equals(mEmp_id)) {
+
+                    marker_data += "Assignee: You";
+
+                } else {
+
+                    marker_data += "Assignee: " + assetBean.getEmployeeName();
+
+                }
+
+            } else {
+                marker_data += "Availability: Available";
+            }
+            marker_data = marker_data.replace("null","");
+
             if (bean.getCode().equals(AppUtils.STATUS_SUCCESS)) {
-                showMarker(bean.getResult().getEmp_lat(), bean.getResult().getEmp_long(), bean.getResult().getLocation());
+                showMarker(bean.getResult().getEmp_lat(), bean.getResult().getEmp_long(), marker_data);
             }
 
         }
@@ -167,4 +214,36 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
     public void onDialogClick(int which, int requestCode) {
 
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+    }
+
+    public void countdownForConnection() {
+
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+
+        countDownTimer = new CountDownTimer(30000, NODE_CONNECTION_CHECK) {
+
+            public void onTick(long millisUntilFinished) {
+                if (!isDataLoading) {
+                    getLatLon();
+                }
+            }
+
+            public void onFinish() {
+                countDownTimer.start();
+            }
+
+        }.start();
+
+    }
+
+
 }
