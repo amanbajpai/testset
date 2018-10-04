@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.keykeeper.app.R;
 import com.keykeeper.app.model.bean.HistoryResponseBean;
+import com.keykeeper.app.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -60,7 +61,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.Holder> 
         Log.e(bean.getAsset_transaction_log_id() + "<<", "onBindViewHolder: Asset Transaction Log Id" );
 
         holder.trans_disc_tv.setText(historyList.get(position).getTransaction_description());
-        holder.created_at_tv.setText(historyList.get(position).getCreated_at());
+        String date = Utils.formattedDateFromString(Utils.INPUT_DATE_TIME_FORMATE, Utils.OUTPUT_DATE_TIME_FORMATE,historyList.get(position).getCreated_at());
+        holder.created_at_tv.setText(date);
     }
 
 

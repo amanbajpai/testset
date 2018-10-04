@@ -180,14 +180,17 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == AppUtils.REQUEST_CODE_LOCATION && Utils.onRequestPermissionsResult(permissions, grantResults)) {
-            if (!Utils.isGpsEnable(context)) {
-                displayLocationSettingsRequest();
+        if (requestCode == AppUtils.REQUEST_CODE_LOCATION) {
+            if (Utils.onRequestPermissionsResult(permissions, grantResults)) {
+                if (!Utils.isGpsEnable(context)) {
+                    displayLocationSettingsRequest();
+                }
+            } else {
+                Utils.showToast(context, getString(R.string.allow_location_permission));
+                finishAffinity();
             }
-        } else {
-            Utils.showToast(context, getString(R.string.allow_location_permission));
-            finishAffinity();
         }
+
     }
 
     @Override

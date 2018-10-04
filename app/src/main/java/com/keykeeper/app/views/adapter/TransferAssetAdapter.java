@@ -59,6 +59,7 @@ public class TransferAssetAdapter extends RecyclerView.Adapter<TransferAssetAdap
                 listener.onCallActivityResult(intent);
             }
         });
+
         holder.assetName.setText(assetLists.getResult().get(position).getAssetName());
         holder.vinNumber.setText("VIN Number: "+assetLists.getResult().get(position).getVin());
 

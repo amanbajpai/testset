@@ -111,10 +111,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         } else {
             mBuilder.setSmallIcon(R.mipmap.ic_launcher);
         }
+
         mBuilder.setContentTitle(pushData.getTitle());
         mBuilder.setContentText(pushData.getBody());
         mBuilder.setStyle(new NotificationCompat.BigTextStyle()
                 .bigText(pushData.getBody()));
+
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addNextIntent(intent);
