@@ -6,7 +6,6 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
@@ -70,11 +69,11 @@ public class ChatActivity extends BaseActivity {
 
     private void loadChatUrl() {
 
-//        String chat_url = getIntent().getStringExtra(AppUtils.CHAT_EMP_URL);
-//        if (chat_url == null || chat_url.equals("")) {
-//            chat_url = AppSharedPrefs.getChatUrl();
-//        }
-        String chat_url = AppSharedPrefs.getChatUrl();
+        String chat_url = getIntent().getStringExtra(AppUtils.CHAT_EMP_URL);
+        if (chat_url == null || chat_url.equals("")) {
+            chat_url = AppSharedPrefs.getChatUrl();
+        }
+//        String chat_url = AppSharedPrefs.getChatUrl();
 
         binding.chatWvProgressBar.setVisibility(View.VISIBLE);
         binding.chatWv.setVisibility(View.VISIBLE);
