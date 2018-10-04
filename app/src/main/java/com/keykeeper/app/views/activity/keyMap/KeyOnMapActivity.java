@@ -184,7 +184,7 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
             marker_data += "Location: " + bean.getResult().getLocation();
 
 
-            if (assetBean.getAssetAssginedStatus().equals("1")) {
+            if (Utils.validateInteger(assetBean.getAssetAssginedStatus()).equals("1")) {
 
                 String mEmp_id = AppSharedPrefs.getEmployeeID();
                 if (Utils.validateStringValue(assetBean.getEmployeeName()).equals("") ||
