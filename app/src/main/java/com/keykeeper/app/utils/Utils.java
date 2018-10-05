@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.NotificationManager;
 import android.content.ActivityNotFoundException;
 import android.content.ContentUris;
 import android.content.Context;
@@ -2015,12 +2016,16 @@ public class Utils {
             e.printStackTrace();
         }
     }
+
+
     private static String getAppNameFileName(Context context) {
         String result = getAppName(context);
         // replace non-alphanumeric with _
         result = result.replaceAll("[^a-zA-Z0-9.-]", "_") + ".txt";
         return result;
     }
+
+
     private static String getAppName(Context context) {
         PackageManager lPackageManager = context.getPackageManager();
         ApplicationInfo lApplicationInfo = null;
@@ -2031,18 +2036,34 @@ public class Utils {
         }
         return (String) (lApplicationInfo != null ? lPackageManager.getApplicationLabel(lApplicationInfo) : "Unknown");
     }
+
+
     private static String getTimeStampString() {
         Calendar now = Calendar.getInstance();
         return calToDateTimeHiresStr(now);
     }
+
+
     private static String calToStr(Calendar date, String format) {
         DateFormat formatter = new SimpleDateFormat(format);
         return formatter.format(date.getTime());
     }
 
+
     private static String calToDateTimeHiresStr(Calendar adatetime) {
            String DATE_TIME_STAMP_HIRES_FORMAT = "dd-MM-yyyy HH:mm:ss.SSS";
         return calToStr(adatetime, DATE_TIME_STAMP_HIRES_FORMAT);
     }
+
+
+    public static void clearNotification(Context context) {
+        // Clear all notification
+        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            manager.deleteNotificationChannel(Keys.CHANNEL_NAME_BACKGROUND);
+        }
+        manager.cancelAll();
+    }
+
 
 }
