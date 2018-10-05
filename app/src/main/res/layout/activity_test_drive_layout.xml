@@ -91,6 +91,16 @@
             android:visibility="visible" />
 
 
+        <com.keykeeper.app.views.custom_view.StyledTextViewRegular
+            android:id="@+id/gps_enable_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Unable to get location please enable GPS"
+            android:textSize="@dimen/_15sdp"
+            android:textColor="@color/colorRed"
+            />
+
     </RelativeLayout>
 
 </layout>

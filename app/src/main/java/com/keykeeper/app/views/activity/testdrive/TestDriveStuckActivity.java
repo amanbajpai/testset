@@ -2,14 +2,32 @@ package com.keykeeper.app.views.activity.testdrive;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.IntentSender;
 import android.databinding.DataBindingUtil;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.keykeeper.app.R;
 import com.keykeeper.app.databinding.ActivityTestDriveLayoutBinding;
 import com.keykeeper.app.interfaces.DialogClickListener;
@@ -26,10 +44,11 @@ import com.keykeeper.app.views.custom_view.CustomActionBar;
 
 import java.util.ArrayList;
 
+import static io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider.REQUEST_CHECK_SETTINGS;
+
 /**
  * Created by ankurrawal on 18/9/18.
  */
-
 public class TestDriveStuckActivity extends BaseActivity implements DialogClickListener {
 
     private ActivityTestDriveLayoutBinding binding;
@@ -58,6 +77,7 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
 
     @Override
     public void initializeViews() {
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_test_drive_layout);
         viewModel = ViewModelProviders.of(this).get(TestDriveStuckViewModel.class);
         binding.setViewModel(viewModel);
@@ -67,9 +87,14 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
 
         binding.tvTestDriveStop.setOnClickListener(this);
 
-
         viewModel.doCheckIfTestDriveIsRuning(AppSharedPrefs.getTestDriveId());
         viewModel.getCurrentAssetsOwned();
+        registerReceiver(receiver, new IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION));
+        if (Utils.isGpsEnable(context)) {
+            binding.gpsEnableTv.setVisibility(View.GONE);
+        } else {
+            binding.gpsEnableTv.setVisibility(View.VISIBLE);
+        }
 
     }
 
@@ -79,20 +104,23 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
         switch (v.getId()) {
 
             case R.id.tv_test_drive_stop:
-                if (Connectivity.isConnected()) {
-                    if (isDriveStart) {
-
-                        setCustomActionBar();
-                        Utils.showProgressDialog(context, getString(R.string.loading));
-                        viewModel.doStopTestDrive(AppSharedPrefs.getEmployeeID(), Integer.valueOf(checkIfAnyTestDriveResponseBean.getAsset_id()), AppSharedPrefs.getLatitude(), AppSharedPrefs.getLongitude(), Utils.getCurrentTimeStampDate(), Utils.getCurrentUTCTimeStampDate(), AppSharedPrefs.getInstance(context).getTestDriveId());
-
-                    }
-                } else {
-                    Utils.showAlert(context, "", getString(R.string.internet_connection), "ok", "", AppUtils.dialog_ok_click, TestDriveStuckActivity.this);
-                }
+                validateStartService();
                 break;
         }
 
+    }
+
+    private void validateStartService() {
+
+        if (Connectivity.isConnected()) {
+            if (isDriveStart) {
+                 setCustomActionBar();
+                    Utils.showProgressDialog(context, getString(R.string.loading));
+                    viewModel.doStopTestDrive(AppSharedPrefs.getEmployeeID(), Integer.valueOf(checkIfAnyTestDriveResponseBean.getAsset_id()), AppSharedPrefs.getLatitude(), AppSharedPrefs.getLongitude(), Utils.getCurrentTimeStampDate(), Utils.getCurrentUTCTimeStampDate(), AppSharedPrefs.getInstance(context).getTestDriveId());
+            }
+        } else {
+            Utils.showAlert(context, "", getString(R.string.internet_connection), "ok", "", AppUtils.dialog_ok_click, TestDriveStuckActivity.this);
+        }
     }
 
     /**
@@ -164,7 +192,7 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
                 isDriveStart = false;
                 AppSharedPrefs.getInstance(context).setTestDriveID("");
                 Intent intent = new Intent(context, HomeActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 viewModel.getCurrentAssetsOwned();
             }
@@ -178,7 +206,7 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
             return;
         } else {
             Intent intent = new Intent(context, HomeActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
     }
@@ -237,5 +265,22 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
             AppSharedPrefs.getInstance(context).setOwnedKeyIds(ownedKeys);
         }
     }
+
+
+
+
+    BroadcastReceiver receiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if (Utils.isGpsEnable(context)) {
+                binding.gpsEnableTv.setVisibility(View.GONE);
+            } else {
+                binding.gpsEnableTv.setVisibility(View.VISIBLE);
+            }
+        }
+    };
+
 
 }

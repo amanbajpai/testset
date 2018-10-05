@@ -3,12 +3,25 @@ package com.keykeeper.app.views.fragment.testDrive;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.keykeeper.app.R;
 import com.keykeeper.app.databinding.TestDriveAssetDetailBinding;
 import com.keykeeper.app.interfaces.DialogClickListener;
@@ -20,6 +33,8 @@ import com.keykeeper.app.utils.Utils;
 import com.keykeeper.app.views.activity.testdrive.TestDriveStuckActivity;
 import com.keykeeper.app.views.base.BaseActivity;
 import com.keykeeper.app.views.custom_view.CustomActionBar;
+
+import static io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider.REQUEST_CHECK_SETTINGS;
 
 
 /**
@@ -236,20 +251,7 @@ public class TestDriveAssetDetailFragment extends BaseActivity implements Dialog
                 break;
 
             case R.id.drive_start_button:
-                if (isDriveStart) {
-                    setCustomActionBar();
-                    AppSharedPrefs.getInstance(context).setQrCode("");
-//                    Utils.showProgressDialog(context, getString(R.string.loading));
-//                    viewModel.doStopTestDrive(mEmp_id, assetId, AppSharedPrefs.getLatitude(), AppSharedPrefs.getLongitude(), Utils.getCurrentTimeStampDate(), Utils.getCurrentUTCTimeStampDate(), AppSharedPrefs.getInstance(context).getTestDriveId());
-
-                } else {
-                    setCustomActionBar();
-                    AppSharedPrefs.getInstance(context).setQrCode(qr_code);
-                    Utils.showProgressDialog(context, getString(R.string.loading));
-                    viewModel.doStartTestDrive(mEmp_id, assetId, AppSharedPrefs.getLatitude(), AppSharedPrefs.getLongitude(), Utils.getCurrentTimeStampDate(), Utils.getCurrentUTCTimeStampDate(), qr_code);
-
-                }
-
+                validateTestDrive();
                 break;
         }
     }
@@ -262,7 +264,103 @@ public class TestDriveAssetDetailFragment extends BaseActivity implements Dialog
             case AppUtils.dialog_ok_to_finish:
                 finish();
                 break;
+
+
+            case AppUtils.dialog_gps_enable: {
+
+                switch (which) {
+
+                    case DialogInterface.BUTTON_POSITIVE:
+                        displayLocationSettingsRequest();
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        setCustomActionBar();
+                        AppSharedPrefs.getInstance(context).setQrCode(qr_code);
+                        Utils.showProgressDialog(context, getString(R.string.loading));
+                        viewModel.doStartTestDrive(mEmp_id, assetId, AppSharedPrefs.getLatitude(), AppSharedPrefs.getLongitude(), Utils.getCurrentTimeStampDate(), Utils.getCurrentUTCTimeStampDate(), qr_code);
+
+                        break;
+                }
+            }
+            break;
         }
+    }
+
+    public void validateTestDrive() {
+
+        if (isDriveStart) {
+
+            setCustomActionBar();
+            AppSharedPrefs.getInstance(context).setQrCode("");
+//                    Utils.showProgressDialog(context, getString(R.string.loading));
+//                    viewModel.doStopTestDrive(mEmp_id, assetId, AppSharedPrefs.getLatitude(), AppSharedPrefs.getLongitude(), Utils.getCurrentTimeStampDate(), Utils.getCurrentUTCTimeStampDate(), AppSharedPrefs.getInstance(context).getTestDriveId());
+
+        } else {
+
+            if (Utils.isGpsEnable(context)) {
+                setCustomActionBar();
+                AppSharedPrefs.getInstance(context).setQrCode(qr_code);
+                Utils.showProgressDialog(context, getString(R.string.loading));
+                viewModel.doStartTestDrive(mEmp_id, assetId, AppSharedPrefs.getLatitude(), AppSharedPrefs.getLongitude(), Utils.getCurrentTimeStampDate(), Utils.getCurrentUTCTimeStampDate(), qr_code);
+            } else {
+                Utils.showAlert(context, "", getString(R.string.gps_enable_test_drive), "Ok", "Cancel", AppUtils.dialog_gps_enable, this);
+            }
+
+        }
+
+    }
+
+
+    private void displayLocationSettingsRequest() {
+
+        GoogleApiClient googleApiClient = new GoogleApiClient.Builder(context)
+                .addApi(LocationServices.API).build();
+        googleApiClient.connect();
+
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(10000 / 2);
+
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest);
+        builder.setAlwaysShow(true);
+
+        PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build());
+        result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+            @Override
+            public void onResult(LocationSettingsResult result) {
+                final Status status = result.getStatus();
+                switch (status.getStatusCode()) {
+
+                    case LocationSettingsStatusCodes.SUCCESS:
+                        Log.i("tag", "All location settings are satisfied.");
+                        if (Utils.checkPermissions(TestDriveAssetDetailFragment.this, AppUtils.LOCATION_PERMISSIONS)) {
+
+                        } else {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                requestPermissions(AppUtils.LOCATION_PERMISSIONS, AppUtils.REQUEST_CODE_LOCATION);
+                            }
+                        }
+                        break;
+
+                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                        Log.i("tag", "Location settings are not satisfied. Show the user a dialog to upgrade location settings ");
+
+                        try {
+                            // Show the dialog by calling startResolutionForResult(), and check the result
+                            // in onActivityResult().
+                            status.startResolutionForResult(TestDriveAssetDetailFragment.this, REQUEST_CHECK_SETTINGS);
+                        } catch (IntentSender.SendIntentException e) {
+                            Log.i("tag", "PendingIntent unable to execute request.");
+                        }
+                        break;
+                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                        Log.i("tag", "Location settings are inadequate, and cannot be fixed here. Dialog not created.");
+                        break;
+                }
+            }
+        });
     }
 
 

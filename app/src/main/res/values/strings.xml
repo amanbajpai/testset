@@ -142,6 +142,7 @@
     <string name="place_a_qr_code_or_bar_inside_the_rectangle_box_to_scan_it">Place a Qr code/Bar code inside the viewfinder rectangle box to scan it</string>
     <string name="_forgot_password">Forgot password</string>
     <string name="back_to_login">Back to login</string>
+    <string name="gps_enable_test_drive">Unable to fetch your location, It seems your Smartphone Location/Gps is turned OFF, Please turn it ON. You can continue it anyway.</string>
 
 
 </resources>
