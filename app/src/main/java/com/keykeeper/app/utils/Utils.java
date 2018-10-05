@@ -976,6 +976,39 @@ public class Utils {
     }
 
 
+    public static String formattedDateFromString(String inputFormat, String outputFormat, String inputDate,boolean isUtc) {
+
+        if (inputFormat.equals("")) { // if inputFormat = "", set a default input format.
+            inputFormat = "yyyy-MM-dd hh:mm:ss";
+        }
+
+        if (outputFormat.equals("")) {
+            outputFormat = "EEEE d 'de' MMMM 'del' yyyy"; // if inputFormat = "", set a default output format.
+        }
+        Date parsed;
+        String outputDate = "";
+
+        try {
+
+            SimpleDateFormat df_input = new SimpleDateFormat(inputFormat);
+            if (isUtc){
+                df_input.setTimeZone(TimeZone.getTimeZone("utc"));
+            }
+
+            SimpleDateFormat df_output = new SimpleDateFormat(outputFormat);
+            if (isUtc){
+                df_output.setTimeZone(TimeZone.getDefault());
+            }
+            parsed = df_input.parse(inputDate);
+            outputDate = df_output.format(parsed);
+        } catch (Exception e) {
+            LogUtils.v("formattedDateFromString", "Exception in formateDateFromstring(): " + e.getMessage());
+        }
+        return outputDate;
+
+    }
+
+
     public static String validateTime(String startTime, String endTime) {
 
         String startT = "N/A";
