@@ -179,13 +179,12 @@ public class LoginActivity extends BaseActivity implements DialogClickListener {
     }
 
     private void getLocation() {
-
+        Utils.showProgressDialog(context, "Fetching location...");
         LocationParams.Builder builder = new LocationParams.Builder();
         builder.setAccuracy(LocationAccuracy.HIGH);
         builder.setDistance(5); // in Meteres
         builder.setInterval(1000);
         LocationParams params = builder.build();
-
 
         location_control = SmartLocation.with(context).location().config(params);
 
@@ -194,6 +193,7 @@ public class LoginActivity extends BaseActivity implements DialogClickListener {
             public void onLocationUpdated(Location location) {
                 mlocation = location;
                 if (location.getLatitude() != 0 && location.getLongitude() != 0) {
+                    Utils.hideProgressDialog();
                     String lat = location.getLatitude() + "";
                     String lng = location.getLongitude() + "";
                     Log.e(" onLocationUpdated: ", lat + " " + lng);
@@ -201,6 +201,8 @@ public class LoginActivity extends BaseActivity implements DialogClickListener {
                     AppSharedPrefs.setLongitude(lng);
                     AppSharedPrefs.setSpeed(location.getSpeed() + "");
 
+                } else {
+                    getLocation();
                 }
             }
         });

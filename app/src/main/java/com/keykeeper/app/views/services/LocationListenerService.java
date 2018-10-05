@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.keykeeper.app.R;
@@ -167,7 +168,7 @@ public class LocationListenerService extends Service {
 
                     Log.e("Accuracy: ", "" + location.getAccuracy());
 
-                    if (location.getAccuracy() > 0 && location.getAccuracy() < 20) {
+                    if (location.getAccuracy() > 0 && location.getAccuracy() < 10) {
 
                         if (location.getLatitude() != Utils.validateStringToDouble(AppSharedPrefs.getInstance(context).getLatitude())
                                 || location.getLongitude() != Utils.validateStringToDouble(AppSharedPrefs.getInstance(context).getLongitude())) {
@@ -295,6 +296,8 @@ public class LocationListenerService extends Service {
                             }
 
                             if (trackLocationBaseResponse.getResultArray() != null && trackLocationBaseResponse.getResultArray().size() > 0) {
+                                // Store owned key ids here
+                                storeOwnedKeyIdsPreferences(trackLocationBaseResponse);
                                 handler.removeCallbacks(periodicUpdate);
                                 handler.postDelayed(periodicUpdate, trackLocationInterval);
                             } else {
@@ -325,7 +328,23 @@ public class LocationListenerService extends Service {
             handler.removeCallbacks(periodicUpdate);
             handler.postDelayed(periodicUpdate, trackLocationInterval);
         }
+    }
 
+    private void storeOwnedKeyIdsPreferences(TrackLocationBaseResponse
+                                                     trackLocationBaseResponse) {
+        String ownedKeys = null;
+        if (trackLocationBaseResponse != null && trackLocationBaseResponse.getResultArray().size() > 0) {
+            for (int i = 0; i < trackLocationBaseResponse.getResultArray().size(); i++) {
+                if (!TextUtils.isEmpty(String.valueOf(trackLocationBaseResponse.getResultArray().get(i).getAsset_id()))) {
+                    if (ownedKeys != null) {
+                        ownedKeys = ownedKeys + "," + trackLocationBaseResponse.getResultArray().get(i).getAsset_id();
+                    } else {
+                        ownedKeys = String.valueOf(trackLocationBaseResponse.getResultArray().get(i).getAsset_id());
+                    }
+                }
+            }
+            AppSharedPrefs.getInstance(context).setOwnedKeyIds(ownedKeys);
+        }
     }
 
 
