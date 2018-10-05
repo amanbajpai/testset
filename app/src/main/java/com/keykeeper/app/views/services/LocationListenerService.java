@@ -168,7 +168,7 @@ public class LocationListenerService extends Service {
 
                     Log.e("Accuracy: ", "" + location.getAccuracy());
 
-                    if (location.getAccuracy() > 0 && location.getAccuracy() < 10) {
+                    if (location.getAccuracy() > 0 && location.getAccuracy() < 2) {
 
                         if (location.getLatitude() != Utils.validateStringToDouble(AppSharedPrefs.getInstance(context).getLatitude())
                                 || location.getLongitude() != Utils.validateStringToDouble(AppSharedPrefs.getInstance(context).getLongitude())) {
