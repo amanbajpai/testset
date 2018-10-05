@@ -67,7 +67,7 @@ public interface AppUtils {
     int dialog_logout_app = 304;
     int dialog_request_succes = 305;
     int dialog_ok_mock_location = 306;
-
+    int dialog_gps_enable =307;
 
     /**
      * api status code
@@ -87,4 +87,5 @@ public interface AppUtils {
     String ASSET_CUSTOMER = "3";
 
     String ASSET_BEAN = "asset_bean";
+
 }

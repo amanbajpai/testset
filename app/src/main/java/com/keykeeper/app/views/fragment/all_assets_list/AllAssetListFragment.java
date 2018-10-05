@@ -175,6 +175,7 @@ public class AllAssetListFragment extends BaseFragment implements XRecyclerView.
             Utils.showSnackBar(binding, getString(R.string.internet_connection));
         }
 
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
