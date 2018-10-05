@@ -61,6 +61,7 @@ import com.keykeeper.app.views.fragment.home.HomeFragment;
 import com.keykeeper.app.views.fragment.notifications.NotificationFragment;
 import com.keykeeper.app.views.fragment.setting.SettingFragment;
 
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -584,6 +585,8 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
 
 
             AppSharedPrefs.getInstance(HomeActivity.this).clearPref();
+
+            Utils.clearNotification(context);
 
             Intent logOutIntent = new Intent(HomeActivity.this, LoginActivity.class);
             logOutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

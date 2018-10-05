@@ -6,6 +6,7 @@ import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.AppOpsManager;
 import android.app.DatePickerDialog;
+import android.app.NotificationManager;
 import android.content.ActivityNotFoundException;
 import android.content.ContentUris;
 import android.content.Context;
@@ -970,6 +971,39 @@ public class Utils {
             df_input.setTimeZone(TimeZone.getTimeZone("utc"));
             SimpleDateFormat df_output = new SimpleDateFormat(outputFormat);
             df_output.setTimeZone(TimeZone.getDefault());
+            parsed = df_input.parse(inputDate);
+            outputDate = df_output.format(parsed);
+        } catch (Exception e) {
+            LogUtils.v("formattedDateFromString", "Exception in formateDateFromstring(): " + e.getMessage());
+        }
+        return outputDate;
+
+    }
+
+
+    public static String formattedDateFromString(String inputFormat, String outputFormat, String inputDate,boolean isUtc) {
+
+        if (inputFormat.equals("")) { // if inputFormat = "", set a default input format.
+            inputFormat = "yyyy-MM-dd hh:mm:ss";
+        }
+
+        if (outputFormat.equals("")) {
+            outputFormat = "EEEE d 'de' MMMM 'del' yyyy"; // if inputFormat = "", set a default output format.
+        }
+        Date parsed;
+        String outputDate = "";
+
+        try {
+
+            SimpleDateFormat df_input = new SimpleDateFormat(inputFormat);
+            if (isUtc){
+                df_input.setTimeZone(TimeZone.getTimeZone("utc"));
+            }
+
+            SimpleDateFormat df_output = new SimpleDateFormat(outputFormat);
+            if (isUtc){
+                df_output.setTimeZone(TimeZone.getDefault());
+            }
             parsed = df_input.parse(inputDate);
             outputDate = df_output.format(parsed);
         } catch (Exception e) {
@@ -2015,6 +2049,7 @@ public class Utils {
         return formatter.format(date.getTime());
     }
 
+
     private static String calToDateTimeHiresStr(Calendar adatetime) {
         String DATE_TIME_STAMP_HIRES_FORMAT = "dd-MM-yyyy HH:mm:ss.SSS";
         return calToStr(adatetime, DATE_TIME_STAMP_HIRES_FORMAT);
@@ -2074,4 +2109,15 @@ public class Utils {
             e.printStackTrace();
         }
     }
+
+    public static void clearNotification(Context context) {
+        // Clear all notification
+        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            manager.deleteNotificationChannel(Keys.CHANNEL_NAME_BACKGROUND);
+        }
+        manager.cancelAll();
+    }
+
+
 }

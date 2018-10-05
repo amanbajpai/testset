@@ -17,6 +17,7 @@ import com.keykeeper.app.R;
 import com.keykeeper.app.model.bean.AssetsListResponseBean;
 import com.keykeeper.app.preferences.AppSharedPrefs;
 import com.keykeeper.app.utils.AppUtils;
+import com.keykeeper.app.utils.Connectivity;
 import com.keykeeper.app.utils.Utils;
 import com.keykeeper.app.views.activity.assetDetail.AssetDetailActivity;
 import com.keykeeper.app.views.custom_view.StyledTextViewBold;
@@ -67,12 +68,16 @@ public class MyAssetsAdapter extends RecyclerView.Adapter<MyAssetsAdapter.Holder
             @Override
             public void onClick(View view) {
 
-                AssetsListResponseBean.Result bean = assetLists.get(position);
-                Intent intent = new Intent(context, AssetDetailActivity.class);
-                intent.putExtra(AppUtils.ASSET_STATUS_CODE, REQ_TYPE);
-                intent.putExtra(AppUtils.ASSET_ID,bean.getAssetId());
-                intent.putExtra(AppUtils.SCANED_QR_CODE, bean.getQrCodeNumber());
-                listener.CallOnActivityResult(intent);
+                if (Connectivity.isConnected()) {
+                    AssetsListResponseBean.Result bean = assetLists.get(position);
+                    Intent intent = new Intent(context, AssetDetailActivity.class);
+                    intent.putExtra(AppUtils.ASSET_STATUS_CODE, REQ_TYPE);
+                    intent.putExtra(AppUtils.ASSET_ID,bean.getAssetId());
+                    intent.putExtra(AppUtils.SCANED_QR_CODE, bean.getQrCodeNumber());
+                    listener.CallOnActivityResult(intent);
+                }else {
+                    Utils.showSnackBar(context,view, context.getString(R.string.internet_connection));
+                }
 
             }
         });
@@ -103,7 +108,7 @@ public class MyAssetsAdapter extends RecyclerView.Adapter<MyAssetsAdapter.Holder
         }
 
         String date = Utils.formattedDateFromString(Utils.INPUT_DATE_TIME_FORMATE, Utils.OUTPUT_DATE_TIME_FORMATE, bean.getAssigned_approved_or_decline_at());
-        String time = Utils.formattedDateFromString(Utils.INPUT_TIME_FORMATE, Utils.OUTPUT_HOUR_TIME_FORMATE, bean.getAssets_hold_remain_time());
+        String time = Utils.formattedDateFromString(Utils.INPUT_TIME_FORMATE, Utils.OUTPUT_HOUR_TIME_FORMATE, bean.getAssets_hold_remain_time(),false);
 
         //currently use to show owner
         holder.assigned_at_tv.setText("Assigned At: " + date);
