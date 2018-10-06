@@ -33,6 +33,7 @@ public class AppSharedPrefs {
     public static final String TEST_DRIVE_ID = "test_drive_id";
     public static final String ASSET_NAME_TEST_DRIVE = "asset_name_test_drive";
     public static final String TEST_DRIVE_ASSET_ID = "test_drive_asset_id";
+    public static final String NOTIFICATION_COUNT = "NOTIFICATION_COUNT";
 
     private static Context mContext = null;
     public static AppSharedPrefs instance = null;
@@ -294,6 +295,15 @@ public class AppSharedPrefs {
 
     public static boolean isToTrackLocation() {
         return sp.getBoolean(IS_TO_TRACK_LOCATION, false);
+    }
+
+    public static void setNotificationCount(int count) {
+        prefEditor.putInt(NOTIFICATION_COUNT, count);
+        prefEditor.commit();
+    }
+
+    public static int getNotificationCount() {
+        return sp.getInt(NOTIFICATION_COUNT, 0);
     }
 
 }

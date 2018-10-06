@@ -19,6 +19,7 @@ import com.keykeeper.app.databinding.FragmentNotificationBinding;
 import com.keykeeper.app.interfaces.DialogClickListener;
 import com.keykeeper.app.model.bean.BaseResponse;
 import com.keykeeper.app.model.bean.NotificationsResponseBean;
+import com.keykeeper.app.preferences.AppSharedPrefs;
 import com.keykeeper.app.utils.AppUtils;
 import com.keykeeper.app.utils.Connectivity;
 import com.keykeeper.app.utils.Utils;
@@ -27,6 +28,8 @@ import com.keykeeper.app.views.adapter.NotificationsListAdapter;
 import com.keykeeper.app.views.base.BaseFragment;
 
 import java.util.ArrayList;
+
+import me.leolin.shortcutbadger.ShortcutBadger;
 
 /**
  * Created by ankurrawal on 6/9/18.
@@ -103,6 +106,7 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
 
         @Override
         public void onChanged(@Nullable Integer value) {
+
             switch (value) {
 
                 case AppUtils.NO_INTERNET:
@@ -114,6 +118,7 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
                     Utils.showSnackBar(binding, getString(R.string.server_error));
                     break;
             }
+
         }
     };
 
@@ -129,6 +134,13 @@ public class NotificationFragment extends BaseFragment implements XRecyclerView.
                     resultArrayList.add(notificationsResponseBean.getResult().get(i));
                 }
                 notificationsListAdapter.setNotificationList(context, resultArrayList);
+                int count= Utils.validateStringToInt(notificationsResponseBean.getResult().get(0).getUnreadCount());
+                AppSharedPrefs.setNotificationCount(count);
+                if (count >0){
+                    ShortcutBadger.applyCount(context,count);
+                }else {
+                    ShortcutBadger.removeCount(context);
+                }
                 activity.setRightButtonEnable("Clear All", true, NotificationFragment.this);
 
             } else {

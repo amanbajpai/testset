@@ -2120,4 +2120,17 @@ public class Utils {
     }
 
 
+    public static Double parseDouble(String value) {
+
+        try{
+
+            double d =Double.parseDouble(value);
+            return d;
+
+        }catch (Exception e){
+
+        }
+
+        return 0.0;
+    }
 }

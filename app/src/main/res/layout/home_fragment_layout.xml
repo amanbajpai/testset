@@ -16,6 +16,7 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/root_ll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -215,5 +216,26 @@
 
 
         </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/enable_gps_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"
+            android:background="@color/blue">
+
+            <com.keykeeper.app.views.custom_view.StyledTextViewRegular
+                android:id="@+id/gps_enable_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/location_services_disabled_tap_here_to_enable_location_services"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp" />
+        </LinearLayout>
+
     </RelativeLayout>
+
 </layout>

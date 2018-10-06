@@ -2,17 +2,32 @@ package com.keykeeper.app.views.fragment.home;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.IntentSender;
 import android.databinding.DataBindingUtil;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.keykeeper.app.R;
 import com.keykeeper.app.databinding.HomeFragmentLayoutBinding;
 import com.keykeeper.app.interfaces.DialogClickListener;
@@ -26,6 +41,8 @@ import com.keykeeper.app.views.activity.AssetListActivity;
 import com.keykeeper.app.views.activity.assetDetail.AssetDetailActivity;
 import com.keykeeper.app.views.activity.chat.ChatActivity;
 import com.keykeeper.app.views.activity.history.HistoryActivity;
+import com.keykeeper.app.views.activity.home.HomeActivity;
+import com.keykeeper.app.views.activity.login.LoginActivity;
 import com.keykeeper.app.views.activity.transfer.TransferActivity;
 import com.keykeeper.app.views.base.BaseFragment;
 import com.keykeeper.app.views.fragment.testDrive.TestDriveAssetDetailFragment;
@@ -34,6 +51,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import static io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider.REQUEST_CHECK_SETTINGS;
 
 public class HomeFragment extends BaseFragment implements DialogClickListener {
 
@@ -49,6 +68,7 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
         viewModel = ViewModelProviders.of(this).get(HomeFragmentViewModel.class);
         initializeViews(binding.getRoot());
         return binding.getRoot();
+
     }
 
     @Override
@@ -63,7 +83,7 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
 
         viewModel.validator.observe(this, observer);
         viewModel.response_allassets_owned.observe(this, responseAssetsOwnedCurrently);
-
+        binding.enableGpsLl.setOnClickListener(this);
 
     }
 
@@ -118,6 +138,10 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
                 if (!TextUtils.isEmpty(AppSharedPrefs.getInstance(context).getChatUrl())) {
                     startActivity(new Intent(context, ChatActivity.class));
                 }
+                break;
+
+            case R.id.enable_gps_ll:
+                displayLocationSettingsRequest();
                 break;
         }
     }
@@ -283,7 +307,15 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
         super.onResume();
         Utils.showProgressDialog(context, getString(R.string.loading));
         viewModel.getCurrentAssetsOwned();
+        context.registerReceiver(receiver, new IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION));
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        context.unregisterReceiver(receiver);
+    }
+
 
     private void storeOwnedKeyIdsPreferences(EmployeeOwnedAssetsListResponse employeeOwnedAssetsListResponse) {
         String ownedKeys = null;
@@ -300,4 +332,69 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
             AppSharedPrefs.getInstance(context).setOwnedKeyIds(ownedKeys);
         }
     }
+
+    BroadcastReceiver receiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if (Utils.isGpsEnable(context)) {
+                binding.enableGpsLl.setVisibility(View.GONE);
+            } else {
+                binding.enableGpsLl.setVisibility(View.VISIBLE);
+            }
+        }
+    };
+
+
+    private void displayLocationSettingsRequest() {
+        GoogleApiClient googleApiClient = new GoogleApiClient.Builder(context)
+                .addApi(LocationServices.API).build();
+        googleApiClient.connect();
+
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(10000 / 2);
+
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest);
+        builder.setAlwaysShow(true);
+
+        PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build());
+        result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+            @Override
+            public void onResult(LocationSettingsResult result) {
+                final Status status = result.getStatus();
+                switch (status.getStatusCode()) {
+
+                    case LocationSettingsStatusCodes.SUCCESS:
+                        Log.i("tag", "All location settings are satisfied.");
+                        if (Utils.checkPermissions(getActivity(), AppUtils.LOCATION_PERMISSIONS)) {
+
+                        } else {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                requestPermissions(AppUtils.LOCATION_PERMISSIONS, AppUtils.REQUEST_CODE_LOCATION);
+                            }
+                        }
+                        break;
+
+                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                        Log.i("tag", "Location settings are not satisfied. Show the user a dialog to upgrade location settings ");
+
+                        try {
+                            // Show the dialog by calling startResolutionForResult(), and check the result
+                            // in onActivityResult().
+                            status.startResolutionForResult(getActivity(), REQUEST_CHECK_SETTINGS);
+                        } catch (IntentSender.SendIntentException e) {
+                            Log.i("tag", "PendingIntent unable to execute request.");
+                        }
+                        break;
+                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                        Log.i("tag", "Location settings are inadequate, and cannot be fixed here. Dialog not created.");
+                        break;
+                }
+            }
+        });
+    }
+
 }

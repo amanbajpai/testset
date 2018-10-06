@@ -9,98 +9,175 @@
             type="com.keykeeper.app.views.activity.testdrive.TestDriveStuckViewModel" />
     </data>
 
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/detail_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="vertical"
-            android:padding="@dimen/_15sdp">
+            android:orientation="vertical">
 
-            <com.keykeeper.app.views.custom_view.StyledTextViewBold
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/_5sdp"
-                android:text="@string/stock_number"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_16sdp" />
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/satellite_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:text="@string/satellite"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/_14sdp" />
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray_light" />
+
+                <TextView
+                    android:id="@+id/standard_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:text="@string/standard"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp" />
 
 
-            <com.keykeeper.app.views.custom_view.StyledTextViewRegular
-                android:id="@+id/tv_key_name"
+            </LinearLayout>
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/_5sdp"
-                android:text="N/A"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_16sdp" />
+                android:layout_centerInParent="true"
+                android:orientation="horizontal">
+
+                <com.keykeeper.app.views.custom_view.StyledTextViewBold
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:text="@string/stock_number"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sdp" />
 
 
-            <com.keykeeper.app.views.custom_view.StyledTextViewBold
+                <com.keykeeper.app.views.custom_view.StyledTextViewRegular
+                    android:id="@+id/tv_key_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:text="N/A"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sdp" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/_5sdp"
-                android:text="@string/start_date"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_16sdp" />
+                android:layout_centerInParent="true"
+                android:orientation="horizontal">
+
+                <com.keykeeper.app.views.custom_view.StyledTextViewBold
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:text="@string/start_at"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sdp" />
 
 
-            <com.keykeeper.app.views.custom_view.StyledTextViewRegular
-                android:id="@+id/tv_started_datetime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/_5sdp"
-                android:text="N/A"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_16sdp" />
+                <com.keykeeper.app.views.custom_view.StyledTextViewRegular
+                    android:id="@+id/tv_started_datetime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:text="N/A"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sdp" />
 
-
-            <!-- <com.lotview.app.views.custom_view.StyledTextViewBold
-                 android:id="@+id/tv_end_datetime"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:paddingLeft="@dimen/_5sdp"
-                 android:text=""
-                 android:textColor="@color/black"
-                 android:textSize="@dimen/_16sdp" />-->
-
+            </LinearLayout>
 
         </LinearLayout>
 
-        <com.keykeeper.app.views.custom_view.StyledTextViewBold
-            android:id="@+id/tv_test_drive_stop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="11dp"
-            android:background="@drawable/green_rect_bg"
-            android:gravity="center"
-            android:paddingBottom="@dimen/_10sdp"
-            android:paddingLeft="@dimen/_25sdp"
-            android:paddingRight="@dimen/_25sdp"
-            android:paddingTop="@dimen/_10sdp"
-            android:text="Stop Test Drive"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_13sdp"
-            android:visibility="visible" />
 
-
-        <com.keykeeper.app.views.custom_view.StyledTextViewRegular
-            android:id="@+id/gps_enable_tv"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Unable to get location please enable GPS"
-            android:textSize="@dimen/_15sdp"
-            android:textColor="@color/colorRed"
-            />
+            android:layout_above="@+id/bottom_ll"
+            android:layout_below="@+id/detail_ll">
+
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/_5sdp" />
+
+
+            <LinearLayout
+                android:id="@+id/gps_enable_ll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/root_ll"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:background="@color/blue">
+
+                <com.keykeeper.app.views.custom_view.StyledTextViewRegular
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@+id/tv_test_drive_stop"
+                    android:gravity="center"
+                    android:text="@string/location_services_disabled_tap_here_to_enable_location_services"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12sdp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/bottom_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+
+
+            <com.keykeeper.app.views.custom_view.StyledTextViewBold
+                android:id="@+id/tv_test_drive_stop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/green_rect_bg"
+                android:gravity="center"
+                android:paddingBottom="@dimen/_10sdp"
+                android:paddingLeft="@dimen/_25sdp"
+                android:paddingRight="@dimen/_25sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:text="Stop Test Drive"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13sdp"
+                android:visibility="visible" />
+        </LinearLayout>
 
     </RelativeLayout>
+
 
 </layout>

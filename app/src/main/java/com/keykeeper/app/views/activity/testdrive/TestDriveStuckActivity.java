@@ -12,6 +12,7 @@ import android.databinding.DataBindingUtil;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
@@ -28,6 +29,13 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.keykeeper.app.R;
 import com.keykeeper.app.databinding.ActivityTestDriveLayoutBinding;
 import com.keykeeper.app.interfaces.DialogClickListener;
@@ -39,23 +47,30 @@ import com.keykeeper.app.utils.AppUtils;
 import com.keykeeper.app.utils.Connectivity;
 import com.keykeeper.app.utils.Utils;
 import com.keykeeper.app.views.activity.home.HomeActivity;
+import com.keykeeper.app.views.activity.keyMap.CustomInfoWindowGoogleMap;
 import com.keykeeper.app.views.base.BaseActivity;
 import com.keykeeper.app.views.custom_view.CustomActionBar;
 
 import java.util.ArrayList;
 
+import static com.keykeeper.app.views.activity.keyMap.KeyOnMapActivity.isDataLoading;
 import static io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider.REQUEST_CHECK_SETTINGS;
 
 /**
  * Created by ankurrawal on 18/9/18.
  */
-public class TestDriveStuckActivity extends BaseActivity implements DialogClickListener {
+public class TestDriveStuckActivity extends BaseActivity implements DialogClickListener, OnMapReadyCallback {
 
+    private static final long TIMER_VALUE = 3000;
+    private int MAP_TYPE = GoogleMap.MAP_TYPE_SATELLITE;
     private ActivityTestDriveLayoutBinding binding;
     private TestDriveStuckViewModel viewModel;
     private boolean isDriveStart;
     private Context context;
     private CheckIfAnyTestDriveResponseBean.Result checkIfAnyTestDriveResponseBean = null;
+    private SupportMapFragment mapFragment;
+    private GoogleMap googleMap;
+    private CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,14 +102,37 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
 
         binding.tvTestDriveStop.setOnClickListener(this);
 
+        binding.satelliteTv.setOnClickListener(this);
+        binding.standardTv.setOnClickListener(this);
+
+        binding.gpsEnableLl.setOnClickListener(this);
+
         viewModel.doCheckIfTestDriveIsRuning(AppSharedPrefs.getTestDriveId());
         viewModel.getCurrentAssetsOwned();
+
+        /**
+         * register receiver for gps broad cast
+         */
         registerReceiver(receiver, new IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION));
+
         if (Utils.isGpsEnable(context)) {
-            binding.gpsEnableTv.setVisibility(View.GONE);
+            binding.gpsEnableLl.setVisibility(View.GONE);
         } else {
-            binding.gpsEnableTv.setVisibility(View.VISIBLE);
+            binding.gpsEnableLl.setVisibility(View.VISIBLE);
         }
+
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        super.onDestroy();
+        unregisterReceiver(receiver);
+        countDownTimer.cancel();
 
     }
 
@@ -106,6 +144,25 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
             case R.id.tv_test_drive_stop:
                 validateStartService();
                 break;
+
+            case R.id.satellite_tv:
+                MAP_TYPE = GoogleMap.MAP_TYPE_SATELLITE;
+                googleMap.setMapType(MAP_TYPE);
+                binding.standardTv.setTextColor(getResources().getColor(R.color.black));
+                binding.satelliteTv.setTextColor(getResources().getColor(R.color.blue));
+                break;
+
+            case R.id.standard_tv:
+                MAP_TYPE = GoogleMap.MAP_TYPE_NORMAL;
+                googleMap.setMapType(MAP_TYPE);
+                binding.standardTv.setTextColor(getResources().getColor(R.color.blue));
+                binding.satelliteTv.setTextColor(getResources().getColor(R.color.black));
+                break;
+
+
+            case R.id.gps_enable_ll:
+                displayLocationSettingsRequest();
+                break;
         }
 
     }
@@ -114,9 +171,9 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
 
         if (Connectivity.isConnected()) {
             if (isDriveStart) {
-                 setCustomActionBar();
-                    Utils.showProgressDialog(context, getString(R.string.loading));
-                    viewModel.doStopTestDrive(AppSharedPrefs.getEmployeeID(), Integer.valueOf(checkIfAnyTestDriveResponseBean.getAsset_id()), AppSharedPrefs.getLatitude(), AppSharedPrefs.getLongitude(), Utils.getCurrentTimeStampDate(), Utils.getCurrentUTCTimeStampDate(), AppSharedPrefs.getInstance(context).getTestDriveId());
+                setCustomActionBar();
+                Utils.showProgressDialog(context, getString(R.string.loading));
+                viewModel.doStopTestDrive(AppSharedPrefs.getEmployeeID(), Integer.valueOf(checkIfAnyTestDriveResponseBean.getAsset_id()), AppSharedPrefs.getLatitude(), AppSharedPrefs.getLongitude(), Utils.getCurrentTimeStampDate(), Utils.getCurrentUTCTimeStampDate(), AppSharedPrefs.getInstance(context).getTestDriveId());
             }
         } else {
             Utils.showAlert(context, "", getString(R.string.internet_connection), "ok", "", AppUtils.dialog_ok_click, TestDriveStuckActivity.this);
@@ -171,7 +228,7 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
 
     private void setViewForRunningTestDrive() {
         binding.tvKeyName.setText(checkIfAnyTestDriveResponseBean.getAsset_name());
-        binding.tvStartedDatetime.setText("Start time: " + checkIfAnyTestDriveResponseBean.getStart_date_time());
+        binding.tvStartedDatetime.setText(checkIfAnyTestDriveResponseBean.getStart_date_time());
     }
 
 
@@ -228,7 +285,6 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
         if (viewModel != null) {
             viewModel.doCheckIfTestDriveIsRuning(AppSharedPrefs.getInstance(context).getTestDriveId());
         }
-
     }
 
 
@@ -267,20 +323,116 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
     }
 
 
-
-
     BroadcastReceiver receiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
 
             if (Utils.isGpsEnable(context)) {
-                binding.gpsEnableTv.setVisibility(View.GONE);
+                binding.gpsEnableLl.setVisibility(View.GONE);
             } else {
-                binding.gpsEnableTv.setVisibility(View.VISIBLE);
+                binding.gpsEnableLl.setVisibility(View.VISIBLE);
             }
         }
     };
 
+
+    @Override
+    public void onMapReady(GoogleMap gMap) {
+
+        googleMap = gMap;
+        Double lat = Utils.parseDouble(AppSharedPrefs.getLatitude());
+        Double lng = Utils.parseDouble(AppSharedPrefs.getLongitude());
+        googleMap.clear();
+        googleMap.setMapType(MAP_TYPE);
+        googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(lat, lng))
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), 14));
+        countdownForConnection();
+
+    }
+
+    public void countdownForConnection() {
+
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+
+        countDownTimer = new CountDownTimer(30000, TIMER_VALUE) {
+
+            public void onTick(long millisUntilFinished) {
+                Double lat = Utils.parseDouble(AppSharedPrefs.getLatitude());
+
+                Double lng = Utils.parseDouble(AppSharedPrefs.getLongitude());
+
+                googleMap.clear();
+
+                googleMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(lat, lng))
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), 14));
+
+            }
+
+            public void onFinish() {
+                countDownTimer.start();
+            }
+
+        }.start();
+
+    }
+
+
+    private void displayLocationSettingsRequest() {
+        GoogleApiClient googleApiClient = new GoogleApiClient.Builder(context)
+                .addApi(LocationServices.API).build();
+        googleApiClient.connect();
+
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(10000 / 2);
+
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest);
+        builder.setAlwaysShow(true);
+
+        PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build());
+        result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+            @Override
+            public void onResult(LocationSettingsResult result) {
+                final Status status = result.getStatus();
+                switch (status.getStatusCode()) {
+
+                    case LocationSettingsStatusCodes.SUCCESS:
+                        Log.i("tag", "All location settings are satisfied.");
+                        if (Utils.checkPermissions(TestDriveStuckActivity.this, AppUtils.LOCATION_PERMISSIONS)) {
+
+                        } else {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                requestPermissions(AppUtils.LOCATION_PERMISSIONS, AppUtils.REQUEST_CODE_LOCATION);
+                            }
+                        }
+                        break;
+
+                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                        Log.i("tag", "Location settings are not satisfied. Show the user a dialog to upgrade location settings ");
+
+                        try {
+                            // Show the dialog by calling startResolutionForResult(), and check the result
+                            // in onActivityResult().
+                            status.startResolutionForResult(TestDriveStuckActivity.this, REQUEST_CHECK_SETTINGS);
+                        } catch (IntentSender.SendIntentException e) {
+                            Log.i("tag", "PendingIntent unable to execute request.");
+                        }
+                        break;
+                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                        Log.i("tag", "Location settings are inadequate, and cannot be fixed here. Dialog not created.");
+                        break;
+                }
+            }
+        });
+    }
 
 }
