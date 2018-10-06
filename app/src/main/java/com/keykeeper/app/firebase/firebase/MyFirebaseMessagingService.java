@@ -26,6 +26,8 @@ import org.json.JSONObject;
 import java.util.Map;
 import java.util.Random;
 
+import me.leolin.shortcutbadger.ShortcutBadger;
+
 /*
  * Created by ankurrawal
  */
@@ -101,6 +103,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             NotificationChannel mChannel = new NotificationChannel(
                     channelId, channelName, importance);
             notificationManager.createNotificationChannel(mChannel);
+        }
+
+        int count  = AppSharedPrefs.getNotificationCount();
+        count++;
+        AppSharedPrefs.setNotificationCount(count);
+
+        if (count >0){
+            ShortcutBadger.applyCount(context,count);
+        }else {
+            ShortcutBadger.removeCount(context);
         }
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, channelId);

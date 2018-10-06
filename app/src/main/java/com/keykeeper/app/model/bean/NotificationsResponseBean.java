@@ -49,6 +49,20 @@ public class NotificationsResponseBean extends BaseResponse {
         @Expose
         private String notification_created_time;
 
+
+        @SerializedName("unreadcount")
+        @Expose
+        private String unreadCount;
+
+
+        public String getUnreadCount() {
+            return unreadCount;
+        }
+
+        public void setUnreadCount(String unreadCount) {
+            this.unreadCount = unreadCount;
+        }
+
         public String getNotificationId() {
             return notificationId;
         }

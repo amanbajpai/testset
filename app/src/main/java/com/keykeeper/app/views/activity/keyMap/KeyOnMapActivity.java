@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.CompoundButton;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -31,7 +32,7 @@ import com.keykeeper.app.views.custom_view.CustomActionBar;
 
 public class KeyOnMapActivity extends BaseActivity implements DialogClickListener {
 
-    private static final long NODE_CONNECTION_CHECK = 15000;
+    private static final long NODE_CONNECTION_CHECK = 30000;
     SupportMapFragment mapFragment;
     ActivityKeyOnMapBinding keyOnMapBinding;
     KeyOnMapViewModel keyOnMapViewModel;
@@ -41,11 +42,14 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
     public static boolean isDataLoading;
 
     AssetDetailBean.Result assetBean;
+    private GoogleMap googleMap;
+    public int MAP_TYPE = GoogleMap.MAP_TYPE_SATELLITE;
+    boolean isSatelite = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         context = this;
         setCustomActionBar();
         initializeViews();
@@ -76,6 +80,8 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
         getLatLon();
         countdownForConnection();
         assetBean = (AssetDetailBean.Result) getIntent().getSerializableExtra(AppUtils.ASSET_BEAN);
+        keyOnMapBinding.satelliteTv.setOnClickListener(this);
+        keyOnMapBinding.standardTv.setOnClickListener(this);
 
     }
 
@@ -108,11 +114,14 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
 
 
     private void showMarker(double emp_lat, double emp_long, String location) {
+
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
-            public void onMapReady(GoogleMap googleMap) {
-                googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+            public void onMapReady(GoogleMap gMap) {
 
+                googleMap = gMap;
+                googleMap.clear();
+                googleMap.setMapType(MAP_TYPE);
                 googleMap.addMarker(new MarkerOptions()
                         .position(new LatLng(emp_lat, emp_long))
                         .title(location)
@@ -128,7 +137,9 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
 
     @Override
     public void onClick(View v) {
+
         switch (v.getId()) {
+
             case R.id.left_iv:
                 finish();
                 break;
@@ -138,13 +149,29 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
                     getLatLon();
                 }
                 break;
+
+            case R.id.satellite_tv:
+                MAP_TYPE = GoogleMap.MAP_TYPE_SATELLITE;
+                googleMap.setMapType(MAP_TYPE);
+                keyOnMapBinding.standardTv.setTextColor(getResources().getColor(R.color.black));
+                keyOnMapBinding.satelliteTv.setTextColor(getResources().getColor(R.color.blue));
+                break;
+
+            case R.id.standard_tv:
+                MAP_TYPE = GoogleMap.MAP_TYPE_NORMAL;
+                googleMap.setMapType(MAP_TYPE);
+                keyOnMapBinding.standardTv.setTextColor(getResources().getColor(R.color.blue));
+                keyOnMapBinding.satelliteTv.setTextColor(getResources().getColor(R.color.black));
+                break;
         }
+
     }
 
     Observer<Integer> observer = new Observer<Integer>() {
 
         @Override
         public void onChanged(@Nullable Integer value) {
+
             Utils.hideProgressDialog();
             switch (value) {
                 case AppUtils.NO_INTERNET:
@@ -181,7 +208,7 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
                 marker_data += "Stock number: " + Utils.validateValue(assetBean.getAssetName()) + "\n";
             }
 
-            marker_data += "Location: " + Utils.validateValue(bean.getResult().getLocation());
+            marker_data += "Location: " + Utils.validateValue(bean.getResult().getLocation()) + "\n";
 
 
             if (Utils.validateInteger(assetBean.getAssetAssginedStatus()).equals("1")) {
@@ -190,10 +217,10 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
                 if (Utils.validateStringValue(assetBean.getEmployeeName()).equals("") ||
                         Utils.validateInteger(assetBean.getEmployeeId()).equals(mEmp_id)) {
 
-                    marker_data += "Assignee: You";
+                    marker_data += "Owner: You";
 
                 } else {
-                    marker_data += "Assignee: " + Utils.validateValue(assetBean.getEmployeeName());
+                    marker_data += "Owner: " + Utils.validateValue(assetBean.getEmployeeName());
                 }
 
             } else {

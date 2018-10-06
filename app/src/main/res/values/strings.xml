@@ -137,12 +137,16 @@
 
     <string name="google_maps_key">AIzaSyDUzFLr_RoI5PItlCd12Tn-8YEqO210B94</string>
     <string name="firebase_key">0b2a50fa30c096f0b61aae2622ab361081013c2f</string>
-    <string name="stock_number">Stock Number</string>
-    <string name="start_date">Start Date</string>
+    <string name="stock_number">Stock Number: </string>
+    <string name="start_date">Start Date: </string>
     <string name="place_a_qr_code_or_bar_inside_the_rectangle_box_to_scan_it">Place a Qr code/Bar code inside the viewfinder rectangle box to scan it</string>
     <string name="_forgot_password">Forgot password</string>
     <string name="back_to_login">Back to login</string>
     <string name="gps_enable_test_drive">Unable to fetch your location, It seems your Smartphone Location/Gps is turned OFF, Please turn it ON. You can continue it anyway.</string>
+    <string name="start_at">Start At</string>
+    <string name="satellite">Satellite</string>
+    <string name="standard">Standard</string>
+    <string name="location_services_disabled_tap_here_to_enable_location_services">Location Services disabled, Tap here to enable Location Services.</string>
 
 
 </resources>
