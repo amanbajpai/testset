@@ -4,7 +4,6 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentSender;
@@ -14,11 +13,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
-import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -47,13 +45,11 @@ import com.keykeeper.app.utils.AppUtils;
 import com.keykeeper.app.utils.Connectivity;
 import com.keykeeper.app.utils.Utils;
 import com.keykeeper.app.views.activity.home.HomeActivity;
-import com.keykeeper.app.views.activity.keyMap.CustomInfoWindowGoogleMap;
 import com.keykeeper.app.views.base.BaseActivity;
 import com.keykeeper.app.views.custom_view.CustomActionBar;
 
 import java.util.ArrayList;
 
-import static com.keykeeper.app.views.activity.keyMap.KeyOnMapActivity.isDataLoading;
 import static io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider.REQUEST_CHECK_SETTINGS;
 
 /**
@@ -148,21 +144,29 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
             case R.id.satellite_tv:
                 MAP_TYPE = GoogleMap.MAP_TYPE_SATELLITE;
                 googleMap.setMapType(MAP_TYPE);
-                binding.standardTv.setTextColor(getResources().getColor(R.color.black));
-                binding.satelliteTv.setTextColor(getResources().getColor(R.color.blue));
+
+                binding.satelliteTv.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.send_request_selector));
+                binding.standardTv.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.received_request_deselector));
+                binding.standardTv.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+                binding.satelliteTv.setTextColor(ContextCompat.getColor(context, R.color.white));
+
+
                 break;
 
             case R.id.standard_tv:
                 MAP_TYPE = GoogleMap.MAP_TYPE_NORMAL;
                 googleMap.setMapType(MAP_TYPE);
-                binding.standardTv.setTextColor(getResources().getColor(R.color.blue));
-                binding.satelliteTv.setTextColor(getResources().getColor(R.color.black));
-                break;
 
+                binding.satelliteTv.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.send_request_deselector));
+                binding.standardTv.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.received_request_selector));
+                binding.satelliteTv.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+                binding.standardTv.setTextColor(ContextCompat.getColor(context, R.color.white));
+                break;
 
             case R.id.gps_enable_ll:
                 displayLocationSettingsRequest();
                 break;
+
         }
 
     }
@@ -371,8 +375,8 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
 
                 googleMap.addMarker(new MarkerOptions()
                         .position(new LatLng(lat, lng))
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), 14));
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), 16));
 
             }
 

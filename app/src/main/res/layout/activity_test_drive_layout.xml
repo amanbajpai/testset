@@ -20,41 +20,84 @@
             android:orientation="vertical">
 
 
+            <!--      <LinearLayout
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:background="@color/white"
+                      android:orientation="horizontal">
+
+                      <TextView
+                          android:id="@+id/satellite_tv"
+                          android:layout_width="0dp"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="0.5"
+                          android:gravity="center"
+                          android:padding="@dimen/_5sdp"
+                          android:text="@string/satellite"
+                          android:textColor="@color/blue"
+                          android:textSize="@dimen/_14sdp" />
+
+                      <View
+                          android:layout_width="0.5dp"
+                          android:layout_height="match_parent"
+                          android:background="@color/gray_light" />
+
+                      <TextView
+                          android:id="@+id/standard_tv"
+                          android:layout_width="0dp"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="0.5"
+                          android:gravity="center"
+                          android:padding="@dimen/_5sdp"
+                          android:text="@string/standard"
+                          android:textColor="@color/black"
+                          android:textSize="@dimen/_14sdp" />
+
+
+                  </LinearLayout>-->
+
             <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="horizontal">
+                android:layout_marginLeft="@dimen/_3sdp"
+                android:layout_marginRight="@dimen/_3sdp"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="2">
 
-                <TextView
+
+                <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                     android:id="@+id/satellite_tv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
+                    android:layout_weight="1"
+                    android:background="@drawable/send_request_selector"
+                    android:clickable="true"
                     android:gravity="center"
-                    android:padding="@dimen/_5sdp"
+                    android:padding="@dimen/_4sdp"
                     android:text="@string/satellite"
-                    android:textColor="@color/blue"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_14sdp" />
 
-                <View
-                    android:layout_width="0.5dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/gray_light" />
-
-                <TextView
+                <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                     android:id="@+id/standard_tv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
+                    android:layout_weight="1"
+                    android:background="@drawable/received_request_deselector"
+                    android:clickable="true"
                     android:gravity="center"
-                    android:padding="@dimen/_5sdp"
+                    android:padding="@dimen/_4sdp"
                     android:text="@string/standard"
-                    android:textColor="@color/black"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/_14sdp" />
-
-
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
 
 
             <LinearLayout
@@ -132,9 +175,9 @@
                 android:layout_height="match_parent"
                 android:layout_below="@+id/root_ll"
                 android:layout_centerInParent="true"
-                android:visibility="gone"
                 android:layout_marginTop="@dimen/_3sdp"
-                android:background="@color/blue">
+                android:background="@color/blue"
+                android:visibility="gone">
 
                 <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                     android:layout_width="match_parent"
