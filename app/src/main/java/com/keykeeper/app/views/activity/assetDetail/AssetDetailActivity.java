@@ -151,10 +151,14 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
              * Asset handover
              */
         } else if (asset_emp_id.equals(mEmp_id)) {
-            if (isConfirm || IS_FROM_SCANNER)
+           /* if (isConfirm || IS_FROM_SCANNER)
                 return getString(R.string.confirm_transfer);
             else
-                return getString(R.string.transfer_ownership);
+                return getString(R.string.transfer_ownership);*/
+
+            HAS_SCANNED = true;
+            return getString(R.string.confirm_transfer);
+
 
             /**
              * Asset transfer

@@ -981,7 +981,7 @@ public class Utils {
     }
 
 
-    public static String formattedDateFromString(String inputFormat, String outputFormat, String inputDate,boolean isUtc) {
+    public static String formattedDateFromString(String inputFormat, String outputFormat, String inputDate, boolean isUtc) {
 
         if (inputFormat.equals("")) { // if inputFormat = "", set a default input format.
             inputFormat = "yyyy-MM-dd hh:mm:ss";
@@ -996,12 +996,12 @@ public class Utils {
         try {
 
             SimpleDateFormat df_input = new SimpleDateFormat(inputFormat);
-            if (isUtc){
+            if (isUtc) {
                 df_input.setTimeZone(TimeZone.getTimeZone("utc"));
             }
 
             SimpleDateFormat df_output = new SimpleDateFormat(outputFormat);
-            if (isUtc){
+            if (isUtc) {
                 df_output.setTimeZone(TimeZone.getDefault());
             }
             parsed = df_input.parse(inputDate);
@@ -2122,12 +2122,12 @@ public class Utils {
 
     public static Double parseDouble(String value) {
 
-        try{
+        try {
 
-            double d =Double.parseDouble(value);
+            double d = Double.parseDouble(value);
             return d;
 
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 
