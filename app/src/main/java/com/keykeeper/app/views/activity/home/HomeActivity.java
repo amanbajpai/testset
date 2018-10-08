@@ -61,7 +61,6 @@ import com.keykeeper.app.views.fragment.home.HomeFragment;
 import com.keykeeper.app.views.fragment.notifications.NotificationFragment;
 import com.keykeeper.app.views.fragment.setting.SettingFragment;
 
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -324,6 +323,14 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
     public void onItemClick(int position) {
         if (!Connectivity.isConnected()) {
             Utils.showSnackBar(HomeActivity.this, drawerView, getString(R.string.internet_connection));
+            return;
+        }
+
+        if (!AppSharedPrefs.getInstance(getApplicationContext()).isLogin()) {
+            return;
+        }
+
+        if (AppSharedPrefs.getInstance(getApplicationContext()).isTestDriveRunning()) {
             return;
         }
 

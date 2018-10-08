@@ -105,13 +105,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             notificationManager.createNotificationChannel(mChannel);
         }
 
-        int count  = AppSharedPrefs.getNotificationCount();
+        int count = AppSharedPrefs.getNotificationCount();
         count++;
         AppSharedPrefs.setNotificationCount(count);
 
-        if (count >0){
-            ShortcutBadger.applyCount(context,count);
-        }else {
+        if (count > 0) {
+            ShortcutBadger.applyCount(context, count);
+        } else {
             ShortcutBadger.removeCount(context);
         }
 
