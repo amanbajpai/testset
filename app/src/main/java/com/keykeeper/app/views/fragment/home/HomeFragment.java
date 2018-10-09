@@ -41,8 +41,6 @@ import com.keykeeper.app.views.activity.AssetListActivity;
 import com.keykeeper.app.views.activity.assetDetail.AssetDetailActivity;
 import com.keykeeper.app.views.activity.chat.ChatActivity;
 import com.keykeeper.app.views.activity.history.HistoryActivity;
-import com.keykeeper.app.views.activity.home.HomeActivity;
-import com.keykeeper.app.views.activity.login.LoginActivity;
 import com.keykeeper.app.views.activity.transfer.TransferActivity;
 import com.keykeeper.app.views.base.BaseFragment;
 import com.keykeeper.app.views.fragment.testDrive.TestDriveAssetDetailFragment;
@@ -278,6 +276,8 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
                 } else {
                     Utils.stopLocationStorage(context);
                 }
+            } else {
+                Utils.stopLocationStorage(context);
             }
         }
     };
@@ -305,7 +305,7 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        Utils.showProgressDialog(context, getString(R.string.loading));
+        // Utils.showProgressDialog(context, getString(R.string.loading));
         viewModel.getCurrentAssetsOwned();
         context.registerReceiver(receiver, new IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION));
     }

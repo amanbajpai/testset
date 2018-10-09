@@ -537,7 +537,15 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
                 Utils.replaceFragment(HomeActivity.this, new NotificationFragment());
                 break;
             case Keys.NOTIFICATION_CHAT_COMMUNICATION_BETWEEN_EMPLOYEE_TO_EMPLOYEE_AN:
-                startActivity(new Intent(context, ChatActivity.class));
+                Intent intent = new Intent(context, ChatActivity.class);
+                String emp_chat_url = pushData.getAdditionalData().getChatUserUrl();
+                if (!TextUtils.isEmpty(emp_chat_url)) {
+                    intent.putExtra(AppUtils.CHAT_EMP_URL, emp_chat_url);
+                    context.startActivity(intent);
+                } else {
+                    context.startActivity(intent);
+                }
+
                 break;
 
         }

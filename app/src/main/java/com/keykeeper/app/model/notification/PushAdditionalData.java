@@ -23,6 +23,10 @@ public class PushAdditionalData implements Serializable {
     @Expose
     private int assetId;
 
+    @SerializedName("chat_user_url")
+    @Expose
+    private String chatUserUrl;
+
     public int getCompanyId() {
         return companyId;
     }
@@ -45,5 +49,13 @@ public class PushAdditionalData implements Serializable {
 
     public void setAssetId(int assetId) {
         this.assetId = assetId;
+    }
+
+    public String getChatUserUrl() {
+        return chatUserUrl;
+    }
+
+    public void setChatUserUrl(String chatUserUrl) {
+        this.chatUserUrl = chatUserUrl;
     }
 }
