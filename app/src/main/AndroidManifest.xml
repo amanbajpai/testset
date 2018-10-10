@@ -113,6 +113,13 @@
             android:name="com.keykeeper.app.views.services.LocationListenerService"
             android:enabled="true"
             android:stopWithTask="false" />
+
+        <service
+            android:name="com.keykeeper.app.views.services.LocationMonitoringService"
+            android:enabled="true"
+            android:stopWithTask="false" />
+
+
         <service android:name=".views.services.LocationSubmitService" />
 
         <meta-data

@@ -293,9 +293,8 @@ public class TestDriveAssetDetailFragment extends BaseActivity implements Dialog
         if (isDriveStart) {
 
             setCustomActionBar();
+
             AppSharedPrefs.getInstance(context).setQrCode("");
-//                    Utils.showProgressDialog(context, getString(R.string.loading));
-//                    viewModel.doStopTestDrive(mEmp_id, assetId, AppSharedPrefs.getLatitude(), AppSharedPrefs.getLongitude(), Utils.getCurrentTimeStampDate(), Utils.getCurrentUTCTimeStampDate(), AppSharedPrefs.getInstance(context).getTestDriveId());
 
         } else {
 

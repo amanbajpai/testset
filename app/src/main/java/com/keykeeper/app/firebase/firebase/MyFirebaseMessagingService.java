@@ -21,6 +21,7 @@ import com.keykeeper.app.preferences.AppSharedPrefs;
 import com.keykeeper.app.utils.Utils;
 import com.keykeeper.app.views.activity.home.HomeActivity;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Map;
@@ -63,18 +64,25 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             pushDatabean.setBody(jsonObject.optString("body"));
             pushDatabean.setPushType(Integer.valueOf(jsonObject.optString("push_type")));
 
-//            PushAdditionalDataJson = jsonObject.optString("additional_data");
-//            JSONObject object = new JSONObject(PushAdditionalDataJson);
-//            int pushAssetId = object.optInt("asset_id");
-//            int pushEmployeeId = object.optInt("employee_id");
-//            int pushCompanyId = object.optInt("company_id");
+            try {
+                PushAdditionalDataJson = jsonObject.optString("additional_data");
+                JSONObject object = new JSONObject(PushAdditionalDataJson);
 
-            PushAdditionalData pushAdditionalDataBean = new PushAdditionalData();
-//            pushAdditionalDataBean.setAssetId(pushAssetId);
-//            pushAdditionalDataBean.setEmployeeId(pushEmployeeId);
-//            pushAdditionalDataBean.setCompanyId(pushCompanyId);
+                int pushAssetId = object.optInt("asset_id");
+                int pushEmployeeId = object.optInt("employee_id");
+                int pushCompanyId = object.optInt("company_id");
+                String chat_user_url = object.optString("chat_user_url");
 
-            pushDatabean.setAdditionalData(pushAdditionalDataBean);
+                PushAdditionalData pushAdditionalDataBean = new PushAdditionalData();
+                pushAdditionalDataBean.setAssetId(pushAssetId);
+                pushAdditionalDataBean.setEmployeeId(pushEmployeeId);
+                pushAdditionalDataBean.setCompanyId(pushCompanyId);
+                pushAdditionalDataBean.setChatUserUrl(chat_user_url);
+
+                pushDatabean.setAdditionalData(pushAdditionalDataBean);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
             if (AppSharedPrefs.getInstance(getApplicationContext()).isLogin() && checkIfNotificationEnabled()) {
                 showNotification(this, pushDatabean);
@@ -105,13 +113,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             notificationManager.createNotificationChannel(mChannel);
         }
 
-        int count  = AppSharedPrefs.getNotificationCount();
+        int count = AppSharedPrefs.getNotificationCount();
         count++;
         AppSharedPrefs.setNotificationCount(count);
 
-        if (count >0){
-            ShortcutBadger.applyCount(context,count);
-        }else {
+        if (count > 0) {
+            ShortcutBadger.applyCount(context, count);
+        } else {
             ShortcutBadger.removeCount(context);
         }
 
@@ -128,15 +136,21 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         mBuilder.setContentText(pushData.getBody());
         mBuilder.setStyle(new NotificationCompat.BigTextStyle()
                 .bigText(pushData.getBody()));
+        mBuilder.setAutoCancel(true);
 
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addNextIntent(intent);
+
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(
                 0,
                 PendingIntent.FLAG_UPDATE_CURRENT
         );
-        mBuilder.setContentIntent(resultPendingIntent);
+
+        if (!AppSharedPrefs.isTestDriveRunning()) {
+            mBuilder.setContentIntent(resultPendingIntent);
+        }
+
         Random random = new Random();
         int notificationId = random.nextInt(9999 - 1000) + 1000;
         notificationManager.notify(notificationId, mBuilder.build());

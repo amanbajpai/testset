@@ -28,7 +28,7 @@
     <string name="qr_code_camera_not_open">Could not open your camera</string>
     <string name="qr_code_positive_button_know">OK</string>
     <string name="qr_code_positive_button_confirm">Confirm</string>
-    <string name="qr_code_could_not_read_qr_code_from_picture">Could not read your image.Try another image~</string>
+    <string name="qr_code_could_not_read_qr_code_from_picture">Could not read your image.Try another image</string>
     <string name="qr_code_could_not_read_qr_code_from_scanner">Sorry, could not open scan content</string>
     <string name="qr_code_camera_not_found">Could not detect camera</string>
 
@@ -103,9 +103,9 @@
     <string name="txt_home">Home</string>
     <string name="txt_all_asset">All Keys</string>
     <string name="txt_my_asset">My Keys</string>
-    <string name="transfer_asset">Transfer</string>
+    <string name="transfer_asset">Return Key</string>
     <string name="transfer_ownership">Transfer Ownership</string>
-    <string name="confirm_transfer">Confirm Transfer</string>
+    <string name="confirm_transfer">Return Key</string>
     <string name="sorry_qr_code_does_not_match">Sorry this qr code does not match this asset</string>
 
     <string name="turn_of_mock_location_dialog_text">To use Keykeeper, you must TURN OFF GPS mock location in your

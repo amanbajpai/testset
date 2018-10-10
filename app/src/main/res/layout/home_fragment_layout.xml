@@ -141,7 +141,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="Transfer"
+                        android:text="Return"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_14sdp" />
 
@@ -221,10 +221,10 @@
             android:id="@+id/enable_gps_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_3sdp"
             android:layout_alignParentBottom="true"
-            android:visibility="gone"
-            android:background="@color/blue">
+            android:layout_marginTop="@dimen/_3sdp"
+            android:background="@color/blue"
+            android:visibility="gone">
 
             <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                 android:id="@+id/gps_enable_tv"

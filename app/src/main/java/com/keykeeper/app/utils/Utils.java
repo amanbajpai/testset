@@ -50,6 +50,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.gson.Gson;
 import com.keykeeper.app.BuildConfig;
 import com.keykeeper.app.R;
@@ -62,7 +64,7 @@ import com.keykeeper.app.views.activity.home.HomeActivity;
 import com.keykeeper.app.views.base.BaseActivity;
 import com.keykeeper.app.views.custom_view.CustomProgressDialog;
 import com.keykeeper.app.views.fragment.home.HomeFragment;
-import com.keykeeper.app.views.services.LocationListenerService;
+import com.keykeeper.app.views.services.LocationMonitoringService;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -790,7 +792,6 @@ public class Utils {
         }
     }
 
-
     public static void replaceFragment(BaseActivity activity, Fragment fragment) {
         try {
             if (activity instanceof HomeActivity)
@@ -981,7 +982,7 @@ public class Utils {
     }
 
 
-    public static String formattedDateFromString(String inputFormat, String outputFormat, String inputDate,boolean isUtc) {
+    public static String formattedDateFromString(String inputFormat, String outputFormat, String inputDate, boolean isUtc) {
 
         if (inputFormat.equals("")) { // if inputFormat = "", set a default input format.
             inputFormat = "yyyy-MM-dd hh:mm:ss";
@@ -996,12 +997,12 @@ public class Utils {
         try {
 
             SimpleDateFormat df_input = new SimpleDateFormat(inputFormat);
-            if (isUtc){
+            if (isUtc) {
                 df_input.setTimeZone(TimeZone.getTimeZone("utc"));
             }
 
             SimpleDateFormat df_output = new SimpleDateFormat(outputFormat);
-            if (isUtc){
+            if (isUtc) {
                 df_output.setTimeZone(TimeZone.getDefault());
             }
             parsed = df_input.parse(inputDate);
@@ -1891,14 +1892,6 @@ public class Utils {
         return device_id;
     }
 
-    public static String getToken() {
-        /**
-         * dummy token for now
-         */
-        String token = "adfasdfasdfaf";
-
-        return token;
-    }
 
     public static String getDeviceType() {
         return Keys.TYPE_ANDROID;
@@ -2083,9 +2076,9 @@ public class Utils {
 
     public static void startLocationStorage(Context context) {
         try {
-            if (!Utils.isMyServiceRunning(context, LocationListenerService.class)) {
+            if (!Utils.isMyServiceRunning(context, LocationMonitoringService.class)) {
                 AppSharedPrefs.getInstance(context).setIsToTrackLocation(true);
-                Intent serviceIntent = new Intent(context, LocationListenerService.class);
+                Intent serviceIntent = new Intent(context, LocationMonitoringService.class);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     context.startForegroundService(serviceIntent);
                 } else {
@@ -2099,10 +2092,10 @@ public class Utils {
 
     public static void stopLocationStorage(Context context) {
         try {
-            LocationListenerService.stopLocationUpdate();
+          //  LocationMonitoringService.stopLocationUpdate();
             AppSharedPrefs.getInstance(context).setIsToTrackLocation(false);
-            if (isMyServiceRunning(context, LocationListenerService.class)) {
-                Intent serviceIntent = new Intent(context, LocationListenerService.class);
+            if (isMyServiceRunning(context, LocationMonitoringService.class)) {
+                Intent serviceIntent = new Intent(context, LocationMonitoringService.class);
                 context.stopService(serviceIntent);
             }
         } catch (Exception e) {
@@ -2122,15 +2115,31 @@ public class Utils {
 
     public static Double parseDouble(String value) {
 
-        try{
+        try {
 
-            double d =Double.parseDouble(value);
+            double d = Double.parseDouble(value);
             return d;
 
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 
         return 0.0;
+    }
+
+
+    /**
+     * Return the availability of GooglePlayServices
+     */
+    public boolean isGooglePlayServicesAvailable(Context context) {
+        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+        int status = googleApiAvailability.isGooglePlayServicesAvailable(context);
+        if (status != ConnectionResult.SUCCESS) {
+            if (googleApiAvailability.isUserResolvableError(status)) {
+                googleApiAvailability.getErrorDialog(((Activity) context), status, 2404).show();
+            }
+            return false;
+        }
+        return true;
     }
 }

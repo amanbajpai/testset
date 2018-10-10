@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.CompoundButton;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -151,6 +150,9 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
                 break;
 
             case R.id.satellite_tv:
+                if (googleMap == null) {
+                    return;
+                }
                 MAP_TYPE = GoogleMap.MAP_TYPE_SATELLITE;
                 googleMap.setMapType(MAP_TYPE);
                 keyOnMapBinding.standardTv.setTextColor(getResources().getColor(R.color.black));
@@ -158,6 +160,9 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
                 break;
 
             case R.id.standard_tv:
+                if (googleMap == null) {
+                    return;
+                }
                 MAP_TYPE = GoogleMap.MAP_TYPE_NORMAL;
                 googleMap.setMapType(MAP_TYPE);
                 keyOnMapBinding.standardTv.setTextColor(getResources().getColor(R.color.blue));

@@ -60,6 +60,7 @@ import com.keykeeper.app.views.fragment.asset_request_fragment.AssetRequestFragm
 import com.keykeeper.app.views.fragment.home.HomeFragment;
 import com.keykeeper.app.views.fragment.notifications.NotificationFragment;
 import com.keykeeper.app.views.fragment.setting.SettingFragment;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -325,6 +326,14 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
             return;
         }
 
+        if (!AppSharedPrefs.getInstance(getApplicationContext()).isLogin()) {
+            return;
+        }
+
+        if (AppSharedPrefs.getInstance(getApplicationContext()).isTestDriveRunning()) {
+            return;
+        }
+
         /**
          * disable right button
          */
@@ -528,7 +537,15 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
                 Utils.replaceFragment(HomeActivity.this, new NotificationFragment());
                 break;
             case Keys.NOTIFICATION_CHAT_COMMUNICATION_BETWEEN_EMPLOYEE_TO_EMPLOYEE_AN:
-                startActivity(new Intent(context, ChatActivity.class));
+                Intent intent = new Intent(context, ChatActivity.class);
+                String emp_chat_url = pushData.getAdditionalData().getChatUserUrl();
+                if (!TextUtils.isEmpty(emp_chat_url)) {
+                    intent.putExtra(AppUtils.CHAT_EMP_URL, emp_chat_url);
+                    context.startActivity(intent);
+                } else {
+                    context.startActivity(intent);
+                }
+
                 break;
 
         }
