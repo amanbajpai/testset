@@ -34,8 +34,14 @@ public class AssetListActivity extends BaseActivity {
     public void setCustomActionBar() {
         super.setCustomActionBar();
         CustomActionBar customActionBar = new CustomActionBar(this);
-        customActionBar.setActionbar(getString(R.string.actionbar_keys), true, false,false,false, this);
+        customActionBar.setActionbar(getString(R.string.actionbar_keys), true, false, false, false, this);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
 
     @Override
     public void initializeViews() {

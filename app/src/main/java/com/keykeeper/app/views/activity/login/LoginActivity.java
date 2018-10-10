@@ -5,25 +5,11 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.databinding.DataBindingUtil;
-import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResult;
-import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.gson.Gson;
 import com.keykeeper.app.R;
 import com.keykeeper.app.databinding.LoginActivityBinding;
@@ -37,13 +23,6 @@ import com.keykeeper.app.views.activity.home.HomeActivity;
 import com.keykeeper.app.views.activity.testdrive.TestDriveStuckActivity;
 import com.keykeeper.app.views.base.BaseActivity;
 
-import io.nlopez.smartlocation.OnLocationUpdatedListener;
-import io.nlopez.smartlocation.SmartLocation;
-import io.nlopez.smartlocation.location.config.LocationAccuracy;
-import io.nlopez.smartlocation.location.config.LocationParams;
-
-import static io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider.REQUEST_CHECK_SETTINGS;
-
 /**
  * Created by akshaydashore on 22/8/18
  */
@@ -51,8 +30,8 @@ public class LoginActivity extends BaseActivity implements DialogClickListener {
 
     LoginViewModel viewModel;
     private Context context;
-    private Location mlocation = null;
     private LoginActivityBinding binding;
+
     Observer validatorObserver = new Observer<Integer>() {
 
         @Override
@@ -142,12 +121,13 @@ public class LoginActivity extends BaseActivity implements DialogClickListener {
 
         }
     };
-    private SmartLocation.LocationControl location_control;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
+        getLocation();
         initializeViews();
 
     }
@@ -164,55 +144,26 @@ public class LoginActivity extends BaseActivity implements DialogClickListener {
         viewModel.response_validator.observe(this, login_response_observer);
         viewModel.validator.observe(this, validatorObserver);
 
-
-        if (Utils.isGpsEnable(context)) {
-            if (Utils.checkPermissions(this, AppUtils.LOCATION_PERMISSIONS)) {
-                getLocation();
-            } else {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    requestPermissions(AppUtils.LOCATION_PERMISSIONS, AppUtils.REQUEST_CODE_LOCATION);
-                }
-            }
-        } else {
-            displayLocationSettingsRequest();
-        }
     }
 
-    private void getLocation() {
-        Utils.showProgressDialog(context, "Fetching location...");
-        LocationParams.Builder builder = new LocationParams.Builder();
-        builder.setAccuracy(LocationAccuracy.HIGH);
-        builder.setDistance(5); // in Meteres
-        builder.setInterval(1000);
-        LocationParams params = builder.build();
-
-        location_control = SmartLocation.with(context).location().config(params);
-
-        location_control.start(new OnLocationUpdatedListener() {
-            @Override
-            public void onLocationUpdated(Location location) {
-                mlocation = location;
-                if (location.getLatitude() != 0 && location.getLongitude() != 0) {
-                    Utils.hideProgressDialog();
-                    String lat = location.getLatitude() + "";
-                    String lng = location.getLongitude() + "";
-                    Log.e(" onLocationUpdated: ", lat + " " + lng);
-                    AppSharedPrefs.setLatitude(lat);
-                    AppSharedPrefs.setLongitude(lng);
-                    AppSharedPrefs.setSpeed(location.getSpeed() + "");
-
-                } else {
-                    getLocation();
-                }
-            }
-        });
-
-    }
 
     @Override
     protected void onResume() {
         super.onResume();
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        getLocation();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopLocatonUpdates();
+    }
+
 
     @Override
     public void onClick(View view) {
@@ -228,76 +179,6 @@ public class LoginActivity extends BaseActivity implements DialogClickListener {
         }
     }
 
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == AppUtils.REQUEST_CODE_LOCATION && Utils.onRequestPermissionsResult(permissions, grantResults)) {
-            getLocation();
-        } else {
-            Utils.showSnackBar(binding, getString(R.string.allow_location_permission));
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (location_control != null) {
-            location_control.stop();
-        }
-    }
-
-
-    private void displayLocationSettingsRequest() {
-        GoogleApiClient googleApiClient = new GoogleApiClient.Builder(context)
-                .addApi(LocationServices.API).build();
-        googleApiClient.connect();
-
-        LocationRequest locationRequest = LocationRequest.create();
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(10000);
-        locationRequest.setFastestInterval(10000 / 2);
-
-        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest);
-        builder.setAlwaysShow(true);
-
-        PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build());
-        result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
-            @Override
-            public void onResult(LocationSettingsResult result) {
-                final Status status = result.getStatus();
-                switch (status.getStatusCode()) {
-
-                    case LocationSettingsStatusCodes.SUCCESS:
-                        Log.i("tag", "All location settings are satisfied.");
-                        if (Utils.checkPermissions(LoginActivity.this, AppUtils.LOCATION_PERMISSIONS)) {
-                            getLocation();
-                        } else {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                requestPermissions(AppUtils.LOCATION_PERMISSIONS, AppUtils.REQUEST_CODE_LOCATION);
-                            }
-                        }
-                        break;
-
-                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-                        Log.i("tag", "Location settings are not satisfied. Show the user a dialog to upgrade location settings ");
-
-                        try {
-                            // Show the dialog by calling startResolutionForResult(), and check the result
-                            // in onActivityResult().
-                            status.startResolutionForResult(LoginActivity.this, REQUEST_CHECK_SETTINGS);
-                        } catch (IntentSender.SendIntentException e) {
-                            Log.i("tag", "PendingIntent unable to execute request.");
-                        }
-                        break;
-                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-                        Log.i("tag", "Location settings are inadequate, and cannot be fixed here. Dialog not created.");
-                        break;
-                }
-            }
-        });
-    }
 
     @Override
     public void onDialogClick(int which, int requestCode) {

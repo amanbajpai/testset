@@ -223,7 +223,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="@dimen/_3sdp"
-            android:background="@color/blue"
+            android:background="@color/colorPrimaryDark"
             android:visibility="gone">
 
             <com.keykeeper.app.views.custom_view.StyledTextViewRegular

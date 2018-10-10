@@ -1,13 +1,16 @@
 package com.keykeeper.app.views.activity.assetDetail;
 
+import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.databinding.DataBindingUtil;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -38,6 +41,11 @@ import com.keykeeper.app.views.custom_view.CustomActionBar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import io.nlopez.smartlocation.OnLocationUpdatedListener;
+import io.nlopez.smartlocation.SmartLocation;
+import io.nlopez.smartlocation.location.config.LocationAccuracy;
+import io.nlopez.smartlocation.location.config.LocationParams;
 
 import static io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider.REQUEST_CHECK_SETTINGS;
 
@@ -133,6 +141,11 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
 
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
 
@@ -387,7 +400,8 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         switch (v.getId()) {
 
             case R.id.scan_button:
-                callSubmit(binding.scanButton.getText().toString());
+                if (checkLocationDepedency())
+                    callSubmit();
                 break;
 
             case R.id.left_iv:
@@ -420,10 +434,72 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
     }
 
 
+    OnLocationUpdatedListener onLocationUpdatedListener = new OnLocationUpdatedListener() {
+        @Override
+        public void onLocationUpdated(Location location) {
+            if (location.getLatitude() != 0 && location.getLongitude() != 0) {
+                // Utils.hideProgressDialog();
+                String lat = location.getLatitude() + "";
+                String lng = location.getLongitude() + "";
+                Log.e(" onLocationUpdated: ", lat + " " + lng);
+                AppSharedPrefs.setLatitude(lat);
+                AppSharedPrefs.setLongitude(lng);
+                AppSharedPrefs.setSpeed(location.getSpeed() + "");
+                Utils.hideProgressDialog();
+                callSubmit();
+
+            } else {
+                fetchLocation(onLocationUpdatedListener);
+            }
+        }
+    };
+
+    public boolean checkLocationDepedency() {
+
+        if (Utils.checkPermissions(AssetDetailActivity.this, AppUtils.LOCATION_PERMISSIONS)) {
+            if (Utils.isGpsEnable(context)) {
+                String lat = AppSharedPrefs.getLatitude();
+                String lng = AppSharedPrefs.getLatitude();
+                if (lat.equalsIgnoreCase("0") || lng.equalsIgnoreCase("0")) {
+                    Utils.showProgressDialog(context, getString(R.string.fetching_location));
+                    fetchLocation(onLocationUpdatedListener);
+                    return false;
+                }
+                return true;
+            } else {
+                displayLocationSettingsRequest();
+                return false;
+            }
+        } else {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(AppUtils.LOCATION_PERMISSIONS, AppUtils.REQUEST_CODE_LOCATION);
+            }
+            return false;
+        }
+    }
+
+
+    public void fetchLocation(OnLocationUpdatedListener listener) {
+        // Utils.showProgressDialog(context, "Fetching location...");
+        LocationParams.Builder builder = new LocationParams.Builder();
+        builder.setAccuracy(LocationAccuracy.HIGH);
+        builder.setDistance(5); // in Meteres
+        builder.setInterval(1000);
+        LocationParams params = builder.build();
+
+        SmartLocation.LocationControl location_control = SmartLocation.with(context).location().config(params);
+        location_control.start(listener);
+
+    }
+
     /**
      * Put action onclick according to status code
      */
-    private void callSubmit(String from) {
+    private void callSubmit() {
+
+        /*Check for Location dependency here*/
+
 
         if (IS_FROM_SCANNER || HAS_SCANNED) {
 
@@ -612,6 +688,23 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
                     }
                 }
             }
+        } else if (requestCode == REQUEST_CHECK_SETTINGS) {
+            switch (resultCode) {
+                case Activity.RESULT_OK:
+                    Log.i(AssetDetailActivity.class.getCanonicalName(), "User agreed to make required location settings changes.");
+                    getLocation();
+                    break;
+                case Activity.RESULT_CANCELED:
+                    Log.i(BaseActivity.class.getCanonicalName(), "User chose not to make required location settings changes.");
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            displayLocationSettingsRequest();
+                        }
+                    }, 1000);
+
+                    break;
+            }
         }
 
 
@@ -620,13 +713,25 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == AppUtils.REQUEST_CODE_CAMERA && Utils.onRequestPermissionsResult(permissions, grantResults)) {
-            Intent i = new Intent(this, ScannerActivity.class);
-            i.putExtra("title", getString(R.string.txt_qr_code_screen_title_from_keydetail));
-            startActivityForResult(i, AppUtils.REQUEST_CODE_QR_SCAN);
+        if (requestCode == AppUtils.REQUEST_CODE_CAMERA) {
+            if (Utils.onRequestPermissionsResult(permissions, grantResults)) {
+                Intent i = new Intent(this, ScannerActivity.class);
+                i.putExtra("title", getString(R.string.txt_qr_code_screen_title_from_keydetail));
+                startActivityForResult(i, AppUtils.REQUEST_CODE_QR_SCAN);
+            } else {
+                Utils.showSnackBar(binding, getString(R.string.allow_camera_permission));
+            }
 
-        } else {
-            Utils.showSnackBar(binding, getString(R.string.allow_camera_permission));
+        } else if (requestCode == AppUtils.REQUEST_CODE_LOCATION) {
+            if (Utils.onRequestPermissionsResult(permissions, grantResults)) {
+                if (Utils.isGpsEnable(context)) {
+                    getLocation();
+                } else {
+                    displayLocationSettingsRequest();
+                }
+            } else {
+                Utils.showSnackBar(binding, getString(R.string.allow_location_permission));
+            }
         }
     }
 

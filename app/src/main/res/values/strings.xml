@@ -76,6 +76,7 @@
     <string name="txt_status_unavailable">Assigned</string>
     <string name="scan">Scan</string>
     <string name="loading">Loading...</string>
+    <string name="fetching_location">Fetching location...</string>
     <string name="txt_status_type_send">send</string>
     <string name="txt_status_type_recieve">receive</string>
     <string name="txt_tab_title_pending_send_request">Sent</string>

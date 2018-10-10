@@ -40,7 +40,7 @@ import static io.nlopez.smartlocation.location.providers.LocationGooglePlayServi
 /**
  * Created by akshaydashore on 15/9/18
  */
-public class TestDriveAssetDetailFragment extends BaseActivity implements DialogClickListener {
+public class TestDriveAssetDetailActivity extends BaseActivity implements DialogClickListener {
 
     public static int ASSET_STATUS = 1;
     private Context context;
@@ -58,6 +58,7 @@ public class TestDriveAssetDetailFragment extends BaseActivity implements Dialog
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
+        getLocation();
         initializeViews();
     }
 
@@ -111,12 +112,12 @@ public class TestDriveAssetDetailFragment extends BaseActivity implements Dialog
         public void onChanged(@Nullable AssetDetailBean bean) {
 
             if (bean == null) {
-                Utils.showAlert(context, "", getString(R.string.server_error), getString(R.string.ok), "", AppUtils.dialog_ok_click, TestDriveAssetDetailFragment.this);
+                Utils.showAlert(context, "", getString(R.string.server_error), getString(R.string.ok), "", AppUtils.dialog_ok_click, TestDriveAssetDetailActivity.this);
                 return;
             }
 
             if (bean.getCode().equals(AppUtils.STATUS_FAIL)) {
-                Utils.showAlert(context, "", bean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_to_finish, TestDriveAssetDetailFragment.this);
+                Utils.showAlert(context, "", bean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_to_finish, TestDriveAssetDetailActivity.this);
                 return;
             }
             if (bean.getCode().equals(AppUtils.STATUS_SUCCESS)) {
@@ -135,12 +136,12 @@ public class TestDriveAssetDetailFragment extends BaseActivity implements Dialog
         public void onChanged(@Nullable TestDriveResponseBean bean) {
             Utils.hideProgressDialog();
             if (bean == null) {
-                Utils.showAlert(context, "", getString(R.string.server_error), getString(R.string.ok), "", AppUtils.dialog_ok_click, TestDriveAssetDetailFragment.this);
+                Utils.showAlert(context, "", getString(R.string.server_error), getString(R.string.ok), "", AppUtils.dialog_ok_click, TestDriveAssetDetailActivity.this);
                 return;
             }
 
             if (bean.getCode().equals(AppUtils.STATUS_FAIL)) {
-                Utils.showAlert(context, "", bean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_to_finish, TestDriveAssetDetailFragment.this);
+                Utils.showAlert(context, "", bean.getMessage(), getString(R.string.ok), "", AppUtils.dialog_ok_to_finish, TestDriveAssetDetailActivity.this);
                 return;
             }
             if (bean.getCode().equals(AppUtils.STATUS_SUCCESS)) {
@@ -220,7 +221,7 @@ public class TestDriveAssetDetailFragment extends BaseActivity implements Dialog
         }
 
         binding.make.setText(resultBean.getDescription());
-        binding.driveStartButton.setOnClickListener(TestDriveAssetDetailFragment.this);
+        binding.driveStartButton.setOnClickListener(TestDriveAssetDetailActivity.this);
         qr_code = resultBean.getQrCodeNumber();
         tag_number = resultBean.getTagNumber();
 
@@ -334,7 +335,7 @@ public class TestDriveAssetDetailFragment extends BaseActivity implements Dialog
 
                     case LocationSettingsStatusCodes.SUCCESS:
                         Log.i("tag", "All location settings are satisfied.");
-                        if (Utils.checkPermissions(TestDriveAssetDetailFragment.this, AppUtils.LOCATION_PERMISSIONS)) {
+                        if (Utils.checkPermissions(TestDriveAssetDetailActivity.this, AppUtils.LOCATION_PERMISSIONS)) {
 
                         } else {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -349,7 +350,7 @@ public class TestDriveAssetDetailFragment extends BaseActivity implements Dialog
                         try {
                             // Show the dialog by calling startResolutionForResult(), and check the result
                             // in onActivityResult().
-                            status.startResolutionForResult(TestDriveAssetDetailFragment.this, REQUEST_CHECK_SETTINGS);
+                            status.startResolutionForResult(TestDriveAssetDetailActivity.this, REQUEST_CHECK_SETTINGS);
                         } catch (IntentSender.SendIntentException e) {
                             Log.i("tag", "PendingIntent unable to execute request.");
                         }
@@ -362,5 +363,21 @@ public class TestDriveAssetDetailFragment extends BaseActivity implements Dialog
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        getLocation();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopLocatonUpdates();
+    }
 
 }

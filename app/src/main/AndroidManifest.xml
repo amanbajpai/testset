@@ -75,7 +75,7 @@
             android:name="com.keykeeper.app.views.activity.assetDetail.AssetDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.keykeeper.app.views.fragment.testDrive.TestDriveAssetDetailFragment"
+            android:name="com.keykeeper.app.views.fragment.testDrive.TestDriveAssetDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.keykeeper.app.views.activity.chat.ChatActivity"
