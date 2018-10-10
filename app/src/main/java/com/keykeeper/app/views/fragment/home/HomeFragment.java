@@ -272,7 +272,7 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
                 ArrayList<EmployeeOwnedAssetsListResponse.Result> resultArrayList = employeeOwnedAssetsListResponse.getResults();
                 if (resultArrayList.size() > 0) {
                     storeOwnedKeyIdsPreferences(employeeOwnedAssetsListResponse);
-                    Utils.startLocationStorage(context);
+                    Utils.startLocationStorage(context,true);
                 } else {
                     Utils.stopLocationStorage(context);
                 }

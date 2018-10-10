@@ -147,14 +147,11 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
                 binding.standardTv.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.received_request_deselector));
                 binding.standardTv.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
                 binding.satelliteTv.setTextColor(ContextCompat.getColor(context, R.color.white));
-
-
                 break;
 
             case R.id.standard_tv:
                 MAP_TYPE = GoogleMap.MAP_TYPE_NORMAL;
                 googleMap.setMapType(MAP_TYPE);
-
                 binding.satelliteTv.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.send_request_deselector));
                 binding.standardTv.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.received_request_selector));
                 binding.satelliteTv.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
@@ -166,7 +163,6 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
                 break;
 
         }
-
     }
 
     private void validateStartService() {
@@ -198,7 +194,7 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
                 AppSharedPrefs.setTestDriveAssetId(checkIfAnyTestDriveResponseBean.getAsset_id());
                 setViewForRunningTestDrive();
                 AppSharedPrefs.setTestDriveRunning(true);
-                Utils.startLocationStorage(context);
+                Utils.startLocationStorage(context,true);
             } else {
                 Utils.stopLocationStorage(context);
                 AppSharedPrefs.setTestDriveRunning(false);
@@ -300,7 +296,7 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
                 ArrayList<EmployeeOwnedAssetsListResponse.Result> resultArrayList = employeeOwnedAssetsListResponse.getResults();
                 if (resultArrayList.size() > 0) {
                     storeOwnedKeyIdsPreferences(employeeOwnedAssetsListResponse);
-                    Utils.startLocationStorage(context);
+                    Utils.startLocationStorage(context,true);
                 } else {
                     Utils.stopLocationStorage(context);
                 }

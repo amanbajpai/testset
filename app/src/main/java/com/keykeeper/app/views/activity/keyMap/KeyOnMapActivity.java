@@ -7,6 +7,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -88,7 +89,7 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
 
         isDataLoading = true;
 
-//        Utils.showProgressDialog(context, getString(R.string.loading));
+//      Utils.showProgressDialog(context, getString(R.string.loading));
 
         TrackLocationRequestEntity trackLocationRequestEntity = new TrackLocationRequestEntity();
         trackLocationRequestEntity.setEmp_current_lat(AppSharedPrefs.getLatitude());
@@ -149,15 +150,19 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
                 }
                 break;
 
+
             case R.id.satellite_tv:
                 if (googleMap == null) {
                     return;
                 }
                 MAP_TYPE = GoogleMap.MAP_TYPE_SATELLITE;
                 googleMap.setMapType(MAP_TYPE);
-                keyOnMapBinding.standardTv.setTextColor(getResources().getColor(R.color.black));
-                keyOnMapBinding.satelliteTv.setTextColor(getResources().getColor(R.color.blue));
+                keyOnMapBinding.satelliteTv.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.send_request_selector));
+                keyOnMapBinding.standardTv.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.received_request_deselector));
+                keyOnMapBinding.standardTv.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+                keyOnMapBinding.satelliteTv.setTextColor(ContextCompat.getColor(context, R.color.white));
                 break;
+
 
             case R.id.standard_tv:
                 if (googleMap == null) {
@@ -165,9 +170,12 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
                 }
                 MAP_TYPE = GoogleMap.MAP_TYPE_NORMAL;
                 googleMap.setMapType(MAP_TYPE);
-                keyOnMapBinding.standardTv.setTextColor(getResources().getColor(R.color.blue));
-                keyOnMapBinding.satelliteTv.setTextColor(getResources().getColor(R.color.black));
+                keyOnMapBinding.satelliteTv.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.send_request_deselector));
+                keyOnMapBinding.standardTv.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.received_request_selector));
+                keyOnMapBinding.satelliteTv.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+                keyOnMapBinding.standardTv.setTextColor(ContextCompat.getColor(context, R.color.white));
                 break;
+
         }
 
     }

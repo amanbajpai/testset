@@ -33,45 +33,44 @@
             android:background="@color/white"
             android:orientation="vertical">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/grayseperator" />
-
-
 
             <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:layout_marginLeft="@dimen/_3sdp"
+                android:layout_marginRight="@dimen/_3sdp"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:gravity="center"
                 android:orientation="horizontal"
-                >
-                <TextView
+                android:weightSum="2">
+
+
+                <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                     android:id="@+id/satellite_tv"
                     android:layout_width="0dp"
-                    android:layout_weight="0.5"
-                    android:text="@string/satellite"
-                    android:textColor="@color/blue"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/send_request_selector"
+                    android:clickable="true"
                     android:gravity="center"
-                    android:textSize="@dimen/_14sdp"
-                    android:padding="@dimen/_5sdp"
-                    android:layout_height="wrap_content" />
-                <View
-                    android:layout_width="0.5dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/gray_light"
-                    />
+                    android:padding="@dimen/_4sdp"
+                    android:text="@string/satellite"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_14sdp" />
 
-                <TextView
+                <com.keykeeper.app.views.custom_view.StyledTextViewRegular
                     android:id="@+id/standard_tv"
                     android:layout_width="0dp"
-                    android:layout_weight="0.5"
-                    android:text="@string/standard"
-                    android:textColor="@color/black"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/received_request_deselector"
+                    android:clickable="true"
                     android:gravity="center"
-                    android:textSize="@dimen/_14sdp"
-                    android:padding="@dimen/_5sdp"
-                    android:layout_height="wrap_content" />
+                    android:padding="@dimen/_4sdp"
+                    android:text="@string/standard"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/_14sdp" />
 
 
             </LinearLayout>
