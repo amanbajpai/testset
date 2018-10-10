@@ -60,8 +60,6 @@ import com.keykeeper.app.views.fragment.asset_request_fragment.AssetRequestFragm
 import com.keykeeper.app.views.fragment.home.HomeFragment;
 import com.keykeeper.app.views.fragment.notifications.NotificationFragment;
 import com.keykeeper.app.views.fragment.setting.SettingFragment;
-
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -184,7 +182,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
         if (requestCode == AppUtils.REQUEST_CODE_LOCATION) {
             if (Utils.onRequestPermissionsResult(permissions, grantResults)) {
                 if (!Utils.isGpsEnable(context)) {
-                    displayLocationSettingsRequest();
+//                    displayLocationSettingsRequest();
                 }
             } else {
                 Utils.showToast(context, getString(R.string.allow_location_permission));

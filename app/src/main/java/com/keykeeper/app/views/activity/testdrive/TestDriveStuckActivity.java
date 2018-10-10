@@ -57,7 +57,7 @@ import static io.nlopez.smartlocation.location.providers.LocationGooglePlayServi
  */
 public class TestDriveStuckActivity extends BaseActivity implements DialogClickListener, OnMapReadyCallback {
 
-    private static final long TIMER_VALUE = 3000;
+    private static final long TIMER_VALUE = 1000;
     private int MAP_TYPE = GoogleMap.MAP_TYPE_SATELLITE;
     private ActivityTestDriveLayoutBinding binding;
     private TestDriveStuckViewModel viewModel;
@@ -125,11 +125,9 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
 
     @Override
     protected void onDestroy() {
-
         super.onDestroy();
         unregisterReceiver(receiver);
         countDownTimer.cancel();
-
     }
 
     @Override

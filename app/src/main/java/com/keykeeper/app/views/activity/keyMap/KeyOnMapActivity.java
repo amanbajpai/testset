@@ -89,7 +89,7 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
 
         isDataLoading = true;
 
-        Utils.showProgressDialog(context, getString(R.string.loading));
+//        Utils.showProgressDialog(context, getString(R.string.loading));
 
         TrackLocationRequestEntity trackLocationRequestEntity = new TrackLocationRequestEntity();
         trackLocationRequestEntity.setEmp_current_lat(AppSharedPrefs.getLatitude());
