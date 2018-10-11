@@ -250,7 +250,6 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
 
     @Override
     public void onDialogClick(int which, int requestCode) {
-
     }
 
     @Override
