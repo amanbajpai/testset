@@ -59,6 +59,14 @@ android {
         enabled = true
     }
 
+    signingConfigs {
+        config {
+            keyAlias 'lotviewalias'
+            keyPassword 'android'
+            storePassword 'android'
+        }
+    }
+
     productFlavors {
 
         flavorCDN {
