@@ -194,7 +194,7 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
                 AppSharedPrefs.setTestDriveAssetId(checkIfAnyTestDriveResponseBean.getAsset_id());
                 setViewForRunningTestDrive();
                 AppSharedPrefs.setTestDriveRunning(true);
-                Utils.startLocationStorage(context,true);
+                Utils.startLocationStorage(context);
             } else {
                 Utils.stopLocationStorage(context);
                 AppSharedPrefs.setTestDriveRunning(false);
@@ -296,7 +296,7 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
                 ArrayList<EmployeeOwnedAssetsListResponse.Result> resultArrayList = employeeOwnedAssetsListResponse.getResults();
                 if (resultArrayList.size() > 0) {
                     storeOwnedKeyIdsPreferences(employeeOwnedAssetsListResponse);
-                    Utils.startLocationStorage(context,true);
+                    Utils.startLocationStorage(context);
                 } else {
                     Utils.stopLocationStorage(context);
                 }

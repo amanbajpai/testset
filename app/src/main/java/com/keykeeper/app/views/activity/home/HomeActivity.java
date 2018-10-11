@@ -639,7 +639,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
                 ArrayList<EmployeeOwnedAssetsListResponse.Result> resultArrayList = employeeOwnedAssetsListResponse.getResults();
                 if (resultArrayList.size() > 0) {
                     storeOwnedKeyIdsPreferences(employeeOwnedAssetsListResponse);
-                    Utils.startLocationStorage(context,true);
+                    Utils.startLocationStorage(context);
                 } else {
                     Utils.stopLocationStorage(context);
                 }

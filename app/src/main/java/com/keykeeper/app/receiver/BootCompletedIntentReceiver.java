@@ -20,8 +20,9 @@ public class BootCompletedIntentReceiver extends BroadcastReceiver {
             try {
                 if (AppSharedPrefs.getInstance(context).isToTrackLocation()) {
                     if (!Utils.isMyServiceRunning(context, LocationMonitoringService.class)) {
-                        Intent pushIntent = new Intent(context, LocationMonitoringService.class);
-                        context.startService(pushIntent);
+//                        Intent pushIntent = new Intent(context, LocationMonitoringService.class);
+//                        context.startService(pushIntent);
+                        Utils.startLocationStorage(context);
                     }
                 }
             } catch (Exception e) {

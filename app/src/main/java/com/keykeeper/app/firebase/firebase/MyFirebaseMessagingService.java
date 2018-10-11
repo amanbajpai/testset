@@ -20,7 +20,6 @@ import com.keykeeper.app.netcom.Keys;
 import com.keykeeper.app.preferences.AppSharedPrefs;
 import com.keykeeper.app.utils.Utils;
 import com.keykeeper.app.views.activity.home.HomeActivity;
-import com.keykeeper.app.views.services.LocationMonitoringService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -103,11 +102,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
          */
         if (pushData.getPushType() == 15) {
             if (Utils.isGpsEnable(context)) {
-                if (!Utils.isMyServiceRunning(context, LocationMonitoringService.class)) {
-                    Intent pushIntent = new Intent(context, LocationMonitoringService.class);
-                    context.startService(pushIntent);
-                    return;
-                }
+                Utils.startLocationStorage(context);
+                return;
             }
         }
 
