@@ -182,7 +182,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
         if (requestCode == AppUtils.REQUEST_CODE_LOCATION) {
             if (Utils.onRequestPermissionsResult(permissions, grantResults)) {
                 if (!Utils.isGpsEnable(context)) {
-                    displayLocationSettingsRequest();
+//                    displayLocationSettingsRequest();
                 }
             } else {
                 Utils.showToast(context, getString(R.string.allow_location_permission));
@@ -639,7 +639,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
                 ArrayList<EmployeeOwnedAssetsListResponse.Result> resultArrayList = employeeOwnedAssetsListResponse.getResults();
                 if (resultArrayList.size() > 0) {
                     storeOwnedKeyIdsPreferences(employeeOwnedAssetsListResponse);
-                    Utils.startLocationStorage(context);
+                    Utils.startLocationStorage(context,true);
                 } else {
                     Utils.stopLocationStorage(context);
                 }

@@ -255,6 +255,7 @@ public class TestDriveAssetDetailActivity extends BaseActivity implements Dialog
                 validateTestDrive();
                 break;
         }
+
     }
 
 
@@ -265,7 +266,6 @@ public class TestDriveAssetDetailActivity extends BaseActivity implements Dialog
             case AppUtils.dialog_ok_to_finish:
                 finish();
                 break;
-
 
             case AppUtils.dialog_gps_enable: {
 
@@ -286,6 +286,7 @@ public class TestDriveAssetDetailActivity extends BaseActivity implements Dialog
             }
             break;
         }
+
     }
 
     public void validateTestDrive() {

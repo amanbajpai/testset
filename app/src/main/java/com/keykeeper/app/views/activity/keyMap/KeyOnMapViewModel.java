@@ -35,7 +35,7 @@ public class KeyOnMapViewModel extends ViewModel {
 
         if (!Connectivity.isConnected()) {
             validator.setValue(AppUtils.NO_INTERNET);
-            Utils.hideProgressDialog();
+//            Utils.hideProgressDialog();
             return;
         }
 
@@ -69,7 +69,7 @@ public class KeyOnMapViewModel extends ViewModel {
 
             @Override
             public void onFailure(Call<AssetLocationResponseBean> call, Throwable t) {
-                Utils.hideProgressDialog();
+//                Utils.hideProgressDialog();
                 validator.setValue(AppUtils.SERVER_ERROR);
                 KeyOnMapActivity.isDataLoading = false;
             }

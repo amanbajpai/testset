@@ -147,6 +147,7 @@
     <string name="satellite">Satellite</string>
     <string name="standard">Standard</string>
     <string name="location_services_disabled_tap_here_to_enable_location_services">Location Services disabled, Tap here to enable Location Services.</string>
+    <string name="start_test_drive">Start Test Drive</string>
 
 
 </resources>

@@ -2074,7 +2074,7 @@ public class Utils {
     }
 
 
-    public static void startLocationStorage(Context context) {
+    public static void startLocationStorage(Context context,boolean hasAsset) {
         try {
             if (!Utils.isMyServiceRunning(context, LocationMonitoringService.class)) {
                 AppSharedPrefs.getInstance(context).setIsToTrackLocation(true);
@@ -2089,6 +2089,8 @@ public class Utils {
             e.printStackTrace();
         }
     }
+
+
 
     public static void stopLocationStorage(Context context) {
         try {

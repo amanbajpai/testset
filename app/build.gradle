@@ -59,6 +59,15 @@ android {
         enabled = true
     }
 
+    signingConfigs {
+        release {
+            storeFile file('/home/akshaydashore/Akshay Dashore/CurrentProject/LotView/MainCode/LotView_Android/signing/keeykeeper.jks')
+            keyAlias 'lotviewalias'
+            keyPassword 'android'
+            storePassword 'android'
+        }
+    }
+
     productFlavors {
 
         flavorCDN {

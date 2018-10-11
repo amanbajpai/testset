@@ -461,7 +461,7 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:background="@drawable/green_rect_bg"
             android:gravity="center"
-            android:text="Start Drive"
+            android:text="@string/start_test_drive"
             android:paddingBottom="@dimen/_10sdp"
             android:paddingLeft="@dimen/_25sdp"
             android:paddingRight="@dimen/_25sdp"

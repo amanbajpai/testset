@@ -20,6 +20,7 @@ import com.keykeeper.app.netcom.Keys;
 import com.keykeeper.app.preferences.AppSharedPrefs;
 import com.keykeeper.app.utils.Utils;
 import com.keykeeper.app.views.activity.home.HomeActivity;
+import com.keykeeper.app.views.services.LocationMonitoringService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -96,6 +97,20 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     public void showNotification(Context context, PushData pushData) {
 
+
+        /**
+         * handle push for location service
+         */
+        if (pushData.getPushType() == 15) {
+            if (Utils.isGpsEnable(context)) {
+                if (!Utils.isMyServiceRunning(context, LocationMonitoringService.class)) {
+                    Intent pushIntent = new Intent(context, LocationMonitoringService.class);
+                    context.startService(pushIntent);
+                    return;
+                }
+            }
+        }
+
         Intent intent = new Intent(this, HomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.putExtra(Keys.NOTIFICATION_DATA, pushData);
@@ -138,7 +153,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .bigText(pushData.getBody()));
         mBuilder.setAutoCancel(true);
 
-
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addNextIntent(intent);
 
@@ -154,6 +168,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Random random = new Random();
         int notificationId = random.nextInt(9999 - 1000) + 1000;
         notificationManager.notify(notificationId, mBuilder.build());
+
     }
 
 
