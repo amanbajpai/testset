@@ -65,8 +65,6 @@ import com.keykeeper.app.views.base.BaseActivity;
 import com.keykeeper.app.views.custom_view.CustomProgressDialog;
 import com.keykeeper.app.views.fragment.home.HomeFragment;
 import com.keykeeper.app.views.services.LocationMonitoringService;
-import com.keykeeper.app.views.services.TestLocationListenerService;
-import com.keykeeper.app.views.services.TestLocationSubmitService;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -2076,60 +2074,30 @@ public class Utils {
     }
 
 
-//    public static void startLocationStorage(Context context,boolean hasAsset) {
-//        try {
-//            if (!Utils.isMyServiceRunning(context, LocationMonitoringService.class)) {
-//                AppSharedPrefs.getInstance(context).setIsToTrackLocation(true);
-//                Intent serviceIntent = new Intent(context, LocationMonitoringService.class);
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                    context.startForegroundService(serviceIntent);
-//                } else {
-//                    context.startService(serviceIntent);
-//                }
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-
     public static void startLocationStorage(Context context,boolean hasAsset) {
-
         try {
-
-            if (hasAsset && !Utils.isMyServiceRunning(context, TestLocationSubmitService.class)) {
+            if (!Utils.isMyServiceRunning(context, LocationMonitoringService.class)) {
                 AppSharedPrefs.getInstance(context).setIsToTrackLocation(true);
-                Intent serviceIntent = new Intent(context, TestLocationSubmitService.class);
+                Intent serviceIntent = new Intent(context, LocationMonitoringService.class);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     context.startForegroundService(serviceIntent);
                 } else {
                     context.startService(serviceIntent);
                 }
             }
-
-            if (!Utils.isMyServiceRunning(context, TestLocationListenerService.class)) {
-                AppSharedPrefs.getInstance(context).setIsToTrackLocation(true);
-                Intent serviceIntent = new Intent(context, TestLocationListenerService.class);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    context.startForegroundService(serviceIntent);
-                } else {
-                    context.startService(serviceIntent);
-                }
-            }
-
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+
+
     public static void stopLocationStorage(Context context) {
         try {
           //  LocationMonitoringService.stopLocationUpdate();
             AppSharedPrefs.getInstance(context).setIsToTrackLocation(false);
-            if (isMyServiceRunning(context, TestLocationSubmitService.class)) {
-                Intent serviceIntent = new Intent(context, TestLocationSubmitService.class);
+            if (isMyServiceRunning(context, LocationMonitoringService.class)) {
+                Intent serviceIntent = new Intent(context, LocationMonitoringService.class);
                 context.stopService(serviceIntent);
             }
         } catch (Exception e) {

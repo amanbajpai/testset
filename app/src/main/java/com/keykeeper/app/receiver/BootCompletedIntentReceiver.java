@@ -11,7 +11,6 @@ import android.content.Intent;
 import com.keykeeper.app.preferences.AppSharedPrefs;
 import com.keykeeper.app.utils.Utils;
 import com.keykeeper.app.views.services.LocationMonitoringService;
-import com.keykeeper.app.views.services.TestLocationListenerService;
 
 
 public class BootCompletedIntentReceiver extends BroadcastReceiver {
@@ -20,8 +19,8 @@ public class BootCompletedIntentReceiver extends BroadcastReceiver {
         if ("android.intent.action.BOOT_COMPLETED".equals(intent.getAction())) {
             try {
                 if (AppSharedPrefs.getInstance(context).isToTrackLocation()) {
-                    if (!Utils.isMyServiceRunning(context, TestLocationListenerService.class)) {
-                        Intent pushIntent = new Intent(context, TestLocationListenerService.class);
+                    if (!Utils.isMyServiceRunning(context, LocationMonitoringService.class)) {
+                        Intent pushIntent = new Intent(context, LocationMonitoringService.class);
                         context.startService(pushIntent);
                     }
                 }

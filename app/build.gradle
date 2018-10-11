@@ -60,7 +60,8 @@ android {
     }
 
     signingConfigs {
-        config {
+        release {
+            storeFile file('/home/akshaydashore/Akshay Dashore/CurrentProject/LotView/MainCode/LotView_Android/signing/keeykeeper.jks')
             keyAlias 'lotviewalias'
             keyPassword 'android'
             storePassword 'android'

@@ -119,15 +119,6 @@
             android:enabled="true"
             android:stopWithTask="false" />
 
-        <service
-            android:name="com.keykeeper.app.views.services.TestLocationListenerService"
-            android:enabled="true"
-            android:stopWithTask="false" />
-
-        <service
-            android:name="com.keykeeper.app.views.services.TestLocationSubmitService"
-            android:enabled="true"
-            android:stopWithTask="false" />
 
         <service android:name=".views.services.LocationSubmitService" />
 
