@@ -158,27 +158,12 @@ public class LocationMonitoringService extends Service implements
     //to get the location change
     @Override
     public void onLocationChanged(Location location) {
-        Log.d(TAG, "Location changed");
-
-
         if (location != null) {
             Log.d(TAG, "== location != null");
 
-            //Send result to activities
-            // sendMessageToUI(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
             handleUpdatedLocation(location);
         }
     }
-
-//    private void sendMessageToUI(String lat, String lng) {
-//
-//        Log.d(TAG, "Sending info...");
-//
-//        Intent intent = new Intent(ACTION_LOCATION_BROADCAST);
-//        intent.putExtra(EXTRA_LATITUDE, lat);
-//        intent.putExtra(EXTRA_LONGITUDE, lng);
-//        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-//    }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
