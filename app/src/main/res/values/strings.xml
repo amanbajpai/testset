@@ -148,6 +148,7 @@
     <string name="standard">Standard</string>
     <string name="location_services_disabled_tap_here_to_enable_location_services">Location Services disabled, Tap here to enable Location Services.</string>
     <string name="start_test_drive">Start Test Drive</string>
+    <string name="enable_high_accuract">It seems your Location Mode is not accurate, please check \"High Accuracy\" under Mode for better results.</string>
 
 
 </resources>
