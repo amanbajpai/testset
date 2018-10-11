@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentSender;
@@ -87,8 +88,11 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
         }else {
             binding.enableGpsLl.setVisibility(View.GONE);
         }
-
+        if (!Utils.isLocationInHighMode(context)){
+            Utils.showAlert(context,"",getString(R.string.enable_high_accuract),"ok","",AppUtils.REQUEST_CODE_LOCATION_HIGH_ACCURACY,this);
+        }
     }
+
 
 
     @Override
@@ -265,6 +269,17 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
     @Override
     public void onDialogClick(int which, int requestCode) {
 
+        switch (requestCode){
+
+            case AppUtils.REQUEST_CODE_LOCATION_HIGH_ACCURACY:{
+                     switch (which){
+                         case DialogInterface.BUTTON_POSITIVE:
+                              Utils.sendToLocationSetting(context);
+                             break;
+                     }
+            }
+                   break;
+        }
     }
 
     Observer<EmployeeOwnedAssetsListResponse> responseAssetsOwnedCurrently = new Observer<EmployeeOwnedAssetsListResponse>() {
@@ -314,6 +329,7 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
         // Utils.showProgressDialog(context, getString(R.string.loading));
         viewModel.getCurrentAssetsOwned();
         context.registerReceiver(receiver, new IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION));
+
     }
 
     @Override

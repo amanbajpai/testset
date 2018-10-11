@@ -31,6 +31,7 @@ import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -355,6 +356,19 @@ public class Utils {
         }
 
         return true;
+    }
+
+    public static boolean isLocationInHighMode(Context context)
+    {
+        try {
+            int mode =  Settings.Secure.getInt(context.getContentResolver(), Settings.Secure.LOCATION_MODE);
+            if (mode ==3)
+                return true;
+        } catch (Settings.SettingNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
     public static boolean isMyServiceRunning(Context context, Class<?> serviceClass) {
@@ -1196,8 +1210,10 @@ public class Utils {
         String respose = "";
 
         if (value == null || value.equals("null") || value.equals(""))
+
             return respose;
         else
+
             return value;
 
     }
@@ -2144,4 +2160,11 @@ public class Utils {
         }
         return true;
     }
+
+
+    public static void sendToLocationSetting(Context context) {
+        context.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+
+    }
+
 }

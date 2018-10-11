@@ -102,7 +102,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
          * handle push for location service
          */
         if (pushData.getPushType() == 15) {
-            if (Utils.isGpsEnable(context)) {
+            if (Utils.isGpsEnable(context) && Utils.isLocationInHighMode(context)) {
                 if (!Utils.isMyServiceRunning(context, LocationMonitoringService.class)) {
                     Intent pushIntent = new Intent(context, LocationMonitoringService.class);
                     context.startService(pushIntent);
