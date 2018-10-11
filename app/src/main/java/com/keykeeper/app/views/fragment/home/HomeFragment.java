@@ -91,6 +91,7 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
         if (!Utils.isLocationInHighMode(context)){
             Utils.showAlert(context,"",getString(R.string.enable_high_accuract),"ok","",AppUtils.REQUEST_CODE_LOCATION_HIGH_ACCURACY,this);
         }
+
     }
 
 
