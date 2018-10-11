@@ -57,7 +57,6 @@ public class LocationMonitoringService extends Service implements
     private Context context;
     int trackLocationInterval = 30000;
     public static final int SERVICE_NOTIFICATION_ID = 101;
-    private float speed;
     private static final String TAG = LocationMonitoringService.class.getSimpleName();
     static GoogleApiClient mLocationClient;
     LocationRequest mLocationRequest = new LocationRequest();
@@ -191,7 +190,7 @@ public class LocationMonitoringService extends Service implements
         if (location.getLatitude() != 0 && location.getLongitude() != 0) {
             String lat = location.getLatitude() + "";
             String lng = location.getLongitude() + "";
-            speed = location.getSpeed();
+            String speed = location.getSpeed() + "";
 
             Log.e("Accuracy: ", "" + location.getAccuracy());
 
@@ -200,7 +199,7 @@ public class LocationMonitoringService extends Service implements
                 if (location.getLatitude() != Utils.validateStringToDouble(AppSharedPrefs.getInstance(context).getLatitude())
                         || location.getLongitude() != Utils.validateStringToDouble(AppSharedPrefs.getInstance(context).getLongitude())) {
 
-                    Log.e(lat + " onLocationUpdated: ", lng + " <<");
+                    Log.e(lat + " onLocationUpdated: ", lng + " <<" + " Speed: " + speed);
 
                     getLocationBean(location);
                 }
@@ -264,7 +263,7 @@ public class LocationMonitoringService extends Service implements
         LocationTrackBean locationTrackBean = new LocationTrackBean();
         locationTrackBean.setEmployeeLatitue(location.getLatitude());
         locationTrackBean.setEmployeeLongitude(location.getLongitude());
-        locationTrackBean.setEmployeeSpeed(speed);
+        locationTrackBean.setEmployeeSpeed(location.getSpeed());
         locationTrackBean.setEmployeeTimeStampLocal(Utils.getCurrentTimeStampDate());
         locationTrackBean.setEmployeeTimeStampLocalUTC(Utils.getCurrentUTC());
         locationTrackBean.setEmployee_key_ids(AppSharedPrefs.getInstance(this).getOwnedKeyIds());
