@@ -108,7 +108,6 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
 
         final ViewGroup viewGroup = (ViewGroup) ((ViewGroup) this
                 .findViewById(android.R.id.content)).getChildAt(0);
-
         initializeViews();
         setupDrawer();
         setView();
@@ -187,7 +186,7 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
                 }
             } else {
                 Utils.showToast(context, getString(R.string.allow_location_permission));
-                finishAffinity();
+//                finishAffinity();
             }
         }
 
@@ -205,18 +204,11 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
 
             activityResumed();
 
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        activityPaused();
-    }
-
 
     private final int[] menuItemIcons = new int[]{
             R.drawable.home,
@@ -545,6 +537,8 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
                 } else {
                     context.startActivity(intent);
                 }
+                break;
+            case Keys.NOTIFICATION_HIGH_SPEED_ALERT:
 
                 break;
 
@@ -559,6 +553,8 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
             if (!AppSharedPrefs.isTestDriveRunning()) {
                 PushData pushData = (PushData) this.getIntent().getSerializableExtra(Keys.NOTIFICATION_DATA);
                 handlePushCall(pushData);
+            } else {
+                return;
             }
         }
     }

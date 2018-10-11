@@ -43,7 +43,7 @@ import com.keykeeper.app.views.activity.chat.ChatActivity;
 import com.keykeeper.app.views.activity.history.HistoryActivity;
 import com.keykeeper.app.views.activity.transfer.TransferActivity;
 import com.keykeeper.app.views.base.BaseFragment;
-import com.keykeeper.app.views.fragment.testDrive.TestDriveAssetDetailFragment;
+import com.keykeeper.app.views.fragment.testDrive.TestDriveAssetDetailActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -82,6 +82,11 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
         viewModel.validator.observe(this, observer);
         viewModel.response_allassets_owned.observe(this, responseAssetsOwnedCurrently);
         binding.enableGpsLl.setOnClickListener(this);
+        if (!Utils.isGpsEnable(context)){
+            binding.enableGpsLl.setVisibility(View.VISIBLE);
+        }else {
+            binding.enableGpsLl.setVisibility(View.GONE);
+        }
 
     }
 
@@ -230,7 +235,7 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
             if (data.getBooleanExtra(AppUtils.IS_MANUAL_QR, false)) {
                 String result = data.getStringExtra(AppUtils.QR_NUMBER_MANUAL_SCAN_SUCCESS);
                 String qr_tag_number = data.getStringExtra(AppUtils.SCAN_SUCCESS);
-                Intent intent = new Intent(context, TestDriveAssetDetailFragment.class);
+                Intent intent = new Intent(context, TestDriveAssetDetailActivity.class);
                 intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.SCAN_SUCCESS);
                 intent.putExtra(AppUtils.SCANED_QR_CODE, qr_tag_number);
                 startActivity(intent);
@@ -240,12 +245,12 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String mResult = jsonObject.getString("qr_code_number");
-                    Intent intent = new Intent(context, TestDriveAssetDetailFragment.class);
+                    Intent intent = new Intent(context, TestDriveAssetDetailActivity.class);
                     intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_SCANED_CODE);
                     intent.putExtra(AppUtils.SCANED_QR_CODE, mResult);
                     startActivity(intent);
                 } catch (JSONException e) {
-                    Intent intent = new Intent(context, TestDriveAssetDetailFragment.class);
+                    Intent intent = new Intent(context, TestDriveAssetDetailActivity.class);
                     intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_SCANED_CODE);
                     intent.putExtra(AppUtils.SCANED_QR_CODE, result);
                     startActivity(intent);
@@ -274,6 +279,7 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
                     storeOwnedKeyIdsPreferences(employeeOwnedAssetsListResponse);
                     Utils.startLocationStorage(context,true);
                 } else {
+                    storeOwnedKeyIdsPreferences(employeeOwnedAssetsListResponse);
                     Utils.stopLocationStorage(context);
                 }
             } else {
@@ -330,6 +336,8 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
                 }
             }
             AppSharedPrefs.getInstance(context).setOwnedKeyIds(ownedKeys);
+        } else {
+            AppSharedPrefs.getInstance(context).setOwnedKeyIds("");
         }
     }
 

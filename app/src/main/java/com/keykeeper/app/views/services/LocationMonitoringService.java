@@ -205,8 +205,8 @@ public class LocationMonitoringService extends Service implements
                     getLocationBean(location);
                 }
             }
-            AppSharedPrefs.setLatitude(lat);
-            AppSharedPrefs.setLongitude(lng);
+//            AppSharedPrefs.setLatitude(lat);
+//            AppSharedPrefs.setLongitude(lng);
             AppSharedPrefs.setSpeed(location.getSpeed() + "");
             try {
                 AppSharedPrefs.setIsLocationFromMock(location.isFromMockProvider());

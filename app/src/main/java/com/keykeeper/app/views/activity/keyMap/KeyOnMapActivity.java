@@ -253,6 +253,13 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+
+
+    @Override
     protected void onStop() {
         super.onStop();
         if (countDownTimer != null) {
