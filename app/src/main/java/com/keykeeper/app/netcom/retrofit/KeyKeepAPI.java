@@ -7,6 +7,7 @@ import com.keykeeper.app.model.bean.BaseRequestEntity;
 import com.keykeeper.app.model.bean.BaseResponse;
 import com.keykeeper.app.model.bean.ChangePasswordBean;
 import com.keykeeper.app.model.bean.CheckIfAnyTestDriveResponseBean;
+import com.keykeeper.app.model.bean.ConfirmLocationUpdateBean;
 import com.keykeeper.app.model.bean.EmployeeOwnedAssetsListResponse;
 import com.keykeeper.app.model.bean.ForgotPasswordResponseBean;
 import com.keykeeper.app.model.bean.HistoryResponseBean;
@@ -182,7 +183,7 @@ public interface KeyKeepAPI {
 
     @POST(Config.EMPLOYEE_TRACKER_URL)
     Call<TrackLocationBaseResponse> trackEmployee(/*@Body BaseRequestEntity baseEntity,*/
-                                                   @Body LocationTrackBeanList locationTrackBeanList);
+                                                  @Body LocationTrackBeanList locationTrackBeanList);
 
     //    asset_employee_test_drive_id:1 need to send this
 
@@ -193,5 +194,10 @@ public interface KeyKeepAPI {
     @POST(Config.HISTORY_LIST_URL)
     Call<HistoryResponseBean> getHistoryList(@Body BaseRequestEntity baseRequestEntity,
                                              @Query(Keys.LAST_ASSET_TRANSACTION_LOG_ID) int last_asset_transaction_log_id);
+
+
+    @POST(Config.EMPLOYEE_LOCATION_UPDATES)
+    Call<EmployeeOwnedAssetsListResponse> confirmLocationUpdates(@Body ConfirmLocationUpdateBean confirmLocationUpdateBean);
+
 
 }

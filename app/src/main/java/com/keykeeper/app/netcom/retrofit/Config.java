@@ -41,6 +41,7 @@ public interface Config {
     String ASSET_CURRENT_LOCATION_URL = "employee/assetcurrentlocation";
     String CHECK_RUNNING_TESTDRIVE_URL = "employee/checkrunningtestdrive";
     String HISTORY_LIST_URL = "employee/assethistory";
+    String EMPLOYEE_LOCATION_UPDATES = "employeelocationsupdates";
 
 
 }
