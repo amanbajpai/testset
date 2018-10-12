@@ -34,6 +34,7 @@ public class AppSharedPrefs {
     public static final String ASSET_NAME_TEST_DRIVE = "asset_name_test_drive";
     public static final String TEST_DRIVE_ASSET_ID = "test_drive_asset_id";
     public static final String NOTIFICATION_COUNT = "NOTIFICATION_COUNT";
+    public static final String CURRENT_TIME = "Current_time";
 
     private static Context mContext = null;
     public static AppSharedPrefs instance = null;
@@ -304,6 +305,15 @@ public class AppSharedPrefs {
 
     public static int getNotificationCount() {
         return sp.getInt(NOTIFICATION_COUNT, 0);
+    }
+
+    public static void setLastApiCall(long l) {
+        prefEditor.putLong(CURRENT_TIME, l);
+        prefEditor.commit();
+    }
+
+    public static long getLastApiCall() {
+        return sp.getLong(CURRENT_TIME, 0);
     }
 
 }

@@ -4,12 +4,21 @@ package com.keykeeper.app.model.bean;
  * Created by ankurrawal on 12/10/18.
  */
 
-public class ConfirmLocationUpdateBean extends BaseRequestEntity {
+public class ConfirmLocationUpdateBean  {
 
     private String emp_current_lat;
     private String emp_current_long;
     private String emp_current_speed;
     private String asset_id;
+    BaseRequestEntity baseRequestEntity;
+
+    public BaseRequestEntity getBaseRequestEntity() {
+        return baseRequestEntity;
+    }
+
+    public void setBaseRequestEntity(BaseRequestEntity baseRequestEntity) {
+        this.baseRequestEntity = baseRequestEntity;
+    }
 
     public String getEmp_current_lat() {
         return emp_current_lat;

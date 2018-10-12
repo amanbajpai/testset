@@ -97,8 +97,10 @@ public interface Keys {
     String LAST_NOTIFICATION_ID = "last_notification_id";
 
 
-
-
     String ASSET_NAME = "asset_name";
 
+
+    String EMP_CURRENT_LAT ="emp_current_lat";
+    String EMP_CURRENT_LONG ="emp_current_long";
+    String EMP_CURRENT_SPEED ="emp_current_speed";
 }

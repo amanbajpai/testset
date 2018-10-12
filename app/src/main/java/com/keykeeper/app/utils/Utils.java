@@ -2166,4 +2166,19 @@ public class Utils {
 
     }
 
+
+    public static boolean hasCompletedDuration(long oldTime) {
+        if (oldTime == 0){
+            return false;
+        }
+        long FIVE_MINUTES =  300000;
+        long currentTime  = System.currentTimeMillis();
+        long diff  = currentTime - oldTime;
+        if (diff >= FIVE_MINUTES){
+            return true;
+        }
+        return false;
+    }
+
+
 }

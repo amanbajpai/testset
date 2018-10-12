@@ -29,6 +29,8 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.keykeeper.app.R;
 import com.keykeeper.app.application.KeyKeepApplication;
+import com.keykeeper.app.model.bean.BaseRequestEntity;
+import com.keykeeper.app.model.bean.EmployeeOwnedAssetsListResponse;
 import com.keykeeper.app.model.bean.LocationTrackBeanList;
 import com.keykeeper.app.model.bean.TrackLocationBaseResponse;
 import com.keykeeper.app.model.location.LocationTrackBean;
@@ -291,16 +293,30 @@ public class LocationMonitoringService extends Service implements
         if (Utils.validateStringToInt(AppSharedPrefs.getInstance(this).getEmployeeID()) == 0) {
             return;
         }
+
         if (trackBeanArrayList.size() == 0) {
-            if (mLocationClient.isConnected() || mLocationClient.isConnecting()) {
-                return;
-            } else {
-                mLocationClient.connect();
-                return;
+
+            try {
+                if (mLocationClient.isConnected() || mLocationClient.isConnecting()) {
+                    return;
+                } else {
+                    mLocationClient.connect();
+                    return;
+                }
+
+            }catch (Exception e){
             }
 
-        }
+            /**
+             * check data sync and update location of asset
+             */
+              if (Utils.hasCompletedDuration(AppSharedPrefs.getInstance(context).getLastApiCall())
+                      && Utils.isGpsEnable(context)
+                      ){
+                 updateAssetLocation();
+              }
 
+        }
 
         long startPoint = trackBeanArrayList.get(0).getEmpTrackId();
         long endPoint = trackBeanArrayList.get(trackBeanArrayList.size() - 1).getEmpTrackId();
@@ -335,6 +351,9 @@ public class LocationMonitoringService extends Service implements
                 public void onResponse(Call<TrackLocationBaseResponse> call, Response<TrackLocationBaseResponse> response) {
                     TrackLocationBaseResponse trackLocationBaseResponse = response.body();
                     try {
+                          /** set last api calling time  **/
+                          AppSharedPrefs.getInstance(context).setLastApiCall(System.currentTimeMillis());
+
                         if (trackLocationBaseResponse.getSuccess()) {
 
                             for (int i = 0; i < trackBeanArrayList.size(); i++) {
@@ -382,6 +401,52 @@ public class LocationMonitoringService extends Service implements
             handler.postDelayed(periodicUpdate, trackLocationInterval);
         }
     }
+
+
+    /**
+     * call when location not update with in five minutes
+     */
+    private void updateAssetLocation() {
+
+        BaseRequestEntity baseRequestEntity = KeyKeepApplication.getBaseEntity(true);
+        String lat   =AppSharedPrefs.getLatitude();
+        String lng  = AppSharedPrefs.getLongitude();
+        String speed   = AppSharedPrefs.getSpeed();
+        String asset_id  = AppSharedPrefs.getOwnedKeyIds();
+
+        if (Connectivity.isConnected()){
+
+            Call<EmployeeOwnedAssetsListResponse> call = RetrofitHolder.getService().confirmLocationUpdates(baseRequestEntity
+            ,asset_id,lat,lng,speed
+            );
+
+            call.enqueue(new Callback<EmployeeOwnedAssetsListResponse>() {
+
+                @Override
+                public void onResponse(Call<EmployeeOwnedAssetsListResponse> call, Response<EmployeeOwnedAssetsListResponse> response) {
+                    EmployeeOwnedAssetsListResponse trackLocationBaseResponse = response.body();
+                    try {
+                        AppSharedPrefs.getInstance(context).setLastApiCall(System.currentTimeMillis());
+
+                        if (mLocationClient.isConnected() || mLocationClient.isConnecting()) {
+                            return;
+                        } else {
+                            mLocationClient.connect();
+                            return;
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<EmployeeOwnedAssetsListResponse> call, Throwable t) {
+                }
+            });
+        }
+    }
+
 
     private void storeOwnedKeyIdsPreferences(TrackLocationBaseResponse
                                                      trackLocationBaseResponse) {

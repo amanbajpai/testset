@@ -24,6 +24,7 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
+
 /**
  * Created by ankurrawal on 22/8/18.
  */
@@ -189,6 +190,7 @@ public interface KeyKeepAPI {
 
     @POST(Config.ASSET_CURRENT_LOCATION_URL)
     Call<AssetLocationResponseBean> getAssetCurrentLocation(@Body TrackLocationRequestEntity baseEntity,
+
                                                             @Query(Keys.ASSET_ID) int asset_id);
 
     @POST(Config.HISTORY_LIST_URL)
@@ -197,7 +199,12 @@ public interface KeyKeepAPI {
 
 
     @POST(Config.EMPLOYEE_LOCATION_UPDATES)
-    Call<EmployeeOwnedAssetsListResponse> confirmLocationUpdates(@Body ConfirmLocationUpdateBean confirmLocationUpdateBean);
+    Call<EmployeeOwnedAssetsListResponse> confirmLocationUpdates(@Body BaseRequestEntity confirmLocationUpdateBean,
+                                                                 @Query(Keys.ASSET_ID) String asset_id,
+                                                                 @Query(Keys.EMP_CURRENT_LAT) String emp_current_lat,
+                                                                 @Query(Keys.EMP_CURRENT_LONG) String emp_current_long,
+                                                                 @Query(Keys.EMP_CURRENT_SPEED) String emp_current_speed
+    );
 
 
 }
