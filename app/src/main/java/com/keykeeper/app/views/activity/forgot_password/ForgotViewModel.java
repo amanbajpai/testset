@@ -29,10 +29,10 @@ public class ForgotViewModel extends BaseViewModel {
         if (Utils.isStringsEmpty(text)) {
             validator.setValue(AppUtils.empty_id);
             return false;
-        } else if (!Utils.isValideEmail(text)) {
+        }/* else if (!Utils.isValideEmail(text)) {
             validator.setValue(AppUtils.invalid_mail);
             return false;
-        }
+        }*/
         return true;
     }
 
