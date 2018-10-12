@@ -179,12 +179,16 @@ public class LocationMonitoringService extends Service implements
 
             Log.e("Accuracy: ", "" + location.getAccuracy());
 
-            if (location.getAccuracy() > 0 && location.getAccuracy() < 15) {
+            if (location.getAccuracy() > 0 && location.getAccuracy() < 30) {
 
                 if (location.getLatitude() != Utils.validateStringToDouble(AppSharedPrefs.getInstance(context).getLatitude())
                         || location.getLongitude() != Utils.validateStringToDouble(AppSharedPrefs.getInstance(context).getLongitude())) {
 
                     Log.e(lat + " onLocationUpdated: ", lng + " <<" + " Speed: " + speed);
+
+                    AppSharedPrefs.setLatitude(lat);
+                    AppSharedPrefs.setLongitude(lng);
+                    AppSharedPrefs.setSpeed(location.getSpeed() + "");
 
                     getLocationBean(location);
                 }
