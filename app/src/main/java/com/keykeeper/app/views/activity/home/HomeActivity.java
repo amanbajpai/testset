@@ -54,6 +54,7 @@ import com.keykeeper.app.utils.Utils;
 import com.keykeeper.app.views.activity.AssetListActivity;
 import com.keykeeper.app.views.activity.chat.ChatActivity;
 import com.keykeeper.app.views.activity.login.LoginActivity;
+import com.keykeeper.app.views.activity.testdrive.TestDriveStuckActivity;
 import com.keykeeper.app.views.adapter.LeftDrawerListAdapter;
 import com.keykeeper.app.views.base.BaseActivity;
 import com.keykeeper.app.views.fragment.asset_request_fragment.AssetRequestFragment;
@@ -488,6 +489,13 @@ public class HomeActivity extends BaseActivity implements LeftDrawerListAdapter.
     }
 
     private void handlePushCall(PushData pushData) {
+
+        if (AppSharedPrefs.isTestDriveRunning()) {
+            Intent intent = new Intent(HomeActivity.this, TestDriveStuckActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            return;
+        }
 
         switch (pushData.getPushType()) {
             case Keys.NOTIFICATION_ASSET_REQUEST:
