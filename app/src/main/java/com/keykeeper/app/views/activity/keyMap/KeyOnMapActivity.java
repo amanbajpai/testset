@@ -129,8 +129,8 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
 
                 CustomInfoWindowGoogleMap adapter = new CustomInfoWindowGoogleMap(context, location);
                 googleMap.setInfoWindowAdapter(adapter);
-
                 googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(emp_lat, emp_long), 14));
+
             }
         });
     }
