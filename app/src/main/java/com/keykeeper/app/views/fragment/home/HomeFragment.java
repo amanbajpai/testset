@@ -88,7 +88,9 @@ public class HomeFragment extends BaseFragment implements DialogClickListener {
         }else {
             binding.enableGpsLl.setVisibility(View.GONE);
         }
-        if (!Utils.isLocationInHighMode(context)){
+        if (Utils.checkPermissions(getActivity(),AppUtils.LOCATION_PERMISSIONS)&&
+                Utils.isGpsEnable(context) &&
+                !Utils.isLocationInHighMode(context)){
             Utils.showAlert(context,"",getString(R.string.enable_high_accuract),"ok","",AppUtils.REQUEST_CODE_LOCATION_HIGH_ACCURACY,this);
         }
 
