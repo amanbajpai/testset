@@ -94,17 +94,14 @@ public class LocationMonitoringService extends Service implements
                 .addApi(LocationServices.API)
                 .build();
 
-        mLocationRequest.setInterval(trackLocationInterval);
-//        mLocationRequest.setFastestInterval(trackLocationInterval);
-
-
         int priority = LocationRequest.PRIORITY_HIGH_ACCURACY; //by default
         //PRIORITY_BALANCED_POWER_ACCURACY, PRIORITY_LOW_POWER, PRIORITY_NO_POWER are the other priority modes
 
-
+        // mLocationRequest.setInterval(trackLocationInterval);
+//        mLocationRequest.setFastestInterval(trackLocationInterval);
         mLocationRequest.setPriority(priority);
         mLocationRequest.setSmallestDisplacement(3);
-//        mLocationRequest.setInterval(5000L);
+        mLocationRequest.setInterval(10000);
 //        mLocationRequest.setInterval(5000L);
         mLocationClient.connect();
 
@@ -304,17 +301,17 @@ public class LocationMonitoringService extends Service implements
                     return;
                 }
 
-            }catch (Exception e){
+            } catch (Exception e) {
             }
 
             /**
              * check data sync and update location of asset
              */
-              if (Utils.hasCompletedDuration(AppSharedPrefs.getInstance(context).getLastApiCall())
-                      && Utils.isGpsEnable(context)
-                      ){
-                 updateAssetLocation();
-              }
+            if (Utils.hasCompletedDuration(AppSharedPrefs.getInstance(context).getLastApiCall())
+                    && Utils.isGpsEnable(context)
+                    ) {
+                updateAssetLocation();
+            }
 
         }
 
@@ -351,8 +348,8 @@ public class LocationMonitoringService extends Service implements
                 public void onResponse(Call<TrackLocationBaseResponse> call, Response<TrackLocationBaseResponse> response) {
                     TrackLocationBaseResponse trackLocationBaseResponse = response.body();
                     try {
-                          /** set last api calling time  **/
-                          AppSharedPrefs.getInstance(context).setLastApiCall(System.currentTimeMillis());
+                        /** set last api calling time  **/
+                        AppSharedPrefs.getInstance(context).setLastApiCall(System.currentTimeMillis());
 
                         if (trackLocationBaseResponse.getSuccess()) {
 
@@ -409,15 +406,15 @@ public class LocationMonitoringService extends Service implements
     private void updateAssetLocation() {
 
         BaseRequestEntity baseRequestEntity = KeyKeepApplication.getBaseEntity(true);
-        String lat   =AppSharedPrefs.getLatitude();
-        String lng  = AppSharedPrefs.getLongitude();
-        String speed   = AppSharedPrefs.getSpeed();
-        String asset_id  = AppSharedPrefs.getOwnedKeyIds();
+        String lat = AppSharedPrefs.getLatitude();
+        String lng = AppSharedPrefs.getLongitude();
+        String speed = AppSharedPrefs.getSpeed();
+        String asset_id = AppSharedPrefs.getOwnedKeyIds();
 
-        if (Connectivity.isConnected()){
+        if (Connectivity.isConnected()) {
 
             Call<EmployeeOwnedAssetsListResponse> call = RetrofitHolder.getService().confirmLocationUpdates(baseRequestEntity
-            ,asset_id,lat,lng,speed
+                    , asset_id, lat, lng, speed
             );
 
             call.enqueue(new Callback<EmployeeOwnedAssetsListResponse>() {
