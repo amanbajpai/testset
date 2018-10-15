@@ -295,12 +295,9 @@ public class LocationMonitoringService extends Service implements
 
             try {
                 if (mLocationClient.isConnected() || mLocationClient.isConnecting()) {
-                    return;
                 } else {
                     mLocationClient.connect();
-                    return;
                 }
-
             } catch (Exception e) {
             }
 
@@ -312,7 +309,7 @@ public class LocationMonitoringService extends Service implements
                     ) {
                 updateAssetLocation();
             }
-
+            return;
         }
 
         long startPoint = trackBeanArrayList.get(0).getEmpTrackId();
@@ -421,11 +418,18 @@ public class LocationMonitoringService extends Service implements
 
                 @Override
                 public void onResponse(Call<EmployeeOwnedAssetsListResponse> call, Response<EmployeeOwnedAssetsListResponse> response) {
-                    EmployeeOwnedAssetsListResponse trackLocationBaseResponse = response.body();
                     try {
                         AppSharedPrefs.getInstance(context).setLastApiCall(System.currentTimeMillis());
 
                         if (mLocationClient.isConnected() || mLocationClient.isConnecting()) {
+//                            mLocationClient.disconnect();
+//                            new Handler().postDelayed(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    mLocationClient.connect();
+//                                }
+//                            }, 2000);
+
                             return;
                         } else {
                             mLocationClient.connect();
