@@ -422,13 +422,13 @@ public class LocationMonitoringService extends Service implements
                         AppSharedPrefs.getInstance(context).setLastApiCall(System.currentTimeMillis());
 
                         if (mLocationClient.isConnected() || mLocationClient.isConnecting()) {
-//                            mLocationClient.disconnect();
-//                            new Handler().postDelayed(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    mLocationClient.connect();
-//                                }
-//                            }, 2000);
+                            mLocationClient.disconnect();
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mLocationClient.connect();
+                                }
+                            }, 2000);
 
                             return;
                         } else {
