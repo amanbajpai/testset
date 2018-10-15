@@ -28,11 +28,23 @@
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/_5sdp">
 
+
+                <CheckBox
+                    android:id="@+id/selectionCB"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:layout_alignParentRight="true"
+                    android:visibility="gone"
+                    />
+
+
                 <com.keykeeper.app.views.custom_view.StyledTextViewBold
                     android:id="@+id/tv_asset_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="BMW CAR"
+                    android:layout_marginRight="@dimen/_40sdp"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_16sdp" />
 

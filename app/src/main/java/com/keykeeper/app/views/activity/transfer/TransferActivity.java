@@ -10,6 +10,10 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -32,6 +36,9 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
     private ActivityTransferAssetBinding binding;
     TransferViewModel viewModel;
     private TransferAssetAdapter myAssetAdapter;
+    public AssetsListResponseBean assetsListBean;
+    private ActionMode actionMode;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,9 +51,11 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
 
     @Override
     public void setCustomActionBar() {
+
         super.setCustomActionBar();
         CustomActionBar customActionBar = new CustomActionBar(this);
         customActionBar.setActionbar(getString(R.string.transfer_asset), true, false, false, false, this);
+
     }
 
     @Override
@@ -81,13 +90,15 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
 
     Observer<AssetsListResponseBean> response_observer = new Observer<AssetsListResponseBean>() {
 
+
         @Override
         public void onChanged(@Nullable AssetsListResponseBean assetsListResponseBean) {
 
+            assetsListBean = assetsListResponseBean;
             if (assetsListResponseBean != null && assetsListResponseBean.getResult() != null && assetsListResponseBean.getResult().size() > 0) {
                 LinearLayoutManager manager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
                 binding.recyclerView.setLayoutManager(manager);
-                myAssetAdapter = new TransferAssetAdapter(context, assetsListResponseBean, TransferActivity.this);
+                myAssetAdapter = new TransferAssetAdapter(context, assetsListResponseBean, TransferActivity.this, longClickListener);
                 binding.recyclerView.setAdapter(myAssetAdapter);
             } else {
                 noDataView();
@@ -149,6 +160,7 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == AppUtils.REQ_REFRESH_VIEW) {
             viewModel.getMyAssets(binding);
+            actionMode.finish();
         }
     }
 
@@ -156,6 +168,74 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
     protected void onResume() {
         super.onResume();
     }
+
+
+    View.OnLongClickListener longClickListener = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View view) {
+            myAssetAdapter.enableMultiSelectionMode(true);
+            actionMode = startActionMode(mActionModeCallback);
+            myAssetAdapter.notifyDataSetChanged();
+            return false;
+
+        }
+    };
+
+
+    private Menu context_menu;
+    private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            // Inflate a menu resource providing context menu items
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.manu_multiselect, menu);
+            context_menu = menu;
+            binding.returnKeyTv.setVisibility(View.VISIBLE);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false; // Return false if nothing is done
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.action_select:
+                    for (int i = 0; i < assetsListBean.getResult().size(); i++) {
+                        assetsListBean.getResult().get(i).isSelected = true;
+                    }
+                    myAssetAdapter.notifyDataSetChanged();
+                    return true;
+
+                case R.id.action_deselect:
+                    for (int i = 0; i < assetsListBean.getResult().size(); i++) {
+                        assetsListBean.getResult().get(i).isSelected = false;
+                    }
+                    myAssetAdapter.notifyDataSetChanged();
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            binding.returnKeyTv.setVisibility(View.GONE);
+            for (int i = 0; i < assetsListBean.getResult().size(); i++) {
+                assetsListBean.getResult().get(i).isSelected = false;
+            }
+            myAssetAdapter.enableMultiSelectionMode(false);
+            myAssetAdapter.notifyDataSetChanged();
+//            mActionMode = null;
+//            isMultiSelect = false;
+//            multiselect_list = new ArrayList<SampleModel>();
+//            refreshAdapter();
+        }
+    };
 
 
 }

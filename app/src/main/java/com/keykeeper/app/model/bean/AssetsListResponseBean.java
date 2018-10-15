@@ -77,6 +77,8 @@ public class AssetsListResponseBean extends BaseResponse {
         @Expose
         private String employeeChatUrl;
 
+        public  boolean isSelected;
+
 
         public String getEmployeeChatUrl() {
             return employeeChatUrl;
