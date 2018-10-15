@@ -2,6 +2,7 @@ package com.keykeeper.app.views.base;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentSender;
 import android.location.Location;
 import android.os.Build;
@@ -280,6 +281,33 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
 
             // Utils.showSnackBar(context, null, getString(R.string.allow_location_permission));
         }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        switch (requestCode) {
+
+            // Check for the integer request code originally supplied to startResolutionForResult().
+            case REQUEST_CHECK_SETTINGS:
+                switch (resultCode) {
+                    case Activity.RESULT_OK:
+                        Log.i(BaseActivity.class.getCanonicalName(), "User agreed to make required location settings changes.");
+                        if (Utils.checkPermissions(((Activity) context), AppUtils.LOCATION_PERMISSIONS)) {
+                            fetchLocation();
+                        } else {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                requestPermissions(AppUtils.LOCATION_PERMISSIONS, AppUtils.REQUEST_CODE_LOCATION);
+                            }
+                        }
+                        break;
+                    case Activity.RESULT_CANCELED:
+                        Log.i(BaseActivity.class.getCanonicalName(), "User chose not to make required location settings changes.");
+                        break;
+                }
+                break;
+
+        }
+
     }
 
 
