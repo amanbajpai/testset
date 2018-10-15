@@ -67,6 +67,7 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
     private SupportMapFragment mapFragment;
     private GoogleMap googleMap;
     private CountDownTimer countDownTimer;
+    float zoomLevel =14;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

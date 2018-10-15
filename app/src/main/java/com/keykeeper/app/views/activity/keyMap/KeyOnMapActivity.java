@@ -45,6 +45,7 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
     private GoogleMap googleMap;
     public int MAP_TYPE = GoogleMap.MAP_TYPE_SATELLITE;
     boolean isSatelite = true;
+    private float zoomLevel =14;
 
 
     @Override
@@ -129,7 +130,7 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
 
                 CustomInfoWindowGoogleMap adapter = new CustomInfoWindowGoogleMap(context, location);
                 googleMap.setInfoWindowAdapter(adapter);
-                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(emp_lat, emp_long), 14));
+                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(emp_lat, emp_long), zoomLevel));
 
             }
         });
@@ -146,6 +147,7 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
 
             case R.id.refresh_iv:
                 if (!isDataLoading) {
+                    zoomLevel  =  googleMap.getCameraPosition().zoom;
                     getLatLon();
                 }
                 break;
@@ -278,6 +280,7 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
 
             public void onTick(long millisUntilFinished) {
                 if (!isDataLoading) {
+                    zoomLevel  =  googleMap.getCameraPosition().zoom;
                     getLatLon();
                 }
             }
