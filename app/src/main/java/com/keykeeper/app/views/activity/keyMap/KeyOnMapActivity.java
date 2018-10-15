@@ -201,6 +201,7 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
     };
 
     Observer<AssetLocationResponseBean> response_observer = new Observer<AssetLocationResponseBean>() {
+
         @Override
         public void onChanged(@Nullable AssetLocationResponseBean bean) {
             Utils.hideProgressDialog();
@@ -252,12 +253,12 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
     public void onDialogClick(int which, int requestCode) {
     }
 
+
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onRestart() {
+        super.onRestart();
+        countdownForConnection();
     }
-
-
 
     @Override
     protected void onStop() {
