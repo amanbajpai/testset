@@ -67,6 +67,7 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
     private SupportMapFragment mapFragment;
     private GoogleMap googleMap;
     private CountDownTimer countDownTimer;
+    float zoomLevel =14;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -127,8 +128,23 @@ public class TestDriveStuckActivity extends BaseActivity implements DialogClickL
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(receiver);
-        countDownTimer.cancel();
     }
+
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        countdownForConnection();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+    }
+
 
     @Override
     public void onClick(View v) {
