@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import com.keykeeper.app.R;
 import com.keykeeper.app.model.bean.AssetsListResponseBean;
@@ -24,14 +26,15 @@ public class TransferAssetAdapter extends RecyclerView.Adapter<TransferAssetAdap
     Context context;
     private AssetsListResponseBean assetLists;
     ActivityForResult listener;
+    private boolean isMultiSelectionMode;
+    View.OnLongClickListener longClickListener;
 
-    public TransferAssetAdapter(Context context, AssetsListResponseBean resultAssetList,ActivityForResult listener) {
+    public TransferAssetAdapter(Context context, AssetsListResponseBean resultAssetList, ActivityForResult listener, View.OnLongClickListener longClickListener) {
         this.context = context;
         this.assetLists = resultAssetList;
         this.listener = listener;
-
+        this.longClickListener = longClickListener;
     }
-
 
 
     @NonNull
@@ -44,6 +47,10 @@ public class TransferAssetAdapter extends RecyclerView.Adapter<TransferAssetAdap
         return holder;
     }
 
+    public void enableMultiSelectionMode(boolean isEnable) {
+        isMultiSelectionMode = isEnable;
+    }
+
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
 
@@ -54,17 +61,39 @@ public class TransferAssetAdapter extends RecyclerView.Adapter<TransferAssetAdap
                 AssetsListResponseBean.Result bean = assetLists.getResult().get(position);
                 Intent intent = new Intent(context, AssetDetailActivity.class);
                 intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_TRANSFER_ASSET_LIST);
-                intent.putExtra(AppUtils.ASSET_ID,bean.getAssetId());
+                intent.putExtra(AppUtils.ASSET_ID, bean.getAssetId());
                 intent.putExtra(AppUtils.SCANED_QR_CODE, bean.getQrCodeNumber());
                 listener.onCallActivityResult(intent);
             }
         });
 
-        holder.assetName.setText(assetLists.getResult().get(position).getAssetName());
-        holder.vinNumber.setText("VIN Number: "+assetLists.getResult().get(position).getVin());
+        holder.itemView.setOnLongClickListener(longClickListener);
 
-        holder.assignedAt.setText("Assigned At: "+Utils.formattedDateFromString(Utils.INPUT_DATE_TIME_FORMATE, Utils.OUTPUT_DATE_TIME_FORMATE, assetLists.getResult().get(position).getAssigned_approved_or_decline_at()));
-        holder.remainingTime.setText("Remaining Time: "+assetLists.getResult().get(position).getAssets_hold_remain_time());
+        if (isMultiSelectionMode) {
+            holder.selectionCB.setVisibility(View.VISIBLE);
+        } else {
+            holder.selectionCB.setVisibility(View.GONE);
+        }
+
+        if (assetLists.getResult().get(position).isSelected) {
+            holder.selectionCB.setChecked(true);
+        } else {
+            holder.selectionCB.setChecked(false);
+        }
+
+
+        holder.assetName.setText(assetLists.getResult().get(position).getAssetName());
+        holder.vinNumber.setText("VIN Number: " + assetLists.getResult().get(position).getVin());
+
+        holder.assignedAt.setText("Assigned At: " + Utils.formattedDateFromString(Utils.INPUT_DATE_TIME_FORMATE, Utils.OUTPUT_DATE_TIME_FORMATE, assetLists.getResult().get(position).getAssigned_approved_or_decline_at()));
+        holder.remainingTime.setText("Remaining Time: " + assetLists.getResult().get(position).getAssets_hold_remain_time());
+
+        holder.selectionCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                assetLists.getResult().get(position).isSelected = b;
+            }
+        });
 
 
        /* holder.versionNumber.setText(assetLists.getResult().get(position).getVersionNumber());
@@ -83,7 +112,8 @@ public class TransferAssetAdapter extends RecyclerView.Adapter<TransferAssetAdap
 
     class Holder extends RecyclerView.ViewHolder {
 
-        private AppCompatTextView assetName, vinNumber, assignedAt,remainingTime;
+        private AppCompatTextView assetName, vinNumber, assignedAt, remainingTime;
+        CheckBox selectionCB;
 
         public Holder(View itemView) {
             super(itemView);
@@ -91,6 +121,7 @@ public class TransferAssetAdapter extends RecyclerView.Adapter<TransferAssetAdap
             assignedAt = itemView.findViewById(R.id.tv_assigned_at);
             remainingTime = itemView.findViewById(R.id.tv_remaining_time);
             vinNumber = itemView.findViewById(R.id.tv_vin_number);
+            selectionCB = itemView.findViewById(R.id.selectionCB);
         }
     }
 

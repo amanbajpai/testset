@@ -2148,7 +2148,7 @@ public class Utils {
     /**
      * Return the availability of GooglePlayServices
      */
-    public boolean isGooglePlayServicesAvailable(Context context) {
+    public static boolean isGooglePlayServicesAvailable(Context context) {
         GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
         int status = googleApiAvailability.isGooglePlayServicesAvailable(context);
         if (status != ConnectionResult.SUCCESS) {

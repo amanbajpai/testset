@@ -57,6 +57,8 @@ public interface AppUtils {
     int REQUEST_CODE_CAMERA_FOR_DRIVE = 213;
     int REQUEST_QR_SCAN_FOR_BOX_VERIFY = 214;
     int REQUEST_CODE_LOCATION_HIGH_ACCURACY = 215;
+    int NO_ITEM_SELECT = 216;
+    int MULTI_KEYS_SUBMITED = 217;
 
     /**
      * dialog keys

@@ -408,6 +408,10 @@ public class LocationMonitoringService extends Service implements
         String speed = AppSharedPrefs.getSpeed();
         String asset_id = AppSharedPrefs.getOwnedKeyIds();
 
+        if (lat.equals("0") && lng.equals("0")){
+            return;
+        }
+
         if (Connectivity.isConnected()) {
 
             Call<EmployeeOwnedAssetsListResponse> call = RetrofitHolder.getService().confirmLocationUpdates(baseRequestEntity

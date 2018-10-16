@@ -1,14 +1,17 @@
 package com.keykeeper.app.views.base;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -18,10 +21,12 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
@@ -44,10 +49,15 @@ import static io.nlopez.smartlocation.location.providers.LocationGooglePlayServi
 /**
  * Created by ankurrawal
  */
-abstract public class BaseActivity extends AppCompatActivity implements View.OnClickListener {
+abstract public class BaseActivity extends AppCompatActivity implements View.OnClickListener ,
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
+        LocationListener {
 
     private Context context;
     protected boolean isFirstCheckForLogin = true;
+    private GoogleApiClient mLocationClient;
+    LocationRequest mLocationRequest = new LocationRequest();
+    private String TAG = getClass().getName();
 
     /**
      * this method is responsible to initialize the views
@@ -76,10 +86,40 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
 
+//        initLocationClient();
+
+
+    }
+
+    private void initLocationClient() {
+        mLocationClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+
+        int priority = LocationRequest.PRIORITY_HIGH_ACCURACY; //by default
+        //PRIORITY_BALANCED_POWER_ACCURACY, PRIORITY_LOW_POWER, PRIORITY_NO_POWER are the other priority modes
+
+        // mLocationRequest.setInterval(trackLocationInterval);
+//        mLocationRequest.setFastestInterval(trackLocationInterval);
+        mLocationRequest.setPriority(priority);
+        mLocationRequest.setSmallestDisplacement(3);
+        mLocationRequest.setInterval(10000);
+//        mLocationRequest.setInterval(5000L);
+        mLocationClient.connect();
+
+
     }
 
     protected void getLocation() {
         try {
+
+            if (Utils.isGooglePlayServicesAvailable(context)){
+                Utils.showToast(context,"google play service not available");
+                return;
+            }
+
             if (Utils.isGpsEnable(context)) {
                 if (Utils.checkPermissions(this, AppUtils.LOCATION_PERMISSIONS)) {
                     fetchLocation();
@@ -139,6 +179,7 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
     }
 
     protected void fetchLocation() {
+
         // Utils.showProgressDialog(context, "Fetching location...");
         LocationParams.Builder builder = new LocationParams.Builder();
         builder.setAccuracy(LocationAccuracy.HIGH);
@@ -168,24 +209,6 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
         });
 
     }
-
-
-
-//
-//    public void fetchLocation(OnLocationUpdatedListener listener) {
-//        // Utils.showProgressDialog(context, "Fetching location...");
-//        LocationParams.Builder builder = new LocationParams.Builder();
-//        builder.setAccuracy(LocationAccuracy.HIGH);
-//        builder.setDistance(5); // in Meteres
-//        builder.setInterval(1000);
-//        LocationParams params = builder.build();
-//
-//        location_control = SmartLocation.with(context).location().config(params);
-//        location_control.start(listener);
-//
-//    }
-
-
 
     private void displayLocationSettingsRequest() {
         GoogleApiClient googleApiClient = new GoogleApiClient.Builder(context)
@@ -271,6 +294,15 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
     }
 
 
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        if (mLocationClient != null){
+//            mLocationClient.disconnect();
+//        }
+//
+//    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -282,6 +314,8 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
             // Utils.showSnackBar(context, null, getString(R.string.allow_location_permission));
         }
     }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -310,5 +344,79 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
 
     }
 
+
+    /*
+   * LOCATION CALLBACKS
+   */
+    @Override
+    public void onConnected(Bundle dataBundle) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+
+            Log.d(TAG, "== Error On onConnected() Permission not granted");
+            //Permission not granted by user so cancel the further execution.
+
+            return;
+        }
+
+        LocationServices.FusedLocationApi.requestLocationUpdates(mLocationClient, mLocationRequest, this);
+
+        Log.d(TAG, "Connected to Google API");
+    }
+
+    /*
+     * Called by Location Services if the connection to the
+     * location client drops because of an error.
+     */
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.d(TAG, "Connection suspended");
+    }
+
+    //to get the location change
+    @Override
+    public void onLocationChanged(Location location) {
+        if (location != null) {
+            Log.d(TAG, "== location != null");
+            handleUpdatedLocation(location);
+        }
+    }
+
+
+    /**
+     * Migrate smart location service
+     * @param connectionResult
+     */
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.d("", "Failed to connect to Google API");
+    }
+
+
+    private void handleUpdatedLocation(Location location) {
+        if (location.getLatitude() != 0 && location.getLongitude() != 0) {
+            String lat = location.getLatitude() + "";
+            String lng = location.getLongitude() + "";
+            String speed = location.getSpeed() + "";
+            Log.e("Accuracy: ", "" + location.getAccuracy());
+                    Log.e(lat + " onLocationUpdated: ", lng + " <<" + " Speed: " + speed);
+
+                    AppSharedPrefs.setLatitude(lat);
+                    AppSharedPrefs.setLongitude(lng);
+                    AppSharedPrefs.setSpeed(location.getSpeed() + "");
+
+            try {
+                AppSharedPrefs.setIsLocationFromMock(location.isFromMockProvider());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 }

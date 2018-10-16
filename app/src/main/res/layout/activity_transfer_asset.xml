@@ -49,6 +49,27 @@
 
         </LinearLayout>
 
+        <com.keykeeper.app.views.custom_view.StyledTextViewBold
+            android:id="@+id/return_key_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:background="@drawable/green_rect_bg"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:paddingLeft="@dimen/_15sdp"
+            android:paddingRight="@dimen/_15sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:text="@string/return_key_s"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13sdp" />
+
+
 
     </RelativeLayout>
 
