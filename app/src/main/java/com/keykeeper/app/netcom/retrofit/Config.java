@@ -42,7 +42,7 @@ public interface Config {
     String CHECK_RUNNING_TESTDRIVE_URL = "employee/checkrunningtestdrive";
     String HISTORY_LIST_URL = "employee/assethistory";
     String EMPLOYEE_LOCATION_UPDATES = "employee/employeelocationsupdates";
-
+    String RETURN_MULTIPLE_KEY  ="employee/multipleassetreturn";
 
 }
 

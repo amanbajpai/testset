@@ -3,6 +3,7 @@ package com.keykeeper.app.views.activity.transfer;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -19,7 +20,9 @@ import android.view.View;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.keykeeper.app.R;
 import com.keykeeper.app.databinding.ActivityTransferAssetBinding;
+import com.keykeeper.app.interfaces.DialogClickListener;
 import com.keykeeper.app.model.bean.AssetsListResponseBean;
+import com.keykeeper.app.model.bean.BaseResponse;
 import com.keykeeper.app.utils.AppUtils;
 import com.keykeeper.app.utils.Utils;
 import com.keykeeper.app.views.adapter.TransferAssetAdapter;
@@ -29,7 +32,7 @@ import com.keykeeper.app.views.custom_view.CustomActionBar;
 /**
  * Created by akshaydashore on 31/8/18
  */
-public class TransferActivity extends BaseActivity implements XRecyclerView.LoadingListener, TransferAssetAdapter.ActivityForResult {
+public class TransferActivity extends BaseActivity implements XRecyclerView.LoadingListener, TransferAssetAdapter.ActivityForResult, DialogClickListener {
 
 
     private Context context;
@@ -38,6 +41,7 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
     private TransferAssetAdapter myAssetAdapter;
     public AssetsListResponseBean assetsListBean;
     private ActionMode actionMode;
+    boolean isMultiSelectionMode;
 
 
     @Override
@@ -69,11 +73,16 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
         binding.recyclerView.setLayoutManager(manager);
         binding.recyclerView.setLoadingListener(this);
         binding.recyclerView.setLoadingMoreEnabled(false);
+
+        binding.returnKeyTv.setOnClickListener(this);
+
         viewModel.validator.observe(this, observer);
         viewModel.response_validator.observe(this, response_observer);
+        viewModel.mutikeySubmit_response_validator.observe(this, mutikeySubmit_response_observer);
         Utils.hideSoftKeyboard(this);
         Utils.showProgressDialog(context, getString(R.string.loading));
         viewModel.getMyAssets(binding);
+
 
     }
 
@@ -84,17 +93,48 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
             case R.id.left_iv:
                 finish();
                 break;
+
+            case R.id.return_key_tv:
+                submitMultipleKey();
+                break;
         }
     }
 
+    private void submitMultipleKey() {
+
+        Utils.showProgressDialog(context, getString(R.string.loading));
+        viewModel.returnMultipleKey(assetsListBean);
+    }
+
+
+    private Observer<BaseResponse> mutikeySubmit_response_observer = new Observer<BaseResponse>() {
+
+        @Override
+        public void onChanged(@Nullable BaseResponse baseResponse) {
+
+            if (baseResponse == null) {
+                Utils.hideProgressDialog();
+                Utils.showSnackBar(binding, getString(R.string.server_error));
+                return;
+            }
+
+            actionMode.finish();
+            Utils.showAlert(context, "", baseResponse.getMessage(), "Ok", "", AppUtils.dialog_ok_click, TransferActivity.this);
+
+
+        }
+    };
+
 
     Observer<AssetsListResponseBean> response_observer = new Observer<AssetsListResponseBean>() {
-
 
         @Override
         public void onChanged(@Nullable AssetsListResponseBean assetsListResponseBean) {
 
             assetsListBean = assetsListResponseBean;
+            if (actionMode != null) {
+                actionMode.finish();
+            }
             if (assetsListResponseBean != null && assetsListResponseBean.getResult() != null && assetsListResponseBean.getResult().size() > 0) {
                 LinearLayoutManager manager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
                 binding.recyclerView.setLayoutManager(manager);
@@ -110,6 +150,7 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
 
         @Override
         public void onChanged(@Nullable Integer value) {
+
             switch (value) {
 
                 case AppUtils.NO_INTERNET:
@@ -121,7 +162,13 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
                     Utils.hideProgressDialog();
                     Utils.showSnackBar(binding, getString(R.string.server_error));
                     break;
+
+                case AppUtils.NO_ITEM_SELECT:
+                    Utils.hideProgressDialog();
+                    Utils.showSnackBar(binding, getString(R.string.please_check_one_item));
+                    break;
             }
+
         }
     };
 
@@ -160,7 +207,9 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == AppUtils.REQ_REFRESH_VIEW) {
             viewModel.getMyAssets(binding);
-            actionMode.finish();
+            if (actionMode != null){
+                actionMode.finish();
+            }
         }
     }
 
@@ -237,6 +286,11 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
         }
     };
 
+
+    @Override
+    public void onDialogClick(int which, int requestCode) {
+
+    }
 
 }
 

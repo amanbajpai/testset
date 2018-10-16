@@ -14,6 +14,7 @@ import com.keykeeper.app.model.bean.HistoryResponseBean;
 import com.keykeeper.app.model.bean.LocationTrackBeanList;
 import com.keykeeper.app.model.bean.LoginResponseBean;
 import com.keykeeper.app.model.bean.NotificationsResponseBean;
+import com.keykeeper.app.model.bean.ReturnKeyBeanList;
 import com.keykeeper.app.model.bean.TestDriveResponseBean;
 import com.keykeeper.app.model.bean.TrackLocationBaseResponse;
 import com.keykeeper.app.model.bean.TrackLocationRequestEntity;
@@ -206,5 +207,9 @@ public interface KeyKeepAPI {
                                                                  @Query(Keys.EMP_CURRENT_SPEED) String emp_current_speed
     );
 
+    @POST(Config.RETURN_MULTIPLE_KEY)
+    Call<BaseResponse> returnMultipleKey(
+            @Body ReturnKeyBeanList returnKeyBeanList
+    );
 
 }

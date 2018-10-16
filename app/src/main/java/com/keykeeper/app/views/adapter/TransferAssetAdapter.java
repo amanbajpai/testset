@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import com.keykeeper.app.R;
 import com.keykeeper.app.model.bean.AssetsListResponseBean;
@@ -33,7 +34,6 @@ public class TransferAssetAdapter extends RecyclerView.Adapter<TransferAssetAdap
         this.assetLists = resultAssetList;
         this.listener = listener;
         this.longClickListener = longClickListener;
-
     }
 
 
@@ -75,9 +75,9 @@ public class TransferAssetAdapter extends RecyclerView.Adapter<TransferAssetAdap
             holder.selectionCB.setVisibility(View.GONE);
         }
 
-        if (assetLists.getResult().get(position).isSelected){
+        if (assetLists.getResult().get(position).isSelected) {
             holder.selectionCB.setChecked(true);
-        }else {
+        } else {
             holder.selectionCB.setChecked(false);
         }
 
@@ -87,6 +87,13 @@ public class TransferAssetAdapter extends RecyclerView.Adapter<TransferAssetAdap
 
         holder.assignedAt.setText("Assigned At: " + Utils.formattedDateFromString(Utils.INPUT_DATE_TIME_FORMATE, Utils.OUTPUT_DATE_TIME_FORMATE, assetLists.getResult().get(position).getAssigned_approved_or_decline_at()));
         holder.remainingTime.setText("Remaining Time: " + assetLists.getResult().get(position).getAssets_hold_remain_time());
+
+        holder.selectionCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                assetLists.getResult().get(position).isSelected = b;
+            }
+        });
 
 
        /* holder.versionNumber.setText(assetLists.getResult().get(position).getVersionNumber());

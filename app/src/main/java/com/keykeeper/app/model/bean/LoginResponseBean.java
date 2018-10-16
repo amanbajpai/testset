@@ -2,6 +2,7 @@ package com.keykeeper.app.model.bean;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.keykeeper.app.views.activity.login.LoginActivity;
 
 /**
  * Created by akshaydashore on 28/8/18

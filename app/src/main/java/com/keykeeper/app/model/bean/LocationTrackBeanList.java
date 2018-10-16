@@ -16,6 +16,8 @@ public class LocationTrackBeanList extends TrackLocationRequestEntity {
     @Expose
     public ArrayList<LocationTrackBean> locationTrackBeanArrayList;
 
+
+
     public ArrayList<LocationTrackBean> getLocationTrackBeanArrayList() {
         return locationTrackBeanArrayList;
     }
