@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.databinding.DataBindingUtil;
 import android.location.Location;
+import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -54,6 +55,7 @@ import static io.nlopez.smartlocation.location.providers.LocationGooglePlayServi
  */
 public class AssetDetailActivity extends BaseActivity implements DialogClickListener {
 
+    private String TAG = getClass().getName();
     private boolean HAS_SCANNED = false;
     public static int ASSET_STATUS = 1;
     private Context context;
@@ -434,14 +436,36 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
     }
 
 
-    OnLocationUpdatedListener onLocationUpdatedListener = new OnLocationUpdatedListener() {
+//    OnLocationUpdatedListener onLocationUpdatedListener = new OnLocationUpdatedListener() {
+//        @Override
+//        public void onLocationUpdated(Location location) {
+//            if (location.getLatitude() != 0 && location.getLongitude() != 0) {
+//                // Utils.hideProgressDialog();
+//                String lat = location.getLatitude() + "";
+//                String lng = location.getLongitude() + "";
+//                Log.e(" onLocationUpdated: ", lat + " " + lng);
+//                AppSharedPrefs.setLatitude(lat);
+//                AppSharedPrefs.setLongitude(lng);
+//                AppSharedPrefs.setSpeed(location.getSpeed() + "");
+//                Utils.hideProgressDialog();
+//                callSubmit();
+//
+//            } else {
+//                fetchLocation(onLocationUpdatedListener);
+//            }
+//        }
+//    };
+
+
+
+    LocationChangeListener locationChangeListener  = new LocationChangeListener() {
         @Override
-        public void onLocationUpdated(Location location) {
+        public void onLocationChange(Location location) {
             if (location.getLatitude() != 0 && location.getLongitude() != 0) {
                 // Utils.hideProgressDialog();
                 String lat = location.getLatitude() + "";
                 String lng = location.getLongitude() + "";
-                Log.e(" onLocationUpdated: ", lat + " " + lng);
+                Log.e(TAG+" onLocationUpdated: ", lat + " " + lng);
                 AppSharedPrefs.setLatitude(lat);
                 AppSharedPrefs.setLongitude(lng);
                 AppSharedPrefs.setSpeed(location.getSpeed() + "");
@@ -449,10 +473,12 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
                 callSubmit();
 
             } else {
-                fetchLocation(onLocationUpdatedListener);
+                getLocation(locationChangeListener);
             }
         }
     };
+
+
 
     public boolean checkLocationDepedency() {
 
@@ -462,7 +488,8 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
                 String lng = AppSharedPrefs.getLatitude();
                 if (lat.equalsIgnoreCase("0") || lng.equalsIgnoreCase("0")) {
                     Utils.showProgressDialog(context, getString(R.string.fetching_location));
-                    fetchLocation(onLocationUpdatedListener);
+//                    fetchLocation(onLocationUpdatedListener);
+                    getLocation(locationChangeListener);
                     return false;
                 }
                 return true;
@@ -480,18 +507,18 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
     }
 
 
-    public void fetchLocation(OnLocationUpdatedListener listener) {
-        // Utils.showProgressDialog(context, "Fetching location...");
-        LocationParams.Builder builder = new LocationParams.Builder();
-        builder.setAccuracy(LocationAccuracy.HIGH);
-        builder.setDistance(5); // in Meteres
-        builder.setInterval(1000);
-        LocationParams params = builder.build();
-
-        SmartLocation.LocationControl location_control = SmartLocation.with(context).location().config(params);
-        location_control.start(listener);
-
-    }
+//    public void fetchLocation(OnLocationUpdatedListener listener) {
+//        // Utils.showProgressDialog(context, "Fetching location...");
+//        LocationParams.Builder builder = new LocationParams.Builder();
+//        builder.setAccuracy(LocationAccuracy.HIGH);
+//        builder.setDistance(5); // in Meteres
+//        builder.setInterval(1000);
+//        LocationParams params = builder.build();
+//
+//        SmartLocation.LocationControl location_control = SmartLocation.with(context).location().config(params);
+//        location_control.start(listener);
+//
+//    }
 
     /**
      * Put action onclick according to status code
@@ -692,7 +719,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
             switch (resultCode) {
                 case Activity.RESULT_OK:
                     Log.i(AssetDetailActivity.class.getCanonicalName(), "User agreed to make required location settings changes.");
-                    getLocation();
+                    getLocation(locationChangeListener);
                     break;
                 case Activity.RESULT_CANCELED:
                     Log.i(BaseActivity.class.getCanonicalName(), "User chose not to make required location settings changes.");
@@ -706,8 +733,6 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
                     break;
             }
         }
-
-
     }
 
     @Override
@@ -725,7 +750,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
         } else if (requestCode == AppUtils.REQUEST_CODE_LOCATION) {
             if (Utils.onRequestPermissionsResult(permissions, grantResults)) {
                 if (Utils.isGpsEnable(context)) {
-                    getLocation();
+                    getLocation(locationChangeListener);
                 } else {
                     displayLocationSettingsRequest();
                 }
