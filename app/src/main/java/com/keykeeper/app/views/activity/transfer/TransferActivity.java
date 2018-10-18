@@ -44,6 +44,7 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
     boolean isMultiSelectionMode;
 
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +98,12 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
             case R.id.return_key_tv:
                 submitMultipleKey();
                 break;
+        }
+    }
+
+    public  void updateCounter(int counter) {
+        if (actionMode != null){
+            actionMode.setTitle("selected " + counter);
         }
     }
 
@@ -207,7 +214,7 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == AppUtils.REQ_REFRESH_VIEW) {
             viewModel.getMyAssets(binding);
-            if (actionMode != null){
+            if (actionMode != null) {
                 actionMode.finish();
             }
         }

@@ -16,6 +16,7 @@ import com.keykeeper.app.model.bean.AssetsListResponseBean;
 import com.keykeeper.app.utils.AppUtils;
 import com.keykeeper.app.utils.Utils;
 import com.keykeeper.app.views.activity.assetDetail.AssetDetailActivity;
+import com.keykeeper.app.views.activity.transfer.TransferActivity;
 
 /**
  * Created by akshaydashore on 23/8/18
@@ -28,12 +29,14 @@ public class TransferAssetAdapter extends RecyclerView.Adapter<TransferAssetAdap
     ActivityForResult listener;
     private boolean isMultiSelectionMode;
     View.OnLongClickListener longClickListener;
+    public static int selectCount = 0;
 
     public TransferAssetAdapter(Context context, AssetsListResponseBean resultAssetList, ActivityForResult listener, View.OnLongClickListener longClickListener) {
         this.context = context;
         this.assetLists = resultAssetList;
         this.listener = listener;
         this.longClickListener = longClickListener;
+        selectCount = 0;
     }
 
 
@@ -91,6 +94,15 @@ public class TransferAssetAdapter extends RecyclerView.Adapter<TransferAssetAdap
         holder.selectionCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b){
+                    selectCount =  selectCount + 1;
+                    ((TransferActivity)context).updateCounter(selectCount);
+                }else {
+                       if (selectCount >0){
+                           selectCount = selectCount - 1;
+                       }
+                    ((TransferActivity)context).updateCounter(selectCount);
+                }
                 assetLists.getResult().get(position).isSelected = b;
             }
         });
