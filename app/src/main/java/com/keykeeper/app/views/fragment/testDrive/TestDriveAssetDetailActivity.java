@@ -58,7 +58,7 @@ public class TestDriveAssetDetailActivity extends BaseActivity implements Dialog
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
-        getLocation();
+        getLocation(null);
         initializeViews();
     }
 
@@ -372,7 +372,7 @@ public class TestDriveAssetDetailActivity extends BaseActivity implements Dialog
     @Override
     protected void onRestart() {
         super.onRestart();
-        getLocation();
+        getLocation(null);
     }
 
     @Override

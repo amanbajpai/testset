@@ -127,7 +127,7 @@ public class LoginActivity extends BaseActivity implements DialogClickListener {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
-        getLocation();
+        getLocation(null);
         initializeViews();
 
     }
@@ -155,7 +155,7 @@ public class LoginActivity extends BaseActivity implements DialogClickListener {
     @Override
     protected void onRestart() {
         super.onRestart();
-        getLocation();
+        getLocation(null);
     }
 
     @Override

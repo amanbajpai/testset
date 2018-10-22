@@ -49,7 +49,7 @@ import static io.nlopez.smartlocation.location.providers.LocationGooglePlayServi
 /**
  * Created by ankurrawal
  */
-abstract public class BaseActivity extends AppCompatActivity implements View.OnClickListener ,
+abstract public class BaseActivity extends AppCompatActivity implements View.OnClickListener,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
@@ -58,6 +58,8 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
     private GoogleApiClient mLocationClient;
     LocationRequest mLocationRequest = new LocationRequest();
     private String TAG = getClass().getName();
+    LocationChangeListener locationChangeListener;
+
 
     /**
      * this method is responsible to initialize the views
@@ -86,43 +88,45 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
 
-//        initLocationClient();
-
-
     }
 
-    private void initLocationClient() {
-        mLocationClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
+    private void getMlocation() {
+        if (mLocationClient == null) {
+            mLocationClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
 
-        int priority = LocationRequest.PRIORITY_HIGH_ACCURACY; //by default
-        //PRIORITY_BALANCED_POWER_ACCURACY, PRIORITY_LOW_POWER, PRIORITY_NO_POWER are the other priority modes
+            int priority = LocationRequest.PRIORITY_HIGH_ACCURACY; //by default
+            //PRIORITY_BALANCED_POWER_ACCURACY, PRIORITY_LOW_POWER, PRIORITY_NO_POWER are the other priority modes
 
-        // mLocationRequest.setInterval(trackLocationInterval);
+            // mLocationRequest.setInterval(trackLocationInterval);
 //        mLocationRequest.setFastestInterval(trackLocationInterval);
-        mLocationRequest.setPriority(priority);
-        mLocationRequest.setSmallestDisplacement(3);
-        mLocationRequest.setInterval(10000);
+            mLocationRequest.setPriority(priority);
+            mLocationRequest.setSmallestDisplacement(3);
+            mLocationRequest.setInterval(10000);
 //        mLocationRequest.setInterval(5000L);
-        mLocationClient.connect();
 
+        }
+        if (!mLocationClient.isConnected()){
+            mLocationClient.connect();
+        }
 
     }
 
-    protected void getLocation() {
+    protected void getLocation(LocationChangeListener listener) {
         try {
+            locationChangeListener = listener;
 
-            if (!Utils.isGooglePlayServicesAvailable(context)){
-                Utils.showToast(context,"Google play service not available");
+            if (!Utils.isGooglePlayServicesAvailable(context)) {
+                Utils.showToast(context, "google play service not available");
                 return;
             }
 
             if (Utils.isGpsEnable(context)) {
                 if (Utils.checkPermissions(this, AppUtils.LOCATION_PERMISSIONS)) {
-                    fetchLocation();
+                    getMlocation();
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         requestPermissions(AppUtils.LOCATION_PERMISSIONS, AppUtils.REQUEST_CODE_LOCATION);
@@ -168,9 +172,7 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
 //        } else {
 //            isMockLocationEnabled = false;
 //        }
-
     }
-
 
     @Override
     protected void onPause() {
@@ -178,37 +180,37 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
         KeyKeepApplication.activityPaused();
     }
 
-    protected void fetchLocation() {
-
-        // Utils.showProgressDialog(context, "Fetching location...");
-        LocationParams.Builder builder = new LocationParams.Builder();
-        builder.setAccuracy(LocationAccuracy.HIGH);
-        builder.setDistance(5); // in Meteres
-        builder.setInterval(1000);
-        LocationParams params = builder.build();
-
-        location_control = SmartLocation.with(context).location().config(params);
-
-        location_control.start(new OnLocationUpdatedListener() {
-            @Override
-            public void onLocationUpdated(Location location) {
-                mlocation = location;
-                if (location.getLatitude() != 0 && location.getLongitude() != 0) {
-                    // Utils.hideProgressDialog();
-                    String lat = location.getLatitude() + "";
-                    String lng = location.getLongitude() + "";
-                    Log.e(" onLocationUpdated: ", lat + " " + lng);
-                    AppSharedPrefs.setLatitude(lat);
-                    AppSharedPrefs.setLongitude(lng);
-                    AppSharedPrefs.setSpeed(location.getSpeed() + "");
-
-                } else {
-                    fetchLocation();
-                }
-            }
-        });
-
-    }
+//    protected void fetchLocation() {
+//
+//        // Utils.showProgressDialog(context, "Fetching location...");
+//        LocationParams.Builder builder = new LocationParams.Builder();
+//        builder.setAccuracy(LocationAccuracy.HIGH);
+//        builder.setDistance(5); // in Meteres
+//        builder.setInterval(1000);
+//        LocationParams params = builder.build();
+//
+//        location_control = SmartLocation.with(context).location().config(params);
+//
+//        location_control.start(new OnLocationUpdatedListener() {
+//            @Override
+//            public void onLocationUpdated(Location location) {
+//                mlocation = location;
+//                if (location.getLatitude() != 0 && location.getLongitude() != 0) {
+//                    // Utils.hideProgressDialog();
+//                    String lat = location.getLatitude() + "";
+//                    String lng = location.getLongitude() + "";
+//                    Log.e(" onLocationUpdated: ", lat + " " + lng);
+//                    AppSharedPrefs.setLatitude(lat);
+//                    AppSharedPrefs.setLongitude(lng);
+//                    AppSharedPrefs.setSpeed(location.getSpeed() + "");
+//
+//                } else {
+//                    fetchLocation();
+//                }
+//            }
+//        });
+//
+//    }
 
     private void displayLocationSettingsRequest() {
         GoogleApiClient googleApiClient = new GoogleApiClient.Builder(context)
@@ -233,7 +235,8 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
                     case LocationSettingsStatusCodes.SUCCESS:
                         Log.i("tag", "All location settings are satisfied.");
                         if (Utils.checkPermissions(((Activity) context), AppUtils.LOCATION_PERMISSIONS)) {
-                            fetchLocation();
+//                            fetchLocation();
+                            getMlocation();
                         } else {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                 requestPermissions(AppUtils.LOCATION_PERMISSIONS, AppUtils.REQUEST_CODE_LOCATION);
@@ -280,18 +283,18 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
             e.printStackTrace();
         }
     }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        try {
-            if (location_control != null) {
-                location_control.stop();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        try {
+//            if (location_control != null) {
+//                location_control.stop();
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 
 //    @Override
@@ -308,7 +311,8 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == AppUtils.REQUEST_CODE_LOCATION && Utils.onRequestPermissionsResult(permissions, grantResults)) {
-            fetchLocation();
+//            fetchLocation();
+            getMlocation();
         } else {
 
             // Utils.showSnackBar(context, null, getString(R.string.allow_location_permission));
@@ -327,7 +331,8 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
                     case Activity.RESULT_OK:
                         Log.i(BaseActivity.class.getCanonicalName(), "User agreed to make required location settings changes.");
                         if (Utils.checkPermissions(((Activity) context), AppUtils.LOCATION_PERMISSIONS)) {
-                            fetchLocation();
+//                            fetchLocation();
+                            getMlocation();
                         } else {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                 requestPermissions(AppUtils.LOCATION_PERMISSIONS, AppUtils.REQUEST_CODE_LOCATION);
@@ -391,6 +396,7 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
 
     /**
      * Migrate smart location service
+     *
      * @param connectionResult
      */
     @Override
@@ -405,11 +411,18 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
             String lng = location.getLongitude() + "";
             String speed = location.getSpeed() + "";
             Log.e("Accuracy: ", "" + location.getAccuracy());
-                    Log.e(lat + " onLocationUpdated: ", lng + " <<" + " Speed: " + speed);
+            Log.e(lat + " onLocationUpdated: ", lng + " <<" + " Speed: " + speed);
 
-                    AppSharedPrefs.setLatitude(lat);
-                    AppSharedPrefs.setLongitude(lng);
-                    AppSharedPrefs.setSpeed(location.getSpeed() + "");
+            AppSharedPrefs.setLatitude(lat);
+            AppSharedPrefs.setLongitude(lng);
+            AppSharedPrefs.setSpeed(location.getSpeed() + "");
+
+            mLocationClient.disconnect();
+            mLocationClient  = null;
+
+            if (locationChangeListener != null) {
+                locationChangeListener.onLocationChange(location);
+            }
 
             try {
                 AppSharedPrefs.setIsLocationFromMock(location.isFromMockProvider());
@@ -418,5 +431,11 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
             }
         }
     }
+
+
+    public interface LocationChangeListener {
+        void onLocationChange(Location location);
+    }
+
 
 }
