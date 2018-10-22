@@ -193,10 +193,12 @@ public class KeyKeepApplication extends MultiDexApplication {
         long flex = MINUTES.toMillis(5); // wait 30 sec before job runs again
 
         mLastJobId = new JobRequest.Builder(LocationSyncUploadJob.TAG)
-                .setPeriodic(JobRequest.MIN_INTERVAL, JobRequest.MIN_FLEX)
+                //.setPeriodic(JobRequest.MIN_INTERVAL, JobRequest.MIN_FLEX)
 //                .setPeriodic(interval, flex)
+                .setExecutionWindow(60_000L, 90_000L)
                 .setRequiresCharging(false)
                 .setRequiresDeviceIdle(false)
+                .setUpdateCurrent(true)
                 .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
                 .build()
                 .schedule();

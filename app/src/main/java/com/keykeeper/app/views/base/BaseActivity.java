@@ -115,8 +115,8 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
     protected void getLocation() {
         try {
 
-            if (Utils.isGooglePlayServicesAvailable(context)){
-                Utils.showToast(context,"google play service not available");
+            if (!Utils.isGooglePlayServicesAvailable(context)){
+                Utils.showToast(context,"Google play service not available");
                 return;
             }
 
