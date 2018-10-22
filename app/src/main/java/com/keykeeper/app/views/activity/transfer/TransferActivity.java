@@ -103,7 +103,7 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
 
     public  void updateCounter(int counter) {
         if (actionMode != null){
-            actionMode.setTitle("selected " + counter);
+            actionMode.setTitle("Selected " + counter);
         }
     }
 
