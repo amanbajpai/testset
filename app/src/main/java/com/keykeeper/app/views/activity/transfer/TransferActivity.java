@@ -3,7 +3,6 @@ package com.keykeeper.app.views.activity.transfer;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -103,7 +102,7 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
 
     public  void updateCounter(int counter) {
         if (actionMode != null){
-            actionMode.setTitle("Selected " + counter);
+            actionMode.setTitle(counter);
         }
     }
 
@@ -245,7 +244,7 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             // Inflate a menu resource providing context menu items
             MenuInflater inflater = mode.getMenuInflater();
-            inflater.inflate(R.menu.manu_multiselect, menu);
+            inflater.inflate(R.menu.menu_multiselect, menu);
             context_menu = menu;
             binding.returnKeyTv.setVisibility(View.VISIBLE);
             return true;

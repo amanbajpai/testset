@@ -38,11 +38,6 @@ import com.keykeeper.app.utils.AppUtils;
 import com.keykeeper.app.utils.Utils;
 import com.keykeeper.app.views.activity.login.LoginActivity;
 
-import io.nlopez.smartlocation.OnLocationUpdatedListener;
-import io.nlopez.smartlocation.SmartLocation;
-import io.nlopez.smartlocation.location.config.LocationAccuracy;
-import io.nlopez.smartlocation.location.config.LocationParams;
-
 import static io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider.REQUEST_CHECK_SETTINGS;
 
 
@@ -66,17 +61,12 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
      */
     public abstract void initializeViews();
 
-
     /**
      * init custom action bar override it on need
      */
     public void setCustomActionBar() {
 
     }
-
-    private SmartLocation.LocationControl location_control;
-    private Location mlocation = null;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -104,12 +94,12 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
             // mLocationRequest.setInterval(trackLocationInterval);
 //        mLocationRequest.setFastestInterval(trackLocationInterval);
             mLocationRequest.setPriority(priority);
-            mLocationRequest.setSmallestDisplacement(3);
-            mLocationRequest.setInterval(10000);
-//        mLocationRequest.setInterval(5000L);
+//            mLocationRequest.setSmallestDisplacement(3);
+            mLocationRequest.setInterval(1000);
+            mLocationRequest.setFastestInterval(500);
 
         }
-        if (!mLocationClient.isConnected()){
+        if (!mLocationClient.isConnected()) {
             mLocationClient.connect();
         }
 
@@ -219,8 +209,8 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
 
         LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(10000);
-        locationRequest.setFastestInterval(10000 / 2);
+        locationRequest.setInterval(1000);
+        locationRequest.setFastestInterval(1000 / 2);
 
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest);
         builder.setAlwaysShow(true);
@@ -276,14 +266,14 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
 
     protected void stopLocatonUpdates() {
         try {
-            if (location_control != null) {
-                location_control.stop();
+            if (mLocationClient != null) {
+                mLocationClient.disconnect();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-//
+
 //    @Override
 //    protected void onStop() {
 //        super.onStop();
@@ -418,7 +408,7 @@ abstract public class BaseActivity extends AppCompatActivity implements View.OnC
             AppSharedPrefs.setSpeed(location.getSpeed() + "");
 
             mLocationClient.disconnect();
-            mLocationClient  = null;
+            mLocationClient = null;
 
             if (locationChangeListener != null) {
                 locationChangeListener.onLocationChange(location);
