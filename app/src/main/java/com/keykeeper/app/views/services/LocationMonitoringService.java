@@ -408,7 +408,7 @@ public class LocationMonitoringService extends Service implements
         String speed = AppSharedPrefs.getSpeed();
         String asset_id = AppSharedPrefs.getOwnedKeyIds();
 
-        if (lat.equals("0") && lng.equals("0")){
+        if (lat.equals("0") && lng.equals("0")) {
             return;
         }
 
@@ -470,4 +470,10 @@ public class LocationMonitoringService extends Service implements
         }
     }
 
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        super.onTaskRemoved(rootIntent);
+        Utils.stopLocationStorage(context);
+        Utils.startLocationStorage(context);
+    }
 }

@@ -1,6 +1,9 @@
 package com.keykeeper.app.firebase.firebase;
 
+import android.os.Handler;
+import android.os.SystemClock;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
@@ -14,6 +17,25 @@ import com.keykeeper.app.utils.Utils;
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     private static final String TAG = "MyFirebaseIIDService";
     String refreshedToken = "";
+
+    //FOR TESTING
+//    int trackLocationInterval = 30000;
+//
+//
+//    static Handler handler = new Handler();
+//    private Runnable periodicUpdate = new Runnable() {
+//        @Override
+//        public void run() {
+//            handler.postDelayed(periodicUpdate, trackLocationInterval - SystemClock.elapsedRealtime() % 1000);
+//            Log.e("FirebaseMessaging", "In the service");
+//        }
+//    };
+//
+//    @Override
+//    public void onCreate() {
+//        super.onCreate();
+//        handler.post(periodicUpdate);
+//    }
 
     @Override
     public void onTokenRefresh() {

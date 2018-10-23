@@ -43,7 +43,6 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
     boolean isMultiSelectionMode;
 
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,9 +99,9 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
         }
     }
 
-    public  void updateCounter(int counter) {
-        if (actionMode != null){
-            actionMode.setTitle(counter);
+    public void updateCounter(int counter) {
+        if (actionMode != null) {
+            actionMode.setTitle("" + counter);
         }
     }
 

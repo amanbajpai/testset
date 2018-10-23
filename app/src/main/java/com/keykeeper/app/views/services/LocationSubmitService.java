@@ -181,6 +181,12 @@ public class LocationSubmitService extends Service {
                 manager.cancel(SERVICE_NOTIFICATION_ID);
             }
         }
+    }
 
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        super.onTaskRemoved(rootIntent);
+        Utils.stopLocationStorage(context);
+        Utils.startLocationStorage(context);
     }
 }

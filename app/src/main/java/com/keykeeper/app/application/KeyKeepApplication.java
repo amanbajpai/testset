@@ -6,10 +6,8 @@ import android.support.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
 import com.evernote.android.job.JobManager;
-import com.evernote.android.job.JobRequest;
 import com.facebook.stetho.Stetho;
 import com.keykeeper.app.BuildConfig;
-import com.keykeeper.app.job.LocationSyncUploadJob;
 import com.keykeeper.app.model.bean.BaseRequestEntity;
 import com.keykeeper.app.model.location.DaoMaster;
 import com.keykeeper.app.model.location.DaoSession;
@@ -23,8 +21,6 @@ import org.greenrobot.greendao.database.Database;
 import java.lang.reflect.Method;
 
 import io.fabric.sdk.android.Fabric;
-
-import static java.util.concurrent.TimeUnit.MINUTES;
 
 
 /**
@@ -187,22 +183,22 @@ public class KeyKeepApplication extends MultiDexApplication {
     }
 
 
-    public static void startLocationUploadPeriodicJob() {
-
-        long interval = MINUTES.toMillis(10); // every 1 min
-        long flex = MINUTES.toMillis(5); // wait 30 sec before job runs again
-
-        mLastJobId = new JobRequest.Builder(LocationSyncUploadJob.TAG)
-                //.setPeriodic(JobRequest.MIN_INTERVAL, JobRequest.MIN_FLEX)
-//                .setPeriodic(interval, flex)
-                .setExecutionWindow(60_000L, 90_000L)
-                .setRequiresCharging(false)
-                .setRequiresDeviceIdle(false)
-                .setUpdateCurrent(true)
-                .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
-                .build()
-                .schedule();
-    }
+//    public static void startLocationUploadPeriodicJob() {
+//
+//        long interval = MINUTES.toMillis(10); // every 1 min
+//        long flex = MINUTES.toMillis(5); // wait 30 sec before job runs again
+//
+//        mLastJobId = new JobRequest.Builder(LocationSyncUploadJob.TAG)
+//                //.setPeriodic(JobRequest.MIN_INTERVAL, JobRequest.MIN_FLEX)
+////                .setPeriodic(interval, flex)
+//                .setExecutionWindow(60_000L, 90_000L)
+//                .setRequiresCharging(false)
+//                .setRequiresDeviceIdle(false)
+//                .setUpdateCurrent(true)
+//                .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
+//                .build()
+//                .schedule();
+//    }
 
 //    public boolean checkJobFinished() {
 //        boolean isFinished = false;

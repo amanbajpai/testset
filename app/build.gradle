@@ -47,6 +47,7 @@ android {
             buildConfigField "boolean", "CHECK_MOCK_LOCATION", "true"
             buildConfigField "boolean", "RUN_CRASHLYTICS", 'true'
             minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -61,7 +62,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file('/home/akshaydashore/Akshay Dashore/CurrentProject/LotView/MainCode/LotView_Android/signing/keeykeeper.jks')
+            storeFile file('/home/ankurrawal/current_projects/KeyKeep/Code/KeyKeepGit/KeyKeepAndroid/signing')
             keyAlias 'lotviewalias'
             keyPassword 'android'
             storePassword 'android'

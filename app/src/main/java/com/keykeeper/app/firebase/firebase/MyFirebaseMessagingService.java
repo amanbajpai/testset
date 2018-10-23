@@ -4,12 +4,16 @@ package com.keykeeper.app.firebase.firebase;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -39,7 +43,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private Map<String, String> params;
     public static int value = 1;
     String CHANNEL_ID = "push_cannel_id";
-
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -105,6 +108,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             if (Utils.isGpsEnable(context) && Utils.isLocationInHighMode(context)) {
                 if (!Utils.isMyServiceRunning(context, LocationMonitoringService.class)) {
                     Utils.startLocationStorage(context);
+
                     return;
                 }
             }
