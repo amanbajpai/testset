@@ -88,7 +88,7 @@ public class AssetDetailActivity extends BaseActivity implements DialogClickList
     @Override
     public void setCustomActionBar() {
         CustomActionBar customActionBar = new CustomActionBar(this);
-        customActionBar.setActionbar(getString(R.string.asset_detail), true, false, true, false, this);
+        customActionBar.setActionbar(getString(R.string.asset_detail), true, false, false, true, false, this);
     }
 
 

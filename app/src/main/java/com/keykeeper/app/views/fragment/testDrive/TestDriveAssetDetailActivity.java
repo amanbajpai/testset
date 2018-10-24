@@ -67,9 +67,9 @@ public class TestDriveAssetDetailActivity extends BaseActivity implements Dialog
     public void setCustomActionBar() {
         CustomActionBar customActionBar = new CustomActionBar(this);
         if (isDriveStart) {
-            customActionBar.setActionbar(getString(R.string.test_drive), false, false, false, false, this);
+            customActionBar.setActionbar(getString(R.string.test_drive), false, false, false, false, false, this);
         } else {
-            customActionBar.setActionbar(getString(R.string.test_drive), true, false, false, false, this);
+            customActionBar.setActionbar(getString(R.string.test_drive), true, false, false, false, false, this);
         }
     }
 

@@ -88,7 +88,7 @@ public class HistoryActivity extends BaseActivity implements XRecyclerView.Loadi
     @Override
     public void setCustomActionBar() {
         CustomActionBar customActionBar = new CustomActionBar(this);
-        customActionBar.setActionbar(getString(R.string.history), true, false, false, false, this);
+        customActionBar.setActionbar(getString(R.string.history), true, false,false, false, false, this);
     }
 
     public void initializeViews() {

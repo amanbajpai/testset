@@ -60,7 +60,7 @@ public class KeyOnMapActivity extends BaseActivity implements DialogClickListene
     @Override
     public void setCustomActionBar() {
         CustomActionBar customActionBar = new CustomActionBar(this);
-        customActionBar.setActionbar(getString(R.string.asset_map), true, false, false, true, this);
+        customActionBar.setActionbar(getString(R.string.asset_map), true, false,false, false, true, this);
     }
 
 

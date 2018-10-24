@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 
 import com.keykeeper.app.R;
 import com.keykeeper.app.model.bean.AssetsListResponseBean;
@@ -28,14 +29,12 @@ public class TransferAssetAdapter extends RecyclerView.Adapter<TransferAssetAdap
     private AssetsListResponseBean assetLists;
     ActivityForResult listener;
     private boolean isMultiSelectionMode;
-    View.OnLongClickListener longClickListener;
     public static int selectCount = 0;
 
-    public TransferAssetAdapter(Context context, AssetsListResponseBean resultAssetList, ActivityForResult listener, View.OnLongClickListener longClickListener) {
+    public TransferAssetAdapter(Context context, AssetsListResponseBean resultAssetList, ActivityForResult listener) {
         this.context = context;
         this.assetLists = resultAssetList;
         this.listener = listener;
-        this.longClickListener = longClickListener;
         selectCount = 0;
     }
 
@@ -61,16 +60,37 @@ public class TransferAssetAdapter extends RecyclerView.Adapter<TransferAssetAdap
 
             @Override
             public void onClick(View view) {
-                AssetsListResponseBean.Result bean = assetLists.getResult().get(position);
-                Intent intent = new Intent(context, AssetDetailActivity.class);
-                intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_TRANSFER_ASSET_LIST);
-                intent.putExtra(AppUtils.ASSET_ID, bean.getAssetId());
-                intent.putExtra(AppUtils.SCANED_QR_CODE, bean.getQrCodeNumber());
-                listener.onCallActivityResult(intent);
+                if(isMultiSelectionMode){
+                   boolean isChecked=false;
+                    if(holder.selectionCB.isChecked()){
+                        isChecked=false;
+                        holder.selectionCB.setChecked(false);
+                    }else{
+                        isChecked=true;
+                        holder.selectionCB.setChecked(true);
+                    }
+
+                    if (isChecked){
+                        selectCount =  selectCount + 1;
+                        ((TransferActivity)context).updateCounter(selectCount);
+                    }else {
+                        if (selectCount >0){
+                            selectCount = selectCount - 1;
+                        }
+                        ((TransferActivity)context).updateCounter(selectCount);
+                    }
+                    assetLists.getResult().get(position).isSelected = isChecked;
+                }else{
+                    AssetsListResponseBean.Result bean = assetLists.getResult().get(position);
+                    Intent intent = new Intent(context, AssetDetailActivity.class);
+                    intent.putExtra(AppUtils.ASSET_STATUS_CODE, AppUtils.STATUS_TRANSFER_ASSET_LIST);
+                    intent.putExtra(AppUtils.ASSET_ID, bean.getAssetId());
+                    intent.putExtra(AppUtils.SCANED_QR_CODE, bean.getQrCodeNumber());
+                    listener.onCallActivityResult(intent);
+                }
             }
         });
 
-        holder.itemView.setOnLongClickListener(longClickListener);
 
         if (isMultiSelectionMode) {
             holder.selectionCB.setVisibility(View.VISIBLE);
@@ -90,22 +110,23 @@ public class TransferAssetAdapter extends RecyclerView.Adapter<TransferAssetAdap
 
         holder.assignedAt.setText("Assigned At: " + Utils.formattedDateFromString(Utils.INPUT_DATE_TIME_FORMATE, Utils.OUTPUT_DATE_TIME_FORMATE, assetLists.getResult().get(position).getAssigned_approved_or_decline_at()));
         holder.remainingTime.setText("Remaining Time: " + assetLists.getResult().get(position).getAssets_hold_remain_time());
+        holder.selectionCB.setClickable(false);
 
-        holder.selectionCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b){
-                    selectCount =  selectCount + 1;
-                    ((TransferActivity)context).updateCounter(selectCount);
-                }else {
-                       if (selectCount >0){
-                           selectCount = selectCount - 1;
-                       }
-                    ((TransferActivity)context).updateCounter(selectCount);
-                }
-                assetLists.getResult().get(position).isSelected = b;
-            }
-        });
+//        holder.selectionCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//                if (b){
+//                    selectCount =  selectCount + 1;
+//                    ((TransferActivity)context).updateCounter(selectCount);
+//                }else {
+//                    if (selectCount >0){
+//                        selectCount = selectCount - 1;
+//                    }
+//                    ((TransferActivity)context).updateCounter(selectCount);
+//                }
+//                assetLists.getResult().get(position).isSelected = b;
+//            }
+//        });
 
 
        /* holder.versionNumber.setText(assetLists.getResult().get(position).getVersionNumber());

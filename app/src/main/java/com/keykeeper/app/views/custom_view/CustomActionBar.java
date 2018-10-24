@@ -35,7 +35,7 @@ public class CustomActionBar {
      * @param show_refresh
      * @param onClickListener
      */
-    public void setActionbar(String titleString, boolean show_left, boolean show_right,boolean show_map,boolean show_refresh, View.OnClickListener onClickListener) {
+    public void setActionbar(String titleString, boolean show_left, boolean show_right,boolean isTransfer,boolean show_map,boolean show_refresh, View.OnClickListener onClickListener) {
 
         this.clickListener = onClickListener;
         ActionBar actionBar = activity.getSupportActionBar();
@@ -64,6 +64,9 @@ public class CustomActionBar {
 
         if (show_right) {
             right_iv.setVisibility(View.VISIBLE);
+            if(isTransfer){
+                right_iv.setImageResource(R.drawable.check_mark);
+            }
             right_iv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

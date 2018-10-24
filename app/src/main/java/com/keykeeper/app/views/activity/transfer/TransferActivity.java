@@ -41,6 +41,8 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
     public AssetsListResponseBean assetsListBean;
     private ActionMode actionMode;
     boolean isMultiSelectionMode;
+    CustomActionBar customActionBar;
+
 
 
     @Override
@@ -56,8 +58,8 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
     public void setCustomActionBar() {
 
         super.setCustomActionBar();
-        CustomActionBar customActionBar = new CustomActionBar(this);
-        customActionBar.setActionbar(getString(R.string.transfer_asset), true, false, false, false, this);
+        customActionBar = new CustomActionBar(this);
+        customActionBar.setActionbar(getString(R.string.transfer_asset), true, true,true, false, false, this);
 
     }
 
@@ -93,15 +95,21 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
                 finish();
                 break;
 
+            case R.id.right_iv:
+                myAssetAdapter.enableMultiSelectionMode(true);
+                actionMode = startActionMode(mActionModeCallback);
+                myAssetAdapter.notifyDataSetChanged();
+                break;
+
             case R.id.return_key_tv:
                 submitMultipleKey();
                 break;
         }
     }
 
-    public void updateCounter(int counter) {
-        if (actionMode != null) {
-            actionMode.setTitle("" + counter);
+    public  void updateCounter(int counter) {
+        if (actionMode != null){
+            actionMode.setTitle(""+counter);
         }
     }
 
@@ -143,9 +151,10 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
             if (assetsListResponseBean != null && assetsListResponseBean.getResult() != null && assetsListResponseBean.getResult().size() > 0) {
                 LinearLayoutManager manager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
                 binding.recyclerView.setLayoutManager(manager);
-                myAssetAdapter = new TransferAssetAdapter(context, assetsListResponseBean, TransferActivity.this, longClickListener);
+                myAssetAdapter = new TransferAssetAdapter(context, assetsListResponseBean, TransferActivity.this);
                 binding.recyclerView.setAdapter(myAssetAdapter);
             } else {
+                customActionBar.setActionbar(getString(R.string.transfer_asset), true, false,false, false, false, TransferActivity.this);
                 noDataView();
             }
         }
@@ -224,17 +233,6 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
     }
 
 
-    View.OnLongClickListener longClickListener = new View.OnLongClickListener() {
-        @Override
-        public boolean onLongClick(View view) {
-            myAssetAdapter.enableMultiSelectionMode(true);
-            actionMode = startActionMode(mActionModeCallback);
-            myAssetAdapter.notifyDataSetChanged();
-            return false;
-
-        }
-    };
-
 
     private Menu context_menu;
     private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
@@ -261,6 +259,8 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
                     for (int i = 0; i < assetsListBean.getResult().size(); i++) {
                         assetsListBean.getResult().get(i).isSelected = true;
                     }
+                    myAssetAdapter.selectCount=assetsListBean.getResult().size();
+                    updateCounter(myAssetAdapter.selectCount);
                     myAssetAdapter.notifyDataSetChanged();
                     return true;
 
@@ -268,6 +268,8 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
                     for (int i = 0; i < assetsListBean.getResult().size(); i++) {
                         assetsListBean.getResult().get(i).isSelected = false;
                     }
+                    myAssetAdapter.selectCount=0;
+                    updateCounter(myAssetAdapter.selectCount);
                     myAssetAdapter.notifyDataSetChanged();
                     return true;
 
@@ -282,6 +284,7 @@ public class TransferActivity extends BaseActivity implements XRecyclerView.Load
             for (int i = 0; i < assetsListBean.getResult().size(); i++) {
                 assetsListBean.getResult().get(i).isSelected = false;
             }
+            myAssetAdapter.selectCount=0;
             myAssetAdapter.enableMultiSelectionMode(false);
             myAssetAdapter.notifyDataSetChanged();
 //            mActionMode = null;

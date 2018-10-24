@@ -33,7 +33,7 @@ public class CaptureCodeActivity extends AppCompatActivity implements View.OnCli
 
         setContentView(R.layout.capture_code_activity);
         customActionBar = new CustomActionBar(this);
-        customActionBar.setActionbar(title, true, true, false, false, this);
+        customActionBar.setActionbar(title, true, true,false, false, false, this);
         customActionBar.setRightIcon(R.drawable.flashlight);
         barcodeScannerView = (DecoratedBarcodeView) findViewById(R.id.zxing_barcode_scanner);
 

@@ -39,7 +39,7 @@ public class ChangePasswordActivity extends BaseActivity implements DialogClickL
     public void setCustomActionBar() {
         super.setCustomActionBar();
         CustomActionBar customActionBar = new CustomActionBar(this);
-        customActionBar.setActionbar(getString(R.string.change_password), true, false, false,false,this);
+        customActionBar.setActionbar(getString(R.string.change_password), true, false,false, false,false,this);
     }
 
     @Override
